@@ -1,5 +1,6 @@
 "use client";
 import { useActionState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,7 +9,7 @@ import { login } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
-	const [_state, action] = useActionState(login, {});
+	const [state, action, isPending] = useActionState(login, {});
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -20,6 +21,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 				<CardContent>
 					<form action={action}>
 						<div className="grid gap-6">
+							{state?.error && (
+								<Alert variant="destructive" className="border-red-500/50 bg-red-50">
+									<AlertDescription>{state.error}</AlertDescription>
+								</Alert>
+							)}
 							<div className="grid gap-6">
 								<div className="grid gap-2">
 									<Label htmlFor="email" className="text-[#212529]">
@@ -31,6 +37,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 										placeholder="your@email.com"
 										required
 										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+										disabled={isPending}
 									/>
 								</div>
 								<div className="grid gap-2">
@@ -47,10 +54,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 										type="password"
 										required
 										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+										disabled={isPending}
 									/>
 								</div>
-								<Button type="submit" className="w-full vero-button">
-									Sign In
+								<Button type="submit" className="w-full vero-button" disabled={isPending}>
+									{isPending ? "Signing In..." : "Sign In"}
 								</Button>
 							</div>
 						</div>

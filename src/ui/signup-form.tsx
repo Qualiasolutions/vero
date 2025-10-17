@@ -1,20 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useActionState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signup } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
-	const [isLoading, setIsLoading] = useState(false);
-
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		setIsLoading(true);
-		// TODO: Implement signup logic
-		setTimeout(() => setIsLoading(false), 2000);
-	}
+	const [state, action, isPending] = useActionState(signup, {});
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -24,8 +19,13 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 					<CardDescription className="text-[#6C757D]">Join Veromodels to start collecting</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form onSubmit={handleSubmit}>
+					<form action={action}>
 						<div className="grid gap-6">
+							{state?.error && (
+								<Alert variant="destructive" className="border-red-500/50 bg-red-50">
+									<AlertDescription>{state.error}</AlertDescription>
+								</Alert>
+							)}
 							<div className="grid gap-6">
 								<div className="grid gap-2">
 									<Label htmlFor="name" className="text-[#212529]">
@@ -38,6 +38,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 										placeholder="John Doe"
 										required
 										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+										disabled={isPending}
 									/>
 								</div>
 								<div className="grid gap-2">
@@ -51,6 +52,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 										placeholder="your@email.com"
 										required
 										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+										disabled={isPending}
 									/>
 								</div>
 								<div className="grid gap-2">
@@ -65,6 +67,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 										required
 										minLength={8}
 										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+										disabled={isPending}
 									/>
 								</div>
 								<div className="grid gap-2">
@@ -79,10 +82,11 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 										required
 										minLength={8}
 										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+										disabled={isPending}
 									/>
 								</div>
-								<Button type="submit" className="w-full vero-button" disabled={isLoading}>
-									{isLoading ? "Creating Account..." : "Create Account"}
+								<Button type="submit" className="w-full vero-button" disabled={isPending}>
+									{isPending ? "Creating Account..." : "Create Account"}
 								</Button>
 							</div>
 						</div>
