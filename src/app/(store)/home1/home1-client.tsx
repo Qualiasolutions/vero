@@ -34,7 +34,7 @@ export function Home1Client({ products }: Home1ClientProps) {
 			color: string;
 		}[] = [];
 
-		const colors = ["#D4AF37", "#E6C757", "#B8941F", "#F5E6D3"];
+		const colors = ["#D4AF37", "#E6C757", "#B8941F", "#F5E6D3"] as const;
 
 		// Create initial particles
 		for (let i = 0; i < 100; i++) {
@@ -45,7 +45,7 @@ export function Home1Client({ products }: Home1ClientProps) {
 				vy: (Math.random() - 0.5) * 2,
 				size: Math.random() * 3 + 1,
 				life: Math.random() * 100,
-				color: colors[Math.floor(Math.random() * colors.length)],
+				color: colors[Math.floor(Math.random() * colors.length)] ?? "#D4AF37",
 			});
 		}
 
