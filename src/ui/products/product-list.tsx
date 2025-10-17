@@ -33,7 +33,7 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 										</div>
 									)}
 									<div className="p-5 space-y-3">
-										<h2 className="text-base font-light text-yellow-100 group-hover:text-[#D4AF37] transition-colors duration-300 tracking-wide line-clamp-2">
+										<h2 className="text-base font-light text-[#212529] group-hover:text-[#D4AF37] transition-colors duration-300 tracking-wide line-clamp-2">
 											{product.name}
 										</h2>
 										<footer className="pt-2 border-t border-[#D4AF37]/20">

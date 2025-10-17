@@ -21,12 +21,12 @@ export const NavMenu = () => {
 	return (
 		<>
 			<div className="sm:block hidden">
-				<ul className="flex flex-row items-center justify-center gap-x-2">
+				<ul className="flex flex-row items-center justify-center gap-x-1 lg:gap-x-2 flex-wrap">
 					{links.map((link) => (
 						<li key={link.href}>
 							<Link
 								href={link.href}
-								className="inline-flex h-9 w-max items-center justify-center px-4 py-2 text-sm font-light tracking-wide text-[#6C757D] hover:text-[#D4AF37] transition-colors duration-300 relative group"
+								className="inline-flex h-9 w-max items-center justify-center px-2 lg:px-4 py-2 text-xs lg:text-sm font-light tracking-wide text-[#6C757D] hover:text-[#D4AF37] transition-colors duration-300 relative group whitespace-nowrap"
 							>
 								{link.label}
 								<span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4AF37] group-hover:w-full transition-all duration-300"></span>

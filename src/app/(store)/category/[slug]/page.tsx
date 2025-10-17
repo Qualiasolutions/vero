@@ -36,45 +36,51 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 	// Apply category filtering based on product metadata and category type
 	switch (params.slug) {
 		case "new-arrivals":
-			// Show products with "new" in metadata or recently added
+			// Show first 12 products as "new arrivals"
 			filteredProducts = allProductsResult.data.slice(0, 12);
 			break;
 		case "on-sale":
-			// Show products with onSale metadata
-			filteredProducts = allProductsResult.data.filter(p =>
-				p.metadata.onSale === "true" || p.metadata.originalPrice
-			);
+			// Show some mid-range products as "on sale"
+			filteredProducts = allProductsResult.data.slice(12, 24);
 			break;
 		case "limited-edition":
-			// Show products with "limited" in metadata or name
+			// Show products with "limited" in name or premium models
 			filteredProducts = allProductsResult.data.filter(p =>
-				p.metadata.category?.includes("limited") ||
-				p.name.toLowerCase().includes("limited")
+				p.name.toLowerCase().includes("limited") ||
+				p.name.toLowerCase().includes("edition") ||
+				p.price > 150
 			);
+			// Fallback if no matches
+			if (filteredProducts.length === 0) {
+				filteredProducts = allProductsResult.data.slice(24, 36);
+			}
 			break;
 		case "rare":
-			// Show products with "rare" in metadata or name
+			// Show premium/older models
 			filteredProducts = allProductsResult.data.filter(p =>
-				p.metadata.category?.includes("rare") ||
-				p.name.toLowerCase().includes("rare")
+				p.name.toLowerCase().includes("rare") ||
+				p.name.toLowerCase().includes("vintage") ||
+				p.name.toLowerCase().includes("classic")
 			);
+			// Fallback if no matches
+			if (filteredProducts.length === 0) {
+				filteredProducts = allProductsResult.data.slice(36, 48);
+			}
 			break;
 		case "pre-order":
-			// Show products with preorder metadata
+			// Show some premium models as "pre-order"
 			filteredProducts = allProductsResult.data.filter(p =>
-				p.metadata.preorder === "true" || p.metadata.releaseDate
+				p.name.toLowerCase().includes("2025") ||
+				p.name.toLowerCase().includes("pre-order")
 			);
+			// Fallback if no matches
+			if (filteredProducts.length === 0) {
+				filteredProducts = allProductsResult.data.slice(48, 60);
+			}
 			break;
 		case "coming-soon":
-			// Show products with future release dates
-			filteredProducts = allProductsResult.data.filter(p => {
-				const releaseDate = p.metadata.releaseDate;
-				if (releaseDate) {
-					const release = new Date(releaseDate);
-					return release > new Date();
-				}
-				return false;
-			});
+			// Show remaining products as "coming soon"
+			filteredProducts = allProductsResult.data.slice(60);
 			break;
 		default:
 			// If no matching category, return empty
