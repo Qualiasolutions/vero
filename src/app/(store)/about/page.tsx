@@ -50,7 +50,12 @@ export default function AboutPage() {
 
 					<div className="relative h-[500px] rounded-lg overflow-hidden vero-card">
 						<div className="absolute inset-0 bg-gradient-to-br from-yellow-900/20 to-black/60 z-10" />
-						<Image src="/logo" alt="Veromodels Collection" fill className="object-contain p-12" />
+						<Image
+							src="https://i.ibb.co/b52z9FPV/Untitled-design-3.png"
+							alt="Veromodels Collection"
+							fill
+							className="object-cover"
+						/>
 					</div>
 				</div>
 			</section>
