@@ -1,4 +1,5 @@
 #!/usr/bin/env tsx
+
 /**
  * Veromodels Product Migration Script
  * Migrates products from CSV to Stripe Product Catalog
@@ -6,32 +7,32 @@
  * Usage: npx tsx scripts/migrate-products-to-stripe.ts
  */
 
-import Stripe from 'stripe';
-import * as fs from 'fs';
-import * as path from 'path';
-import { config } from 'dotenv';
-import Papa from 'papaparse';
+import { config } from "dotenv";
+import * as fs from "fs";
+import Papa from "papaparse";
+import * as path from "path";
+import Stripe from "stripe";
 
 // Load environment variables from .env.local
-config({ path: path.join(process.cwd(), '.env.local') });
+config({ path: path.join(process.cwd(), ".env.local") });
 
 // Initialize Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
-	console.error('❌ Error: STRIPE_SECRET_KEY environment variable is not set!');
-	console.log('\nPlease make sure .env.local contains your Stripe secret key.');
+	console.error("❌ Error: STRIPE_SECRET_KEY environment variable is not set!");
+	console.log("\nPlease make sure .env.local contains your Stripe secret key.");
 	process.exit(1);
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	apiVersion: '2025-08-27.basil',
+	apiVersion: "2025-08-27.basil",
 });
 
 interface ProductRow {
-	'Product URL': string;
-	'Title': string;
-	'Price': string;
-	'Product Page': string;
-	'Hosted Image URLs': string;
+	"Product URL": string;
+	Title: string;
+	Price: string;
+	"Product Page": string;
+	"Hosted Image URLs": string;
 }
 
 // Parse CSV using papaparse (handles multi-line fields properly)
@@ -43,7 +44,7 @@ function parseCSV(content: string): ProductRow[] {
 	});
 
 	if (result.errors.length > 0) {
-		console.warn('⚠️  CSV parsing warnings:', result.errors.slice(0, 5));
+		console.warn("⚠️  CSV parsing warnings:", result.errors.slice(0, 5));
 	}
 
 	return result.data;
@@ -52,9 +53,21 @@ function parseCSV(content: string): ProductRow[] {
 // Extract brand from title
 function extractBrand(title: string): string {
 	const brands = [
-		'AutoArt', 'ALPINA', 'SOLIDO', 'GT Spirit', 'OttO mobile', 'Norev',
-		'IXO', 'PARAGON', 'KK Scale', 'MCG', 'Almost Real', 'Ottomobile',
-		'KYOSHO', 'Premium ClassiXXs', 'Minichamps'
+		"AutoArt",
+		"ALPINA",
+		"SOLIDO",
+		"GT Spirit",
+		"OttO mobile",
+		"Norev",
+		"IXO",
+		"PARAGON",
+		"KK Scale",
+		"MCG",
+		"Almost Real",
+		"Ottomobile",
+		"KYOSHO",
+		"Premium ClassiXXs",
+		"Minichamps",
 	];
 
 	for (const brand of brands) {
@@ -64,21 +77,21 @@ function extractBrand(title: string): string {
 	}
 
 	// Try to extract first word as brand
-	const firstWord = title.split(' ')[0];
-	return firstWord || 'Unknown';
+	const firstWord = title.split(" ")[0];
+	return firstWord || "Unknown";
 }
 
 // Extract scale from description
 function extractScale(description: string): string {
 	const scaleMatch = description.match(/Scale:\s*(\d+:\d+)/i);
-	return scaleMatch ? scaleMatch[1] : '1:18';
+	return scaleMatch ? scaleMatch[1] : "1:18";
 }
 
 // Extract material from description
 function extractMaterial(description: string): string {
-	if (description.includes('Resin')) return 'Resin';
-	if (description.includes('Die-cast')) return 'Die-cast';
-	return 'Mixed';
+	if (description.includes("Resin")) return "Resin";
+	if (description.includes("Die-cast")) return "Die-cast";
+	return "Mixed";
 }
 
 // Extract release date from tags
@@ -90,34 +103,34 @@ function extractReleaseDate(tags: string): string | undefined {
 // Clean HTML from description
 function cleanDescription(desc: string): string {
 	return desc
-		.replace(/<pre><code>/g, '')
-		.replace(/<\/code><\/pre>/g, '')
-		.replace(/<br>/g, '\n')
-		.replace(/&nbsp;/g, ' ')
+		.replace(/<pre><code>/g, "")
+		.replace(/<\/code><\/pre>/g, "")
+		.replace(/<br>/g, "\n")
+		.replace(/&nbsp;/g, " ")
 		.trim();
 }
 
 // Create slug from title
 function createSlug(title: string, sku: string): string {
-	return (title + '-' + sku)
+	return (title + "-" + sku)
 		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/^-+|-+$/g, '');
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
 }
 
 async function migrateProducts() {
-	console.log('🚀 Starting Veromodels Product Migration to Stripe...\n');
+	console.log("🚀 Starting Veromodels Product Migration to Stripe...\n");
 
 	// Read CSV file
-	const csvPath = path.join(process.cwd(), 'products_cleaned.csv');
+	const csvPath = path.join(process.cwd(), "products_cleaned.csv");
 
 	if (!fs.existsSync(csvPath)) {
-		console.error('❌ Error: products_cleaned.csv not found!');
-		console.log('Please make sure products_cleaned.csv is in the root directory.');
+		console.error("❌ Error: products_cleaned.csv not found!");
+		console.log("Please make sure products_cleaned.csv is in the root directory.");
 		process.exit(1);
 	}
 
-	const csvContent = fs.readFileSync(csvPath, 'utf-8');
+	const csvContent = fs.readFileSync(csvPath, "utf-8");
 	const products = parseCSV(csvContent);
 
 	console.log(`📊 Found ${products.length} products to migrate\n`);
@@ -128,11 +141,11 @@ async function migrateProducts() {
 
 	for (const [index, product] of products.entries()) {
 		const {
-			'Product URL': productUrl,
-			'Title': title,
-			'Price': price,
-			'Product Page': productPage,
-			'Hosted Image URLs': imageUrl,
+			"Product URL": productUrl,
+			Title: title,
+			Price: price,
+			"Product Page": productPage,
+			"Hosted Image URLs": imageUrl,
 		} = product;
 
 		// Skip if missing essential fields
@@ -144,7 +157,7 @@ async function migrateProducts() {
 		try {
 			console.log(`[${index + 1}/${products.length}] Processing: ${title.substring(0, 60)}...`);
 
-			const slug = productUrl || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+			const slug = productUrl || title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 			const actualPrice = parseFloat(price);
 
 			if (isNaN(actualPrice) || actualPrice <= 0) {
@@ -156,7 +169,7 @@ async function migrateProducts() {
 			const brand = extractBrand(title);
 
 			// Determine if it's a pre-order based on product page
-			const isPreorder = productPage?.toLowerCase().includes('pre-order') || false;
+			const isPreorder = productPage?.toLowerCase().includes("pre-order") || false;
 
 			// Create Stripe Product
 			const stripeProduct = await stripe.products.create({
@@ -166,8 +179,8 @@ async function migrateProducts() {
 				metadata: {
 					slug: slug,
 					brand: brand,
-					productPage: productPage || 'collection',
-					preorder: isPreorder ? 'true' : 'false',
+					productPage: productPage || "collection",
+					preorder: isPreorder ? "true" : "false",
 				},
 				active: true,
 				shippable: true,
@@ -176,7 +189,7 @@ async function migrateProducts() {
 			// Create Stripe Price in EUR
 			await stripe.prices.create({
 				product: stripeProduct.id,
-				currency: 'eur',
+				currency: "eur",
 				unit_amount: Math.round(actualPrice * 100), // Convert to cents
 			});
 
@@ -184,8 +197,7 @@ async function migrateProducts() {
 			successCount++;
 
 			// Rate limiting: wait a bit between requests
-			await new Promise(resolve => setTimeout(resolve, 150));
-
+			await new Promise((resolve) => setTimeout(resolve, 150));
 		} catch (error: any) {
 			console.error(`❌ Error creating product "${title}":`, error.message);
 			errorCount++;
@@ -194,29 +206,29 @@ async function migrateProducts() {
 	}
 
 	// Summary
-	console.log('\n' + '='.repeat(60));
-	console.log('📈 MIGRATION SUMMARY');
-	console.log('='.repeat(60));
+	console.log("\n" + "=".repeat(60));
+	console.log("📈 MIGRATION SUMMARY");
+	console.log("=".repeat(60));
 	console.log(`✅ Successfully migrated: ${successCount} products`);
 	console.log(`❌ Errors: ${errorCount} products`);
-	console.log('='.repeat(60));
+	console.log("=".repeat(60));
 
 	if (errors.length > 0) {
-		console.log('\n⚠️  ERRORS:');
+		console.log("\n⚠️  ERRORS:");
 		errors.forEach(({ sku, error }) => {
 			console.log(`  - ${sku}: ${error}`);
 		});
 	}
 
-	console.log('\n🎉 Migration complete!');
-	console.log('\n📝 Next steps:');
-	console.log('1. Verify products in Stripe Dashboard: https://dashboard.stripe.com/products');
-	console.log('2. Run the development server: npm run dev');
-	console.log('3. Check your store at http://localhost:3000');
+	console.log("\n🎉 Migration complete!");
+	console.log("\n📝 Next steps:");
+	console.log("1. Verify products in Stripe Dashboard: https://dashboard.stripe.com/products");
+	console.log("2. Run the development server: npm run dev");
+	console.log("3. Check your store at http://localhost:3000");
 }
 
 // Run migration
 migrateProducts().catch((error) => {
-	console.error('💥 Fatal error during migration:', error);
+	console.error("💥 Fatal error during migration:", error);
 	process.exit(1);
 });

@@ -22,15 +22,32 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 						<div className="grid gap-6">
 							<div className="grid gap-6">
 								<div className="grid gap-2">
-									<Label htmlFor="email" className="text-[#212529]">Email</Label>
-									<Input name="email" type="email" placeholder="your@email.com" required className="border-[#D4AF37]/20 focus:border-[#D4AF37]" />
+									<Label htmlFor="email" className="text-[#212529]">
+										Email
+									</Label>
+									<Input
+										name="email"
+										type="email"
+										placeholder="your@email.com"
+										required
+										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+									/>
 								</div>
 								<div className="grid gap-2">
 									<div className="flex items-center justify-between">
-										<Label htmlFor="password" className="text-[#212529]">Password</Label>
-										<a href="#" className="text-xs text-[#D4AF37] hover:text-[#B8941F]">Forgot password?</a>
+										<Label htmlFor="password" className="text-[#212529]">
+											Password
+										</Label>
+										<a href="#" className="text-xs text-[#D4AF37] hover:text-[#B8941F]">
+											Forgot password?
+										</a>
 									</div>
-									<Input name="password" type="password" required className="border-[#D4AF37]/20 focus:border-[#D4AF37]" />
+									<Input
+										name="password"
+										type="password"
+										required
+										className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+									/>
 								</div>
 								<Button type="submit" className="w-full vero-button">
 									Sign In

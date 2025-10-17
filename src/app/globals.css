@@ -276,16 +276,22 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 @keyframes glow {
-	0%, 100% {
-		box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
+	0%,
+	100% {
+		box-shadow:
+			0 0 20px rgba(212, 175, 55, 0.3),
+			0 0 40px rgba(212, 175, 55, 0.1);
 	}
 	50% {
-		box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2);
+		box-shadow:
+			0 0 30px rgba(212, 175, 55, 0.5),
+			0 0 60px rgba(212, 175, 55, 0.2);
 	}
 }
 
 @keyframes float {
-	0%, 100% {
+	0%,
+	100% {
 		transform: translateY(0px);
 	}
 	50% {
@@ -340,7 +346,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .has-ripple::before {
-	content: '';
+	content: "";
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -349,7 +355,9 @@ input[type="search" i]::-webkit-search-cancel-button {
 	border-radius: 50%;
 	background: rgba(255, 255, 255, 0.5);
 	transform: translate(-50%, -50%);
-	transition: width 0.6s, height 0.6s;
+	transition:
+		width 0.6s,
+		height 0.6s;
 }
 
 .has-ripple:active::before {
@@ -359,223 +367,236 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 /* Veromodels Luxury Black & Gold Theme */
 @layer base {
-  :root {
-    /* Gold Palette */
-    --verogold: #D4AF37;
-    --verogold-light: #E6C757;
-    --verogold-dark: #B8941F;
-    --verogold-champagne: #F5E6D3;
+	:root {
+		/* Gold Palette */
+		--verogold: #d4af37;
+		--verogold-light: #e6c757;
+		--verogold-dark: #b8941f;
+		--verogold-champagne: #f5e6d3;
 
-    /* Black Palette */
-    --veroblack: #0A0A0A;
-    --veroblack-charcoal: #1A1A1A;
-    --veroblack-soft: #2A2A2A;
+		/* Black Palette */
+		--veroblack: #0a0a0a;
+		--veroblack-charcoal: #1a1a1a;
+		--veroblack-soft: #2a2a2a;
 
-    /* Neutral Palette */
-    --verowhite: #FFFFFF;
-    --verocream: #FDFBF7;
-    --verogray: #F8F9FA;
-    --verogray-dark: #6C757D;
-    --verotext: #212529;
-  }
+		/* Neutral Palette */
+		--verowhite: #ffffff;
+		--verocream: #fdfbf7;
+		--verogray: #f8f9fa;
+		--verogray-dark: #6c757d;
+		--verotext: #212529;
+	}
 
-  .vero-gradient {
-    background: linear-gradient(135deg, var(--verowhite) 0%, var(--verocream) 100%);
-  }
+	.vero-gradient {
+		background: linear-gradient(135deg, var(--verowhite) 0%, var(--verocream) 100%);
+	}
 
-  .vero-black-gradient {
-    background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
-  }
+	.vero-black-gradient {
+		background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
+	}
 
-  .vero-luxury-gradient {
-    background: linear-gradient(135deg, var(--veroblack) 0%, var(--verogold-dark) 100%);
-  }
+	.vero-luxury-gradient {
+		background: linear-gradient(135deg, var(--veroblack) 0%, var(--verogold-dark) 100%);
+	}
 
-  .vero-gold-gradient {
-    background: linear-gradient(135deg, var(--verogold) 0%, var(--verogold-dark) 100%);
-  }
+	.vero-gold-gradient {
+		background: linear-gradient(135deg, var(--verogold) 0%, var(--verogold-dark) 100%);
+	}
 
-  .vero-text-gradient {
-    background: linear-gradient(135deg, var(--verogold) 0%, var(--verogold-dark) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+	.vero-text-gradient {
+		background: linear-gradient(135deg, var(--verogold) 0%, var(--verogold-dark) 100%);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
 
-  .vero-elegant-text {
-    background: linear-gradient(90deg, var(--verogold) 0%, var(--verogold-light) 25%, var(--verogold) 50%, var(--verogold-light) 75%, var(--verogold) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 3s linear infinite;
-  }
+	.vero-elegant-text {
+		background: linear-gradient(
+			90deg,
+			var(--verogold) 0%,
+			var(--verogold-light) 25%,
+			var(--verogold) 50%,
+			var(--verogold-light) 75%,
+			var(--verogold) 100%
+		);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: shimmer 3s linear infinite;
+	}
 
-  .vero-glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(212, 175, 55, 0.1);
-  }
+	.vero-glass {
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border: 1px solid rgba(212, 175, 55, 0.1);
+	}
 
-  .vero-glass-dark {
-    background: rgba(10, 10, 10, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-  }
+	.vero-glass-dark {
+		background: rgba(10, 10, 10, 0.8);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid rgba(212, 175, 55, 0.2);
+	}
 }
 
 /* Custom professional components */
 .vero-card {
-  background: white;
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+	background: white;
+	border: 1px solid rgba(212, 175, 55, 0.15);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .vero-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
-  transition: left 0.5s ease;
-  z-index: 1;
-  pointer-events: none;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
+	transition: left 0.5s ease;
+	z-index: 1;
+	pointer-events: none;
 }
 
 .vero-card:hover::before {
-  left: 100%;
+	left: 100%;
 }
 
 .vero-card:hover {
-  border-color: var(--verogold);
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 20px 48px rgba(212, 175, 55, 0.25), 0 8px 16px rgba(0, 0, 0, 0.1);
+	border-color: var(--verogold);
+	transform: translateY(-6px) scale(1.01);
+	box-shadow:
+		0 20px 48px rgba(212, 175, 55, 0.25),
+		0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .vero-card-dark {
-  background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+	background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
+	border: 1px solid rgba(212, 175, 55, 0.3);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .vero-card-dark::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
-  transition: left 0.5s ease;
-  z-index: 1;
-  pointer-events: none;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+	transition: left 0.5s ease;
+	z-index: 1;
+	pointer-events: none;
 }
 
 .vero-card-dark:hover::before {
-  left: 100%;
+	left: 100%;
 }
 
 .vero-card-dark:hover {
-  border-color: var(--verogold-light);
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 24px 56px rgba(212, 175, 55, 0.35), 0 12px 20px rgba(0, 0, 0, 0.6);
+	border-color: var(--verogold-light);
+	transform: translateY(-8px) scale(1.02);
+	box-shadow:
+		0 24px 56px rgba(212, 175, 55, 0.35),
+		0 12px 20px rgba(0, 0, 0, 0.6);
 }
 
 .vero-button {
-  background: var(--verogold);
-  color: white;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  border: none;
+	background: var(--verogold);
+	color: white;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+	border: none;
 }
 
 .vero-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.3);
+	transform: translate(-50%, -50%);
+	transition:
+		width 0.6s,
+		height 0.6s;
 }
 
 .vero-button:hover::before {
-  width: 300px;
-  height: 300px;
+	width: 300px;
+	height: 300px;
 }
 
 .vero-button:hover {
-  background: var(--verogold-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+	background: var(--verogold-dark);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
 }
 
 .vero-button-outline {
-  background: transparent;
-  color: var(--verogold);
-  border: 2px solid var(--verogold);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+	background: transparent;
+	color: var(--verogold);
+	border: 2px solid var(--verogold);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
 }
 
 .vero-button-outline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: var(--verogold);
-  transition: left 0.3s ease;
-  z-index: -1;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: var(--verogold);
+	transition: left 0.3s ease;
+	z-index: -1;
 }
 
 .vero-button-outline:hover::before {
-  left: 0;
+	left: 0;
 }
 
 .vero-button-outline:hover {
-  color: white;
-  border-color: var(--verogold-dark);
+	color: white;
+	border-color: var(--verogold-dark);
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
+	width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8F9FA;
-  border-left: 1px solid rgba(212, 175, 55, 0.1);
+	background: #f8f9fa;
+	border-left: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--verogold-dark), var(--verogold));
-  border-radius: 6px;
+	background: linear-gradient(180deg, var(--verogold-dark), var(--verogold));
+	border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--verogold-light);
+	background: var(--verogold-light);
 }

@@ -5,6 +5,9 @@ import type { Metadata } from "next/types";
 import { Suspense } from "react";
 import { ProductImageModal } from "@/app/(store)/product/[slug]/product-image-modal";
 import { AddToCart } from "@/components/add-to-cart";
+import { FavoriteButton } from "@/components/favorite-button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -13,6 +16,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { getProductBySlug } from "@/lib/product-service";
@@ -21,9 +25,6 @@ import { JsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
 import { MainProductImage } from "@/ui/products/main-product-image";
 import { YnsLink } from "@/ui/yns-link";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
@@ -69,7 +70,10 @@ export default async function SingleProductPage(props: {
 			<Breadcrumb className="mb-8">
 				<BreadcrumbList>
 					<BreadcrumbItem>
-						<BreadcrumbLink asChild className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]">
+						<BreadcrumbLink
+							asChild
+							className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]"
+						>
 							<YnsLink href="/products">{t("allProducts")}</YnsLink>
 						</BreadcrumbLink>
 					</BreadcrumbItem>
@@ -77,7 +81,10 @@ export default async function SingleProductPage(props: {
 						<>
 							<BreadcrumbSeparator className="text-[#D4AF37]/50" />
 							<BreadcrumbItem>
-								<BreadcrumbLink className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]" asChild>
+								<BreadcrumbLink
+									className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]"
+									asChild
+								>
 									<YnsLink href={`/category/${category}`}>{deslugify(category)}</YnsLink>
 								</BreadcrumbLink>
 							</BreadcrumbItem>
@@ -164,9 +171,7 @@ export default async function SingleProductPage(props: {
 									</div>
 									<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
 										<span className="text-[#6C757D] font-medium">Condition</span>
-										<Badge className="bg-green-500/10 text-green-700 hover:bg-green-500/20">
-											Brand New
-										</Badge>
+										<Badge className="bg-green-500/10 text-green-700 hover:bg-green-500/20">Brand New</Badge>
 									</div>
 									{product.metadata?.category && (
 										<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
@@ -205,12 +210,22 @@ export default async function SingleProductPage(props: {
 							</TabsContent>
 						</Tabs>
 
-						<AddToCart
-							variantId={product.id}
-							className="vero-button w-full py-4"
-						>
-							Add to Cart
-						</AddToCart>
+						<div className="flex gap-3">
+							<AddToCart variantId={product.id} className="vero-button flex-1 py-4">
+								Add to Cart
+							</AddToCart>
+							<FavoriteButton
+								product={{
+									id: product.id,
+									name: product.name,
+									slug: product.slug,
+									price: product.price,
+									images: product.images,
+									metadata: product.metadata,
+								}}
+								className="py-4"
+							/>
+						</div>
 					</div>
 				</div>
 

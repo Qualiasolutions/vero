@@ -28,7 +28,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 						<div className="grid gap-6">
 							<div className="grid gap-6">
 								<div className="grid gap-2">
-									<Label htmlFor="name" className="text-[#212529]">Full Name</Label>
+									<Label htmlFor="name" className="text-[#212529]">
+										Full Name
+									</Label>
 									<Input
 										id="name"
 										name="name"
@@ -39,7 +41,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 									/>
 								</div>
 								<div className="grid gap-2">
-									<Label htmlFor="email" className="text-[#212529]">Email</Label>
+									<Label htmlFor="email" className="text-[#212529]">
+										Email
+									</Label>
 									<Input
 										id="email"
 										name="email"
@@ -50,7 +54,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 									/>
 								</div>
 								<div className="grid gap-2">
-									<Label htmlFor="password" className="text-[#212529]">Password</Label>
+									<Label htmlFor="password" className="text-[#212529]">
+										Password
+									</Label>
 									<Input
 										id="password"
 										name="password"
@@ -62,7 +68,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 									/>
 								</div>
 								<div className="grid gap-2">
-									<Label htmlFor="confirm-password" className="text-[#212529]">Confirm Password</Label>
+									<Label htmlFor="confirm-password" className="text-[#212529]">
+										Confirm Password
+									</Label>
 									<Input
 										id="confirm-password"
 										name="confirmPassword"

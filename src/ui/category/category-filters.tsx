@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface CategoryFiltersProps {
 	onFilterChange?: (filters: FilterState) => void;
@@ -50,9 +50,7 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 
 			{/* Sort By */}
 			<div className="space-y-3">
-				<label className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-					Sort By
-				</label>
+				<label className="text-sm font-medium text-gray-700 uppercase tracking-wide">Sort By</label>
 				<Select value={filters.sortBy} onValueChange={(value) => handleFilterUpdate({ sortBy: value })}>
 					<SelectTrigger className="w-full">
 						<SelectValue />
@@ -70,9 +68,7 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 			{/* Price Range */}
 			<Collapsible open={isPriceOpen} onOpenChange={setIsPriceOpen}>
 				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-						Price Range
-					</span>
+					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">Price Range</span>
 					<ChevronDown
 						className={`h-4 w-4 text-gray-500 transition-transform ${isPriceOpen ? "rotate-180" : ""}`}
 					/>
@@ -99,9 +95,7 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 			{/* Availability */}
 			<Collapsible open={isAvailabilityOpen} onOpenChange={setIsAvailabilityOpen}>
 				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-						Availability
-					</span>
+					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">Availability</span>
 					<ChevronDown
 						className={`h-4 w-4 text-gray-500 transition-transform ${isAvailabilityOpen ? "rotate-180" : ""}`}
 					/>
@@ -111,14 +105,9 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 						<Checkbox
 							id="in-stock"
 							checked={filters.availability.includes("in-stock")}
-							onCheckedChange={(checked) =>
-								handleAvailabilityToggle("in-stock", checked as boolean)
-							}
+							onCheckedChange={(checked) => handleAvailabilityToggle("in-stock", checked as boolean)}
 						/>
-						<label
-							htmlFor="in-stock"
-							className="text-sm text-gray-600 cursor-pointer hover:text-gray-900"
-						>
+						<label htmlFor="in-stock" className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
 							In Stock
 						</label>
 					</div>
@@ -126,14 +115,9 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 						<Checkbox
 							id="pre-order"
 							checked={filters.availability.includes("pre-order")}
-							onCheckedChange={(checked) =>
-								handleAvailabilityToggle("pre-order", checked as boolean)
-							}
+							onCheckedChange={(checked) => handleAvailabilityToggle("pre-order", checked as boolean)}
 						/>
-						<label
-							htmlFor="pre-order"
-							className="text-sm text-gray-600 cursor-pointer hover:text-gray-900"
-						>
+						<label htmlFor="pre-order" className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
 							Pre-Order
 						</label>
 					</div>
@@ -141,14 +125,9 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 						<Checkbox
 							id="limited"
 							checked={filters.availability.includes("limited")}
-							onCheckedChange={(checked) =>
-								handleAvailabilityToggle("limited", checked as boolean)
-							}
+							onCheckedChange={(checked) => handleAvailabilityToggle("limited", checked as boolean)}
 						/>
-						<label
-							htmlFor="limited"
-							className="text-sm text-gray-600 cursor-pointer hover:text-gray-900"
-						>
+						<label htmlFor="limited" className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
 							Limited Edition
 						</label>
 					</div>

@@ -53,9 +53,12 @@ export async function Footer() {
 							className="h-12 w-auto mb-2 object-contain brightness-0 invert opacity-90"
 						/>
 						<p className="text-[#F5E6D3]/60 leading-relaxed">
-							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious automobile manufacturers.
+							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious
+							automobile manufacturers.
 						</p>
-						<h3 className="font-medium text-[#D4AF37] mt-4 uppercase tracking-wider text-sm">{t("newsletterTitle")}</h3>
+						<h3 className="font-medium text-[#D4AF37] mt-4 uppercase tracking-wider text-sm">
+							{t("newsletterTitle")}
+						</h3>
 						<Newsletter />
 					</div>
 				</div>
@@ -63,11 +66,16 @@ export async function Footer() {
 				<nav className="grid grid-cols-3 gap-12">
 					{sections.map((section) => (
 						<section key={section.header}>
-							<h3 className="mb-4 font-medium text-[#D4AF37] uppercase tracking-wider text-sm">{section.header}</h3>
+							<h3 className="mb-4 font-medium text-[#D4AF37] uppercase tracking-wider text-sm">
+								{section.header}
+							</h3>
 							<ul role="list" className="grid gap-3">
 								{section.links.map((link) => (
 									<li key={link.label}>
-										<YnsLink className="text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1 inline-block" href={link.href}>
+										<YnsLink
+											className="text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1 inline-block"
+											href={link.href}
+										>
 											{link.label}
 										</YnsLink>
 									</li>
@@ -80,10 +88,14 @@ export async function Footer() {
 			<div className="container mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-[#F5E6D3]/50 border-t border-[#D4AF37]/30 pt-8 md:flex-row relative z-10">
 				<div>
 					<p className="text-[#F5E6D3]/60">© {new Date().getFullYear()} Veromodels. All rights reserved.</p>
-					<p className="text-[#F5E6D3]/40 text-xs mt-1">Premium diecast collectibles for discerning collectors worldwide.</p>
+					<p className="text-[#F5E6D3]/40 text-xs mt-1">
+						Premium diecast collectibles for discerning collectors worldwide.
+					</p>
 				</div>
 				<div className="flex items-center gap-4">
-					<p className="text-[#D4AF37]/80 hover:text-[#E6C757] transition-colors">Contact: info@veromodels.com</p>
+					<p className="text-[#D4AF37]/80 hover:text-[#E6C757] transition-colors">
+						Contact: info@veromodels.com
+					</p>
 				</div>
 			</div>
 		</footer>

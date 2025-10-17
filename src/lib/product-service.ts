@@ -23,7 +23,7 @@ export interface ProductBrowseResult {
 	endCursor?: string;
 }
 
-export async function getProducts(limit: number = 24): Promise<ProductBrowseResult> {
+export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 	try {
 		const products = await stripe.products.list({
 			limit,
@@ -135,11 +135,12 @@ export async function searchProducts(query: string): Promise<Product[]> {
 		const allProducts = await getProducts(100);
 		const searchTerm = query.toLowerCase();
 
-		return allProducts.data.filter(product =>
-			product.name.toLowerCase().includes(searchTerm) ||
-			product.description?.toLowerCase().includes(searchTerm) ||
-			product.metadata.brand?.toLowerCase().includes(searchTerm) ||
-			product.metadata.category?.toLowerCase().includes(searchTerm)
+		return allProducts.data.filter(
+			(product) =>
+				product.name.toLowerCase().includes(searchTerm) ||
+				product.description?.toLowerCase().includes(searchTerm) ||
+				product.metadata.brand?.toLowerCase().includes(searchTerm) ||
+				product.metadata.category?.toLowerCase().includes(searchTerm),
 		);
 	} catch (error) {
 		console.error("Error searching products:", error);
@@ -147,7 +148,7 @@ export async function searchProducts(query: string): Promise<Product[]> {
 	}
 }
 
-export async function getProductsByCategory(categorySlug: string, limit: number = 3): Promise<Product[]> {
+export async function getProductsByCategory(categorySlug: string, limit = 3): Promise<Product[]> {
 	try {
 		const products = await stripe.products.list({
 			limit: 100,

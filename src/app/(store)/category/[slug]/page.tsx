@@ -3,17 +3,16 @@ import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
-import { ProductList } from "@/ui/products/product-list";
 import { CategoryFilters } from "@/ui/category/category-filters";
+import { ProductList } from "@/ui/products/product-list";
 
 export const generateMetadata = async (props: { params: Promise<{ slug: string }> }): Promise<Metadata> => {
 	const params = await props.params;
-	const category = StoreConfig.categories.find(cat => cat.slug === params.slug);
+	const category = StoreConfig.categories.find((cat) => cat.slug === params.slug);
 
 	if (!category) {
 		return notFound();
 	}
-
 
 	return {
 		title: `${category.name} - Veromodels`,
@@ -24,7 +23,7 @@ export const generateMetadata = async (props: { params: Promise<{ slug: string }
 
 export default async function CategoryPage(props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
-	const category = StoreConfig.categories.find(cat => cat.slug === params.slug);
+	const category = StoreConfig.categories.find((cat) => cat.slug === params.slug);
 
 	if (!category) {
 		return notFound();
@@ -47,10 +46,11 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			break;
 		case "limited-edition":
 			// Show products with "limited" in name or premium models
-			filteredProducts = allProducts.filter(p =>
-				p.name.toLowerCase().includes("limited") ||
-				p.name.toLowerCase().includes("edition") ||
-				p.price > 150
+			filteredProducts = allProducts.filter(
+				(p) =>
+					p.name.toLowerCase().includes("limited") ||
+					p.name.toLowerCase().includes("edition") ||
+					p.price > 150,
 			);
 			// Fallback if no matches
 			if (filteredProducts.length === 0) {
@@ -59,10 +59,11 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			break;
 		case "rare":
 			// Show premium/older models
-			filteredProducts = allProducts.filter(p =>
-				p.name.toLowerCase().includes("rare") ||
-				p.name.toLowerCase().includes("vintage") ||
-				p.name.toLowerCase().includes("classic")
+			filteredProducts = allProducts.filter(
+				(p) =>
+					p.name.toLowerCase().includes("rare") ||
+					p.name.toLowerCase().includes("vintage") ||
+					p.name.toLowerCase().includes("classic"),
 			);
 			// Fallback if no matches
 			if (filteredProducts.length === 0) {
@@ -71,9 +72,8 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			break;
 		case "pre-order":
 			// Show some premium models as "pre-order"
-			filteredProducts = allProducts.filter(p =>
-				p.name.toLowerCase().includes("2025") ||
-				p.name.toLowerCase().includes("pre-order")
+			filteredProducts = allProducts.filter(
+				(p) => p.name.toLowerCase().includes("2025") || p.name.toLowerCase().includes("pre-order"),
 			);
 			// Fallback if no matches
 			if (filteredProducts.length === 0) {
@@ -98,7 +98,9 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 				<div className="container mx-auto px-4 py-16 md:py-24">
 					<div className="text-center space-y-6">
 						<div className="flex items-center justify-center gap-4">
-							<span className={`${category.badgeColor} text-white text-xs px-3 py-1 rounded-sm uppercase tracking-wider font-bold`}>
+							<span
+								className={`${category.badgeColor} text-white text-xs px-3 py-1 rounded-sm uppercase tracking-wider font-bold`}
+							>
 								{category.badge}
 							</span>
 						</div>
@@ -106,9 +108,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 							{category.name}
 						</h1>
 						<div className="w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
-						<p className="text-lg text-[#6C757D] max-w-3xl mx-auto leading-relaxed">
-							{category.description}
-						</p>
+						<p className="text-lg text-[#6C757D] max-w-3xl mx-auto leading-relaxed">{category.description}</p>
 						<div className="text-sm text-[#D4AF37] font-medium uppercase tracking-[0.2em]">
 							{products.length} {products.length === 1 ? "Premium Model" : "Premium Models"} Available
 						</div>
@@ -139,11 +139,14 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 							Models Coming Soon
 						</h3>
 						<p className="text-[#6C757D] max-w-2xl mx-auto">
-							We're currently curating the finest selection for {category.name.toLowerCase()}.
-							Check back soon or explore our other collections.
+							We're currently curating the finest selection for {category.name.toLowerCase()}. Check back soon
+							or explore our other collections.
 						</p>
 						<div className="mt-8">
-							<a href="/products" className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors">
+							<a
+								href="/products"
+								className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors"
+							>
 								View All Models →
 							</a>
 						</div>

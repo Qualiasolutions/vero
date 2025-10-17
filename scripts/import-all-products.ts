@@ -1,67 +1,77 @@
 #!/usr/bin/env tsx
+
 /**
  * Veromodels Complete Product Migration Script
  * Migrates ALL products from CSV to Stripe with smart category distribution
  */
 
-import Stripe from 'stripe';
-import * as fs from 'fs';
-import * as path from 'path';
-import Papa from 'papaparse';
-import { config } from 'dotenv';
+import { config } from "dotenv";
+import * as fs from "fs";
+import Papa from "papaparse";
+import * as path from "path";
+import Stripe from "stripe";
 
 // Load environment variables
-config({ path: path.join(process.cwd(), '.env.local') });
+config({ path: path.join(process.cwd(), ".env.local") });
 
 // Initialize Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
-	console.error('❌ Error: STRIPE_SECRET_KEY environment variable is not set!');
+	console.error("❌ Error: STRIPE_SECRET_KEY environment variable is not set!");
 	process.exit(1);
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	apiVersion: '2025-08-27.basil',
+	apiVersion: "2025-08-27.basil",
 });
 
 // Categories for distribution (excluding pre-order which is automatic)
-const CATEGORIES = [
-	'new-arrivals',
-	'on-sale',
-	'limited-edition',
-	'rare',
-	'coming-soon'
-];
+const CATEGORIES = ["new-arrivals", "on-sale", "limited-edition", "rare", "coming-soon"];
 
 interface CSVRow {
-	'Product ID [Non Editable]': string;
-	'Product Page': string;
-	'Product URL': string;
-	'Title': string;
-	'Description': string;
-	'SKU': string;
-	'Price': string;
-	'Sale Price': string;
-	'On Sale': string;
-	'Tags': string;
-	'Hosted Image URLs': string;
+	"Product ID [Non Editable]": string;
+	"Product Page": string;
+	"Product URL": string;
+	Title: string;
+	Description: string;
+	SKU: string;
+	Price: string;
+	"Sale Price": string;
+	"On Sale": string;
+	Tags: string;
+	"Hosted Image URLs": string;
 }
 
 // Clean HTML from description
 function cleanDescription(desc: string): string {
 	return desc
-		.replace(/<pre><code>/g, '')
-		.replace(/<\/code><\/pre>/g, '')
-		.replace(/<br>/g, '\n')
-		.replace(/&nbsp;/g, ' ')
+		.replace(/<pre><code>/g, "")
+		.replace(/<\/code><\/pre>/g, "")
+		.replace(/<br>/g, "\n")
+		.replace(/&nbsp;/g, " ")
 		.trim();
 }
 
 // Extract brand from title
 function extractBrand(title: string): string {
 	const brands = [
-		'AutoArt', 'ALPINA', 'SOLIDO', 'GT Spirit', 'OttO mobile', 'Norev',
-		'IXO', 'PARAGON', 'KK Scale', 'MCG', 'Almost Real', 'Ottomobile',
-		'KYOSHO', 'Premium ClassiXXs', 'Minichamps', 'BRABUS', 'RWB', 'LB-WORKS'
+		"AutoArt",
+		"ALPINA",
+		"SOLIDO",
+		"GT Spirit",
+		"OttO mobile",
+		"Norev",
+		"IXO",
+		"PARAGON",
+		"KK Scale",
+		"MCG",
+		"Almost Real",
+		"Ottomobile",
+		"KYOSHO",
+		"Premium ClassiXXs",
+		"Minichamps",
+		"BRABUS",
+		"RWB",
+		"LB-WORKS",
 	];
 
 	for (const brand of brands) {
@@ -70,14 +80,14 @@ function extractBrand(title: string): string {
 		}
 	}
 
-	return title.split(' ')[0] || 'Unknown';
+	return title.split(" ")[0] || "Unknown";
 }
 
 // Determine category based on product page and tags
 function determineCategory(productPage: string, tags: string, index: number): string {
 	// Pre-order products go to pre-order category
-	if (productPage.includes('pre-order') || tags.toLowerCase().includes('preorder')) {
-		return 'pre-order';
+	if (productPage.includes("pre-order") || tags.toLowerCase().includes("preorder")) {
+		return "pre-order";
 	}
 
 	// Distribute other products randomly across the 5 remaining categories
@@ -85,16 +95,16 @@ function determineCategory(productPage: string, tags: string, index: number): st
 }
 
 async function importProducts() {
-	console.log('🚀 Starting Complete Veromodels Product Import...\n');
+	console.log("🚀 Starting Complete Veromodels Product Import...\n");
 
-	const csvPath = path.join(process.cwd(), 'products_latest.csv');
+	const csvPath = path.join(process.cwd(), "products_latest.csv");
 
 	if (!fs.existsSync(csvPath)) {
-		console.error('❌ Error: products_latest.csv not found!');
+		console.error("❌ Error: products_latest.csv not found!");
 		process.exit(1);
 	}
 
-	const csvContent = fs.readFileSync(csvPath, 'utf-8');
+	const csvContent = fs.readFileSync(csvPath, "utf-8");
 
 	// Parse CSV with Papa Parse (handles quoted multiline fields)
 	const parsed = Papa.parse<CSVRow>(csvContent, {
@@ -117,12 +127,12 @@ async function importProducts() {
 			Description: rawDescription,
 			SKU: sku,
 			Price: price,
-			'Sale Price': salePrice,
-			'On Sale': onSale,
+			"Sale Price": salePrice,
+			"On Sale": onSale,
 			Tags: tags,
-			'Hosted Image URLs': imageUrl,
-			'Product Page': productPage,
-			'Product URL': productUrl,
+			"Hosted Image URLs": imageUrl,
+			"Product Page": productPage,
+			"Product URL": productUrl,
 		} = product;
 
 		if (!title || !sku || !price) {
@@ -136,7 +146,7 @@ async function importProducts() {
 			const description = cleanDescription(rawDescription);
 			const brand = extractBrand(title);
 			const category = determineCategory(productPage, tags, regularCount);
-			const isPreorder = category === 'pre-order';
+			const isPreorder = category === "pre-order";
 
 			if (isPreorder) {
 				preorderCount++;
@@ -144,8 +154,7 @@ async function importProducts() {
 				regularCount++;
 			}
 
-			const actualPrice = onSale === 'Yes' && salePrice ?
-				parseFloat(salePrice) : parseFloat(price);
+			const actualPrice = onSale === "Yes" && salePrice ? parseFloat(salePrice) : parseFloat(price);
 
 			// Create Stripe Product
 			const stripeProduct = await stripe.products.create({
@@ -158,8 +167,8 @@ async function importProducts() {
 					brand: brand,
 					category: category,
 					productPage: productPage,
-					preorder: isPreorder ? 'true' : 'false',
-					onSale: onSale === 'Yes' ? 'true' : 'false',
+					preorder: isPreorder ? "true" : "false",
+					onSale: onSale === "Yes" ? "true" : "false",
 					originalPrice: price,
 				},
 				active: true,
@@ -169,11 +178,11 @@ async function importProducts() {
 			// Create Stripe Price in EUR
 			await stripe.prices.create({
 				product: stripeProduct.id,
-				currency: 'eur',
+				currency: "eur",
 				unit_amount: Math.round(actualPrice * 100),
 				metadata: {
 					originalPrice: price,
-					salePrice: salePrice || '',
+					salePrice: salePrice || "",
 				},
 			});
 
@@ -181,8 +190,7 @@ async function importProducts() {
 			successCount++;
 
 			// Rate limiting
-			await new Promise(resolve => setTimeout(resolve, 100));
-
+			await new Promise((resolve) => setTimeout(resolve, 100));
 		} catch (error: any) {
 			console.error(`❌ Error creating product ${sku}:`, error.message);
 			errorCount++;
@@ -191,31 +199,31 @@ async function importProducts() {
 	}
 
 	// Summary
-	console.log('\n' + '='.repeat(70));
-	console.log('📈 IMPORT SUMMARY');
-	console.log('='.repeat(70));
+	console.log("\n" + "=".repeat(70));
+	console.log("📈 IMPORT SUMMARY");
+	console.log("=".repeat(70));
 	console.log(`✅ Successfully imported: ${successCount} products`);
 	console.log(`   📦 Pre-order products: ${preorderCount}`);
 	console.log(`   🏎️  Regular products: ${regularCount} (distributed across 5 categories)`);
 	console.log(`❌ Errors: ${errorCount} products`);
-	console.log('='.repeat(70));
+	console.log("=".repeat(70));
 
 	if (errors.length > 0) {
-		console.log('\n⚠️  ERRORS:');
+		console.log("\n⚠️  ERRORS:");
 		errors.forEach(({ sku, error }) => {
 			console.log(`  - ${sku}: ${error}`);
 		});
 	}
 
-	console.log('\n🎉 Import complete!');
-	console.log('\n📝 Next steps:');
-	console.log('1. Check Stripe Dashboard: https://dashboard.stripe.com/products');
-	console.log('2. Redeploy site: vercel --prod');
-	console.log('3. View live site with all products!');
+	console.log("\n🎉 Import complete!");
+	console.log("\n📝 Next steps:");
+	console.log("1. Check Stripe Dashboard: https://dashboard.stripe.com/products");
+	console.log("2. Redeploy site: vercel --prod");
+	console.log("3. View live site with all products!");
 }
 
 // Run import
 importProducts().catch((error) => {
-	console.error('💥 Fatal error during import:', error);
+	console.error("💥 Fatal error during import:", error);
 	process.exit(1);
 });

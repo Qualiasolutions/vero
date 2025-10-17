@@ -164,9 +164,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 							<button className="vero-button w-full rounded-lg px-6 py-4 uppercase tracking-wider">
 								Proceed to Checkout
 							</button>
-							<p className="text-xs text-center text-[#6C757D]">
-								Secure checkout powered by Stripe
-							</p>
+							<p className="text-xs text-center text-[#6C757D]">Secure checkout powered by Stripe</p>
 						</div>
 					)}
 				</div>

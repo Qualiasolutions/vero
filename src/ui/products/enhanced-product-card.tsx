@@ -26,9 +26,7 @@ interface EnhancedProductCardProps {
 export function EnhancedProductCard({ product, currency = "€" }: EnhancedProductCardProps) {
 	const isOnSale = product.metadata?.onSale === "true";
 	const isPreorder = product.metadata?.preorder === "true";
-	const originalPrice = product.metadata?.originalPrice
-		? parseFloat(product.metadata.originalPrice)
-		: null;
+	const originalPrice = product.metadata?.originalPrice ? parseFloat(product.metadata.originalPrice) : null;
 
 	// Determine badge based on product metadata
 	const getBadge = () => {
@@ -62,14 +60,16 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 					{/* Badge */}
 					{badge && (
 						<div className="absolute top-3 left-3 z-10">
-							<div className={cn(
-								"px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm",
-								badge.text === "SPECIAL PRICE" && "bg-[#D4AF37] text-black",
-								badge.text === "PRE-ORDER" && "bg-yellow-600 text-black",
-								badge.text === "RARE" && "bg-amber-500 text-black",
-								badge.text === "LIMITED EDITION" && "bg-purple-600 text-white",
-								badge.text === "NEW ARRIVAL" && "bg-green-600 text-white"
-							)}>
+							<div
+								className={cn(
+									"px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm",
+									badge.text === "SPECIAL PRICE" && "bg-[#D4AF37] text-black",
+									badge.text === "PRE-ORDER" && "bg-yellow-600 text-black",
+									badge.text === "RARE" && "bg-amber-500 text-black",
+									badge.text === "LIMITED EDITION" && "bg-purple-600 text-white",
+									badge.text === "NEW ARRIVAL" && "bg-green-600 text-white",
+								)}
+							>
 								{badge.text}
 							</div>
 						</div>
@@ -114,10 +114,12 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 						{isOnSale && originalPrice && originalPrice > product.price ? (
 							<>
 								<span className="text-xl font-semibold vero-text-gradient">
-									{currency}{product.price.toFixed(2)}
+									{currency}
+									{product.price.toFixed(2)}
 								</span>
 								<span className="text-sm text-[#6C757D] line-through">
-									{currency}{originalPrice.toFixed(2)}
+									{currency}
+									{originalPrice.toFixed(2)}
 								</span>
 								<span className="text-xs text-[#D4AF37] font-semibold bg-[#D4AF37]/10 px-2 py-0.5 rounded">
 									-{Math.round(((originalPrice - product.price) / originalPrice) * 100)}%
@@ -125,7 +127,8 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 							</>
 						) : (
 							<span className="text-xl font-semibold vero-text-gradient">
-								{currency}{product.price.toFixed(2)}
+								{currency}
+								{product.price.toFixed(2)}
 							</span>
 						)}
 					</div>
@@ -134,8 +137,18 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 					<div className="pt-3 border-t border-[#D4AF37]/20">
 						<span className="text-xs text-[#D4AF37] group-hover:text-[#B8941F] font-medium uppercase tracking-wider transition-colors duration-300 flex items-center gap-2">
 							View Details
-							<svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+							<svg
+								className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M17 8l4 4m0 0l-4 4m4-4H3"
+								/>
 							</svg>
 						</span>
 					</div>

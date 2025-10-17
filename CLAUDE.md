@@ -54,9 +54,10 @@ bun run docker:run          # Run Docker container
 src/
 ├── app/                     # Next.js App Router pages
 │   ├── (store)/            # Store route group with layout
-│   ├── api/                # API routes (auth, chat, webhooks)
-│   └── login/              # Authentication pages
+│   ├── login/              # Authentication pages
+│   └── signup/             # User registration
 ├── actions/                # Server actions
+├── components/             # Shared React components
 ├── context/                # React Context providers (cart, modals)
 ├── i18n/                   # Internationalization (client/server)
 ├── lib/                    # Utilities, types, auth, search

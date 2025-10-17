@@ -163,7 +163,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			const updatedCart = await addToCartAction(variantId, quantity);
 			setActualCart(updatedCart);
 			toast.success("Added to cart", {
-				description: product?.name ? `${product.name} has been added to your cart` : "Item added successfully",
+				description: product?.name
+					? `${product.name} has been added to your cart`
+					: "Item added successfully",
 			});
 		} catch (error) {
 			// Rollback will happen automatically via useEffect

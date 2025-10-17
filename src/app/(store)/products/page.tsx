@@ -23,7 +23,6 @@ export default async function AllProductsPage() {
 		products = [];
 	}
 
-
 	return (
 		<main className="pb-16">
 			<div className="mb-8 sm:mb-12 text-center space-y-4">
