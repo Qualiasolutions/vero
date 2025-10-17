@@ -1,6 +1,4 @@
 // import { ProductModel3D } from "@/app/(store)/product/[slug]/product-model3d";
-
-import type { YnsProduct } from "commerce-kit";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
@@ -19,10 +17,13 @@ import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { getProductBySlug } from "@/lib/product-service";
 import { deslugify, formatMoney } from "@/lib/utils";
-import { JsonLd, mappedProductToJsonLd } from "@/ui/json-ld";
+import { JsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
 import { MainProductImage } from "@/ui/products/main-product-image";
 import { YnsLink } from "@/ui/yns-link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
@@ -101,33 +102,114 @@ export default async function SingleProductPage(props: {
 
 						<p className="text-2xl sm:text-3xl font-semibold vero-text-gradient">
 							{formatMoney({
-								amount: product.price,
+								amount: product.price * 100,
 								currency: product.currency,
 								locale,
 							})}
 						</p>
 
-						{(product.stock || 0) <= 0 && (
-							<div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded text-red-600 text-sm uppercase tracking-wider">
-								<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-									<path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-								</svg>
-								Out of Stock
-							</div>
+						{/* Product Status Badge */}
+						{product.metadata?.preorder === "true" && (
+							<Alert className="bg-yellow-500/10 border-yellow-500/30">
+								<AlertDescription className="text-yellow-600 font-medium">
+									⏰ Pre-Order Item - Expected {product.metadata?.releaseDate || "Soon"}
+								</AlertDescription>
+							</Alert>
 						)}
 
-						<section className="pt-6 border-t border-[#D4AF37]/20">
-							<h2 className="text-sm uppercase tracking-[0.2em] text-[#D4AF37] mb-4">Description</h2>
-							<div className="prose prose-sm max-w-none text-[#6C757D]">
-								<Markdown source={product.summary || ""} />
-							</div>
-						</section>
+						{/* Product Details Tabs */}
+						<Tabs defaultValue="description" className="w-full">
+							<TabsList className="grid w-full grid-cols-3 bg-[#F8F9FA]">
+								<TabsTrigger
+									value="description"
+									className="data-[state=active]:bg-white data-[state=active]:text-[#D4AF37] data-[state=active]:border-b-2 data-[state=active]:border-[#D4AF37]"
+								>
+									Description
+								</TabsTrigger>
+								<TabsTrigger
+									value="specifications"
+									className="data-[state=active]:bg-white data-[state=active]:text-[#D4AF37] data-[state=active]:border-b-2 data-[state=active]:border-[#D4AF37]"
+								>
+									Specifications
+								</TabsTrigger>
+								<TabsTrigger
+									value="details"
+									className="data-[state=active]:bg-white data-[state=active]:text-[#D4AF37] data-[state=active]:border-b-2 data-[state=active]:border-[#D4AF37]"
+								>
+									Details
+								</TabsTrigger>
+							</TabsList>
+
+							<TabsContent value="description" className="space-y-4 pt-4">
+								<div className="prose prose-sm max-w-none text-[#6C757D]">
+									<Markdown source={product.description || product.name} />
+								</div>
+							</TabsContent>
+
+							<TabsContent value="specifications" className="space-y-3 pt-4">
+								<div className="grid gap-3 text-sm">
+									<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
+										<span className="text-[#6C757D] font-medium">Scale</span>
+										<span className="text-[#212529]">1:18</span>
+									</div>
+									<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
+										<span className="text-[#6C757D] font-medium">Manufacturer</span>
+										<Badge variant="outline" className="border-[#D4AF37]/30 text-[#D4AF37]">
+											{product.metadata?.brand || "Premium Brand"}
+										</Badge>
+									</div>
+									<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
+										<span className="text-[#6C757D] font-medium">Material</span>
+										<span className="text-[#212529]">Die-Cast Metal</span>
+									</div>
+									<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
+										<span className="text-[#6C757D] font-medium">Condition</span>
+										<Badge className="bg-green-500/10 text-green-700 hover:bg-green-500/20">
+											Brand New
+										</Badge>
+									</div>
+									{product.metadata?.category && (
+										<div className="flex justify-between py-2 border-b border-[#D4AF37]/10">
+											<span className="text-[#6C757D] font-medium">Category</span>
+											<span className="text-[#212529] uppercase tracking-wide text-xs">
+												{product.metadata.category}
+											</span>
+										</div>
+									)}
+								</div>
+							</TabsContent>
+
+							<TabsContent value="details" className="space-y-3 pt-4">
+								<div className="bg-[#FDFBF7] rounded-lg p-4 space-y-3 text-sm">
+									<div className="flex items-start gap-2">
+										<span className="text-[#D4AF37] mt-0.5">✓</span>
+										<p className="text-[#6C757D]">Officially licensed and authentic collectible</p>
+									</div>
+									<div className="flex items-start gap-2">
+										<span className="text-[#D4AF37] mt-0.5">✓</span>
+										<p className="text-[#6C757D]">Highly detailed interior and exterior</p>
+									</div>
+									<div className="flex items-start gap-2">
+										<span className="text-[#D4AF37] mt-0.5">✓</span>
+										<p className="text-[#6C757D]">Premium die-cast construction</p>
+									</div>
+									<div className="flex items-start gap-2">
+										<span className="text-[#D4AF37] mt-0.5">✓</span>
+										<p className="text-[#6C757D]">Comes with display case (where applicable)</p>
+									</div>
+									<div className="flex items-start gap-2">
+										<span className="text-[#D4AF37] mt-0.5">✓</span>
+										<p className="text-[#6C757D]">Perfect for collectors and enthusiasts</p>
+									</div>
+								</div>
+							</TabsContent>
+						</Tabs>
 
 						<AddToCart
-							variantId={ynsProduct.variants[0]?.id || product.id}
-							className={(product.stock || 0) <= 0 ? "vero-button opacity-50 cursor-not-allowed w-full py-4" : "vero-button w-full py-4"}
+							variantId={product.id}
+							className="vero-button w-full py-4"
 						>
-							{(product.stock || 0) <= 0 ? "Out of Stock" : "Add to Cart"}
+							Add to Cart
 						</AddToCart>
 					</div>
 				</div>
@@ -183,7 +265,21 @@ export default async function SingleProductPage(props: {
 				<ProductImageModal images={images} />
 			</Suspense>
 
-			<JsonLd jsonLd={mappedProductToJsonLd(product)} />
+			<JsonLd
+				jsonLd={{
+					"@context": "https://schema.org",
+					"@type": "Product",
+					name: product.name,
+					description: product.description || product.name,
+					image: images,
+					offers: {
+						"@type": "Offer",
+						price: product.price,
+						priceCurrency: product.currency.toUpperCase(),
+						availability: "https://schema.org/InStock",
+					},
+				}}
+			/>
 		</article>
 	);
 }

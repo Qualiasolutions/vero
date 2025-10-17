@@ -4,6 +4,7 @@ import { publicUrl } from "@/env.mjs";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { ProductList } from "@/ui/products/product-list";
+import { CategoryFilters } from "@/ui/category/category-filters";
 
 export const generateMetadata = async (props: { params: Promise<{ slug: string }> }): Promise<Metadata> => {
 	const params = await props.params;
@@ -115,10 +116,20 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 				</div>
 			</div>
 
-			{/* Products Section */}
+			{/* Products Section with Filters */}
 			{products.length > 0 ? (
 				<div className="container mx-auto px-4 py-16">
-					<ProductList products={products} />
+					<div className="flex flex-col lg:flex-row gap-8">
+						{/* Sidebar Filters */}
+						<div className="lg:sticky lg:top-24 lg:self-start">
+							<CategoryFilters />
+						</div>
+
+						{/* Products Grid */}
+						<div className="flex-1">
+							<ProductList products={products} />
+						</div>
+					</div>
 				</div>
 			) : (
 				<div className="container mx-auto px-4 py-20">

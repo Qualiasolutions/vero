@@ -2,6 +2,7 @@
 
 import type { Cart, ProductInfo } from "commerce-kit";
 import { createContext, type ReactNode, useContext, useEffect, useOptimistic, useState } from "react";
+import { toast } from "sonner";
 import {
 	addToCartAction,
 	getCartAction,
@@ -161,9 +162,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			// Perform server action
 			const updatedCart = await addToCartAction(variantId, quantity);
 			setActualCart(updatedCart);
+			toast.success("Added to cart", {
+				description: product?.name ? `${product.name} has been added to your cart` : "Item added successfully",
+			});
 		} catch (error) {
 			// Rollback will happen automatically via useEffect
 			console.error("Failed to add to cart:", error);
+			toast.error("Failed to add to cart", {
+				description: "Please try again later",
+			});
 			throw error;
 		}
 	};
@@ -191,9 +198,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			// Perform server action
 			const updatedCart = await removeFromCartAction(variantId);
 			setActualCart(updatedCart);
+			toast.success("Removed from cart", {
+				description: "Item removed successfully",
+			});
 		} catch (error) {
 			// Rollback will happen automatically via useEffect
 			console.error("Failed to remove from cart:", error);
+			toast.error("Failed to remove item", {
+				description: "Please try again later",
+			});
 			throw error;
 		}
 	};

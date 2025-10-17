@@ -9,6 +9,8 @@ import { Badge } from "@/ui/shadcn/badge";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
 import { BackgroundBeams } from "@/ui/shadcn/background-beams";
 import { ShootingStars } from "@/ui/shadcn/shooting-stars";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/ui/shadcn/tooltip";
+import { Skeleton } from "@/ui/shadcn/skeleton";
 
 export const metadata: Metadata = {
 	alternates: { canonical: publicUrl },
@@ -58,33 +60,41 @@ export default async function Home() {
 					</div>
 
 					{/* Category Quick Links */}
-					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-7xl mx-auto">
-						{StoreConfig.categories.map((category) => (
-							<Link
-								key={category.slug}
-								href={`/category/${category.slug}`}
-								className="group vero-card relative overflow-hidden aspect-square hover:scale-105 transition-all duration-300 rounded-lg"
-							>
-								<div className="relative w-full h-full">
-									<Image
-										src={category.image}
-										alt={category.name}
-										fill
-										className="object-cover transition-transform duration-500 group-hover:scale-110"
-										sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16.666vw"
-									/>
-								</div>
-								<div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-3">
-									<Badge className={`${category.badgeColor} text-white text-xs mb-2 w-fit`}>
-										{category.badge}
-									</Badge>
-									<h3 className="text-white font-light text-xs md:text-sm uppercase tracking-wide">
-										{category.name}
-									</h3>
-								</div>
-							</Link>
-						))}
-					</div>
+					<TooltipProvider delayDuration={200}>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-7xl mx-auto">
+							{StoreConfig.categories.map((category) => (
+								<Tooltip key={category.slug}>
+									<TooltipTrigger asChild>
+										<Link
+											href={`/category/${category.slug}`}
+											className="group vero-card relative overflow-hidden aspect-square hover:scale-105 transition-all duration-300 rounded-lg"
+										>
+											<div className="relative w-full h-full">
+												<Image
+													src={category.image}
+													alt={category.name}
+													fill
+													className="object-cover transition-transform duration-500 group-hover:scale-110"
+													sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16.666vw"
+												/>
+											</div>
+											<div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-3">
+												<Badge className={`${category.badgeColor} text-white text-xs mb-2 w-fit`}>
+													{category.badge}
+												</Badge>
+												<h3 className="text-white font-light text-xs md:text-sm uppercase tracking-wide">
+													{category.name}
+												</h3>
+											</div>
+										</Link>
+									</TooltipTrigger>
+									<TooltipContent side="bottom" className="bg-[#0A0A0A] border-[#D4AF37]/30 text-[#F5E6D3]">
+										<p className="text-sm">{category.description}</p>
+									</TooltipContent>
+								</Tooltip>
+							))}
+						</div>
+					</TooltipProvider>
 				</div>
 			</section>
 

@@ -57,7 +57,7 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 
 	return (
 		<Link href={`/product/${product.slug}`} className="group block">
-			<div className="vero-card rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02] animate-lift">
+			<div className="vero-card rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
 				<div className="relative aspect-square overflow-hidden bg-gradient-to-br from-[#0A0A0A] to-[#1A1A1A]">
 					{/* Badge */}
 					{badge && (
