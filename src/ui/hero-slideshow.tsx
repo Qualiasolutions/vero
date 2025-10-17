@@ -78,7 +78,7 @@ export function HeroSlideshow() {
 	};
 
 	return (
-		<section className="relative w-full h-[500px] md:h-[600px] overflow-hidden bg-[#0A0A0A]">
+		<section className="relative w-full h-[280px] md:h-[350px] overflow-hidden bg-[#0A0A0A]">
 			{/* Slides */}
 			{slides.map((slide, index) => (
 				<div
@@ -102,17 +102,17 @@ export function HeroSlideshow() {
 					<div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
 
 					{/* Content */}
-					<div className="relative z-10 h-full flex items-center px-4 sm:px-6 lg:px-12 xl:px-20">
-						<div className="max-w-2xl">
-							<h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white uppercase tracking-widest mb-4 animate-fade-in">
+					<div className="relative z-10 h-full flex items-center px-4 sm:px-6 lg:px-8 xl:px-12">
+						<div className="max-w-xl">
+							<h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white uppercase tracking-widest mb-2 animate-fade-in">
 								{slide.title}
 							</h2>
-							<p className="text-lg md:text-xl text-[#F5E6D3] font-light mb-8 animate-fade-in">
+							<p className="text-sm md:text-base text-[#F5E6D3] font-light mb-4 animate-fade-in">
 								{slide.subtitle}
 							</p>
 							<Link
 								href={slide.cta.href}
-								className="vero-button has-ripple px-8 py-4 rounded-lg inline-block text-center shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40 animate-fade-in"
+								className="vero-button has-ripple px-5 py-2.5 text-sm rounded-lg inline-block text-center shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40 animate-fade-in"
 							>
 								{slide.cta.text}
 							</Link>
@@ -122,37 +122,37 @@ export function HeroSlideshow() {
 			))}
 
 			{/* Left Side Navigation Buttons */}
-			<div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-4">
+			<div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2">
 				{/* Previous Button */}
 				<button
 					onClick={prevSlide}
-					className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
+					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
 					aria-label="Previous slide"
 				>
-					<ChevronLeft className="h-6 w-6" />
+					<ChevronLeft className="h-4 w-4" />
 				</button>
 
 				{/* Play/Pause Button */}
 				<button
 					onClick={() => setIsPlaying(!isPlaying)}
-					className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
+					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
 					aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
 				>
-					{isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+					{isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
 				</button>
 
 				{/* Next Button */}
 				<button
 					onClick={nextSlide}
-					className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
+					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
 					aria-label="Next slide"
 				>
-					<ChevronRight className="h-6 w-6" />
+					<ChevronRight className="h-4 w-4" />
 				</button>
 			</div>
 
 			{/* Dot Indicators - Bottom Center */}
-			<div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+			<div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
 				{slides.map((slide, index) => (
 					<button
 						key={slide.id}
