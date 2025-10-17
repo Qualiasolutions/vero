@@ -6,7 +6,6 @@ import { getProductsByCategory } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { CompactProductCard } from "@/ui/products/compact-product-card";
 import { Badge } from "@/ui/shadcn/badge";
-import { GradientText } from "@/ui/shadcn/gradient-text";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
 import { BackgroundBeams } from "@/ui/shadcn/background-beams";
 import { ShootingStars } from "@/ui/shadcn/shooting-stars";
