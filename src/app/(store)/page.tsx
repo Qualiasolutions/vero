@@ -58,25 +58,27 @@ export default async function Home() {
 					</div>
 
 					{/* Category Quick Links */}
-					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-7xl mx-auto">
 						{StoreConfig.categories.map((category) => (
 							<Link
 								key={category.slug}
 								href={`/category/${category.slug}`}
 								className="group vero-card relative overflow-hidden aspect-square hover:scale-105 transition-all duration-300 rounded-lg"
 							>
-								<Image
-									src={category.image}
-									alt={category.name}
-									fill
-									className="object-cover transition-transform duration-500 group-hover:scale-110"
-									sizes="(max-width: 768px) 50vw, 16.666vw"
-								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-4">
+								<div className="relative w-full h-full">
+									<Image
+										src={category.image}
+										alt={category.name}
+										fill
+										className="object-cover transition-transform duration-500 group-hover:scale-110"
+										sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16.666vw"
+									/>
+								</div>
+								<div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-3">
 									<Badge className={`${category.badgeColor} text-white text-xs mb-2 w-fit`}>
 										{category.badge}
 									</Badge>
-									<h3 className="text-white font-light text-sm md:text-base uppercase tracking-wide">
+									<h3 className="text-white font-light text-xs md:text-sm uppercase tracking-wide">
 										{category.name}
 									</h3>
 								</div>
