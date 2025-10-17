@@ -42,7 +42,10 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
 			try {
 				const stored = localStorage.getItem("veromodels-favorites");
 				if (stored) {
-					setFavorites(JSON.parse(stored));
+					const parsed = JSON.parse(stored);
+					if (Array.isArray(parsed)) {
+						setFavorites(parsed);
+					}
 				}
 			} catch (error) {
 				console.error("Failed to load favorites:", error);
