@@ -1,6 +1,6 @@
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { commerce } from "@/lib/commerce";
+import { getProducts } from "@/lib/product-service";
 import { ProductList } from "@/ui/products/product-list";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -15,15 +15,15 @@ export default async function AllProductsPage() {
 	let products: any[] = [];
 
 	try {
-		const result = await commerce.product.browse({ first: 100 });
+		const result = await getProducts(100);
 		products = result.data || [];
-		console.log(`✅ Loaded ${products.length} products from commerce-kit on /products`);
+		console.log(`✅ Loaded ${products.length} products from Stripe on /products`);
 	} catch (error) {
 		console.error("Error loading products:", error);
 		products = [];
 	}
 
-	
+
 	return (
 		<main className="pb-16">
 			<div className="mb-8 sm:mb-12 text-center space-y-4">

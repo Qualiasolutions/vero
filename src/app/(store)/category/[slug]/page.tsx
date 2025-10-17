@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { commerce } from "@/lib/commerce";
+import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { ProductList } from "@/ui/products/product-list";
 
@@ -30,7 +30,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 	}
 
 	// Get all products and filter based on category logic
-	const allProductsResult = await commerce.product.browse({ first: 100 });
+	const allProductsResult = await getProducts(100);
 	const allProducts = allProductsResult.data || [];
 	let filteredProducts = allProducts;
 
