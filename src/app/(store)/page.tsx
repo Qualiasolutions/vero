@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next/types";
 import Link from "next/link";
 import { publicUrl } from "@/env.mjs";
-import { commerce } from "@/lib/commerce";
+import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { EnhancedProductCard } from "@/ui/products/enhanced-product-card";
 import { Badge } from "@/ui/shadcn/badge";
@@ -19,9 +19,10 @@ export default async function Home() {
 	let products: any[] = [];
 
 	try {
-		// Load products from Stripe
-		const result = await commerce.product.browse({ first: 24 });
-		products = result?.data || [];
+		// Load products from our custom service
+		const result = await getProducts(24);
+		products = result.data || [];
+		console.log(`✅ Loaded ${products.length} products from Stripe`);
 	} catch (error) {
 		console.error("Error in Home component:", error);
 		products = [];

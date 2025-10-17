@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { publicUrl } from "@/env.mjs";
-import { commerce } from "@/lib/commerce";
+import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 
 type Item = MetadataRoute.Sitemap[number];
@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	let productUrls: Item[] = [];
 
 	try {
-		const result = await commerce.product.browse({ first: 100 });
+		const result = await getProducts(100);
 		if (result.data && Array.isArray(result.data)) {
 			productUrls = result.data.map(
 				(product) =>

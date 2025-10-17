@@ -1,30 +1,19 @@
 import Link from "next/link";
 import { NavMobileMenu } from "@/ui/nav/nav-mobile-menu.client";
+import StoreConfig from "@/store.config";
 
 const links = [
 	{
 		label: "Home",
 		href: "/",
 	},
+	...StoreConfig.categories.map(cat => ({
+		label: cat.name,
+		href: `/category/${cat.slug}`,
+	})),
 	{
 		label: "All Models",
 		href: "/products",
-	},
-	{
-		label: "New Arrivals",
-		href: "/category/new-arrivals",
-	},
-	{
-		label: "Pre-Order",
-		href: "/category/pre-order",
-	},
-	{
-		label: "About",
-		href: "/about",
-	},
-	{
-		label: "Custom Request",
-		href: "/order-your-diecast",
 	},
 ];
 
