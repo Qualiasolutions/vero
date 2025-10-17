@@ -327,18 +327,19 @@ input[type="search" i]::-webkit-search-cancel-button {
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@utility animate-lift:hover {
+/* Hover effect for animate-lift - applied via regular CSS */
+.animate-lift:hover {
 	transform: translateY(-4px) scale(1.02);
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Ripple effect utility */
-@utility has-ripple {
+.has-ripple {
 	position: relative;
 	overflow: hidden;
 }
 
-@utility has-ripple::before {
+.has-ripple::before {
 	content: '';
 	position: absolute;
 	top: 50%;
@@ -351,7 +352,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 	transition: width 0.6s, height 0.6s;
 }
 
-@utility has-ripple:active::before {
+.has-ripple:active::before {
 	width: 300px;
 	height: 300px;
 }
