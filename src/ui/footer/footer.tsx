@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "@/i18n/server";
 import { Newsletter } from "@/ui/footer/newsletter.client";
 import { YnsLink } from "@/ui/yns-link";
@@ -41,7 +42,13 @@ export async function Footer() {
 			<div className="container flex max-w-7xl flex-row flex-wrap justify-center gap-16 text-sm sm:justify-between">
 				<div className="">
 					<div className="flex w-full max-w-sm flex-col gap-4">
-						<h2 className="text-2xl font-light tracking-widest uppercase vero-text-gradient">Veromodels</h2>
+						<Image
+							src="/veromodels-logo.webp"
+							alt="Veromodels"
+							width={160}
+							height={53}
+							className="h-10 w-auto mb-2"
+						/>
 						<p className="text-[#6C757D] leading-relaxed">
 							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious automobile manufacturers.
 						</p>

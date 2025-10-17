@@ -86,54 +86,147 @@ export default async function Home() {
 				</div>
 			</section>
 
-			{/* Products Grid - Main Display */}
-			<section className="container mx-auto px-4 py-20">
-				<div className="flex items-center justify-between mb-12">
-					<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest">
-						Latest Models
-					</h2>
-					<Link href="/products" className="text-[#D4AF37] hover:text-[#B8941F] font-light tracking-wide transition-colors">
-						View All →
-					</Link>
-				</div>
+			{products.length > 0 ? (
+				<>
+					{/* Featured Products Section */}
+					<section className="container mx-auto px-4 py-20">
+						<div className="text-center mb-12">
+							<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest mb-4">
+								Featured Collection
+							</h2>
+							<div className="w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
+						</div>
 
-				{products.length > 0 ? (
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-						{products.map((product) => (
-							<EnhancedProductCard
-								key={product.id}
-								product={{
-									id: product.id,
-									name: product.name,
-									slug: product.slug || product.id,
-									price: product.price,
-									images: product.images,
-									metadata: (product as any).metadata || {},
-								}}
-								currency="€"
-							/>
-						))}
-					</div>
-				) : (
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+							{products.slice(0, 4).map((product) => (
+								<EnhancedProductCard
+									key={product.id}
+									product={{
+										id: product.id,
+										name: product.name,
+										slug: product.slug || product.id,
+										price: product.price,
+										images: product.images,
+										metadata: (product as any).metadata || {},
+									}}
+									currency="€"
+								/>
+							))}
+						</div>
+					</section>
+
+					{/* Latest Models Grid */}
+					<section className="container mx-auto px-4 py-20 bg-gradient-to-b from-[#FDFBF7] to-white">
+						<div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
+							<div>
+								<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest">
+									Latest Models
+								</h2>
+								<p className="text-sm text-[#6C757D] mt-2">Discover our newest arrivals</p>
+							</div>
+							<Link href="/products" className="vero-button-outline px-6 py-3 rounded-lg inline-block">
+								View All Models
+							</Link>
+						</div>
+
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+							{products.slice(4, 13).map((product) => (
+								<EnhancedProductCard
+									key={product.id}
+									product={{
+										id: product.id,
+										name: product.name,
+										slug: product.slug || product.id,
+										price: product.price,
+										images: product.images,
+										metadata: (product as any).metadata || {},
+									}}
+									currency="€"
+								/>
+							))}
+						</div>
+					</section>
+
+					{/* Category-Based Rows */}
+					<section className="container mx-auto px-4 py-20">
+						<div className="space-y-16">
+							{/* Pre-Orders Section */}
+							<div>
+								<div className="flex items-center justify-between mb-8">
+									<div>
+										<h3 className="text-2xl md:text-3xl font-light vero-text-gradient uppercase tracking-wider">
+											Pre-Order Now
+										</h3>
+										<p className="text-sm text-[#6C757D] mt-2">Reserve upcoming releases</p>
+									</div>
+									<Link href="/category/pre-order" className="text-[#D4AF37] hover:text-[#B8941F] font-light tracking-wide transition-colors">
+										View All →
+									</Link>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+									{products.slice(13, 17).map((product) => (
+										<EnhancedProductCard
+											key={product.id}
+											product={{
+												id: product.id,
+												name: product.name,
+												slug: product.slug || product.id,
+												price: product.price,
+												images: product.images,
+												metadata: (product as any).metadata || {},
+											}}
+											currency="€"
+										/>
+									))}
+								</div>
+							</div>
+
+							{/* Limited Editions Section */}
+							<div>
+								<div className="flex items-center justify-between mb-8">
+									<div>
+										<h3 className="text-2xl md:text-3xl font-light vero-text-gradient uppercase tracking-wider">
+											Limited Editions
+										</h3>
+										<p className="text-sm text-[#6C757D] mt-2">Rare and exclusive models</p>
+									</div>
+									<Link href="/category/limited-edition" className="text-[#D4AF37] hover:text-[#B8941F] font-light tracking-wide transition-colors">
+										View All →
+									</Link>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+									{products.slice(17, 21).map((product) => (
+										<EnhancedProductCard
+											key={product.id}
+											product={{
+												id: product.id,
+												name: product.name,
+												slug: product.slug || product.id,
+												price: product.price,
+												images: product.images,
+												metadata: (product as any).metadata || {},
+											}}
+											currency="€"
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+					</section>
+				</>
+			) : (
+				<section className="container mx-auto px-4 py-20">
 					<div className="text-center py-20">
 						<div className="text-[#D4AF37]/40 text-7xl mb-6">🏎️</div>
 						<h3 className="text-2xl font-light text-[#212529] mb-3 uppercase tracking-wide">
-							No models available yet
+							Products Loading
 						</h3>
 						<p className="text-[#6C757D] mb-8">
-							Products will appear here once they are migrated to Stripe
+							66 premium models have been migrated to Stripe
 						</p>
-						<div className="vero-card p-8 max-w-md mx-auto">
-							<p className="text-sm text-[#212529] mb-4">
-								<strong className="text-[#D4AF37]">Next step:</strong> Run the migration script to import products from CSV
-							</p>
-							<code className="text-xs bg-[#F8F9FA] text-[#212529] px-3 py-2 rounded border border-[#D4AF37]/30 inline-block">
-								bun run scripts/migrate-products.ts
-							</code>
-						</div>
 					</div>
-				)}
-			</section>
+				</section>
+			)}
 
 			{/* Brand Showcase - Animated Marquee */}
 			<section className="border-t border-[#D4AF37]/20 bg-gradient-to-b from-[#FDFBF7] to-white py-20">

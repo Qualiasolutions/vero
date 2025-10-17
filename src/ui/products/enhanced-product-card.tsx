@@ -3,8 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/ui/shadcn/badge";
-import { Card, CardContent } from "@/ui/shadcn/card";
 
 interface EnhancedProductCardProps {
 	product: {

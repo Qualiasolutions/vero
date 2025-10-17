@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LoginForm } from "@/ui/login-form";
+import { SignupForm } from "@/ui/signup-form";
 
-export default function LoginPage() {
+export default function SignupPage() {
 	return (
 		<div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-gradient-to-b from-[#FDFBF7] to-white p-6 md:p-10">
 			<div className="flex w-full max-w-sm flex-col gap-6">
@@ -17,7 +17,7 @@ export default function LoginPage() {
 					/>
 					<p className="text-sm text-[#6C757D] text-center">Premium Diecast Car Models</p>
 				</Link>
-				<LoginForm />
+				<SignupForm />
 			</div>
 		</div>
 	);
