@@ -4,7 +4,6 @@ import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
 import { getProductsByCategory } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
-import { HeroSlideshow } from "@/ui/hero-slideshow";
 import { Badge } from "@/ui/shadcn/badge";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
 
@@ -16,36 +15,29 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	// Fetch products by category - get 4 products per category for the column layout
+	// Fetch 3 products per category for cleaner layout
 	const categoryProducts = await Promise.all(
 		StoreConfig.categories.map(async (category) => ({
 			category,
-			products: await getProductsByCategory(category.slug, 4),
+			products: await getProductsByCategory(category.slug, 3),
 		})),
 	);
 
 	return (
-		<main className="min-h-screen bg-white">
-			{/* Hero Slideshow - Compact and cute */}
-			<HeroSlideshow />
-
-			{/* Welcome Section - Compact */}
-			<section className="relative bg-gradient-to-b from-[#FDFBF7] to-white border-b border-[#D4AF37]/20 py-8">
+		<main className="min-h-screen bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white">
+			{/* Minimal Top Banner */}
+			<section className="relative bg-gradient-to-r from-[#D4AF37]/10 via-[#D4AF37]/5 to-[#D4AF37]/10 border-b border-[#D4AF37]/20 py-4">
 				<div className="w-full px-4 max-w-7xl mx-auto">
 					<div className="text-center">
-						<h1 className="text-3xl md:text-4xl font-light tracking-widest uppercase mb-3">
-							<span className="vero-elegant-text">VEROMODELS</span>
-						</h1>
-						<p className="text-base md:text-lg text-[#6C757D] max-w-2xl mx-auto leading-relaxed">
-							Exquisite 1:18 scale collectibles from the world&apos;s most prestigious automobile
-							manufacturers
+						<p className="text-sm md:text-base text-[#6C757D] font-light">
+							Premium 1:18 Scale Die-Cast Model Cars • Free Shipping Over €150
 						</p>
 					</div>
 				</div>
 			</section>
 
-			{/* Category Columns with Products - CK Models Style */}
-			<section className="w-full px-4 py-12 bg-white">
+			{/* Category Columns with Products - 6 Columns Layout */}
+			<section className="w-full px-4 py-8 bg-transparent">
 				<div className="max-w-7xl mx-auto">
 					{/* Grid of 6 columns (2 on mobile, 3 on tablet, 6 on desktop) */}
 					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -86,7 +78,7 @@ export default async function Home() {
 											<div className="vero-card rounded-lg overflow-hidden hover:scale-[1.02] transition-all duration-300">
 												{/* Product Image */}
 												<div className="relative aspect-square w-full bg-[#F8F9FA]">
-													{product.images && product.images.length > 0 ? (
+													{product.images && product.images.length > 0 && product.images[0] ? (
 														<Image
 															src={product.images[0]}
 															alt={product.name}
