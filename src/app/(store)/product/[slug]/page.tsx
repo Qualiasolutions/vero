@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
-import { commerce } from "@/lib/commerce";
+import { getProductBySlug } from "@/lib/product-service";
 import { deslugify, formatMoney } from "@/lib/utils";
 import { JsonLd, mappedProductToJsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
@@ -29,7 +29,7 @@ export const generateMetadata = async (props: {
 	searchParams: Promise<{ variant?: string }>;
 }): Promise<Metadata> => {
 	const params = await props.params;
-	const product = await commerce.product.get({ slug: params.slug });
+	const product = await getProductBySlug(params.slug);
 
 	if (!product) {
 		return notFound();
@@ -40,7 +40,7 @@ export const generateMetadata = async (props: {
 
 	return {
 		title: t("title", { productName: product.name }),
-		description: product.summary,
+		description: product.description || product.name,
 		alternates: { canonical },
 	} satisfies Metadata;
 };
@@ -51,7 +51,7 @@ export default async function SingleProductPage(props: {
 }) {
 	const params = await props.params;
 
-	const product = await commerce.product.get({ slug: params.slug });
+	const product = await getProductBySlug(params.slug);
 
 	if (!product) {
 		return notFound();
@@ -60,9 +60,7 @@ export default async function SingleProductPage(props: {
 	const t = await getTranslations("/product.page");
 	const locale = await getLocale();
 
-	// Cast to YnsProduct to access YNS-specific fields
-	const ynsProduct = product as YnsProduct;
-	const category = ynsProduct.category?.slug;
+	const category = product.metadata?.category;
 	const images = product.images;
 
 	return (

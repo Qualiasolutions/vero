@@ -95,6 +95,10 @@ src/
 - `NEXT_PUBLIC_UMAMI_WEBSITE_ID` - Analytics tracking
 - `NEXT_PUBLIC_NEWSLETTER_ENDPOINT` - Newsletter signup endpoint
 - `NEXT_PUBLIC_LANGUAGE` - Locale (defaults to "en-US")
+- `SECRET` - JWT signing secret for authentication (required for auth features)
+- `EMAIL` - Admin email for authentication
+- `PASSWORD` - Admin password for authentication
+- `DOCKER` - Set to `1` when building for Docker deployment
 
 ## Code Style & Standards
 
@@ -131,12 +135,60 @@ src/
 - Simple search implementation for products
 - Search functionality in `src/lib/search/`
 
+## Commerce & Cart Patterns
+
+### Cart State Management
+- Cart uses **optimistic updates** via `useOptimistic` hook in `src/context/cart-context.tsx`
+- Three-layer cart flow:
+  1. Optimistic UI update (instant feedback)
+  2. Server action execution (`addToCartAction`, `updateCartItemAction`, `removeFromCartAction`)
+  3. Automatic rollback on failure via `useEffect` synchronization
+- Cart state is persisted via cookies using `src/lib/cart-cookies.ts`
+- Import cart functionality via: `import { useCart } from "@/context/cart-context"`
+
+### Commerce Kit Integration
+- Commerce operations use the `commerce-kit` abstraction layer (`src/lib/commerce.ts`)
+- Zero-config setup: reads `STRIPE_SECRET_KEY` and `STRIPE_CURRENCY` from environment
+- Use `commerce.products()`, `commerce.cart()` methods for all Stripe operations
+- Never call Stripe SDK directly; always go through Commerce Kit
+
+### Store Configuration
+- All store-level config in `src/store.config.ts` (categories, brands, social, contact, features)
+- Categories are UI-driven; actual product categorization happens via Stripe metadata
+- Feature flags control optional functionality (preorders, wishlist, reviews, newsletter)
+
+## Authentication & Authorization
+
+- JWT-based authentication using `jose` library (`src/lib/auth.ts`)
+- Session duration: 24 hours with automatic renewal when < 1 hour remaining
+- Protected routes defined in `src/middleware.ts` via `ProtectedPaths` array
+- Auth credentials stored in environment variables: `EMAIL` and `PASSWORD`
+- Login redirects to `/orders`, logout redirects to `/login`
+- Middleware only runs on paths matching the `matcher` config
+
+## Product Data Architecture
+
+### Product Metadata Flow
+Products are managed entirely in Stripe Dashboard with specific metadata:
+- **Required**: `slug` - URL identifier (can be shared across variants)
+- **Optional**:
+  - `category` - Matches categories in `store.config.ts`
+  - `order` - Sort order (lower = first)
+  - `variant` - Variant identifier for product variations
+
+### Variants Implementation
+- Products with identical `slug` metadata are grouped as variants
+- Each variant is a separate Stripe product with its own price, description, and images
+- Variants rendered on same product page at `/product/[slug]`
+- All variants of a product should share the same `category` for consistent browsing
+
 ## Key Development Notes
 
 - Use server components by default, client components only when necessary
-- Leverage Next.js 15 features: Partial Prerendering (PPR), Turbo dev server
-- Commerce Kit handles Stripe integration abstractions
+- Leverage Next.js 15 features: React Compiler, Turbo dev server, MDX support
+- Commerce Kit handles Stripe integration abstractions - never call Stripe SDK directly
 - Internationalization ready with message files in `/messages`
-- Docker-ready with standalone output mode
+- Docker-ready with standalone output mode (`DOCKER=1` env variable)
 - Git hooks configured with Husky for commit linting
-- don't use `bun run dev` I have server running in background all the time, just ask about checking if needed
+- Development server runs in background - don't use `bun run dev`, just ask about checking if needed
+- Use `structuredClone()` when passing Stripe SDK data from server to client components (eliminates class instances)

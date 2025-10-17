@@ -2,12 +2,14 @@ import Image from "next/image";
 import type { Metadata } from "next/types";
 import Link from "next/link";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { getProductsByCategory } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
-import { EnhancedProductCard } from "@/ui/products/enhanced-product-card";
+import { CompactProductCard } from "@/ui/products/compact-product-card";
 import { Badge } from "@/ui/shadcn/badge";
 import { GradientText } from "@/ui/shadcn/gradient-text";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
+import { BackgroundBeams } from "@/ui/shadcn/background-beams";
+import { ShootingStars } from "@/ui/shadcn/shooting-stars";
 
 export const metadata: Metadata = {
 	alternates: { canonical: publicUrl },
@@ -16,43 +18,41 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	let products: any[] = [];
-
-	try {
-		// Load products from Stripe
-		const result = await getProducts(24);
-		products = result.data || [];
-		console.log(`✅ Loaded ${products.length} products from Stripe`);
-	} catch (error) {
-		console.error("Error in Home component:", error);
-		products = [];
-	}
+	// Fetch products by category
+	const categoryProducts = await Promise.all(
+		StoreConfig.categories.map(async (category) => ({
+			category,
+			products: await getProductsByCategory(category.slug, 3),
+		}))
+	);
 
 	return (
 		<main className="min-h-screen bg-white">
 			{/* Hero Section */}
-			<section className="relative bg-gradient-to-b from-[#FDFBF7] to-white border-b border-[#D4AF37]/20 overflow-hidden">
+			<section className="relative bg-gradient-to-b from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A] border-b border-[#D4AF37]/30 overflow-hidden">
+				{/* Animated Background */}
+				<BackgroundBeams className="absolute inset-0 z-0" />
+				<ShootingStars className="absolute inset-0 z-0" starColor="#D4AF37" trailColor="#E6C757" />
+
 				<div className="w-full px-4 py-24 md:py-32 relative z-10">
 					{/* Main Hero */}
 					<div className="text-center mb-16">
-						<h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-widest uppercase mb-8">
-							<GradientText
-								text="VEROMODELS"
-								gradient="linear-gradient(135deg, #D4AF37 0%, #E6C757 100%)"
-								className="text-5xl md:text-7xl lg:text-8xl"
-							/>
+						<h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-widest uppercase mb-8 animate-float">
+							<span className="vero-elegant-text text-5xl md:text-7xl lg:text-8xl">
+								VEROMODELS
+							</span>
 						</h1>
-						<p className="text-xl md:text-2xl text-[#6C757D] font-light tracking-wide mb-6">
+						<p className="text-xl md:text-2xl text-[#F5E6D3] font-light tracking-wide mb-6">
 							Premium Diecast Car Models
 						</p>
-						<p className="text-lg text-[#6C757D]/80 max-w-3xl mx-auto leading-relaxed">
+						<p className="text-lg text-[#F5E6D3]/70 max-w-3xl mx-auto leading-relaxed">
 							Exquisite 1:18 scale collectibles from the world&apos;s most prestigious automobile manufacturers
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-							<Link href="/products" className="vero-button px-8 py-4 rounded-lg inline-block">
+							<Link href="/products" className="vero-button has-ripple px-8 py-4 rounded-lg inline-block text-center shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40">
 								Explore Collection
 							</Link>
-							<Link href="/category/pre-order" className="vero-button-outline px-8 py-4 rounded-lg inline-block">
+							<Link href="/category/pre-order" className="vero-button-outline px-8 py-4 rounded-lg inline-block text-center">
 								View Pre-Orders
 							</Link>
 						</div>
@@ -87,147 +87,53 @@ export default async function Home() {
 				</div>
 			</section>
 
-			{products.length > 0 ? (
-				<>
-					{/* Featured Products Section */}
-					<section className="w-full px-4 py-20">
-						<div className="text-center mb-12">
-							<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest mb-4">
-								Featured Collection
-							</h2>
-							<div className="w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
-						</div>
+			{/* Category-Based Product Sections */}
+			<section className="w-full px-4 py-16 space-y-16">
+				{categoryProducts.map(({ category, products }) => {
+					if (products.length === 0) return null;
 
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-							{products.slice(0, 4).map((product) => (
-								<EnhancedProductCard
-									key={product.id}
-									product={{
-										id: product.id,
-										name: product.name,
-										slug: product.slug || product.id,
-										price: product.price,
-										images: product.images || [],
-										metadata: product.metadata || {},
-									}}
-									currency="€"
-								/>
-							))}
-						</div>
-					</section>
-
-					{/* Latest Models Grid */}
-					<section className="w-full px-4 py-20 bg-gradient-to-b from-[#FDFBF7] to-white">
-						<div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
-							<div>
-								<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest">
-									Latest Models
-								</h2>
-								<p className="text-sm text-[#6C757D] mt-2">Discover our newest arrivals</p>
-							</div>
-							<Link href="/products" className="vero-button-outline px-6 py-3 rounded-lg inline-block">
-								View All Models
-							</Link>
-						</div>
-
-						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-							{products.slice(4, 13).map((product) => (
-								<EnhancedProductCard
-									key={product.id}
-									product={{
-										id: product.id,
-										name: product.name,
-										slug: product.slug || product.id,
-										price: product.price,
-										images: product.images || [],
-										metadata: product.metadata || {},
-									}}
-									currency="€"
-								/>
-							))}
-						</div>
-					</section>
-
-					{/* Category-Based Rows */}
-					<section className="w-full px-4 py-20">
-						<div className="space-y-16">
-							{/* Pre-Orders Section */}
-							<div>
-								<div className="flex items-center justify-between mb-8">
-									<div>
-										<h3 className="text-2xl md:text-3xl font-light vero-text-gradient uppercase tracking-wider">
-											Pre-Order Now
-										</h3>
-										<p className="text-sm text-[#6C757D] mt-2">Reserve upcoming releases</p>
-									</div>
-									<Link href="/category/pre-order" className="text-[#D4AF37] hover:text-[#B8941F] font-light tracking-wide transition-colors">
-										View All →
-									</Link>
+					return (
+						<div key={category.slug} className="space-y-6">
+							{/* Category Header */}
+							<div className="flex items-center justify-between">
+								<div>
+									<h2 className="text-2xl md:text-3xl font-light text-[#212529] uppercase tracking-wider mb-2">
+										{category.name}
+									</h2>
+									<p className="text-sm text-[#6C757D]">{category.description}</p>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-									{products.slice(13, 17).map((product) => (
-										<EnhancedProductCard
-											key={product.id}
-											product={{
-												id: product.id,
-												name: product.name,
-												slug: product.slug || product.id,
-												price: product.price,
-												images: product.images || [],
-												metadata: product.metadata || {},
-											}}
-											currency="€"
-										/>
-									))}
-								</div>
+								<Link
+									href={`/category/${category.slug}`}
+									className="text-[#D4AF37] hover:text-[#B8941F] font-light text-sm tracking-wide transition-colors flex items-center gap-2"
+								>
+									View All
+									<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+									</svg>
+								</Link>
 							</div>
 
-							{/* Limited Editions Section */}
-							<div>
-								<div className="flex items-center justify-between mb-8">
-									<div>
-										<h3 className="text-2xl md:text-3xl font-light vero-text-gradient uppercase tracking-wider">
-											Limited Editions
-										</h3>
-										<p className="text-sm text-[#6C757D] mt-2">Rare and exclusive models</p>
-									</div>
-									<Link href="/category/limited-edition" className="text-[#D4AF37] hover:text-[#B8941F] font-light tracking-wide transition-colors">
-										View All →
-									</Link>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-									{products.slice(17, 21).map((product) => (
-										<EnhancedProductCard
-											key={product.id}
-											product={{
-												id: product.id,
-												name: product.name,
-												slug: product.slug || product.id,
-												price: product.price,
-												images: product.images || [],
-												metadata: product.metadata || {},
-											}}
-											currency="€"
-										/>
-									))}
-								</div>
+							{/* Products Grid - 3 products in a row */}
+							<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+								{products.map((product) => (
+									<CompactProductCard
+										key={product.id}
+										product={{
+											id: product.id,
+											name: product.name,
+											slug: product.slug || product.id,
+											price: product.price,
+											images: product.images || [],
+											metadata: product.metadata || {},
+										}}
+										currency="€"
+									/>
+								))}
 							</div>
 						</div>
-					</section>
-				</>
-			) : (
-				<section className="w-full px-4 py-20">
-					<div className="text-center py-20">
-						<div className="text-[#D4AF37]/40 text-7xl mb-6">🏎️</div>
-						<h3 className="text-2xl font-light text-[#212529] mb-3 uppercase tracking-wide">
-							Products Loading
-						</h3>
-						<p className="text-[#6C757D] mb-8">
-							66 premium models have been migrated to Stripe
-						</p>
-					</div>
-				</section>
-			)}
+					);
+				})}
+			</section>
 
 			{/* Brand Showcase - Animated Marquee */}
 			<section className="border-t border-[#D4AF37]/20 bg-gradient-to-b from-[#FDFBF7] to-white py-20">

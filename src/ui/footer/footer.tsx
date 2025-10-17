@@ -38,8 +38,11 @@ export async function Footer() {
 	const t = await getTranslations("Global.footer");
 
 	return (
-		<footer className="w-full border-t border-[#D4AF37]/20 bg-gradient-to-b from-white to-[#FDFBF7] p-6 text-[#6C757D] md:py-12">
-			<div className="container flex max-w-7xl flex-row flex-wrap justify-center gap-16 text-sm sm:justify-between">
+		<footer className="w-full border-t border-[#D4AF37]/30 vero-black-gradient p-6 text-[#F5E6D3]/70 md:py-12 relative overflow-hidden">
+			{/* Subtle background pattern */}
+			<div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNENEFGMzciIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTMwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHpNNiAzNGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')] pointer-events-none"></div>
+
+			<div className="container flex max-w-7xl flex-row flex-wrap justify-center gap-16 text-sm sm:justify-between relative z-10">
 				<div className="">
 					<div className="flex w-full max-w-sm flex-col gap-4">
 						<Image
@@ -47,9 +50,9 @@ export async function Footer() {
 							alt="Veromodels"
 							width={180}
 							height={60}
-							className="h-12 w-auto mb-2 object-contain"
+							className="h-12 w-auto mb-2 object-contain brightness-0 invert opacity-90"
 						/>
-						<p className="text-[#6C757D] leading-relaxed">
+						<p className="text-[#F5E6D3]/60 leading-relaxed">
 							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious automobile manufacturers.
 						</p>
 						<h3 className="font-medium text-[#D4AF37] mt-4 uppercase tracking-wider text-sm">{t("newsletterTitle")}</h3>
@@ -64,7 +67,7 @@ export async function Footer() {
 							<ul role="list" className="grid gap-3">
 								{section.links.map((link) => (
 									<li key={link.label}>
-										<YnsLink className="text-[#6C757D] hover:text-[#D4AF37] transition-colors" href={link.href}>
+										<YnsLink className="text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1 inline-block" href={link.href}>
 											{link.label}
 										</YnsLink>
 									</li>
@@ -74,13 +77,13 @@ export async function Footer() {
 					))}
 				</nav>
 			</div>
-			<div className="container mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-[#6C757D] border-t border-[#D4AF37]/20 pt-8 md:flex-row">
+			<div className="container mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-[#F5E6D3]/50 border-t border-[#D4AF37]/30 pt-8 md:flex-row relative z-10">
 				<div>
-					<p>© {new Date().getFullYear()} Veromodels. All rights reserved.</p>
-					<p>Premium diecast collectibles for discerning collectors worldwide.</p>
+					<p className="text-[#F5E6D3]/60">© {new Date().getFullYear()} Veromodels. All rights reserved.</p>
+					<p className="text-[#F5E6D3]/40 text-xs mt-1">Premium diecast collectibles for discerning collectors worldwide.</p>
 				</div>
 				<div className="flex items-center gap-4">
-					<p className="text-[#6C757D]">Contact: info@veromodels.com</p>
+					<p className="text-[#D4AF37]/80 hover:text-[#E6C757] transition-colors">Contact: info@veromodels.com</p>
 				</div>
 			</div>
 		</footer>

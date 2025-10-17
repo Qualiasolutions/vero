@@ -57,8 +57,8 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 
 	return (
 		<Link href={`/product/${product.slug}`} className="group block">
-			<div className="vero-card rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
-				<div className="relative aspect-square overflow-hidden bg-black/50">
+			<div className="vero-card rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02] animate-lift">
+				<div className="relative aspect-square overflow-hidden bg-gradient-to-br from-[#0A0A0A] to-[#1A1A1A]">
 					{/* Badge */}
 					{badge && (
 						<div className="absolute top-3 left-3 z-10">
@@ -76,14 +76,16 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 					)}
 
 					{/* Product Image with Gold Border Effect */}
-					<div className="relative h-full w-full border-2 border-transparent group-hover:border-[#D4AF37]/30 transition-colors duration-500">
+					<div className="relative h-full w-full border-2 border-transparent group-hover:border-[#D4AF37]/50 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]">
 						<Image
 							src={imageUrl}
 							alt={product.name}
 							fill
-							className="object-cover transition-transform duration-700 group-hover:scale-110"
+							className="object-cover transition-transform duration-700 group-hover:scale-110 group-hover:brightness-110"
 							sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 						/>
+						{/* Overlay glow effect on hover */}
+						<div className="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/0 via-transparent to-transparent group-hover:from-[#D4AF37]/10 transition-all duration-500"></div>
 					</div>
 
 					{/* Pre-order Release Date Overlay */}

@@ -146,3 +146,48 @@ export async function searchProducts(query: string): Promise<Product[]> {
 		return [];
 	}
 }
+
+export async function getProductsByCategory(categorySlug: string, limit: number = 3): Promise<Product[]> {
+	try {
+		const products = await stripe.products.list({
+			limit: 100,
+			active: true,
+		});
+
+		const filteredProducts: Product[] = [];
+
+		for (const product of products.data) {
+			// Check if product's category metadata matches the category slug
+			if (product.metadata.category?.toLowerCase() === categorySlug.toLowerCase()) {
+				const prices = await stripe.prices.list({
+					product: product.id,
+					limit: 1,
+					active: true,
+				});
+
+				const price = prices.data[0];
+				if (price) {
+					filteredProducts.push({
+						id: product.id,
+						name: product.name,
+						slug: product.metadata.slug || product.id,
+						price: Math.round((price.unit_amount || 0) / 100),
+						images: product.images || [],
+						metadata: product.metadata || {},
+						description: product.description || undefined,
+						active: product.active ?? true,
+						currency: price.currency.toLowerCase(),
+					});
+				}
+			}
+
+			// Stop once we have enough products
+			if (filteredProducts.length >= limit) break;
+		}
+
+		return filteredProducts;
+	} catch (error) {
+		console.error(`Error fetching products for category ${categorySlug}:`, error);
+		return [];
+	}
+}

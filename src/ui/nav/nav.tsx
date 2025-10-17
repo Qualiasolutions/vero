@@ -8,7 +8,7 @@ import { YnsLink } from "@/ui/yns-link";
 
 export const Nav = async () => {
 	return (
-		<header className="z-50 py-6 sticky top-0 bg-white/95 backdrop-blur-lg border-b border-[#D4AF37]/20 shadow-sm">
+		<header className="z-50 py-6 sticky top-0 vero-glass-dark border-b border-[#D4AF37]/30 shadow-lg shadow-black/10">
 			<div className="w-full flex items-center gap-2 px-4 flex-row sm:px-6 lg:px-8 xl:px-12">
 				<YnsLink href="/" className="group flex items-center">
 					<Image
@@ -16,7 +16,7 @@ export const Nav = async () => {
 						alt="Veromodels"
 						width={240}
 						height={80}
-						className="h-14 w-auto sm:h-16 transition-transform group-hover:scale-105"
+						className="h-14 w-auto sm:h-16 transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]"
 						priority
 					/>
 					<SeoH1 className="sr-only">Veromodels</SeoH1>
@@ -29,7 +29,7 @@ export const Nav = async () => {
 					<SearchNav />
 				</div>
 				<CartIcon />
-				<YnsLink href="/login" className="text-[#D4AF37] hover:text-[#B8941F] transition-colors">
+				<YnsLink href="/login" className="text-[#D4AF37] hover:text-[#E6C757] transition-all duration-300 hover:scale-110">
 					<UserIcon className="w-5 h-5" />
 				</YnsLink>
 			</div>
