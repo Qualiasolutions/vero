@@ -44,7 +44,7 @@ const slides: Slide[] = [
 
 export function CompactSlideshow() {
 	const [currentSlide, setCurrentSlide] = useState(0);
-	const [isPlaying, setIsPlaying] = useState(true);
+	const [isPlaying] = useState(true);
 
 	useEffect(() => {
 		if (!isPlaying) return;
