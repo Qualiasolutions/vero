@@ -32,7 +32,7 @@ export default async function Home() {
 		<main className="min-h-screen bg-white">
 			{/* Hero Section */}
 			<section className="relative bg-gradient-to-b from-[#FDFBF7] to-white border-b border-[#D4AF37]/20 overflow-hidden">
-				<div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
+				<div className="w-full px-4 py-24 md:py-32 relative z-10">
 					{/* Main Hero */}
 					<div className="text-center mb-16">
 						<h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-widest uppercase mb-8">
@@ -90,7 +90,7 @@ export default async function Home() {
 			{products.length > 0 ? (
 				<>
 					{/* Featured Products Section */}
-					<section className="container mx-auto px-4 py-20">
+					<section className="w-full px-4 py-20">
 						<div className="text-center mb-12">
 							<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest mb-4">
 								Featured Collection
@@ -117,7 +117,7 @@ export default async function Home() {
 					</section>
 
 					{/* Latest Models Grid */}
-					<section className="container mx-auto px-4 py-20 bg-gradient-to-b from-[#FDFBF7] to-white">
+					<section className="w-full px-4 py-20 bg-gradient-to-b from-[#FDFBF7] to-white">
 						<div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
 							<div>
 								<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest">
@@ -149,7 +149,7 @@ export default async function Home() {
 					</section>
 
 					{/* Category-Based Rows */}
-					<section className="container mx-auto px-4 py-20">
+					<section className="w-full px-4 py-20">
 						<div className="space-y-16">
 							{/* Pre-Orders Section */}
 							<div>
@@ -216,7 +216,7 @@ export default async function Home() {
 					</section>
 				</>
 			) : (
-				<section className="container mx-auto px-4 py-20">
+				<section className="w-full px-4 py-20">
 					<div className="text-center py-20">
 						<div className="text-[#D4AF37]/40 text-7xl mb-6">🏎️</div>
 						<h3 className="text-2xl font-light text-[#212529] mb-3 uppercase tracking-wide">
@@ -231,7 +231,7 @@ export default async function Home() {
 
 			{/* Brand Showcase - Animated Marquee */}
 			<section className="border-t border-[#D4AF37]/20 bg-gradient-to-b from-[#FDFBF7] to-white py-20">
-				<div className="container mx-auto px-4">
+				<div className="w-full px-4">
 					<h3 className="text-center text-2xl font-light vero-text-gradient uppercase tracking-widest mb-12">
 						PREMIUM BRANDS WE CARRY
 					</h3>

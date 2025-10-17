@@ -45,9 +45,9 @@ export async function Footer() {
 						<Image
 							src="/veromodels-logo.webp"
 							alt="Veromodels"
-							width={160}
-							height={53}
-							className="h-10 w-auto mb-2"
+							width={180}
+							height={60}
+							className="h-12 w-auto mb-2 object-contain"
 						/>
 						<p className="text-[#6C757D] leading-relaxed">
 							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious automobile manufacturers.

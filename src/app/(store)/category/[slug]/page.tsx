@@ -1,62 +1,137 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { getTranslations } from "@/i18n/server";
-import { commerce } from "@/lib/commerce";
-import { deslugify } from "@/lib/utils";
+import { getProducts } from "@/lib/product-service";
+import StoreConfig from "@/store.config";
 import { ProductList } from "@/ui/products/product-list";
 
 export const generateMetadata = async (props: { params: Promise<{ slug: string }> }): Promise<Metadata> => {
 	const params = await props.params;
-	const result = await commerce.product.browse({
-		first: 100,
-		category: params.slug, // YNS SDK uses direct category parameter
-	});
+	const category = StoreConfig.categories.find(cat => cat.slug === params.slug);
 
-	if (!result.data || result.data.length === 0) {
+	if (!category) {
 		return notFound();
 	}
 
-	const t = await getTranslations("/category.metadata");
-
+	
 	return {
-		title: t("title", { categoryName: deslugify(params.slug) }),
+		title: `${category.name} - Veromodels`,
+		description: category.description,
 		alternates: { canonical: `${publicUrl}/category/${params.slug}` },
 	};
 };
 
 export default async function CategoryPage(props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
-	const result = await commerce.product.browse({
-		first: 100,
-		category: params.slug, // YNS SDK uses direct category parameter
-	});
+	const category = StoreConfig.categories.find(cat => cat.slug === params.slug);
 
-	if (!result.data || result.data.length === 0) {
+	if (!category) {
 		return notFound();
 	}
 
-	const products = result.data;
+	// Get all products and filter based on category logic
+	const allProductsResult = await getProducts(100);
+	let filteredProducts = allProductsResult.data;
 
-	const t = await getTranslations("/category.page");
+	// Apply category filtering based on product metadata and category type
+	switch (params.slug) {
+		case "new-arrivals":
+			// Show products with "new" in metadata or recently added
+			filteredProducts = allProductsResult.data.slice(0, 12);
+			break;
+		case "on-sale":
+			// Show products with onSale metadata
+			filteredProducts = allProductsResult.data.filter(p =>
+				p.metadata.onSale === "true" || p.metadata.originalPrice
+			);
+			break;
+		case "limited-edition":
+			// Show products with "limited" in metadata or name
+			filteredProducts = allProductsResult.data.filter(p =>
+				p.metadata.category?.includes("limited") ||
+				p.name.toLowerCase().includes("limited")
+			);
+			break;
+		case "rare":
+			// Show products with "rare" in metadata or name
+			filteredProducts = allProductsResult.data.filter(p =>
+				p.metadata.category?.includes("rare") ||
+				p.name.toLowerCase().includes("rare")
+			);
+			break;
+		case "pre-order":
+			// Show products with preorder metadata
+			filteredProducts = allProductsResult.data.filter(p =>
+				p.metadata.preorder === "true" || p.metadata.releaseDate
+			);
+			break;
+		case "coming-soon":
+			// Show products with future release dates
+			filteredProducts = allProductsResult.data.filter(p => {
+				const releaseDate = p.metadata.releaseDate;
+				if (releaseDate) {
+					const release = new Date(releaseDate);
+					return release > new Date();
+				}
+				return false;
+			});
+			break;
+		default:
+			// If no matching category, return empty
+			filteredProducts = [];
+	}
+
+	const products = filteredProducts;
 
 	return (
 		<main className="pb-16">
-			<div className="mb-8 sm:mb-12 space-y-4">
-				<div className="text-center space-y-3">
-					<h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-wider vero-text-gradient uppercase px-4">
-						{deslugify(params.slug)}
-					</h1>
-					<div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
-				</div>
-				<p className="text-center text-xs sm:text-sm text-[#D4AF37] uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
-					{t("title", { categoryName: deslugify(params.slug) })}
-				</p>
-				<div className="text-center text-xs sm:text-sm text-[#6C757D] mt-4">
-					{products.length} {products.length === 1 ? "Model" : "Models"}
+			{/* Category Header */}
+			<div className="relative bg-gradient-to-b from-[#FDFBF7] to-white border-b border-[#D4AF37]/20">
+				<div className="container mx-auto px-4 py-16 md:py-24">
+					<div className="text-center space-y-6">
+						<div className="flex items-center justify-center gap-4">
+							<span className={`${category.badgeColor} text-white text-xs px-3 py-1 rounded-sm uppercase tracking-wider font-bold`}>
+								{category.badge}
+							</span>
+						</div>
+						<h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-widest uppercase vero-text-gradient">
+							{category.name}
+						</h1>
+						<div className="w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
+						<p className="text-lg text-[#6C757D] max-w-3xl mx-auto leading-relaxed">
+							{category.description}
+						</p>
+						<div className="text-sm text-[#D4AF37] font-medium uppercase tracking-[0.2em]">
+							{products.length} {products.length === 1 ? "Premium Model" : "Premium Models"} Available
+						</div>
+					</div>
 				</div>
 			</div>
-			<ProductList products={products} />
+
+			{/* Products Section */}
+			{products.length > 0 ? (
+				<div className="container mx-auto px-4 py-16">
+					<ProductList products={products} />
+				</div>
+			) : (
+				<div className="container mx-auto px-4 py-20">
+					<div className="text-center py-16">
+						<div className="text-[#D4AF37]/40 text-6xl mb-6">🏎️</div>
+						<h3 className="text-2xl font-light text-[#212529] mb-4 uppercase tracking-wide">
+							Models Coming Soon
+						</h3>
+						<p className="text-[#6C757D] max-w-2xl mx-auto">
+							We're currently curating the finest selection for {category.name.toLowerCase()}.
+							Check back soon or explore our other collections.
+						</p>
+						<div className="mt-8">
+							<a href="/products" className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors">
+								View All Models →
+							</a>
+						</div>
+					</div>
+				</div>
+			)}
 		</main>
 	);
 }

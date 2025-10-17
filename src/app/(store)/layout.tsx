@@ -23,7 +23,7 @@ export default async function StoreLayout({
 
 				<Nav />
 				<TooltipProvider>
-					<main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-6 pt-2 sm:px-6 lg:px-8 relative">
+					<main className="mx-auto flex w-full flex-1 flex-col px-4 pb-6 pt-2 sm:px-6 lg:px-8 xl:px-12 relative">
 						{children}
 					</main>
 					<Footer />
