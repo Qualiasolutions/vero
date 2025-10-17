@@ -1,32 +1,34 @@
-import type { SVGAttributes } from "react";
 import { getTranslations } from "@/i18n/server";
-import StoreConfig from "@/store.config";
 import { Newsletter } from "@/ui/footer/newsletter.client";
 import { YnsLink } from "@/ui/yns-link";
 
 const sections = [
 	{
-		header: "Products",
-		links: StoreConfig.categories.map(({ name, slug }) => ({
-			label: name,
-			href: `/category/${slug}`,
-		})),
+		header: "Collections",
+		links: [
+			{ label: "All Models", href: "/products" },
+			{ label: "New Arrivals", href: "/category/new-arrivals" },
+			{ label: "Pre-Order", href: "/category/pre-order" },
+			{ label: "Special Price", href: "/category/on-sale" },
+			{ label: "Limited Editions", href: "/category/limited-edition" },
+			{ label: "Rare Models", href: "/category/rare" },
+		],
 	},
 	{
-		header: "Support",
+		header: "Services",
 		links: [
-			{
-				label: "Features",
-				href: "https://yournextstore.com/#features",
-			},
-			{
-				label: "Pricing",
-				href: "https://yournextstore.com/#pricing",
-			},
-			{
-				label: "Contact Us",
-				href: "mailto:hi@yournextstore.com",
-			},
+			{ label: "Custom Request", href: "/order-your-diecast" },
+			{ label: "Contact Us", href: "/contact" },
+			{ label: "Shipping & Returns", href: "/shipping-returns" },
+			{ label: "FAQ", href: "/faq" },
+		],
+	},
+	{
+		header: "Company",
+		links: [
+			{ label: "About Us", href: "/about" },
+			{ label: "Privacy Policy", href: "/privacy-policy" },
+			{ label: "Terms of Service", href: "/terms-of-service" },
 		],
 	},
 ];
@@ -35,23 +37,27 @@ export async function Footer() {
 	const t = await getTranslations("Global.footer");
 
 	return (
-		<footer className="w-full bg-neutral-50 p-6 text-neutral-800 md:py-12">
+		<footer className="w-full border-t border-yellow-900/30 bg-gradient-to-b from-black to-yellow-950/5 p-6 text-yellow-400 md:py-12">
 			<div className="container flex max-w-7xl flex-row flex-wrap justify-center gap-16 text-sm sm:justify-between">
 				<div className="">
-					<div className="flex w-full max-w-sm flex-col gap-2">
-						<h3 className="font-semibold">{t("newsletterTitle")}</h3>
+					<div className="flex w-full max-w-sm flex-col gap-4">
+						<h2 className="text-2xl font-light tracking-widest uppercase vero-text-gradient">Veromodels</h2>
+						<p className="text-yellow-400/60 leading-relaxed">
+							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious automobile manufacturers.
+						</p>
+						<h3 className="font-medium text-yellow-400 mt-4 uppercase tracking-wider text-sm">{t("newsletterTitle")}</h3>
 						<Newsletter />
 					</div>
 				</div>
 
-				<nav className="grid grid-cols-2 gap-16">
+				<nav className="grid grid-cols-3 gap-12">
 					{sections.map((section) => (
 						<section key={section.header}>
-							<h3 className="mb-2 font-semibold">{section.header}</h3>
-							<ul role="list" className="grid gap-1">
+							<h3 className="mb-4 font-medium text-yellow-400 uppercase tracking-wider text-sm">{section.header}</h3>
+							<ul role="list" className="grid gap-3">
 								{section.links.map((link) => (
 									<li key={link.label}>
-										<YnsLink className="underline-offset-4 hover:underline" href={link.href}>
+										<YnsLink className="text-yellow-400/60 hover:text-yellow-300 transition-colors" href={link.href}>
 											{link.label}
 										</YnsLink>
 									</li>
@@ -61,39 +67,15 @@ export async function Footer() {
 					))}
 				</nav>
 			</div>
-			<div className="container mt-8 flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-neutral-500 md:flex-row">
+			<div className="container mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-yellow-400/60 border-t border-yellow-900/30 pt-8 md:flex-row">
 				<div>
-					<p>© 2024 Your Next Store</p>
-					<p>Delightful commerce for everyone</p>
+					<p>© {new Date().getFullYear()} Veromodels. All rights reserved.</p>
+					<p>Premium diecast collectibles for discerning collectors worldwide.</p>
 				</div>
 				<div className="flex items-center gap-4">
-					<YnsLink
-						className="inline-flex items-center gap-1 transition-colors hover:text-neutral-700"
-						href="https://x.com/zaiste"
-					>
-						<TwitterIcon className="h-4 w-4" /> @zaiste
-						<span className="sr-only">Twitter</span>
-					</YnsLink>
-					<YnsLink
-						className="inline-flex items-center gap-1 transition-colors hover:text-neutral-700"
-						href="https://x.com/typeofweb"
-					>
-						<TwitterIcon className="h-4 w-4" /> @typeofweb
-						<span className="sr-only">Twitter</span>
-					</YnsLink>
+					<p className="text-yellow-400/60">Contact: info@veromodels.com</p>
 				</div>
 			</div>
 		</footer>
-	);
-}
-
-function TwitterIcon(props: SVGAttributes<SVGSVGElement>) {
-	return (
-		<svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 596 596" fill="none">
-			<path
-				fill="#fff"
-				d="m1 19 230 307L0 577h52l203-219 164 219h177L353 252 568 19h-52L329 221 179 19H1Zm77 38h82l359 481h-81L78 57Z"
-			/>
-		</svg>
 	);
 }

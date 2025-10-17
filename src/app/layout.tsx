@@ -22,10 +22,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 	const messages = await getMessages();
 
 	return (
-		<html lang={locale} className="h-full antialiased">
-			<body className="flex min-h-full flex-col">
+		<html lang={locale} className="h-full antialiased scroll-smooth">
+			<body className="flex min-h-full flex-col vero-gradient text-yellow-400 selection:bg-yellow-300 selection:text-black">
 				<IntlClientProvider messages={messages} locale={locale}>
-					<div className="flex min-h-full flex-1 flex-col bg-white" vaul-drawer-wrapper="">
+					<div className="flex min-h-full flex-1 flex-col" vaul-drawer-wrapper="">
 						{children}
 					</div>
 					<Toaster position="top-center" offset={10} />

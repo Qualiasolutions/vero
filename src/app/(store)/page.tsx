@@ -1,122 +1,284 @@
 import Image from "next/image";
 import type { Metadata } from "next/types";
+import Link from "next/link";
 import { publicUrl } from "@/env.mjs";
-import { getTranslations } from "@/i18n/server";
 import { commerce } from "@/lib/commerce";
 import StoreConfig from "@/store.config";
-import { CategoryBox } from "@/ui/category-box";
-import { ProductList } from "@/ui/products/product-list";
-import { YnsLink } from "@/ui/yns-link";
+import { EnhancedProductCard } from "@/ui/products/enhanced-product-card";
+import { Badge } from "@/ui/shadcn/badge";
+import { GradientText } from "@/ui/shadcn/gradient-text";
+import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
+import { Meteors } from "@/ui/shadcn/meteors";
 
 export const metadata: Metadata = {
 	alternates: { canonical: publicUrl },
+	title: "Veromodels - Premium 1:18 Scale Die-Cast Model Cars",
+	description: "Discover exclusive die-cast model cars from top brands. Pre-order limited editions and rare collectibles.",
 };
 
 export default async function Home() {
-	try {
-		// Load products from YNS using REST API (default behavior)
-		const result = await commerce.product.browse({ first: 6 });
-		const t = await getTranslations("/");
+	let products: any[] = [];
 
-		const products = result.data || [];
+	try {
+		// Load products from Stripe
+		const result = await commerce.product.browse({ first: 24 });
+		products = result?.data || [];
 
 		return (
-			<main>
-				<section className="rounded bg-neutral-100 py-8 sm:py-12">
-					<div className="mx-auto grid grid-cols-1 items-center justify-items-center gap-8 px-8 sm:px-16 md:grid-cols-2">
-						<div className="max-w-md space-y-4">
-							<h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl">
-								{t("hero.title")}
-							</h2>
-							<p className="text-pretty text-neutral-600">{t("hero.description")}</p>
-							<YnsLink
-								className="inline-flex h-10 items-center justify-center rounded-full bg-neutral-900 px-6 font-medium text-neutral-50 transition-colors hover:bg-neutral-900/90 focus:outline-hidden focus:ring-1 focus:ring-neutral-950"
-								href={t("hero.link")}
-							>
-								{t("hero.action")}
-							</YnsLink>
+			<main className="min-h-screen">
+				{/* Hero Section with Meteors */}
+				<section className="relative vero-gradient border-b border-yellow-900/30 overflow-hidden">
+					<Meteors number={20} />
+					<div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
+						{/* Main Hero */}
+						<div className="text-center mb-16">
+							<h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-widest uppercase mb-8">
+								<GradientText
+									text="VEROMODELS"
+									gradient="linear-gradient(135deg, #D4AF37 0%, #E6C757 100%)"
+									className="text-5xl md:text-7xl lg:text-8xl"
+								/>
+							</h1>
+							<p className="text-xl md:text-2xl text-yellow-200/90 font-light tracking-wide mb-6">
+								Premium Diecast Car Models
+							</p>
+							<p className="text-lg text-yellow-300/80 max-w-3xl mx-auto leading-relaxed">
+								Exquisite 1:18 scale collectibles from the world&apos;s most prestigious automobile manufacturers
+							</p>
+							<div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+								<Link href="/products" className="vero-button px-8 py-4 inline-block">
+									Explore Collection
+								</Link>
+								<Link href="/category/pre-order" className="vero-button-outline px-8 py-4 inline-block">
+									View Pre-Orders
+								</Link>
+							</div>
 						</div>
-						<Image
-							alt="Cup of Coffee"
-							loading="eager"
-							priority={true}
-							className="rounded"
-							height={450}
-							width={450}
-							src="https://files.stripe.com/links/MDB8YWNjdF8xT3BaeG5GSmNWbVh6bURsfGZsX3Rlc3RfaDVvWXowdU9ZbWlobUIyaHpNc1hCeDM200NBzvUjqP"
-							style={{
-								objectFit: "cover",
-							}}
-							sizes="(max-width: 640px) 70vw, 450px"
-						/>
+
+						{/* Category Quick Links */}
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+							{StoreConfig.categories.map((category) => (
+								<Link
+									key={category.slug}
+									href={`/category/${category.slug}`}
+									className="group vero-card relative overflow-hidden aspect-square hover:scale-105 transition-all duration-300"
+								>
+									<Image
+										src={category.image}
+										alt={category.name}
+										fill
+										className="object-cover transition-transform duration-500 group-hover:scale-110"
+										sizes="(max-width: 768px) 50vw, 16.666vw"
+									/>
+									<div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-4">
+										<Badge className={`${category.badgeColor} text-white text-xs mb-2 w-fit`}>
+											{category.badge}
+										</Badge>
+										<h3 className="text-yellow-400 font-light text-sm md:text-base uppercase tracking-wide">
+											{category.name}
+										</h3>
+									</div>
+								</Link>
+							))}
+						</div>
 					</div>
 				</section>
 
-				<ProductList products={products} />
+				{/* Products Grid - Main Display */}
+				<section className="container mx-auto px-4 py-20">
+					<div className="flex items-center justify-between mb-12">
+						<h2 className="text-3xl md:text-4xl font-light vero-text-gradient uppercase tracking-widest">
+							Latest Models
+						</h2>
+						<Link href="/products" className="text-yellow-400 hover:text-yellow-300 font-light tracking-wide transition-colors">
+							View All →
+						</Link>
+					</div>
 
-				<section className="w-full py-8">
-					<div className="grid gap-8 lg:grid-cols-2">
-						{StoreConfig.categories.map(({ slug, image: src }) => (
-							<CategoryBox key={slug} categorySlug={slug} src={src} />
-						))}
+					{products.length > 0 ? (
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+							{products.map((product) => (
+								<EnhancedProductCard
+									key={product.id}
+									product={{
+										id: product.id,
+										name: product.name,
+										slug: product.slug || product.id,
+										price: product.price,
+										images: product.images,
+										metadata: (product as any).metadata || {},
+									}}
+									currency="€"
+								/>
+							))}
+						</div>
+					) : (
+						<div className="text-center py-20">
+							<div className="text-yellow-400/40 text-7xl mb-6">🏎️</div>
+							<h3 className="text-2xl font-light text-yellow-400 mb-3 uppercase tracking-wide">
+								No models available yet
+							</h3>
+							<p className="text-yellow-400/60 mb-8">
+								Products will appear here once they are migrated to Stripe
+							</p>
+							<div className="vero-card p-8 max-w-md mx-auto">
+								<p className="text-sm text-yellow-400/80 mb-4">
+									<strong className="text-yellow-400">Next step:</strong> Run the migration script to import products from CSV
+								</p>
+								<code className="text-xs bg-black/50 text-yellow-300 px-3 py-2 rounded border border-yellow-900/30 inline-block">
+									bun run scripts/migrate-products.ts
+								</code>
+							</div>
+						</div>
+					)}
+				</section>
+
+				{/* Brand Showcase - Animated Marquee */}
+				<section className="border-t border-yellow-900/30 bg-gradient-to-b from-black to-yellow-950/5 py-20">
+					<div className="container mx-auto px-4">
+						<h3 className="text-center text-2xl font-light vero-text-gradient uppercase tracking-widest mb-12">
+							PREMIUM BRANDS WE CARRY
+						</h3>
+						<Marquee className="py-4">
+							<MarqueeFade side="left" />
+							<MarqueeFade side="right" />
+							<MarqueeContent speed={40}>
+								{StoreConfig.brands.map((brand, idx) => (
+									<MarqueeItem
+										key={`${brand}-${idx}`}
+										className="mx-12 flex items-center justify-center"
+									>
+										<div className="text-2xl font-light text-yellow-400/60 hover:text-yellow-400 transition-all duration-300 hover:scale-110 cursor-default uppercase tracking-wider">
+											{brand}
+										</div>
+									</MarqueeItem>
+								))}
+							</MarqueeContent>
+						</Marquee>
 					</div>
 				</section>
 			</main>
 		);
 	} catch (error) {
 		console.error("Error in Home component:", error);
-		const t = await getTranslations("/");
+		// Continue with empty products array
+		products = [];
+	}
 
-		// Fallback to empty products if YNS fails
-		const products: never[] = [];
-
-		return (
-			<main>
-				<section className="rounded bg-neutral-100 py-8 sm:py-12">
-					<div className="mx-auto grid grid-cols-1 items-center justify-items-center gap-8 px-8 sm:px-16 md:grid-cols-2">
-						<div className="max-w-md space-y-4">
-							<h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl">
-								{t("hero.title")}
-							</h2>
-							<p className="text-pretty text-neutral-600">{t("hero.description")}</p>
-							<YnsLink
-								className="inline-flex h-10 items-center justify-center rounded-full bg-neutral-900 px-6 font-medium text-neutral-50 transition-colors hover:bg-neutral-900/90 focus:outline-hidden focus:ring-1 focus:ring-neutral-950"
-								href={t("hero.link")}
-							>
-								{t("hero.action")}
-							</YnsLink>
-						</div>
-						<Image
-							alt="Cup of Coffee"
-							loading="eager"
-							priority={true}
-							className="rounded"
-							height={450}
-							width={450}
-							src="https://files.stripe.com/links/MDB8YWNjdF8xT3BaeG5GSmNWbVh6bURsfGZsX3Rlc3RfaDVvWXowdU9ZbWlobUIyaHpNc1hCeDM200CBzvUjqP"
-							style={{
-								objectFit: "cover",
-							}}
-							sizes="(max-width: 640px) 70vw, 450px"
-						/>
+	return (
+		<main className="min-h-screen">
+			{/* Hero Section with Categories */}
+			<section className="vero-gradient border-b border-yellow-900/30">
+				<div className="container mx-auto px-4 py-24">
+					{/* Main Hero */}
+					<div className="text-center mb-16">
+						<h1 className="text-5xl md:text-7xl font-light tracking-widest uppercase vero-text-gradient mb-6">
+							VEROMODELS
+						</h1>
+						<p className="text-xl md:text-2xl text-yellow-200/90 font-light tracking-wide mb-4">
+							Premium Diecast Car Models
+						</p>
+						<p className="text-lg text-yellow-300/80 max-w-2xl mx-auto">
+							Discover exclusive 1:18 scale models from the world's finest manufacturers
+						</p>
 					</div>
-				</section>
 
-				<ProductList products={products} />
-
-				<section className="w-full py-8">
-					<div className="grid gap-8 lg:grid-cols-2">
-						{StoreConfig.categories.map(({ slug, image: src }) => (
-							<CategoryBox key={slug} categorySlug={slug} src={src} />
+					{/* Category Quick Links */}
+					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+						{StoreConfig.categories.map((category) => (
+							<Link
+								key={category.slug}
+								href={`/category/${category.slug}`}
+								className="group relative overflow-hidden rounded-lg aspect-square"
+							>
+								<Image
+									src={category.image}
+									alt={category.name}
+									fill
+									className="object-cover transition-transform duration-300 group-hover:scale-110"
+									sizes="(max-width: 768px) 50vw, 16.666vw"
+								/>
+								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-4">
+									<Badge className={`${category.badgeColor} text-white text-xs mb-2 w-fit`}>
+										{category.badge}
+									</Badge>
+									<h3 className="text-white font-bold text-sm md:text-base">
+										{category.name}
+									</h3>
+								</div>
+							</Link>
 						))}
 					</div>
-				</section>
-				<div className="text-center text-red-500 p-4">
-					Error loading products: {error instanceof Error ? error.message : "Unknown error"}
-					<br />
-					<small>Check server logs for more details</small>
 				</div>
-			</main>
-		);
-	}
+			</section>
+
+			{/* Products Grid - Main Display */}
+			<section className="container mx-auto px-4 py-12">
+				<div className="flex items-center justify-between mb-8">
+					<h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+						Latest Models
+					</h2>
+					<Link href="/products" className="text-blue-600 hover:text-blue-700 font-medium">
+						View All →
+					</Link>
+				</div>
+
+				{products.length > 0 ? (
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+						{products.map((product) => (
+							<EnhancedProductCard
+								key={product.id}
+								product={{
+									id: product.id,
+									name: product.name,
+									slug: product.slug || product.id,
+									price: product.price,
+									images: product.images,
+									metadata: (product as any).metadata || {},
+								}}
+								currency="€"
+							/>
+						))}
+					</div>
+				) : (
+					<div className="text-center py-16">
+						<div className="text-gray-400 text-6xl mb-4">🏎️</div>
+						<h3 className="text-xl font-semibold text-gray-700 mb-2">
+							No models available yet
+						</h3>
+						<p className="text-gray-500 mb-6">
+							Products will appear here once they are migrated to Stripe
+						</p>
+						<div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+							<p className="text-sm text-blue-800">
+								<strong>Next step:</strong> Run the migration script to import products from CSV
+							</p>
+							<code className="text-xs bg-blue-100 text-blue-900 px-2 py-1 rounded mt-2 inline-block">
+								npx tsx scripts/migrate-products-to-stripe.ts
+							</code>
+						</div>
+					</div>
+				)}
+			</section>
+
+			{/* Brand Showcase */}
+			<section className="bg-white py-12 border-t">
+				<div className="container mx-auto px-4">
+					<h3 className="text-center text-lg font-semibold text-gray-600 mb-6">
+						PREMIUM BRANDS WE CARRY
+					</h3>
+					<div className="flex flex-wrap justify-center items-center gap-6 md:gap-8">
+						{StoreConfig.brands.slice(0, 8).map((brand) => (
+							<div
+								key={brand}
+								className="text-gray-400 hover:text-gray-700 transition-colors font-medium text-sm md:text-base"
+							>
+								{brand}
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+		</main>
+	);
 }

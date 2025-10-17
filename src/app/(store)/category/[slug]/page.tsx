@@ -41,13 +41,21 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 	const t = await getTranslations("/category.page");
 
 	return (
-		<main className="pb-8">
-			<h1 className="text-3xl font-bold leading-none tracking-tight text-foreground">
-				{deslugify(params.slug)}
-				<div className="text-lg font-semibold text-muted-foreground">
-					{t("title", { categoryName: deslugify(params.slug) })}
+		<main className="pb-16">
+			<div className="mb-8 sm:mb-12 space-y-4">
+				<div className="text-center space-y-3">
+					<h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-wider vero-text-gradient uppercase px-4">
+						{deslugify(params.slug)}
+					</h1>
+					<div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
 				</div>
-			</h1>
+				<p className="text-center text-xs sm:text-sm text-[#D4AF37]/70 uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
+					{t("title", { categoryName: deslugify(params.slug) })}
+				</p>
+				<div className="text-center text-xs sm:text-sm text-yellow-100/60 mt-4">
+					{products.length} {products.length === 1 ? "Model" : "Models"}
+				</div>
+			</div>
 			<ProductList products={products} />
 		</main>
 	);

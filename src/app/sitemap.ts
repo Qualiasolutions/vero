@@ -5,16 +5,26 @@ import StoreConfig from "@/store.config";
 
 type Item = MetadataRoute.Sitemap[number];
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	const result = await commerce.product.browse({ first: 100 });
-	const productUrls = result.data.map(
-		(product) =>
-			({
-				url: `${publicUrl}/product/${product.slug || product.id}`,
-				lastModified: new Date(), // YNS Product doesn't have updated field
-				changeFrequency: "daily",
-				priority: 0.8,
-			}) satisfies Item,
-	);
+	// Handle case where no products exist yet (before migration)
+	let productUrls: Item[] = [];
+
+	try {
+		const result = await commerce.product.browse({ first: 100 });
+		if (result.data && Array.isArray(result.data)) {
+			productUrls = result.data.map(
+				(product) =>
+					({
+						url: `${publicUrl}/product/${product.slug || product.id}`,
+						lastModified: new Date(),
+						changeFrequency: "daily",
+						priority: 0.8,
+					}) satisfies Item,
+			);
+		}
+	} catch (error) {
+		console.warn("Could not load products for sitemap:", error);
+		// Continue with empty product URLs
+	}
 
 	const categoryUrls = StoreConfig.categories.map(
 		(category) =>

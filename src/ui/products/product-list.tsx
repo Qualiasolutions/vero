@@ -10,31 +10,35 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 
 	return (
 		<>
-			<ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			<ul className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{products.map((product, idx) => {
 					return (
 						<li key={product.id} className="group">
 							<YnsLink href={`/product/${product.slug}`}>
-								<article className="overflow-hidden bg-white">
+								<article className="vero-card rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
 									{product.images[0] && (
-										<div className="rounded-lg aspect-square w-full overflow-hidden bg-neutral-100">
-											<Image
-												className="group-hover:rotate hover-perspective w-full bg-neutral-100 object-cover object-center transition-opacity group-hover:opacity-75"
-												src={product.images[0]}
-												width={768}
-												height={768}
-												loading={idx < 3 ? "eager" : "lazy"}
-												priority={idx < 3}
-												sizes="(max-width: 1024x) 100vw, (max-width: 1280px) 50vw, 700px"
-												alt=""
-											/>
+										<div className="relative aspect-square w-full overflow-hidden bg-black/50">
+											<div className="relative h-full w-full border-2 border-transparent group-hover:border-[#D4AF37]/30 transition-colors duration-500">
+												<Image
+													className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+													src={product.images[0]}
+													width={768}
+													height={768}
+													loading={idx < 3 ? "eager" : "lazy"}
+													priority={idx < 3}
+													sizes="(max-width: 1024x) 100vw, (max-width: 1280px) 50vw, 700px"
+													alt={product.name}
+												/>
+											</div>
 										</div>
 									)}
-									<div className="p-2">
-										<h2 className="text-xl font-medium text-neutral-700">{product.name}</h2>
-										<footer className="text-base font-normal text-neutral-900">
+									<div className="p-5 space-y-3">
+										<h2 className="text-base font-light text-yellow-100 group-hover:text-[#D4AF37] transition-colors duration-300 tracking-wide line-clamp-2">
+											{product.name}
+										</h2>
+										<footer className="pt-2 border-t border-[#D4AF37]/20">
 											{product.price && (
-												<p>
+												<p className="text-xl font-semibold vero-text-gradient">
 													{formatMoney({
 														amount: product.price,
 														currency: product.currency,

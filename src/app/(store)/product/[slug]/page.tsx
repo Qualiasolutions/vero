@@ -66,42 +66,72 @@ export default async function SingleProductPage(props: {
 	const images = product.images;
 
 	return (
-		<article className="pb-12">
-			<Breadcrumb>
+		<article className="pb-16">
+			<Breadcrumb className="mb-8">
 				<BreadcrumbList>
 					<BreadcrumbItem>
-						<BreadcrumbLink asChild className="inline-flex min-h-12 min-w-12 items-center justify-center">
+						<BreadcrumbLink asChild className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#E6C757]">
 							<YnsLink href="/products">{t("allProducts")}</YnsLink>
 						</BreadcrumbLink>
 					</BreadcrumbItem>
 					{category && (
 						<>
-							<BreadcrumbSeparator />
+							<BreadcrumbSeparator className="text-[#D4AF37]/50" />
 							<BreadcrumbItem>
-								<BreadcrumbLink className="inline-flex min-h-12 min-w-12 items-center justify-center" asChild>
+								<BreadcrumbLink className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#E6C757]" asChild>
 									<YnsLink href={`/category/${category}`}>{deslugify(category)}</YnsLink>
 								</BreadcrumbLink>
 							</BreadcrumbItem>
 						</>
 					)}
-					<BreadcrumbSeparator />
+					<BreadcrumbSeparator className="text-[#D4AF37]/50" />
 					<BreadcrumbItem>
-						<BreadcrumbPage>{product.name}</BreadcrumbPage>
+						<BreadcrumbPage className="text-yellow-100">{product.name}</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
 
-			<div className="mt-4 grid gap-4 lg:grid-cols-12">
+			<div className="mt-6 sm:mt-8 grid gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-12">
 				<div className="lg:col-span-5 lg:col-start-8">
-					<h1 className="text-3xl font-bold leading-none tracking-tight text-foreground">{product.name}</h1>
-					<p className="mt-2 text-2xl font-medium leading-none tracking-tight text-foreground/70">
-						{formatMoney({
-							amount: product.price,
-							currency: product.currency,
-							locale,
-						})}
-					</p>
-					<div className="mt-2">{(product.stock || 0) <= 0 && <div>Out of stock</div>}</div>
+					<div className="lg:sticky lg:top-24 space-y-4 sm:space-y-6">
+						<div className="space-y-3">
+							<h1 className="text-2xl sm:text-3xl lg:text-4xl font-light leading-tight tracking-wide text-yellow-100">
+								{product.name}
+							</h1>
+							<div className="w-12 sm:w-16 h-px bg-gradient-to-r from-[#D4AF37] to-transparent" />
+						</div>
+
+						<p className="text-2xl sm:text-3xl font-semibold vero-text-gradient">
+							{formatMoney({
+								amount: product.price,
+								currency: product.currency,
+								locale,
+							})}
+						</p>
+
+						{(product.stock || 0) <= 0 && (
+							<div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/30 rounded text-red-400 text-sm uppercase tracking-wider">
+								<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+									<path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+								</svg>
+								Out of Stock
+							</div>
+						)}
+
+						<section className="pt-6 border-t border-[#D4AF37]/20">
+							<h2 className="text-sm uppercase tracking-[0.2em] text-[#D4AF37]/70 mb-4">Description</h2>
+							<div className="prose prose-sm prose-invert max-w-none text-yellow-100/80">
+								<Markdown source={product.summary || ""} />
+							</div>
+						</section>
+
+						<AddToCart
+							variantId={ynsProduct.variants[0]?.id || product.id}
+							className={(product.stock || 0) <= 0 ? "vero-button opacity-50 cursor-not-allowed w-full py-4" : "vero-button w-full py-4"}
+						>
+							{(product.stock || 0) <= 0 ? "Out of Stock" : "Add to Cart"}
+						</AddToCart>
+					</div>
 				</div>
 
 				<div className="lg:col-span-7 lg:row-span-3 lg:row-start-1">
@@ -113,49 +143,37 @@ export default async function SingleProductPage(props: {
 								image: idx.toString(),
 							});
 							return (
-								<YnsLink key={idx} href={`?${params}`} scroll={false}>
+								<YnsLink key={idx} href={`?${params}`} scroll={false} className="group block">
 									{idx === 0 ? (
-										<MainProductImage
-											key={image}
-											className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
-											src={image}
-											loading="eager"
-											priority
-											alt=""
-										/>
+										<div className="vero-card rounded-lg overflow-hidden border-2 border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all duration-500">
+											<MainProductImage
+												key={image}
+												className="w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+												src={image}
+												loading="eager"
+												priority
+												alt={product.name}
+											/>
+										</div>
 									) : (
-										<Image
-											key={image}
-											className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
-											src={image}
-											width={700 / 3}
-											height={700 / 3}
-											sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
-											loading="eager"
-											priority
-											alt=""
-										/>
+										<div className="vero-card rounded-lg overflow-hidden border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all duration-300">
+											<Image
+												key={image}
+												className="w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+												src={image}
+												width={700 / 3}
+												height={700 / 3}
+												sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
+												loading="eager"
+												priority
+												alt={`${product.name} - Image ${idx + 1}`}
+											/>
+										</div>
 									)}
 								</YnsLink>
 							);
 						})}
 					</div>
-				</div>
-
-				<div className="grid gap-8 lg:col-span-5">
-					<section>
-						<h2 className="sr-only">{t("descriptionTitle")}</h2>
-						<div className="prose text-secondary-foreground">
-							<Markdown source={product.summary || ""} />
-						</div>
-					</section>
-
-					<AddToCart
-						variantId={ynsProduct.variants[0]?.id || product.id}
-						className={(product.stock || 0) <= 0 ? "opacity-50 cursor-not-allowed" : ""}
-					>
-						{(product.stock || 0) <= 0 ? "Out of Stock" : "Add to Cart"}
-					</AddToCart>
 				</div>
 			</div>
 
