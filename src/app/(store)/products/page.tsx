@@ -1,6 +1,6 @@
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { commerce } from "@/lib/commerce";
 import { ProductList } from "@/ui/products/product-list";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -15,8 +15,9 @@ export default async function AllProductsPage() {
 	let products: any[] = [];
 
 	try {
-		const result = await getProducts(100);
+		const result = await commerce.product.browse({ first: 100 });
 		products = result.data || [];
+		console.log(`✅ Loaded ${products.length} products from commerce-kit on /products`);
 	} catch (error) {
 		console.error("Error loading products:", error);
 		products = [];

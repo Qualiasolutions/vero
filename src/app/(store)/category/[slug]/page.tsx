@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { commerce } from "@/lib/commerce";
 import StoreConfig from "@/store.config";
 import { ProductList } from "@/ui/products/product-list";
 
@@ -13,7 +13,7 @@ export const generateMetadata = async (props: { params: Promise<{ slug: string }
 		return notFound();
 	}
 
-	
+
 	return {
 		title: `${category.name} - Veromodels`,
 		description: category.description,
@@ -30,57 +30,58 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 	}
 
 	// Get all products and filter based on category logic
-	const allProductsResult = await getProducts(100);
-	let filteredProducts = allProductsResult.data;
+	const allProductsResult = await commerce.product.browse({ first: 100 });
+	const allProducts = allProductsResult.data || [];
+	let filteredProducts = allProducts;
 
 	// Apply category filtering based on product metadata and category type
 	switch (params.slug) {
 		case "new-arrivals":
 			// Show first 12 products as "new arrivals"
-			filteredProducts = allProductsResult.data.slice(0, 12);
+			filteredProducts = allProducts.slice(0, 12);
 			break;
 		case "on-sale":
 			// Show some mid-range products as "on sale"
-			filteredProducts = allProductsResult.data.slice(12, 24);
+			filteredProducts = allProducts.slice(12, 24);
 			break;
 		case "limited-edition":
 			// Show products with "limited" in name or premium models
-			filteredProducts = allProductsResult.data.filter(p =>
+			filteredProducts = allProducts.filter(p =>
 				p.name.toLowerCase().includes("limited") ||
 				p.name.toLowerCase().includes("edition") ||
 				p.price > 150
 			);
 			// Fallback if no matches
 			if (filteredProducts.length === 0) {
-				filteredProducts = allProductsResult.data.slice(24, 36);
+				filteredProducts = allProducts.slice(24, 36);
 			}
 			break;
 		case "rare":
 			// Show premium/older models
-			filteredProducts = allProductsResult.data.filter(p =>
+			filteredProducts = allProducts.filter(p =>
 				p.name.toLowerCase().includes("rare") ||
 				p.name.toLowerCase().includes("vintage") ||
 				p.name.toLowerCase().includes("classic")
 			);
 			// Fallback if no matches
 			if (filteredProducts.length === 0) {
-				filteredProducts = allProductsResult.data.slice(36, 48);
+				filteredProducts = allProducts.slice(36, 48);
 			}
 			break;
 		case "pre-order":
 			// Show some premium models as "pre-order"
-			filteredProducts = allProductsResult.data.filter(p =>
+			filteredProducts = allProducts.filter(p =>
 				p.name.toLowerCase().includes("2025") ||
 				p.name.toLowerCase().includes("pre-order")
 			);
 			// Fallback if no matches
 			if (filteredProducts.length === 0) {
-				filteredProducts = allProductsResult.data.slice(48, 60);
+				filteredProducts = allProducts.slice(48, 60);
 			}
 			break;
 		case "coming-soon":
 			// Show remaining products as "coming soon"
-			filteredProducts = allProductsResult.data.slice(60);
+			filteredProducts = allProducts.slice(60);
 			break;
 		default:
 			// If no matching category, return empty

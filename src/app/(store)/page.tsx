@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next/types";
 import Link from "next/link";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { commerce } from "@/lib/commerce";
 import StoreConfig from "@/store.config";
 import { EnhancedProductCard } from "@/ui/products/enhanced-product-card";
 import { Badge } from "@/ui/shadcn/badge";
@@ -19,10 +19,10 @@ export default async function Home() {
 	let products: any[] = [];
 
 	try {
-		// Load products from our custom service
-		const result = await getProducts(24);
+		// Load products from commerce-kit
+		const result = await commerce.product.browse({ first: 24 });
 		products = result.data || [];
-		console.log(`✅ Loaded ${products.length} products from Stripe`);
+		console.log(`✅ Loaded ${products.length} products from Stripe via commerce-kit`);
 	} catch (error) {
 		console.error("Error in Home component:", error);
 		products = [];
@@ -107,8 +107,8 @@ export default async function Home() {
 										name: product.name,
 										slug: product.slug || product.id,
 										price: product.price,
-										images: product.images,
-										metadata: (product as any).metadata || {},
+										images: product.images || [],
+										metadata: product.metadata || {},
 									}}
 									currency="€"
 								/>
@@ -139,8 +139,8 @@ export default async function Home() {
 										name: product.name,
 										slug: product.slug || product.id,
 										price: product.price,
-										images: product.images,
-										metadata: (product as any).metadata || {},
+										images: product.images || [],
+										metadata: product.metadata || {},
 									}}
 									currency="€"
 								/>
@@ -173,8 +173,8 @@ export default async function Home() {
 												name: product.name,
 												slug: product.slug || product.id,
 												price: product.price,
-												images: product.images,
-												metadata: (product as any).metadata || {},
+												images: product.images || [],
+												metadata: product.metadata || {},
 											}}
 											currency="€"
 										/>
@@ -204,8 +204,8 @@ export default async function Home() {
 												name: product.name,
 												slug: product.slug || product.id,
 												price: product.price,
-												images: product.images,
-												metadata: (product as any).metadata || {},
+												images: product.images || [],
+												metadata: product.metadata || {},
 											}}
 											currency="€"
 										/>
