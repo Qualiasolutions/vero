@@ -49,10 +49,10 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 					</h1>
 					<div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
 				</div>
-				<p className="text-center text-xs sm:text-sm text-[#D4AF37]/70 uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
+				<p className="text-center text-xs sm:text-sm text-[#D4AF37] uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
 					{t("title", { categoryName: deslugify(params.slug) })}
 				</p>
-				<div className="text-center text-xs sm:text-sm text-yellow-100/60 mt-4">
+				<div className="text-center text-xs sm:text-sm text-[#6C757D] mt-4">
 					{products.length} {products.length === 1 ? "Model" : "Models"}
 				</div>
 			</div>

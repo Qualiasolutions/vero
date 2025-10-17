@@ -32,7 +32,7 @@ export default async function AllProductsPage() {
 					{t("title")}
 				</h1>
 				<div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
-				<p className="text-xs sm:text-sm text-[#D4AF37]/70 uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
+				<p className="text-xs sm:text-sm text-[#D4AF37] uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
 					Premium Diecast Collection
 				</p>
 			</div>

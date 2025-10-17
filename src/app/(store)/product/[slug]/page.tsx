@@ -70,7 +70,7 @@ export default async function SingleProductPage(props: {
 			<Breadcrumb className="mb-8">
 				<BreadcrumbList>
 					<BreadcrumbItem>
-						<BreadcrumbLink asChild className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#E6C757]">
+						<BreadcrumbLink asChild className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]">
 							<YnsLink href="/products">{t("allProducts")}</YnsLink>
 						</BreadcrumbLink>
 					</BreadcrumbItem>
@@ -78,7 +78,7 @@ export default async function SingleProductPage(props: {
 						<>
 							<BreadcrumbSeparator className="text-[#D4AF37]/50" />
 							<BreadcrumbItem>
-								<BreadcrumbLink className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#E6C757]" asChild>
+								<BreadcrumbLink className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]" asChild>
 									<YnsLink href={`/category/${category}`}>{deslugify(category)}</YnsLink>
 								</BreadcrumbLink>
 							</BreadcrumbItem>
@@ -86,7 +86,7 @@ export default async function SingleProductPage(props: {
 					)}
 					<BreadcrumbSeparator className="text-[#D4AF37]/50" />
 					<BreadcrumbItem>
-						<BreadcrumbPage className="text-yellow-100">{product.name}</BreadcrumbPage>
+						<BreadcrumbPage className="text-[#212529]">{product.name}</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
@@ -95,7 +95,7 @@ export default async function SingleProductPage(props: {
 				<div className="lg:col-span-5 lg:col-start-8">
 					<div className="lg:sticky lg:top-24 space-y-4 sm:space-y-6">
 						<div className="space-y-3">
-							<h1 className="text-2xl sm:text-3xl lg:text-4xl font-light leading-tight tracking-wide text-yellow-100">
+							<h1 className="text-2xl sm:text-3xl lg:text-4xl font-light leading-tight tracking-wide text-[#212529]">
 								{product.name}
 							</h1>
 							<div className="w-12 sm:w-16 h-px bg-gradient-to-r from-[#D4AF37] to-transparent" />
@@ -110,7 +110,7 @@ export default async function SingleProductPage(props: {
 						</p>
 
 						{(product.stock || 0) <= 0 && (
-							<div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/30 rounded text-red-400 text-sm uppercase tracking-wider">
+							<div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded text-red-600 text-sm uppercase tracking-wider">
 								<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
 									<path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
 								</svg>
@@ -119,8 +119,8 @@ export default async function SingleProductPage(props: {
 						)}
 
 						<section className="pt-6 border-t border-[#D4AF37]/20">
-							<h2 className="text-sm uppercase tracking-[0.2em] text-[#D4AF37]/70 mb-4">Description</h2>
-							<div className="prose prose-sm prose-invert max-w-none text-yellow-100/80">
+							<h2 className="text-sm uppercase tracking-[0.2em] text-[#D4AF37] mb-4">Description</h2>
+							<div className="prose prose-sm max-w-none text-[#6C757D]">
 								<Markdown source={product.summary || ""} />
 							</div>
 						</section>

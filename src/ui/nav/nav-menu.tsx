@@ -37,10 +37,10 @@ export const NavMenu = () => {
 						<li key={link.href}>
 							<Link
 								href={link.href}
-								className="inline-flex h-9 w-max items-center justify-center px-4 py-2 text-sm font-light tracking-wide text-yellow-400/80 hover:text-yellow-300 transition-colors duration-300 relative group"
+								className="inline-flex h-9 w-max items-center justify-center px-4 py-2 text-sm font-light tracking-wide text-[#6C757D] hover:text-[#D4AF37] transition-colors duration-300 relative group"
 							>
 								{link.label}
-								<span className="absolute bottom-0 left-0 w-0 h-px bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+								<span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4AF37] group-hover:w-full transition-all duration-300"></span>
 							</Link>
 						</li>
 					))}
@@ -53,7 +53,7 @@ export const NavMenu = () => {
 							<li key={link.href}>
 								<Link
 									href={link.href}
-									className="inline-flex h-9 w-full items-center justify-center px-4 py-2 text-sm font-light text-yellow-400/80 hover:text-yellow-300 transition-colors border border-yellow-900/30 hover:border-yellow-400/60"
+									className="inline-flex h-9 w-full items-center justify-center px-4 py-2 text-sm font-light text-[#6C757D] hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/20 hover:border-[#D4AF37]/60"
 								>
 									{link.label}
 								</Link>

@@ -40,13 +40,13 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 			/>
 
 			{/* Sidebar */}
-			<div className="fixed right-0 top-0 z-50 h-screen w-full sm:w-96 max-w-full bg-black border-l-2 border-[#D4AF37]/30 shadow-2xl shadow-[#D4AF37]/10 transition-transform">
+			<div className="fixed right-0 top-0 z-50 h-screen w-full sm:w-96 max-w-full bg-white border-l-2 border-[#D4AF37]/30 shadow-2xl shadow-[#D4AF37]/10 transition-transform">
 				<div className="flex h-full flex-col">
 					{/* Header */}
-					<div className="flex items-center justify-between border-b border-[#D4AF37]/30 p-6 bg-gradient-to-b from-[#1a1a1a] to-black">
+					<div className="flex items-center justify-between border-b border-[#D4AF37]/30 p-6 bg-gradient-to-b from-[#FDFBF7] to-white">
 						<div className="flex items-center gap-3">
 							<ShoppingBag className="h-5 w-5 text-[#D4AF37]" />
-							<h2 className="text-lg font-light uppercase tracking-wider text-yellow-100">
+							<h2 className="text-lg font-light uppercase tracking-wider text-[#212529]">
 								Cart <span className="text-[#D4AF37]">({itemCount})</span>
 							</h2>
 						</div>
@@ -60,13 +60,13 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 					</div>
 
 					{/* Content */}
-					<div className="flex-1 overflow-y-auto bg-black">
+					<div className="flex-1 overflow-y-auto bg-white">
 						{!cart || !cart.items || cart.items.length === 0 ? (
 							<div className="flex h-full flex-col items-center justify-center gap-4 p-6 text-center">
 								<ShoppingBag className="h-16 w-16 text-[#D4AF37]/30" />
 								<div>
-									<h3 className="font-light text-yellow-100 text-lg">Your cart is empty</h3>
-									<p className="text-sm text-yellow-100/60 mt-2">Start shopping to add premium models</p>
+									<h3 className="font-light text-[#212529] text-lg">Your cart is empty</h3>
+									<p className="text-sm text-[#6C757D] mt-2">Start shopping to add premium models</p>
 								</div>
 							</div>
 						) : (
@@ -79,7 +79,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 									return (
 										<div key={item.id} className="flex items-start gap-3 border-b border-[#D4AF37]/20 pb-4">
 											{/* Product Image */}
-											<div className="flex-shrink-0 w-20 h-20 bg-black/50 border border-[#D4AF37]/20 rounded-lg overflow-hidden">
+											<div className="flex-shrink-0 w-20 h-20 bg-[#F8F9FA] border border-[#D4AF37]/20 rounded-lg overflow-hidden">
 												{product?.images?.[0] ? (
 													<Image
 														src={product.images[0]}
@@ -97,7 +97,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
 											{/* Product Info */}
 											<div className="flex-1 min-w-0">
-												<h3 className="font-light text-sm text-yellow-100 leading-snug">
+												<h3 className="font-light text-sm text-[#212529] leading-snug">
 													{product?.name || `Product ${item.productId}`}
 												</h3>
 												<p className="text-sm vero-text-gradient font-semibold mt-1">
@@ -113,7 +113,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 											<div className="flex flex-col items-end gap-2">
 												<button
 													onClick={() => handleRemoveItem(item.variantId || item.productId)}
-													className="text-red-400 hover:text-red-300 p-1 transition-colors"
+													className="text-red-500 hover:text-red-600 p-1 transition-colors"
 													aria-label="Remove item"
 												>
 													<X className="h-4 w-4" />
@@ -128,7 +128,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 													>
 														<Minus className="h-3 w-3" />
 													</button>
-													<span className="min-w-[1.5rem] text-center text-sm font-medium text-yellow-100">
+													<span className="min-w-[1.5rem] text-center text-sm font-medium text-[#212529]">
 														{item.quantity}
 													</span>
 													<button
@@ -150,9 +150,9 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
 					{/* Footer with Total */}
 					{cart && cart.items.length > 0 && (
-						<div className="border-t border-[#D4AF37]/30 p-6 space-y-4 bg-gradient-to-t from-[#1a1a1a] to-black">
+						<div className="border-t border-[#D4AF37]/30 p-6 space-y-4 bg-gradient-to-t from-[#FDFBF7] to-white">
 							<div className="flex items-center justify-between">
-								<span className="text-sm uppercase tracking-wider text-yellow-100/70">Total:</span>
+								<span className="text-sm uppercase tracking-wider text-[#6C757D]">Total:</span>
 								<span className="text-2xl font-semibold vero-text-gradient">
 									{formatMoney({
 										amount: cart.total || 0,
@@ -164,7 +164,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 							<button className="vero-button w-full rounded-lg px-6 py-4 uppercase tracking-wider">
 								Proceed to Checkout
 							</button>
-							<p className="text-xs text-center text-yellow-100/40">
+							<p className="text-xs text-center text-[#6C757D]">
 								Secure checkout powered by Stripe
 							</p>
 						</div>

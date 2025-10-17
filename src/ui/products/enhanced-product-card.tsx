@@ -96,7 +96,7 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 					)}
 				</div>
 
-				<div className="p-4 sm:p-5 space-y-3">
+				<div className="p-4 sm:p-5 space-y-3 bg-white">
 					{/* Brand */}
 					{product.metadata?.brand && (
 						<div className="text-xs text-[#D4AF37]/70 uppercase tracking-[0.2em] font-light">
@@ -105,7 +105,7 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 					)}
 
 					{/* Product Name */}
-					<h3 className="font-light text-sm sm:text-base leading-snug line-clamp-2 text-yellow-100 group-hover:text-[#D4AF37] transition-colors duration-300 tracking-wide">
+					<h3 className="font-light text-sm sm:text-base leading-snug line-clamp-2 text-[#212529] group-hover:text-[#D4AF37] transition-colors duration-300 tracking-wide">
 						{product.name}
 					</h3>
 
@@ -116,7 +116,7 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 								<span className="text-xl font-semibold vero-text-gradient">
 									{currency}{product.price.toFixed(2)}
 								</span>
-								<span className="text-sm text-gray-500 line-through">
+								<span className="text-sm text-[#6C757D] line-through">
 									{currency}{originalPrice.toFixed(2)}
 								</span>
 								<span className="text-xs text-[#D4AF37] font-semibold bg-[#D4AF37]/10 px-2 py-0.5 rounded">
@@ -132,7 +132,7 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 
 					{/* Details Link */}
 					<div className="pt-3 border-t border-[#D4AF37]/20">
-						<span className="text-xs text-[#D4AF37] group-hover:text-[#E6C757] font-medium uppercase tracking-wider transition-colors duration-300 flex items-center gap-2">
+						<span className="text-xs text-[#D4AF37] group-hover:text-[#B8941F] font-medium uppercase tracking-wider transition-colors duration-300 flex items-center gap-2">
 							View Details
 							<svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
