@@ -1,7 +1,6 @@
 // import { ProductModel3D } from "@/app/(store)/product/[slug]/product-model3d";
 import {
 	Award,
-	Box,
 	Check,
 	CheckCircle2,
 	Clock,
