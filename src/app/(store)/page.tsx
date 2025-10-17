@@ -10,7 +10,6 @@ import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/m
 import { BackgroundBeams } from "@/ui/shadcn/background-beams";
 import { ShootingStars } from "@/ui/shadcn/shooting-stars";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/ui/shadcn/tooltip";
-import { Skeleton } from "@/ui/shadcn/skeleton";
 
 export const metadata: Metadata = {
 	alternates: { canonical: publicUrl },
