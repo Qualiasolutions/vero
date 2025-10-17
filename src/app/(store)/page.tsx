@@ -4,6 +4,7 @@ import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
 import { getProductsByCategory } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
+import { HeroSlideshow } from "@/ui/hero-slideshow";
 import { CompactProductCard } from "@/ui/products/compact-product-card";
 import { Badge } from "@/ui/shadcn/badge";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
@@ -28,6 +29,9 @@ export default async function Home() {
 
 	return (
 		<main className="min-h-screen bg-white">
+			{/* Hero Slideshow - Right under header */}
+			<HeroSlideshow />
+
 			{/* Hero Section */}
 			<section className="relative bg-gradient-to-b from-[#FDFBF7] via-white to-[#F8F9FA] border-b border-[#D4AF37]/20 overflow-hidden">
 				{/* Subtle Animated Background */}
