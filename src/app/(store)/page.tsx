@@ -36,88 +36,106 @@ export default async function Home() {
 				</div>
 			</section>
 
-			{/* Category Columns with Products - 6 Columns Layout */}
+			{/* Category Columns with Products - 6 Columns in Single Row */}
 			<section className="w-full px-4 py-8 bg-transparent">
-				<div className="max-w-7xl mx-auto">
-					{/* Grid of 6 columns (2 on mobile, 3 on tablet, 6 on desktop) */}
-					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-						{categoryProducts.map(({ category, products }) => (
-							<div key={category.slug} className="flex flex-col space-y-4">
-								{/* Category Header with Image */}
-								<Link
-									href={`/category/${category.slug}`}
-									className="group relative overflow-hidden rounded-lg aspect-square hover:scale-[1.02] transition-all duration-300"
+				<div className="max-w-[1600px] mx-auto">
+					{/* Grid of 6 columns (1 on mobile, 3 on tablet, 6 on desktop) */}
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+						{categoryProducts.map(({ category, products }) => {
+							// Map badge color to subtle background tint
+							const getBgTint = (badgeColor: string) => {
+								const colorMap: Record<string, string> = {
+									"bg-green-500": "bg-green-50/50 border-green-100",
+									"bg-red-500": "bg-red-50/50 border-red-100",
+									"bg-purple-500": "bg-purple-50/50 border-purple-100",
+									"bg-amber-500": "bg-amber-50/50 border-amber-100",
+									"bg-blue-500": "bg-blue-50/50 border-blue-100",
+									"bg-indigo-500": "bg-indigo-50/50 border-indigo-100",
+								};
+								return colorMap[badgeColor] || "bg-gray-50/50 border-gray-100";
+							};
+
+							return (
+								<div
+									key={category.slug}
+									className={`flex flex-col space-y-3 p-3 rounded-xl border ${getBgTint(category.badgeColor)} transition-all duration-300 hover:shadow-lg`}
 								>
-									<div className="relative w-full h-full">
-										<Image
-											src={category.image}
-											alt={category.name}
-											fill
-											className="object-cover transition-transform duration-500 group-hover:scale-110"
-											sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-										/>
-									</div>
-									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-3">
-										<Badge className={`${category.badgeColor} text-white text-xs mb-1 w-fit`}>
-											{category.badge}
-										</Badge>
-										<h2 className="text-white font-medium text-xs uppercase tracking-wide">
-											{category.name}
-										</h2>
-									</div>
-								</Link>
-
-								{/* Products under this category */}
-								<div className="space-y-3">
-									{products.slice(0, 4).map((product) => (
-										<Link
-											key={product.id}
-											href={`/product/${product.slug || product.id}`}
-											className="group block"
-										>
-											<div className="vero-card rounded-lg overflow-hidden hover:scale-[1.02] transition-all duration-300">
-												{/* Product Image */}
-												<div className="relative aspect-square w-full bg-[#F8F9FA]">
-													{product.images && product.images.length > 0 && product.images[0] ? (
-														<Image
-															src={product.images[0]}
-															alt={product.name}
-															fill
-															className="object-contain p-2 transition-transform duration-500 group-hover:scale-110"
-															sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-														/>
-													) : (
-														<div className="w-full h-full flex items-center justify-center text-[#6C757D]">
-															No Image
-														</div>
-													)}
-												</div>
-
-												{/* Product Info - Compact */}
-												<div className="p-2">
-													<h3 className="text-xs text-[#212529] font-medium line-clamp-2 mb-1 group-hover:text-[#D4AF37] transition-colors">
-														{product.name}
-													</h3>
-													<p className="text-sm font-semibold text-[#D4AF37]">
-														€{(product.price / 100).toFixed(2)}
-													</p>
-												</div>
-											</div>
-										</Link>
-									))}
-								</div>
-
-								{/* View All Link */}
-								{products.length > 0 && (
+									{/* Category Header */}
 									<Link
 										href={`/category/${category.slug}`}
-										className="text-xs text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-all duration-300 text-center py-2 hover:underline"
+										className="group relative overflow-hidden rounded-lg aspect-[4/3] hover:scale-[1.02] transition-all duration-300"
 									>
-										View All →
+										<div className="relative w-full h-full">
+											<Image
+												src={category.image}
+												alt={category.name}
+												fill
+												className="object-cover transition-transform duration-500 group-hover:scale-110"
+												sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+											/>
+										</div>
+										<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-2.5">
+											<Badge className={`${category.badgeColor} text-white text-[10px] mb-1 w-fit px-2 py-0.5`}>
+												{category.badge}
+											</Badge>
+											<h2 className="text-white font-semibold text-xs uppercase tracking-wide">
+												{category.name}
+											</h2>
+										</div>
 									</Link>
-								)}
-							</div>
-						))}
+
+									{/* 3 Products under this category */}
+									<div className="space-y-2.5">
+										{products.slice(0, 3).map((product) => (
+											<Link
+												key={product.id}
+												href={`/product/${product.slug || product.id}`}
+												className="group block"
+											>
+												<div className="bg-white rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100">
+													{/* Product Image */}
+													<div className="relative aspect-square w-full bg-white">
+														{product.images && product.images.length > 0 && product.images[0] ? (
+															<Image
+																src={product.images[0]}
+																alt={product.name}
+																fill
+																className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+																sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+															/>
+														) : (
+															<div className="w-full h-full flex items-center justify-center text-[#6C757D] text-xs">
+																No Image
+															</div>
+														)}
+													</div>
+
+													{/* Product Info - Compact */}
+													<div className="p-2 bg-white">
+														<h3 className="text-[11px] text-[#212529] font-medium line-clamp-2 mb-1 group-hover:text-[#D4AF37] transition-colors leading-tight">
+															{product.name}
+														</h3>
+														<p className="text-sm font-bold text-[#D4AF37]">
+															€{(product.price / 100).toFixed(2)}
+														</p>
+													</div>
+												</div>
+											</Link>
+										))}
+									</div>
+
+									{/* View All Link */}
+									{products.length > 0 && (
+										<Link
+											href={`/category/${category.slug}`}
+											className="text-[11px] text-[#D4AF37] hover:text-[#B8941F] font-semibold tracking-wide transition-all duration-300 text-center py-1.5 hover:underline uppercase"
+										>
+											View All →
+										</Link>
+									)}
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			</section>
