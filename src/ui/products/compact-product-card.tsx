@@ -60,24 +60,24 @@ export function CompactProductCard({ product, currency = "€" }: CompactProduct
 		});
 	};
 
-	// Determine badge based on product metadata
+	// Determine badge based on product metadata - Professional Vero palette
 	const getBadge = () => {
 		const category = product.metadata?.category?.toLowerCase();
 
 		if (isOnSale) {
-			return { text: "SALE", color: "bg-red-500 text-white" };
+			return { text: "SALE", color: "bg-[#B8941F] text-white shadow-md" };
 		}
 		if (isPreorder && product.metadata?.releaseDate) {
-			return { text: "PRE-ORDER", color: "bg-blue-500 text-white" };
+			return { text: "PRE-ORDER", color: "bg-[#2A2A2A] text-[#F5E6D3] border border-[#D4AF37]/20" };
 		}
 		if (category?.includes("rare") || product.name.toLowerCase().includes("rare")) {
-			return { text: "RARE", color: "bg-amber-500 text-white" };
+			return { text: "RARE", color: "bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-white shadow-lg" };
 		}
 		if (category?.includes("limited") || product.name.toLowerCase().includes("limited")) {
-			return { text: "LIMITED", color: "bg-purple-500 text-white" };
+			return { text: "LIMITED", color: "bg-[#0A0A0A] border-2 border-[#D4AF37] text-[#D4AF37]" };
 		}
-		if (category?.includes("new")) {
-			return { text: "NEW", color: "bg-green-500 text-white" };
+		if (category?.includes("new") || category?.includes("collection")) {
+			return { text: "NEW", color: "bg-[#F5E6D3] text-[#B8941F] border border-[#D4AF37]/30" };
 		}
 		return null;
 	};
@@ -103,12 +103,14 @@ export function CompactProductCard({ product, currency = "€" }: CompactProduct
 						</div>
 					)}
 
-					{/* Favorite Button */}
+					{/* Favorite Button - Vero Gold Theme */}
 					<button
 						onClick={handleToggleFavorite}
 						className={cn(
 							"absolute top-2 right-2 z-10 p-1.5 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 shadow-md",
-							isFavorite(product.id) ? "bg-red-500 text-white" : "bg-white/90 text-gray-600 hover:bg-white",
+							isFavorite(product.id)
+								? "bg-[#D4AF37] text-white"
+								: "bg-white/90 text-[#6C757D] hover:bg-white hover:text-[#D4AF37]",
 						)}
 						aria-label={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}
 						title={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}

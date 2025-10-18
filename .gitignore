@@ -41,3 +41,6 @@ next-env.d.ts
 .zed
 
 /src/generated/prisma
+
+.env.production
+.env.production.local

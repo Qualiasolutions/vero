@@ -37,7 +37,7 @@ export function FavoriteButton({ product, className = "" }: FavoriteButtonProps)
 			className={cn(
 				"flex items-center justify-center gap-2 rounded-lg px-6 py-3 transition-all duration-300 border-2",
 				isProductFavorite
-					? "bg-red-500 border-red-500 text-white hover:bg-red-600 hover:border-red-600"
+					? "bg-[#D4AF37] border-[#D4AF37] text-white hover:bg-[#E6C757] hover:border-[#E6C757]"
 					: "bg-white border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]",
 				className,
 			)}

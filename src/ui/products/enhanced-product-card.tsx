@@ -28,24 +28,24 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 	const isPreorder = product.metadata?.preorder === "true";
 	const originalPrice = product.metadata?.originalPrice ? parseFloat(product.metadata.originalPrice) : null;
 
-	// Determine badge based on product metadata
+	// Determine badge based on product metadata - Professional Vero palette
 	const getBadge = () => {
 		const category = product.metadata?.category?.toLowerCase();
 
 		if (isOnSale) {
-			return { text: "SPECIAL PRICE", color: "bg-red-500 text-white" };
+			return { text: "SPECIAL PRICE", color: "bg-[#B8941F] text-white shadow-md" };
 		}
 		if (isPreorder && product.metadata?.releaseDate) {
-			return { text: "PRE-ORDER", color: "bg-blue-500 text-white" };
+			return { text: "PRE-ORDER", color: "bg-[#2A2A2A] text-[#F5E6D3] border border-[#D4AF37]/20" };
 		}
 		if (category?.includes("rare") || product.name.toLowerCase().includes("rare")) {
-			return { text: "RARE", color: "bg-amber-500 text-white" };
+			return { text: "RARE", color: "bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-white shadow-lg" };
 		}
 		if (category?.includes("limited") || product.name.toLowerCase().includes("limited")) {
-			return { text: "LIMITED EDITION", color: "bg-purple-500 text-white" };
+			return { text: "LIMITED EDITION", color: "bg-[#0A0A0A] border-2 border-[#D4AF37] text-[#D4AF37]" };
 		}
-		if (category?.includes("collection")) {
-			return { text: "NEW ARRIVAL", color: "bg-green-500 text-white" };
+		if (category?.includes("collection") || category?.includes("new")) {
+			return { text: "NEW ARRIVAL", color: "bg-[#F5E6D3] text-[#B8941F] border border-[#D4AF37]/30" };
 		}
 		return null;
 	};
@@ -57,19 +57,10 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 		<Link href={`/product/${product.slug}`} className="group block">
 			<div className="vero-card rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
 				<div className="relative aspect-square overflow-hidden bg-gradient-to-br from-[#0A0A0A] to-[#1A1A1A]">
-					{/* Badge */}
+					{/* Badge - Professional Vero Styling */}
 					{badge && (
 						<div className="absolute top-3 left-3 z-10">
-							<div
-								className={cn(
-									"px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm",
-									badge.text === "SPECIAL PRICE" && "bg-red-500 text-white",
-									badge.text === "PRE-ORDER" && "bg-blue-500 text-white",
-									badge.text === "RARE" && "bg-amber-500 text-white",
-									badge.text === "LIMITED EDITION" && "bg-purple-500 text-white",
-									badge.text === "NEW ARRIVAL" && "bg-green-500 text-white",
-								)}
-							>
+							<div className={cn("px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm", badge.color)}>
 								{badge.text}
 							</div>
 						</div>

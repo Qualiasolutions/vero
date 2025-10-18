@@ -8,7 +8,7 @@ import {
 	getCartAction,
 	removeFromCartAction,
 	updateCartItemAction,
-} from "@/actions/cart-actions";
+} from "@/actions/cart-actions-new";
 
 type CartAction =
 	| { type: "ADD_ITEM"; variantId: string; quantity: number; product?: ProductInfo }
