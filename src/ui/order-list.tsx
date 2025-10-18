@@ -1,20 +1,16 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Package, Search } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-// Mock data for orders
-const orders = [
-	{ id: "1", customer: "John Doe", date: "2023-05-01", total: 99.99, status: "Completed" },
-	{ id: "2", customer: "Jane Smith", date: "2023-05-02", total: 149.99, status: "Processing" },
-	{ id: "3", customer: "Bob Johnson", date: "2023-05-03", total: 79.99, status: "Shipped" },
-	{ id: "4", customer: "Alice Brown", date: "2023-05-04", total: 199.99, status: "Completed" },
-	{ id: "5", customer: "Charlie Davis", date: "2023-05-05", total: 59.99, status: "Processing" },
-];
+// Real orders will be fetched from Stripe via server actions
+// For now, showing empty state until Stripe orders integration is implemented
+const orders: Array<{ id: string; customer: string; date: string; total: number; status: string }> = [];
 
 export function OrderList() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -33,6 +29,30 @@ export function OrderList() {
 	const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
 	const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
+
+	// Empty state when no orders exist
+	if (orders.length === 0) {
+		return (
+			<div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+				<div className="mb-6 p-8 rounded-full bg-[#D4AF37]/10">
+					<Package className="h-16 w-16 text-[#D4AF37]" />
+				</div>
+				<h2 className="text-2xl md:text-3xl font-light text-[#212529] mb-4 uppercase tracking-wider">
+					No Orders Yet
+				</h2>
+				<p className="text-base text-[#6C757D] mb-8 max-w-md">
+					You haven&apos;t placed any orders yet. Start exploring our premium collection!
+				</p>
+				<Link
+					href="/products"
+					className="vero-button inline-flex items-center gap-2 px-8 py-4 rounded-lg shadow-lg uppercase tracking-wide"
+				>
+					<Package className="h-5 w-5" />
+					Browse Products
+				</Link>
+			</div>
+		);
+	}
 
 	return (
 		<div className="space-y-4">

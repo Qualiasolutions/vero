@@ -102,7 +102,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 												</h3>
 												<p className="text-sm vero-text-gradient font-semibold mt-1">
 													{formatMoney({
-														amount: price,
+														amount: Math.round(price * 100), // Convert to cents
 														currency: cart.currency || "USD",
 														locale: "en-US",
 													})}
@@ -155,7 +155,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 								<span className="text-sm uppercase tracking-wider text-[#6C757D]">Total:</span>
 								<span className="text-2xl font-semibold vero-text-gradient">
 									{formatMoney({
-										amount: cart.total || 0,
+										amount: Math.round((cart.total || 0) * 100), // Convert to cents
 										currency: cart.currency || "USD",
 										locale: "en-US",
 									})}

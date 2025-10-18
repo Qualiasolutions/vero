@@ -10,7 +10,8 @@ export async function getCartAction(): Promise<Cart | null> {
 
 	try {
 		const cart = await commerce.cart.get({ cartId });
-		return cart;
+		// Use structuredClone to eliminate Stripe class instances for client serialization
+		return cart ? structuredClone(cart) : null;
 	} catch (error) {
 		console.error("Error fetching cart:", error);
 		return null;
@@ -32,7 +33,8 @@ export async function addToCartAction(variantId: string, quantity = 1): Promise<
 			await setCartId(cart.id);
 		}
 
-		return cart;
+		// Use structuredClone to eliminate Stripe class instances for client serialization
+		return cart ? structuredClone(cart) : null;
 	} catch (error) {
 		console.error("Error adding to cart:", error);
 		throw error;
@@ -49,7 +51,8 @@ export async function updateCartItemAction(variantId: string, quantity: number):
 			variantId,
 			quantity,
 		});
-		return cart;
+		// Use structuredClone to eliminate Stripe class instances for client serialization
+		return cart ? structuredClone(cart) : null;
 	} catch (error) {
 		console.error("Error updating cart item:", error);
 		throw error;
@@ -65,7 +68,8 @@ export async function removeFromCartAction(variantId: string): Promise<Cart | nu
 			cartId,
 			variantId,
 		});
-		return cart;
+		// Use structuredClone to eliminate Stripe class instances for client serialization
+		return cart ? structuredClone(cart) : null;
 	} catch (error) {
 		console.error("Error removing from cart:", error);
 		throw error;

@@ -1,13 +1,16 @@
-import { UserIcon } from "lucide-react";
 import Image from "next/image";
 import { CartIcon } from "@/components/cart-icon";
 import { FavoritesIcon } from "@/components/favorites-icon";
+import { UserMenu } from "@/components/user-menu";
+import { auth } from "@/lib/auth";
 import { NavMenu } from "@/ui/nav/nav-menu";
 import { SearchNav } from "@/ui/nav/search-nav";
 import { SeoH1 } from "@/ui/seo-h1";
 import { YnsLink } from "@/ui/yns-link";
 
 export const Nav = async () => {
+	const session = await auth();
+
 	return (
 		<header className="z-50 py-6 sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#D4AF37]/20 shadow-sm">
 			<div className="w-full flex items-center gap-2 px-4 flex-row sm:px-6 lg:px-8 xl:px-12">
@@ -32,12 +35,7 @@ export const Nav = async () => {
 				<div className="flex items-center gap-4">
 					<FavoritesIcon />
 					<CartIcon />
-					<YnsLink
-						href="/login"
-						className="text-[#D4AF37] hover:text-[#E6C757] transition-all duration-300 hover:scale-110"
-					>
-						<UserIcon className="w-5 h-5" />
-					</YnsLink>
+					<UserMenu userEmail={session?.user.email} />
 				</div>
 			</div>
 		</header>

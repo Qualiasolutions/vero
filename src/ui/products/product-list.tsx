@@ -1,5 +1,6 @@
 import type { Product } from "commerce-kit";
 import Image from "next/image";
+import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
 import { getLocale } from "@/i18n/server";
 import { formatMoney } from "@/lib/utils";
 import { JsonLd, mappedProductsToJsonLd } from "@/ui/json-ld";
@@ -30,6 +31,7 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 													alt={product.name}
 												/>
 											</div>
+											<FavoriteHeartIcon product={product} />
 										</div>
 									)}
 									<div className="p-5 space-y-3">

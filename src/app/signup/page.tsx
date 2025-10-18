@@ -1,8 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import { SignupForm } from "@/ui/signup-form";
 
-export default function SignupPage() {
+export default async function SignupPage() {
+	// Redirect if already logged in
+	const session = await auth();
+	if (session) {
+		redirect("/orders");
+	}
+
 	return (
 		<div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-gradient-to-b from-[#FDFBF7] to-white p-6 md:p-10">
 			<div className="flex w-full max-w-sm flex-col gap-6">

@@ -3,8 +3,7 @@ import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
-import { CategoryFilters } from "@/ui/category/category-filters";
-import { ProductList } from "@/ui/products/product-list";
+import { CategoryContent } from "@/ui/category/category-content";
 
 export const generateMetadata = async (props: { params: Promise<{ slug: string }> }): Promise<Metadata> => {
 	const params = await props.params;
@@ -118,19 +117,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 
 			{/* Products Section with Filters */}
 			{products.length > 0 ? (
-				<div className="container mx-auto px-4 py-16">
-					<div className="flex flex-col lg:flex-row gap-8">
-						{/* Sidebar Filters */}
-						<div className="lg:sticky lg:top-24 lg:self-start">
-							<CategoryFilters />
-						</div>
-
-						{/* Products Grid */}
-						<div className="flex-1">
-							<ProductList products={products} />
-						</div>
-					</div>
-				</div>
+				<CategoryContent products={products} />
 			) : (
 				<div className="container mx-auto px-4 py-20">
 					<div className="text-center py-16">

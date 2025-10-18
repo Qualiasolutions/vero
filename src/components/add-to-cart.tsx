@@ -27,7 +27,7 @@ export function AddToCart({ variantId, quantity = 1, className = "", children, o
 	return (
 		<button
 			onClick={handleAddToCart}
-			className={`flex items-center justify-center gap-2 rounded-lg bg-black px-6 py-3 text-white hover:bg-gray-800 transition-colors ${className}`}
+			className={`vero-button flex items-center justify-center gap-2 px-8 py-3 rounded-md uppercase tracking-wide ${className}`}
 		>
 			<Plus className="h-4 w-4" />
 			{children || "Add to Cart"}

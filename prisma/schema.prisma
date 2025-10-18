@@ -1,0 +1,208 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User roles
+enum Role {
+  USER
+  ADMIN
+}
+
+// Order status
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+// User model for authentication
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String
+  role          Role      @default(USER)
+  emailVerified Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  cart          Cart?
+  orders        Order[]
+  sessions      Session[]
+  wishlist      Wishlist[]
+  addresses     Address[]
+
+  @@index([email])
+}
+
+// Session management for authentication
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+}
+
+// Shopping cart
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String?    @unique
+  sessionId String?    @unique // For guest carts
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  expiresAt DateTime?  // For cart cleanup
+
+  // Relations
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+
+  @@index([userId])
+  @@index([sessionId])
+}
+
+// Cart items
+model CartItem {
+  id         String   @id @default(cuid())
+  cartId     String
+  productId  String   // Stripe product ID
+  variantId  String   // Stripe price ID
+  quantity   Int
+  metadata   Json?    // Store product info snapshot
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, variantId])
+  @@index([cartId])
+}
+
+// Orders
+model Order {
+  id              String      @id @default(cuid())
+  userId          String?
+  email           String
+  stripeSessionId String?     @unique
+  stripePaymentId String?     @unique
+  total           Int         // Amount in cents
+  currency        String      @default("eur")
+  status          OrderStatus @default(PENDING)
+  metadata        Json?       // Additional order data
+  items           Json        // Order items snapshot
+  shippingAddress Json?
+  billingAddress  Json?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  user            User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([stripeSessionId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// User addresses
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  line1       String
+  line2       String?
+  city        String
+  state       String?
+  postalCode  String
+  country     String
+  phone       String?
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Wishlist/Favorites
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String   // Stripe product ID
+  metadata  Json?    // Product snapshot
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+}
+
+// Product cache (sync from Stripe)
+model Product {
+  id          String   @id // Stripe product ID
+  name        String
+  slug        String   @unique
+  description String?
+  images      Json     // Array of image URLs
+  metadata    Json
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  prices      Price[]
+
+  @@index([slug])
+  @@index([active])
+}
+
+// Price cache (sync from Stripe)
+model Price {
+  id         String   @id // Stripe price ID
+  productId  String
+  amount     Int      // Amount in cents
+  currency   String
+  active     Boolean  @default(true)
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([active])
+}
+
+// Newsletter subscriptions
+model Newsletter {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  @@index([email])
+}

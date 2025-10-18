@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import StoreConfig from "@/store.config";
 import { NavMobileMenu } from "@/ui/nav/nav-mobile-menu.client";
@@ -26,7 +28,7 @@ export const NavMenu = () => {
 						<li key={link.href}>
 							<Link
 								href={link.href}
-								className="inline-flex h-9 w-max items-center justify-center px-2 lg:px-4 py-2 text-xs lg:text-sm font-light tracking-wide text-[#6C757D] hover:text-[#D4AF37] transition-colors duration-300 relative group whitespace-nowrap"
+								className="inline-flex h-9 w-max items-center justify-center px-2 lg:px-4 py-2 text-xs lg:text-sm font-light tracking-wide text-[#6C757D] hover:text-[#D4AF37] transition-colors duration-300 relative group whitespace-nowrap cursor-pointer"
 							>
 								{link.label}
 								<span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4AF37] group-hover:w-full transition-all duration-300"></span>
@@ -42,7 +44,7 @@ export const NavMenu = () => {
 							<li key={link.href}>
 								<Link
 									href={link.href}
-									className="inline-flex h-9 w-full items-center justify-center px-4 py-2 text-sm font-light text-[#6C757D] hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/20 hover:border-[#D4AF37]/60"
+									className="inline-flex h-9 w-full items-center justify-center px-4 py-2 text-sm font-light text-[#6C757D] hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/20 hover:border-[#D4AF37]/60 cursor-pointer"
 								>
 									{link.label}
 								</Link>

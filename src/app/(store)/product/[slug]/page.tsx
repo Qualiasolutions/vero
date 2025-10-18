@@ -18,6 +18,7 @@ import { Suspense } from "react";
 import { ProductImageModal } from "@/app/(store)/product/[slug]/product-image-modal";
 import { AddToCart } from "@/components/add-to-cart";
 import { FavoriteButton } from "@/components/favorite-button";
+import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -174,6 +175,7 @@ export default async function SingleProductPage(props: {
 												Main Image
 											</div>
 										)}
+										{!isPlaceholder && <FavoriteHeartIcon product={product} />}
 									</Card>
 								</YnsLink>
 							);

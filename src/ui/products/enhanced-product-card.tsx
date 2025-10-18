@@ -63,11 +63,11 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 							<div
 								className={cn(
 									"px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm",
-									badge.text === "SPECIAL PRICE" && "bg-[#D4AF37] text-black",
-									badge.text === "PRE-ORDER" && "bg-yellow-600 text-black",
-									badge.text === "RARE" && "bg-amber-500 text-black",
-									badge.text === "LIMITED EDITION" && "bg-purple-600 text-white",
-									badge.text === "NEW ARRIVAL" && "bg-green-600 text-white",
+									badge.text === "SPECIAL PRICE" && "bg-red-500 text-white",
+									badge.text === "PRE-ORDER" && "bg-blue-500 text-white",
+									badge.text === "RARE" && "bg-amber-500 text-white",
+									badge.text === "LIMITED EDITION" && "bg-purple-500 text-white",
+									badge.text === "NEW ARRIVAL" && "bg-green-500 text-white",
 								)}
 							>
 								{badge.text}

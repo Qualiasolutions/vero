@@ -1,9 +1,11 @@
-import { Award, Package, Shield, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { Award, Eye, Package, Shield, ShoppingCart, Sparkles, TrendingUp, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next/types";
+import { AddToCart } from "@/components/add-to-cart";
+import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
 import { publicUrl } from "@/env.mjs";
-import { getProductsByCategory } from "@/lib/product-service";
+import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { CompactSlideshow } from "@/ui/home/compact-slideshow";
 import { Badge } from "@/ui/shadcn/badge";
@@ -17,13 +19,31 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	// Fetch 3 products per category for cleaner layout
-	const categoryProducts = await Promise.all(
-		StoreConfig.categories.map(async (category) => ({
+	// Fetch all products once
+	const allProductsResult = await getProducts(100);
+	const allProducts = allProductsResult.data || [];
+
+	// Distribute products across categories (3 per category)
+	const categoryProducts = StoreConfig.categories.map((category, index) => {
+		// First, try to get products with matching category metadata
+		let categoryProds = allProducts.filter(
+			(p) => p.metadata.category?.toLowerCase() === category.slug.toLowerCase(),
+		);
+
+		// If no products with category metadata, use fallback logic
+		if (categoryProds.length === 0) {
+			const startIndex = index * 3;
+			categoryProds = allProducts.slice(startIndex, startIndex + 3);
+		} else {
+			// Limit to 3 products
+			categoryProds = categoryProds.slice(0, 3);
+		}
+
+		return {
 			category,
-			products: await getProductsByCategory(category.slug, 3),
-		})),
-	);
+			products: categoryProds,
+		};
+	});
 
 	return (
 		<main className="min-h-screen bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white">
@@ -154,13 +174,9 @@ export default async function Home() {
 									{/* 3 Products under this category */}
 									<div className="space-y-2.5">
 										{products.slice(0, 3).map((product) => (
-											<Link
-												key={product.id}
-												href={`/product/${product.slug || product.id}`}
-												className="group block"
-											>
-												<div className="bg-white rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100">
-													{/* Product Image */}
+											<div key={product.id} className="group bg-white rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100">
+												{/* Product Image */}
+												<Link href={`/product/${product.slug || product.id}`} className="block">
 													<div className="relative aspect-square w-full bg-white">
 														{product.images && product.images.length > 0 && product.images[0] ? (
 															<Image
@@ -175,19 +191,38 @@ export default async function Home() {
 																No Image
 															</div>
 														)}
+														<FavoriteHeartIcon product={product} />
 													</div>
+												</Link>
 
-													{/* Product Info - Compact */}
-													<div className="p-2 bg-white">
-														<h3 className="text-[11px] text-[#212529] font-medium line-clamp-2 mb-1 group-hover:text-[#D4AF37] transition-colors leading-tight">
+												{/* Product Info - Compact */}
+												<div className="p-2 bg-white space-y-1.5">
+													<Link href={`/product/${product.slug || product.id}`}>
+														<h3 className="text-xs text-black font-semibold line-clamp-2 group-hover:text-[#D4AF37] transition-colors leading-snug">
 															{product.name}
 														</h3>
-														<p className="text-sm font-bold text-[#D4AF37]">
-															€{(product.price / 100).toFixed(2)}
-														</p>
+													</Link>
+													<p className="text-sm font-bold text-[#D4AF37]">
+														€{(product.price / 100).toFixed(2)}
+													</p>
+													<div className="flex gap-1">
+														<AddToCart
+															variantId={product.id}
+															className="flex-1 !py-1.5 !px-2 text-[10px] !rounded-sm"
+														>
+															<ShoppingCart className="h-3 w-3" />
+															ADD
+														</AddToCart>
+														<Link
+															href={`/product/${product.slug || product.id}`}
+															className="flex-1 flex items-center justify-center gap-1 bg-[#212529] hover:bg-[#1A1A1A] text-white py-1.5 px-2 text-[10px] font-semibold rounded-sm uppercase tracking-wide transition-colors"
+														>
+															<Eye className="h-3 w-3" />
+															DETAILS
+														</Link>
 													</div>
 												</div>
-											</Link>
+											</div>
 										))}
 									</div>
 
