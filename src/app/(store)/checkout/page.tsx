@@ -1,7 +1,7 @@
 import { ShoppingBag } from "lucide-react";
 import { redirect } from "next/navigation";
-import { createCheckoutSession } from "@/actions/checkout-actions";
 import { getCartAction } from "@/actions/cart-actions-new";
+import { createCheckoutSession } from "@/actions/checkout-actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

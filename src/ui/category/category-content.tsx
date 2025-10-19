@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { Product } from "@/lib/product-service";
 import { filterProducts, sortProducts } from "@/lib/filter-products";
+import type { Product } from "@/lib/product-service";
 import { CategoryFilters, type FilterState } from "@/ui/category/category-filters";
 import { ProductList } from "@/ui/products/product-list";
 

@@ -219,7 +219,10 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 					/>
 				</CollapsibleTrigger>
 				<CollapsibleContent className="pt-4 space-y-3">
-					<Select value={filters.yearRange} onValueChange={(value) => handleFilterUpdate({ yearRange: value })}>
+					<Select
+						value={filters.yearRange}
+						onValueChange={(value) => handleFilterUpdate({ yearRange: value })}
+					>
 						<SelectTrigger className="w-full">
 							<SelectValue />
 						</SelectTrigger>

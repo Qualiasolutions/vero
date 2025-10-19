@@ -1,8 +1,7 @@
 "use client";
 
-import { LogOut, User, Package } from "lucide-react";
+import { LogOut, Package, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { logout } from "@/lib/auth";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,6 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logout } from "@/lib/auth";
 
 interface UserMenuProps {
 	userEmail?: string;

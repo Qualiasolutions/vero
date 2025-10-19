@@ -19,7 +19,7 @@ async function updateCategoryImages() {
 		// Get one representative image from a product
 		const getProductImage = (index: number) => {
 			const product = products.data[index];
-			if (product && product.images && product.images.length > 0) {
+			if (product?.images && product.images.length > 0) {
 				return product.images[0];
 			}
 			return null;

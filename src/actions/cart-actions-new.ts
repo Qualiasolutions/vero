@@ -69,7 +69,7 @@ async function formatCart(cartId: string): Promise<Cart | null> {
 
 				// Get price from product (already in cents)
 				let priceAmount = 0;
-				if (product && product.price) {
+				if (product?.price) {
 					priceAmount = product.price * 100; // Convert to cents
 				}
 
@@ -79,12 +79,14 @@ async function formatCart(cartId: string): Promise<Cart | null> {
 					variantId: item.variantId,
 					quantity: item.quantity,
 					price: priceAmount,
-					product: product ? {
-						id: product.id,
-						name: product.name,
-						images: product.images || [],
-						metadata: {},
-					} : undefined,
+					product: product
+						? {
+								id: product.id,
+								name: product.name,
+								images: product.images || [],
+								metadata: {},
+							}
+						: undefined,
 				};
 			} catch (error) {
 				console.error(`Error fetching product ${item.productId}:`, error);
@@ -98,11 +100,11 @@ async function formatCart(cartId: string): Promise<Cart | null> {
 					product: item.metadata as any,
 				};
 			}
-		})
+		}),
 	);
 
 	// Calculate total
-	const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+	const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
 	return {
 		id: cart.id,
@@ -158,10 +160,12 @@ export async function addToCartAction(variantId: string, quantity = 1): Promise<
 					productId: product?.id || variantId, // Use product ID if available, otherwise variantId
 					variantId,
 					quantity,
-					metadata: product ? {
-						name: product.name,
-						images: product.images,
-					} : undefined,
+					metadata: product
+						? {
+								name: product.name,
+								images: product.images,
+							}
+						: undefined,
 				},
 			});
 		}

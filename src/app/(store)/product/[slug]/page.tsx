@@ -248,7 +248,7 @@ export default async function SingleProductPage(props: {
 									</div>
 									<div className="space-y-2 p-3 bg-white rounded-lg border border-black/5">
 										<p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Condition</p>
-										<Badge className="bg-green-500/10 text-green-700 border-0 font-bold">
+										<Badge className="bg-[#D4AF37]/10 text-[#B8941F] border-0 font-bold">
 											<Star className="w-3 h-3 mr-1" />
 											Brand New
 										</Badge>
@@ -324,7 +324,7 @@ export default async function SingleProductPage(props: {
 										</div>
 										<div className="flex justify-between items-center py-4 px-5 border-b-2 border-black/5 bg-gray-50">
 											<span className="text-gray-600 font-medium">Condition</span>
-											<Badge className="bg-green-500/10 text-green-700 border border-green-500/20 font-bold">
+											<Badge className="bg-[#D4AF37]/10 text-[#B8941F] border border-[#D4AF37]/20 font-bold">
 												<Star className="w-3 h-3 mr-1" />
 												Brand New in Box
 											</Badge>

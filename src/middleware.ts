@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { type NextRequest, NextResponse } from "next/server";
 import { isAuthenticated } from "@/lib/auth-new";
 
 // Protected paths that require authentication
@@ -15,7 +15,7 @@ const ratelimit = process.env.UPSTASH_REDIS_REST_URL
 			redis: Redis.fromEnv(),
 			limiter: Ratelimit.slidingWindow(10, "10 s"), // 10 requests per 10 seconds
 			analytics: true,
-	  })
+		})
 	: null;
 
 export async function middleware(request: NextRequest) {
@@ -27,14 +27,8 @@ export async function middleware(request: NextRequest) {
 	response.headers.set("X-Content-Type-Options", "nosniff");
 	response.headers.set("X-XSS-Protection", "1; mode=block");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-	response.headers.set(
-		"Permissions-Policy",
-		"camera=(), microphone=(), geolocation=(), interest-cohort=()"
-	);
-	response.headers.set(
-		"Strict-Transport-Security",
-		"max-age=31536000; includeSubDomains; preload"
-	);
+	response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
+	response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
 	response.headers.set(
 		"Content-Security-Policy",
 		[
@@ -50,7 +44,7 @@ export async function middleware(request: NextRequest) {
 			"form-action 'self'",
 			"frame-ancestors 'none'",
 			"upgrade-insecure-requests",
-		].join("; ")
+		].join("; "),
 	);
 
 	// Rate limiting for API routes

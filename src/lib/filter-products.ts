@@ -37,7 +37,9 @@ export function filterProducts(products: Product[], filters: FilterState): Produ
 	if (filters.scales.length > 0) {
 		filtered = filtered.filter((product) => {
 			const productScale =
-				product.metadata.scale || product.name.match(/1:\d+/)?.[0] || product.description?.match(/1:\d+/)?.[0];
+				product.metadata.scale ||
+				product.name.match(/1:\d+/)?.[0] ||
+				product.description?.match(/1:\d+/)?.[0];
 			return filters.scales.some((scale) => {
 				if (scale === "Other") {
 					return !productScale || !["1:18", "1:43", "1:64", "1:12", "1:24"].includes(productScale);
@@ -77,7 +79,8 @@ export function filterProducts(products: Product[], filters: FilterState): Produ
 			const availability = product.metadata.availability || "in-stock";
 			return filters.availability.some((filter) => {
 				if (filter === "in-stock") return availability === "in-stock" || !product.metadata.availability;
-				if (filter === "pre-order") return availability === "pre-order" || product.name.toLowerCase().includes("pre-order");
+				if (filter === "pre-order")
+					return availability === "pre-order" || product.name.toLowerCase().includes("pre-order");
 				if (filter === "limited")
 					return (
 						availability === "limited" ||

@@ -15,24 +15,24 @@ export const Banner = () => {
 	};
 
 	return (
-		<div className="bg-linear-to-r from-indigo-100 via-indigo-200 to-indigo-300 px-4 py-3 text-indigo-900">
+		<div className="bg-gradient-to-r from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] px-4 py-3 text-[#F5E6D3] border-b border-[#D4AF37]/30">
 			<div className="flex items-center justify-between gap-x-4">
 				<div className="mx-auto flex max-w-7xl items-center justify-between gap-x-4">
 					<div className="flex items-center gap-x-4">
 						<p className="text-center text-sm font-medium">
-							🎉 Your Next Store adds 3D product previews powered by Spline
+							🎉 Premium 1:18 Scale Die-Cast Model Cars - Collector's Edition
 						</p>
 						<YnsLink
-							href="/product/horizon-gaze-sunglasses"
-							className="flex-none rounded-full bg-indigo-500 px-3 py-1 text-sm font-semibold text-white shadow-xs hover:bg-indigo-600"
+							href="/new-arrivals"
+							className="flex-none rounded-full bg-[#D4AF37] px-3 py-1 text-sm font-semibold text-white shadow-md hover:bg-[#E6C757] transition-all duration-300"
 						>
-							Check it out
+							Shop Now
 						</YnsLink>
 					</div>
 				</div>
 				<button
 					onClick={handleClose}
-					className="flex-none rounded-full justify-self-end bg-indigo-500 p-1 text-white shadow-xs hover:bg-indigo-600"
+					className="flex-none rounded-full justify-self-end bg-[#D4AF37] p-1 text-white shadow-md hover:bg-[#E6C757] transition-all duration-300"
 					aria-label="Close banner"
 					type="button"
 				>

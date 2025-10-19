@@ -95,7 +95,10 @@ export default function CustomRequestPage() {
 						{ icon: Sparkles, title: "Confirmation", desc: "Photos and final pricing sent" },
 						{ icon: Shield, title: "No Obligation", desc: "Approve before any purchase" },
 					].map((step, index) => (
-						<div key={index} className="vero-card p-6 text-center border-2 border-[#D4AF37]/20 hover:border-[#D4AF37] transition-all">
+						<div
+							key={index}
+							className="vero-card p-6 text-center border-2 border-[#D4AF37]/20 hover:border-[#D4AF37] transition-all"
+						>
 							<div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#D4AF37]/10 mb-4">
 								<step.icon className="w-6 h-6 text-[#D4AF37]" />
 							</div>
@@ -220,9 +223,7 @@ export default function CustomRequestPage() {
 						</div>
 
 						<div className="mt-6">
-							<label className="block text-[#212529] mb-3 text-sm font-medium">
-								Preferred Manufacturers
-							</label>
+							<label className="block text-[#212529] mb-3 text-sm font-medium">Preferred Manufacturers</label>
 							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
 								{manufacturers.map((manufacturer) => (
 									<button
@@ -262,9 +263,7 @@ export default function CustomRequestPage() {
 						</h2>
 						<div className="grid md:grid-cols-2 gap-6">
 							<div>
-								<label className="block text-[#212529] mb-2 text-sm font-medium">
-									Minimum Budget ($)
-								</label>
+								<label className="block text-[#212529] mb-2 text-sm font-medium">Minimum Budget ($)</label>
 								<input
 									type="number"
 									value={formData.minBudget}
@@ -274,9 +273,7 @@ export default function CustomRequestPage() {
 								/>
 							</div>
 							<div>
-								<label className="block text-[#212529] mb-2 text-sm font-medium">
-									Maximum Budget ($)
-								</label>
+								<label className="block text-[#212529] mb-2 text-sm font-medium">Maximum Budget ($)</label>
 								<input
 									type="number"
 									value={formData.maxBudget}

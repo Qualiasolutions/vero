@@ -336,7 +336,10 @@ export type BreakpointKey = keyof typeof breakpoints;
  */
 export function getColor(category: keyof typeof colors, shade?: string): string {
 	const colorGroup = colors[category];
-	if (!shade) return typeof colorGroup === "string" ? colorGroup : (Object.values(colorGroup)[0] ?? colors.neutral.textPrimary);
+	if (!shade)
+		return typeof colorGroup === "string"
+			? colorGroup
+			: (Object.values(colorGroup)[0] ?? colors.neutral.textPrimary);
 	return (colorGroup as Record<string, string>)[shade] || colors.neutral.textPrimary;
 }
 

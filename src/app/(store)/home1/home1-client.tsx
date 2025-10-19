@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import type { Product } from "@/lib/product-service";
 
 interface Home1ClientProps {
@@ -236,9 +236,7 @@ export function Home1Client({ products }: Home1ClientProps) {
 											<p className="text-sm text-gray-400 line-clamp-2">{product.description}</p>
 										)}
 										<div className="flex items-center justify-between pt-4">
-											<span className="text-2xl font-bold text-[#D4AF37]">
-												€{product.price.toFixed(2)}
-											</span>
+											<span className="text-2xl font-bold text-[#D4AF37]">€{product.price.toFixed(2)}</span>
 											<span className="px-4 py-2 bg-[#D4AF37]/10 text-[#D4AF37] rounded-full text-sm font-semibold uppercase tracking-wide group-hover:bg-[#D4AF37] group-hover:text-black transition-all duration-300">
 												View
 											</span>

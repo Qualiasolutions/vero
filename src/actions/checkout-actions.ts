@@ -1,7 +1,7 @@
 "use server";
 
-import Stripe from "stripe";
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
 import { auth } from "@/lib/auth-new";
 import { prisma } from "@/lib/prisma";
 
@@ -40,7 +40,7 @@ export async function createCheckoutSession() {
 					price: price.id,
 					quantity: item.quantity,
 				};
-			})
+			}),
 		);
 
 		// Create checkout session
@@ -206,7 +206,8 @@ export async function createOrderFromCheckout(sessionId: string) {
 				currency: session.currency || "eur",
 				status: "PROCESSING",
 				items: cart.items,
-				shippingAddress: (session as any).shipping_details || (session.customer_details?.address as any) || {},
+				shippingAddress:
+					(session as any).shipping_details || (session.customer_details?.address as any) || {},
 				billingAddress: (session.customer_details?.address as any) || {},
 				metadata: {
 					shipping: session.total_details?.amount_shipping || 0,

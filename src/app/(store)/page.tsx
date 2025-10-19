@@ -76,22 +76,22 @@ export default async function Home() {
 								<p className="text-[10px] text-[#6C757D]">Officially Licensed</p>
 							</div>
 						</div>
-						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-green-50 to-white rounded-lg border border-green-200">
-							<Package className="w-8 h-8 text-green-600 flex-shrink-0" />
+						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[#E6C757]/10 to-white rounded-lg border border-[#D4AF37]/20">
+							<Package className="w-8 h-8 text-[#B8941F] flex-shrink-0" />
 							<div>
 								<p className="text-xs font-bold text-[#212529]">FREE SHIPPING</p>
 								<p className="text-[10px] text-[#6C757D]">Orders Over €150</p>
 							</div>
 						</div>
-						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-purple-50 to-white rounded-lg border border-purple-200">
-							<Award className="w-8 h-8 text-purple-600 flex-shrink-0" />
+						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[#F5E6D3]/50 to-white rounded-lg border border-[#D4AF37]/20">
+							<Award className="w-8 h-8 text-[#D4AF37] flex-shrink-0" />
 							<div>
 								<p className="text-xs font-bold text-[#212529]">PREMIUM</p>
 								<p className="text-[10px] text-[#6C757D]">1:18 Scale Quality</p>
 							</div>
 						</div>
-						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-blue-50 to-white rounded-lg border border-blue-200">
-							<TrendingUp className="w-8 h-8 text-blue-600 flex-shrink-0" />
+						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[#1A1A1A]/5 to-white rounded-lg border border-[#D4AF37]/20">
+							<TrendingUp className="w-8 h-8 text-[#B8941F] flex-shrink-0" />
 							<div>
 								<p className="text-xs font-bold text-[#212529]">LIMITED</p>
 								<p className="text-[10px] text-[#6C757D]">Exclusive Releases</p>
@@ -101,13 +101,13 @@ export default async function Home() {
 				</div>
 			</section>
 
-			{/* Hot Deals Banner */}
-			<section className="w-full px-4 py-3 bg-gradient-to-r from-red-500 to-orange-500">
+			{/* Special Offers Banner - Vero Gold */}
+			<section className="w-full px-4 py-3 bg-gradient-to-r from-[#B8941F] via-[#D4AF37] to-[#B8941F]">
 				<div className="max-w-[1600px] mx-auto">
 					<div className="flex items-center justify-center gap-2 text-white">
 						<Zap className="w-5 h-5 animate-pulse" />
 						<p className="text-sm md:text-base font-bold uppercase tracking-wide">
-							🔥 Hot Deals: Up to 30% Off Selected Items - Limited Time!
+							✨ Special Offers: Up to 30% Off Selected Items - Limited Time!
 						</p>
 						<Zap className="w-5 h-5 animate-pulse" />
 					</div>
@@ -123,17 +123,20 @@ export default async function Home() {
 					{/* Grid of 6 columns (1 on mobile, 3 on tablet, 6 on desktop) */}
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
 						{categoryProducts.map(({ category, products }) => {
-							// Map badge color to subtle background tint
+							// Map badge color to subtle Vero-themed background tint
 							const getBgTint = (badgeColor: string) => {
+								// Extract the first class from badgeColor for matching
+								const firstClass = badgeColor.split(" ")[0] || "";
 								const colorMap: Record<string, string> = {
-									"bg-green-500": "bg-green-50/50 border-green-100",
-									"bg-red-500": "bg-red-50/50 border-red-100",
-									"bg-purple-500": "bg-purple-50/50 border-purple-100",
-									"bg-amber-500": "bg-amber-50/50 border-amber-100",
-									"bg-blue-500": "bg-blue-50/50 border-blue-100",
-									"bg-indigo-500": "bg-indigo-50/50 border-indigo-100",
+									"bg-[#F5E6D3]": "bg-[#F5E6D3]/30 border-[#D4AF37]/20", // NEW
+									"bg-[#B8941F]": "bg-[#D4AF37]/10 border-[#D4AF37]/30", // SALE
+									"bg-[#0A0A0A]": "bg-[#1A1A1A]/5 border-[#D4AF37]/30", // LIMITED
+									"bg-gradient-to-r":
+										"bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/5 border-[#D4AF37]/30", // RARE
+									"bg-[#2A2A2A]": "bg-[#2A2A2A]/5 border-[#D4AF37]/20", // PRE-ORDER
+									"bg-[#1A1A1A]": "bg-[#1A1A1A]/5 border-[#E6C757]/20", // SOON
 								};
-								return colorMap[badgeColor] || "bg-gray-50/50 border-gray-100";
+								return colorMap[firstClass] || "bg-[#F5E6D3]/10 border-[#D4AF37]/20";
 							};
 
 							return (
@@ -174,7 +177,10 @@ export default async function Home() {
 									{/* 3 Products under this category */}
 									<div className="space-y-2.5">
 										{products.slice(0, 3).map((product) => (
-											<div key={product.id} className="group bg-white rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100">
+											<div
+												key={product.id}
+												className="group bg-white rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100"
+											>
 												{/* Product Image */}
 												<Link href={`/product/${product.slug || product.id}`} className="block">
 													<div className="relative aspect-square w-full bg-white">

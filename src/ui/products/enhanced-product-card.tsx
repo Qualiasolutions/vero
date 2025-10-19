@@ -60,7 +60,9 @@ export function EnhancedProductCard({ product, currency = "€" }: EnhancedProdu
 					{/* Badge - Professional Vero Styling */}
 					{badge && (
 						<div className="absolute top-3 left-3 z-10">
-							<div className={cn("px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm", badge.color)}>
+							<div
+								className={cn("px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm", badge.color)}
+							>
 								{badge.text}
 							</div>
 						</div>

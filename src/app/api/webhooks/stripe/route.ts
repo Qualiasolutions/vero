@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 						data: {
 							status: "CANCELLED",
 							metadata: {
-								...order.metadata as any,
+								...(order.metadata as any),
 								failureReason: paymentIntent.last_payment_error?.message,
 							},
 						},
