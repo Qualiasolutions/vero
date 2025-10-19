@@ -7,7 +7,7 @@ import Stripe from "stripe";
 import { supabase } from "@/lib/supabase";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-	apiVersion: "2025-08-27.basil",
+	apiVersion: "2024-11-20.acacia",
 });
 
 // Get or create cart session ID
@@ -28,8 +28,18 @@ async function getCartSessionId(): Promise<string> {
 	return sessionId;
 }
 
+interface DbCartItem {
+	id: string;
+	product_id: string;
+	quantity: number;
+	created_at: string;
+	updated_at: string;
+	session_id: string;
+	user_id: string | null;
+}
+
 // Helper to transform DB cart items to Cart type
-async function transformCart(items: any[]): Promise<Cart> {
+async function transformCart(items: DbCartItem[]): Promise<Cart> {
 	const cartItems = await Promise.all(
 		items.map(async (item) => {
 			try {
@@ -74,7 +84,7 @@ async function transformCart(items: any[]): Promise<Cart> {
 		id: items[0]?.id || "empty",
 		items: cartItems,
 		total,
-		currency: "AED",
+		currency: "eur",
 	};
 }
 
@@ -137,7 +147,7 @@ export async function addToCartAction(variantId: string, quantity: number): Prom
 				id: "empty",
 				items: [],
 				total: 0,
-				currency: "AED",
+				currency: "eur",
 			}
 		);
 	} catch (error) {
@@ -172,7 +182,7 @@ export async function updateCartItemAction(variantId: string, quantity: number):
 				id: "empty",
 				items: [],
 				total: 0,
-				currency: "AED",
+				currency: "eur",
 			}
 		);
 	} catch (error) {
@@ -194,7 +204,7 @@ export async function removeFromCartAction(variantId: string): Promise<Cart> {
 				id: "empty",
 				items: [],
 				total: 0,
-				currency: "AED",
+				currency: "eur",
 			}
 		);
 	} catch (error) {
