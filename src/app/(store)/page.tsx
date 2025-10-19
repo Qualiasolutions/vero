@@ -8,8 +8,6 @@ import { publicUrl } from "@/env.mjs";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { HeroSection } from "@/ui/home/hero-section";
-import { ImageSlideshow } from "@/ui/home/image-slideshow";
-import { ParallaxSection } from "@/ui/home/parallax-section";
 import { Badge } from "@/ui/shadcn/badge";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
 
@@ -255,9 +253,6 @@ export default async function Home() {
 				</div>
 			</section>
 
-			{/* Image Slideshow */}
-			<ImageSlideshow />
-
 			{/* Why Choose Us Section */}
 			<section className="w-full px-6 lg:px-12 xl:px-16 py-16 bg-gradient-to-b from-[#FDFBF7] to-white border-y border-[#D4AF37]/20">
 				<div className="w-full">
@@ -341,9 +336,6 @@ export default async function Home() {
 					</Marquee>
 				</div>
 			</section>
-
-			{/* Parallax Section */}
-			<ParallaxSection />
 
 			{/* Newsletter CTA */}
 			<section className="w-full px-6 lg:px-12 xl:px-16 py-8 bg-gradient-to-r from-[#D4AF37]/20 via-[#D4AF37]/10 to-[#D4AF37]/20 border-t border-[#D4AF37]/20">
