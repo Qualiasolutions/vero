@@ -7,18 +7,19 @@ export function filterProducts(products: Product[], filters: FilterState): Produ
 	// Apply price range filter
 	if (filters.priceRange !== "all") {
 		filtered = filtered.filter((product) => {
+			// Price is stored in fils (cents), so convert filter ranges to fils
 			const price = product.price;
 			switch (filters.priceRange) {
 				case "0-75":
-					return price < 75;
+					return price < 7500; // 75 AED = 7500 fils
 				case "75-150":
-					return price >= 75 && price < 150;
+					return price >= 7500 && price < 15000; // 75-150 AED
 				case "150-250":
-					return price >= 150 && price < 250;
+					return price >= 15000 && price < 25000; // 150-250 AED
 				case "250-500":
-					return price >= 250 && price < 500;
+					return price >= 25000 && price < 50000; // 250-500 AED
 				case "500+":
-					return price >= 500;
+					return price >= 50000; // 500+ AED
 				default:
 					return true;
 			}
