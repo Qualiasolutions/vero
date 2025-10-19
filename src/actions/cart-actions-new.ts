@@ -7,7 +7,7 @@ import Stripe from "stripe";
 import { supabase } from "@/lib/supabase";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-	apiVersion: "2024-11-20.acacia",
+	apiVersion: "2025-08-27.basil",
 });
 
 // Get or create cart session ID
