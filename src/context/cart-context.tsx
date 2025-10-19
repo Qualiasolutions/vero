@@ -45,7 +45,7 @@ function cartReducer(state: Cart | null, action: CartAction): Cart | null {
 						},
 					],
 					total: 0,
-					currency: "eur",
+					currency: "aed",
 				};
 			}
 

@@ -114,7 +114,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 												<p className="text-sm vero-text-gradient font-semibold mt-1">
 													{formatMoney({
 														amount: price, // Already in cents from Stripe
-														currency: cart.currency || "eur",
+														currency: cart.currency || "aed",
 														locale: "en-US",
 													})}
 												</p>
@@ -167,7 +167,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 								<span className="text-2xl font-semibold vero-text-gradient">
 									{formatMoney({
 										amount: Math.round((cart.total || 0) * 100), // Convert to cents
-										currency: cart.currency || "eur",
+										currency: cart.currency || "aed",
 										locale: "en-US",
 									})}
 								</span>

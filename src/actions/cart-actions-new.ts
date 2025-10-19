@@ -84,7 +84,7 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 		id: items[0]?.id || "empty",
 		items: cartItems,
 		total,
-		currency: "eur",
+		currency: "aed",
 	};
 }
 
@@ -147,7 +147,7 @@ export async function addToCartAction(variantId: string, quantity: number): Prom
 				id: "empty",
 				items: [],
 				total: 0,
-				currency: "eur",
+				currency: "aed",
 			}
 		);
 	} catch (error) {
@@ -182,7 +182,7 @@ export async function updateCartItemAction(variantId: string, quantity: number):
 				id: "empty",
 				items: [],
 				total: 0,
-				currency: "eur",
+				currency: "aed",
 			}
 		);
 	} catch (error) {
@@ -204,7 +204,7 @@ export async function removeFromCartAction(variantId: string): Promise<Cart> {
 				id: "empty",
 				items: [],
 				total: 0,
-				currency: "eur",
+				currency: "aed",
 			}
 		);
 	} catch (error) {

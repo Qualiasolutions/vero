@@ -20,7 +20,7 @@ export async function createCheckoutSession() {
 		// Create Stripe line items from cart
 		const lineItems = cart.items.map((item) => ({
 			price_data: {
-				currency: "eur",
+				currency: "aed",
 				product_data: {
 					name: item.product?.name || "Product",
 					images: item.product?.images || [],
@@ -72,7 +72,7 @@ export async function createOrderFromCheckout(sessionId: string) {
 				stripe_checkout_session_id: sessionId,
 				stripe_payment_intent_id: session.payment_intent as string,
 				total_amount: session.amount_total! / 100, // Convert from cents
-				currency: session.currency || "eur",
+				currency: session.currency || "aed",
 				status: "pending",
 			})
 			.select()
