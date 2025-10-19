@@ -59,7 +59,7 @@ export default function FavoritesPage() {
 			{/* Favorites Grid */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 				{favorites.map((product) => (
-					<CompactProductCard key={product.id} product={product} currency="€" />
+					<CompactProductCard key={product.id} product={product} currency="AED" />
 				))}
 			</div>
 		</div>

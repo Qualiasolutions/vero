@@ -185,7 +185,7 @@ Product availability is subject to change. We reserve the right to limit quantit
 ## 3. Pricing and Payment
 
 ### Prices
-All prices are in USD/EUR and subject to change without notice. The price at checkout is the final price.
+All prices are in AED (UAE Dirham) and subject to change without notice. The price at checkout is the final price.
 
 ### Payment Processing
 Payments are processed securely through Stripe. We do not store your payment information.

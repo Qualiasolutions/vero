@@ -23,7 +23,7 @@ interface EnhancedProductCardProps {
 	currency?: string;
 }
 
-export function EnhancedProductCard({ product, currency = "€" }: EnhancedProductCardProps) {
+export function EnhancedProductCard({ product, currency = "AED" }: EnhancedProductCardProps) {
 	const isOnSale = product.metadata?.onSale === "true";
 	const isPreorder = product.metadata?.preorder === "true";
 	const originalPrice = product.metadata?.originalPrice ? parseFloat(product.metadata.originalPrice) : null;

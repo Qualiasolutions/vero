@@ -202,7 +202,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 						) : (
 							<>
 								<ShoppingBag className="mr-2 h-5 w-5" />
-								Proceed to Payment - €{cart.total.toFixed(2)}
+								Proceed to Payment - AED {cart.total.toFixed(2)}
 							</>
 						)}
 					</Button>

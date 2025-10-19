@@ -26,7 +26,7 @@ interface CompactProductCardProps {
 	currency?: string;
 }
 
-export function CompactProductCard({ product, currency = "€" }: CompactProductCardProps) {
+export function CompactProductCard({ product, currency = "AED" }: CompactProductCardProps) {
 	const { optimisticAdd } = useCart();
 	const { isFavorite, toggleFavorite } = useFavorites();
 	const isOnSale = product.metadata?.onSale === "true";

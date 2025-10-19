@@ -254,8 +254,8 @@ export default async function Home() {
 			</section>
 
 			{/* Why Choose Us Section */}
-			<section className="w-full px-4 py-16 bg-gradient-to-b from-[#FDFBF7] to-white border-y border-[#D4AF37]/20">
-				<div className="max-w-[1600px] mx-auto">
+			<section className="w-full px-6 lg:px-12 xl:px-16 py-16 bg-gradient-to-b from-[#FDFBF7] to-white border-y border-[#D4AF37]/20">
+				<div className="w-full">
 					{/* Section Header */}
 					<div className="text-center mb-12">
 						<h3 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-3">
@@ -317,7 +317,7 @@ export default async function Home() {
 				{/* Gradient Overlay */}
 				<div className="absolute inset-0 bg-gradient-to-b from-[#FDFBF7] via-[#F8F9FA]/95 to-white/95 z-0" />
 
-				<div className="relative z-10 w-full px-4 max-w-7xl mx-auto">
+				<div className="relative z-10 w-full px-6 lg:px-12 xl:px-16">
 					<h3 className="text-center text-lg md:text-xl font-light vero-text-gradient uppercase tracking-widest mb-8">
 						Premium Brands We Carry
 					</h3>
@@ -338,8 +338,8 @@ export default async function Home() {
 			</section>
 
 			{/* Newsletter CTA */}
-			<section className="w-full px-4 py-8 bg-gradient-to-r from-[#D4AF37]/20 via-[#D4AF37]/10 to-[#D4AF37]/20 border-t border-[#D4AF37]/20">
-				<div className="max-w-[1600px] mx-auto text-center">
+			<section className="w-full px-6 lg:px-12 xl:px-16 py-8 bg-gradient-to-r from-[#D4AF37]/20 via-[#D4AF37]/10 to-[#D4AF37]/20 border-t border-[#D4AF37]/20">
+				<div className="w-full text-center">
 					<h3 className="text-xl md:text-2xl font-bold text-[#212529] mb-2">
 						Get Exclusive Updates & Early Access
 					</h3>
