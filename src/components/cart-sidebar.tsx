@@ -102,7 +102,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 												</h3>
 												<p className="text-sm vero-text-gradient font-semibold mt-1">
 													{formatMoney({
-														amount: Math.round(price * 100), // Convert to cents
+														amount: price, // Already in cents from Stripe
 														currency: cart.currency || "USD",
 														locale: "en-US",
 													})}

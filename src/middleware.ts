@@ -1,13 +1,9 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { type NextRequest, NextResponse } from "next/server";
-import { isAuthenticated } from "@/lib/auth-new";
 
 // Protected paths that require authentication
 const ProtectedPaths = ["/orders", "/profile", "/admin"];
-
-// Admin-only paths
-const AdminPaths = ["/admin"];
 
 // Rate limiting configuration (optional - only if Redis is configured)
 const ratelimit = process.env.UPSTASH_REDIS_REST_URL
@@ -68,36 +64,23 @@ export async function middleware(request: NextRequest) {
 
 	// Check protected paths
 	const isProtectedPath = ProtectedPaths.some((p) => pathname.startsWith(p));
-	const isAdminPath = AdminPaths.some((p) => pathname.startsWith(p));
 
 	if (isProtectedPath) {
-		const authenticated = await isAuthenticated();
+		// Check if user has a valid session cookie
+		const sessionCookie = request.cookies.get("veromodels-session");
 
-		if (!authenticated) {
+		if (!sessionCookie) {
 			const url = new URL("/login", request.url);
 			url.searchParams.set("from", pathname);
 			return NextResponse.redirect(url);
 		}
 
-		// Additional admin check
-		if (isAdminPath) {
-			const { isAdmin } = await import("@/lib/auth-new");
-			const admin = await isAdmin();
-
-			if (!admin) {
-				return new NextResponse("Forbidden", { status: 403 });
-			}
-		}
+		// Note: Full email verification and admin checks are done in the route handlers
+		// Middleware only does basic session check for performance in edge runtime
 	}
 
-	// Update session if needed (extends expiry)
-	if (request.cookies.has("veromodels-session")) {
-		const { getSession } = await import("@/lib/auth-new");
-		const session = await getSession();
-		if (session.isLoggedIn) {
-			await session.save();
-		}
-	}
+	// Note: Session renewal is handled in individual route handlers
+	// to avoid edge runtime compatibility issues
 
 	return response;
 }

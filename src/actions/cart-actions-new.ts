@@ -2,299 +2,245 @@
 
 import type { Cart } from "commerce-kit";
 import { cookies } from "next/headers";
-import { auth } from "@/lib/auth-new";
-import { commerce } from "@/lib/commerce";
-import { prisma } from "@/lib/prisma";
+import { nanoid } from "nanoid";
+import Stripe from "stripe";
+import { supabase } from "@/lib/supabase";
 
-// Get or create cart for current user/session
-async function getOrCreateCart(): Promise<string> {
-	const user = await auth();
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+	apiVersion: "2025-08-27.basil",
+});
+
+// Get or create cart session ID
+async function getCartSessionId(): Promise<string> {
 	const cookieStore = await cookies();
-	const sessionId = cookieStore.get("yns_cart_id")?.value || crypto.randomUUID();
+	let sessionId = cookieStore.get("yns_cart_id")?.value;
 
-	if (user) {
-		// Get user cart
-		let cart = await prisma.cart.findUnique({
-			where: { userId: user.id },
+	if (!sessionId) {
+		sessionId = nanoid();
+		cookieStore.set("yns_cart_id", sessionId, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === "production",
+			sameSite: "lax",
+			maxAge: 60 * 60 * 24 * 30, // 30 days
 		});
-
-		if (!cart) {
-			cart = await prisma.cart.create({
-				data: { userId: user.id },
-			});
-		}
-
-		return cart.id;
-	} else {
-		// Get or create guest cart
-		let cart = await prisma.cart.findUnique({
-			where: { sessionId },
-		});
-
-		if (!cart) {
-			cart = await prisma.cart.create({
-				data: {
-					sessionId,
-					expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-				},
-			});
-
-			// Set cookie for guest cart
-			cookieStore.set("yns_cart_id", sessionId, {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
-				maxAge: 60 * 60 * 24 * 30, // 30 days
-			});
-		}
-
-		return cart.id;
 	}
+
+	return sessionId;
 }
 
-// Convert database cart to Commerce Kit format
-async function formatCart(cartId: string): Promise<Cart | null> {
-	const cart = await prisma.cart.findUnique({
-		where: { id: cartId },
-		include: { items: true },
-	});
-
-	if (!cart) return null;
-
-	// Fetch product details from Stripe for each item
-	const items = await Promise.all(
-		cart.items.map(async (item: any) => {
+// Helper to transform DB cart items to Cart type
+async function transformCart(items: any[]): Promise<Cart> {
+	const cartItems = await Promise.all(
+		items.map(async (item) => {
 			try {
-				const product = await commerce.product.get({ id: item.productId });
+				// Fetch product from Stripe
+				const product = await stripe.products.retrieve(item.product_id, {
+					expand: ["default_price"],
+				});
 
-				// Get price from product (already in cents)
-				let priceAmount = 0;
-				if (product?.price) {
-					priceAmount = product.price * 100; // Convert to cents
-				}
+				const price = product.default_price as Stripe.Price;
 
 				return {
 					id: item.id,
-					productId: item.productId,
-					variantId: item.variantId,
+					productId: item.product_id,
+					variantId: item.product_id,
 					quantity: item.quantity,
-					price: priceAmount,
-					product: product
-						? {
-								id: product.id,
-								name: product.name,
-								images: product.images || [],
-								metadata: {},
-							}
-						: undefined,
+					price: typeof price.unit_amount === "number" ? price.unit_amount : 0,
+					product: {
+						id: product.id,
+						name: product.name,
+						description: product.description || undefined,
+						images: product.images || [],
+						metadata: product.metadata || {},
+					},
 				};
 			} catch (error) {
-				console.error(`Error fetching product ${item.productId}:`, error);
-				// Return item with cached metadata if Stripe fetch fails
+				console.error(`Error fetching product ${item.product_id}:`, error);
+				// Return item with minimal data if Stripe fetch fails
 				return {
 					id: item.id,
-					productId: item.productId,
-					variantId: item.variantId,
+					productId: item.product_id,
+					variantId: item.product_id,
 					quantity: item.quantity,
 					price: 0,
-					product: item.metadata as any,
 				};
 			}
 		}),
 	);
 
-	// Calculate total
-	const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+	const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity) / 100, 0);
 
 	return {
-		id: cart.id,
-		items,
-		total: total / 100, // Convert from cents
-		currency: process.env.STRIPE_CURRENCY || "eur",
+		id: items[0]?.id || "empty",
+		items: cartItems,
+		total,
+		currency: "EUR",
 	};
 }
 
-// Get cart action
 export async function getCartAction(): Promise<Cart | null> {
 	try {
-		const cartId = await getOrCreateCart();
-		return await formatCart(cartId);
+		const sessionId = await getCartSessionId();
+
+		// Get cart items for this session
+		const { data: items } = await supabase
+			.from("cart_items")
+			.select("*")
+			.eq("session_id", sessionId)
+			.order("created_at", { ascending: true });
+
+		if (!items || items.length === 0) {
+			return null;
+		}
+
+		return transformCart(items);
 	} catch (error) {
-		console.error("Error fetching cart:", error);
+		console.error("Error getting cart:", error);
 		return null;
 	}
 }
 
-// Add to cart action
-export async function addToCartAction(variantId: string, quantity = 1): Promise<Cart | null> {
+export async function addToCartAction(variantId: string, quantity: number): Promise<Cart> {
 	try {
-		const cartId = await getOrCreateCart();
-
-		// For now, we'll use the variantId as the product ID
-		// In a full implementation, you'd need to map price IDs to product IDs
-		const product = await commerce.product.get({ id: variantId }).catch(() => null);
+		const sessionId = await getCartSessionId();
 
 		// Check if item already exists in cart
-		const existingItem = await prisma.cartItem.findUnique({
-			where: {
-				cartId_variantId: {
-					cartId,
-					variantId,
-				},
-			},
-		});
+		const { data: existingItem } = await supabase
+			.from("cart_items")
+			.select("*")
+			.eq("session_id", sessionId)
+			.eq("product_id", variantId)
+			.single();
 
 		if (existingItem) {
 			// Update quantity
-			await prisma.cartItem.update({
-				where: { id: existingItem.id },
-				data: {
+			await supabase
+				.from("cart_items")
+				.update({
 					quantity: existingItem.quantity + quantity,
-				},
-			});
+					updated_at: new Date().toISOString(),
+				})
+				.eq("id", existingItem.id);
 		} else {
 			// Add new item
-			await prisma.cartItem.create({
-				data: {
-					cartId,
-					productId: product?.id || variantId, // Use product ID if available, otherwise variantId
-					variantId,
-					quantity,
-					metadata: product
-						? {
-								name: product.name,
-								images: product.images,
-							}
-						: undefined,
-				},
+			await supabase.from("cart_items").insert({
+				session_id: sessionId,
+				product_id: variantId,
+				quantity,
 			});
 		}
 
-		// Update cart timestamp
-		await prisma.cart.update({
-			where: { id: cartId },
-			data: { updatedAt: new Date() },
-		});
-
-		return await formatCart(cartId);
+		// Return updated cart
+		const cart = await getCartAction();
+		return (
+			cart || {
+				id: "empty",
+				items: [],
+				total: 0,
+				currency: "EUR",
+			}
+		);
 	} catch (error) {
 		console.error("Error adding to cart:", error);
 		throw error;
 	}
 }
 
-// Update cart item action
-export async function updateCartItemAction(variantId: string, quantity: number): Promise<Cart | null> {
+export async function updateCartItemAction(variantId: string, quantity: number): Promise<Cart> {
 	try {
-		const cartId = await getOrCreateCart();
+		const sessionId = await getCartSessionId();
 
 		if (quantity <= 0) {
-			// Remove item if quantity is 0
-			await prisma.cartItem.deleteMany({
-				where: {
-					cartId,
-					variantId,
-				},
-			});
+			// Remove item if quantity is 0 or less
+			await supabase.from("cart_items").delete().eq("session_id", sessionId).eq("product_id", variantId);
 		} else {
 			// Update quantity
-			await prisma.cartItem.updateMany({
-				where: {
-					cartId,
-					variantId,
-				},
-				data: { quantity },
-			});
+			await supabase
+				.from("cart_items")
+				.update({
+					quantity,
+					updated_at: new Date().toISOString(),
+				})
+				.eq("session_id", sessionId)
+				.eq("product_id", variantId);
 		}
 
-		// Update cart timestamp
-		await prisma.cart.update({
-			where: { id: cartId },
-			data: { updatedAt: new Date() },
-		});
-
-		return await formatCart(cartId);
+		// Return updated cart
+		const cart = await getCartAction();
+		return (
+			cart || {
+				id: "empty",
+				items: [],
+				total: 0,
+				currency: "EUR",
+			}
+		);
 	} catch (error) {
 		console.error("Error updating cart item:", error);
 		throw error;
 	}
 }
 
-// Remove from cart action
-export async function removeFromCartAction(variantId: string): Promise<Cart | null> {
+export async function removeFromCartAction(variantId: string): Promise<Cart> {
 	try {
-		const cartId = await getOrCreateCart();
+		const sessionId = await getCartSessionId();
 
-		await prisma.cartItem.deleteMany({
-			where: {
-				cartId,
-				variantId,
-			},
-		});
+		await supabase.from("cart_items").delete().eq("session_id", sessionId).eq("product_id", variantId);
 
-		// Update cart timestamp
-		await prisma.cart.update({
-			where: { id: cartId },
-			data: { updatedAt: new Date() },
-		});
-
-		return await formatCart(cartId);
+		// Return updated cart
+		const cart = await getCartAction();
+		return (
+			cart || {
+				id: "empty",
+				items: [],
+				total: 0,
+				currency: "EUR",
+			}
+		);
 	} catch (error) {
 		console.error("Error removing from cart:", error);
 		throw error;
 	}
 }
 
-// Clear cart action
-export async function clearCartAction(): Promise<void> {
-	try {
-		const cartId = await getOrCreateCart();
-
-		await prisma.cartItem.deleteMany({
-			where: { cartId },
-		});
-
-		// Update cart timestamp
-		await prisma.cart.update({
-			where: { id: cartId },
-			data: { updatedAt: new Date() },
-		});
-	} catch (error) {
-		console.error("Error clearing cart:", error);
-		throw error;
-	}
-}
-
-// Get cart item count
 export async function getCartItemCount(): Promise<number> {
 	try {
-		const cartId = await getOrCreateCart();
+		const sessionId = await getCartSessionId();
 
-		const result = await prisma.cartItem.aggregate({
-			where: { cartId },
-			_sum: { quantity: true },
-		});
+		const { data: items } = await supabase.from("cart_items").select("quantity").eq("session_id", sessionId);
 
-		return result._sum.quantity || 0;
+		if (!items || items.length === 0) {
+			return 0;
+		}
+
+		return items.reduce((sum, item) => sum + item.quantity, 0);
 	} catch (error) {
 		console.error("Error getting cart item count:", error);
 		return 0;
 	}
 }
 
-// Clean up expired guest carts (run periodically)
-export async function cleanupExpiredCarts() {
+export async function clearCartAction(): Promise<void> {
 	try {
-		const deleted = await prisma.cart.deleteMany({
-			where: {
-				expiresAt: {
-					lt: new Date(),
-				},
-			},
-		});
-
-		console.log(`Cleaned up ${deleted.count} expired carts`);
+		const sessionId = await getCartSessionId();
+		await supabase.from("cart_items").delete().eq("session_id", sessionId);
 	} catch (error) {
-		console.error("Error cleaning up carts:", error);
+		console.error("Error clearing cart:", error);
+	}
+}
+
+export async function cleanupExpiredCarts(): Promise<void> {
+	try {
+		// Delete cart items older than 30 days with no user_id (guest carts)
+		const thirtyDaysAgo = new Date();
+		thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+		await supabase
+			.from("cart_items")
+			.delete()
+			.is("user_id", null)
+			.lt("created_at", thirtyDaysAgo.toISOString());
+	} catch (error) {
+		console.error("Error cleaning up expired carts:", error);
 	}
 }
