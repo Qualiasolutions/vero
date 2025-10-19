@@ -46,7 +46,7 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 					id: product.id,
 					name: product.name,
 					slug: product.metadata.slug || product.id,
-					price: Math.round((price.unit_amount || 0) / 100),
+					price: price.unit_amount || 0, // Keep in cents for consistency
 					images: product.images || [],
 					metadata: product.metadata || {},
 					description: product.description || undefined,
@@ -89,7 +89,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 						id: product.id,
 						name: product.name,
 						slug: product.metadata.slug || product.id,
-						price: Math.round((price.unit_amount || 0) / 100),
+						price: price.unit_amount || 0, // Keep in cents for consistency
 						images: product.images || [],
 						metadata: product.metadata || {},
 						description: product.description || undefined,
@@ -172,7 +172,7 @@ export async function getProductsByCategory(categorySlug: string, limit = 3): Pr
 						id: product.id,
 						name: product.name,
 						slug: product.metadata.slug || product.id,
-						price: Math.round((price.unit_amount || 0) / 100),
+						price: price.unit_amount || 0, // Keep in cents for consistency
 						images: product.images || [],
 						metadata: product.metadata || {},
 						description: product.description || undefined,

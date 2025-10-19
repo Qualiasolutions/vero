@@ -151,17 +151,17 @@ export function CompactProductCard({ product, currency = "€" }: CompactProduct
 								<>
 									<span className="text-lg font-semibold text-[#D4AF37]">
 										{currency}
-										{product.price.toFixed(2)}
+										{(product.price / 100).toFixed(2)}
 									</span>
 									<span className="text-xs text-gray-400 line-through">
 										{currency}
-										{originalPrice.toFixed(2)}
+										{(originalPrice / 100).toFixed(2)}
 									</span>
 								</>
 							) : (
 								<span className="text-lg font-semibold text-[#D4AF37]">
 									{currency}
-									{product.price.toFixed(2)}
+									{(product.price / 100).toFixed(2)}
 								</span>
 							)}
 						</div>
