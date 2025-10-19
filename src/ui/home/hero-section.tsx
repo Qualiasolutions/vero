@@ -70,65 +70,28 @@ export function HeroSection() {
 						</div>
 					</div>
 
-					{/* Right Content - Featured Product Showcase */}
+					{/* Right Content - Video Showcase */}
 					<div className="relative hidden lg:block">
-						{/* Main Product Card */}
-						<div className="relative vero-glass-dark rounded-xl p-4 backdrop-blur-xl">
+						{/* Video Container */}
+						<div className="relative vero-glass-dark rounded-xl overflow-hidden backdrop-blur-xl border border-[#D4AF37]/20">
 							{/* Featured Badge */}
-							<div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-black font-bold text-xs px-3 py-1 rounded-full shadow-lg">
-								FEATURED
+							<div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-black font-bold text-xs px-4 py-1.5 rounded-full shadow-lg">
+								PREMIUM COLLECTION
 							</div>
 
-							{/* Product Image */}
-							<div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-white/5 to-white/10 mb-3 group">
-								<Image
-									src="https://i.ibb.co/c1KJ2Lm/image-2.webp"
-									alt="Featured Model"
-									fill
-									className="object-contain p-3 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"
-									sizes="(max-width: 768px) 100vw, 50vw"
-									priority
-								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-							</div>
-
-							{/* Product Info */}
-							<div className="space-y-2">
-								<div>
-									<h3 className="text-lg font-bold text-white mb-0.5">Ferrari F40</h3>
-									<p className="text-white/60 text-xs">Limited Edition 1:18</p>
-								</div>
-
-								{/* Features */}
-								<div className="flex flex-wrap gap-1.5">
-									<div className="inline-flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-white/90">
-										<Award className="w-3 h-3 text-[#D4AF37]" />
-										Authentic
-									</div>
-									<div className="inline-flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-white/90">
-										<Package className="w-3 h-3 text-[#D4AF37]" />
-										Free Ship
-									</div>
-									<div className="inline-flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-white/90">
-										<Star className="w-3 h-3 text-[#D4AF37]" fill="#D4AF37" />
-										Limited
-									</div>
-								</div>
-
-								{/* Price & CTA */}
-								<div className="flex items-center justify-between pt-2 border-t border-white/10">
-									<div>
-										<div className="text-xs text-white/60">Starting at</div>
-										<div className="text-xl font-bold text-[#D4AF37]">AED 330</div>
-									</div>
-									<Link
-										href="/product/ferrari-f40-rosso-corsa"
-										className="inline-flex items-center gap-1.5 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#D4AF37] transition-all duration-300 hover:scale-105 text-xs"
-									>
-										View
-										<ArrowRight className="w-3.5 h-3.5" />
-									</Link>
-								</div>
+							{/* Video */}
+							<div className="relative aspect-video rounded-lg overflow-hidden">
+								<video
+									autoPlay
+									loop
+									muted
+									playsInline
+									className="w-full h-full object-cover"
+								>
+									<source src="/homepage-video-1.mp4" type="video/mp4" />
+									Your browser does not support the video tag.
+								</video>
+								<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 							</div>
 						</div>
 
