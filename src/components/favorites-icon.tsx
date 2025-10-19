@@ -11,12 +11,12 @@ export function FavoritesIcon() {
 	return (
 		<Link
 			href="/favorites"
-			className="relative text-[#D4AF37] hover:text-[#E6C757] transition-all duration-300 hover:scale-110"
+			className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-[#B8941F]/10 transition-all duration-300 group"
 			aria-label={`Favorites (${itemCount} items)`}
 		>
-			<Heart className="w-5 h-5" />
+			<Heart className="w-5 h-5 text-[#6C757D] group-hover:text-[#B8941F] group-hover:fill-[#B8941F]/20 transition-all duration-300" strokeWidth={1.5} />
 			{itemCount > 0 && (
-				<span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#D4AF37] text-[10px] font-bold text-white">
+				<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#B8941F] to-[#8B7015] text-[10px] font-semibold text-white shadow-lg">
 					{itemCount}
 				</span>
 			)}

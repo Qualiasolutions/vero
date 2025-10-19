@@ -24,35 +24,35 @@ export default async function LoginPage() {
 						<Image
 							src="/veromodels-logo.webp"
 							alt="Veromodels"
-							width={240}
-							height={80}
-							className="h-20 w-auto brightness-0 invert"
+							width={480}
+							height={160}
+							className="h-40 w-auto"
 							priority
 						/>
 					</Link>
 					<h1 className="text-4xl font-light text-white mb-4 tracking-wide">Welcome Back</h1>
-					<p className="text-lg text-[#E6C757] mb-8 leading-relaxed">
+					<p className="text-lg text-[#C9A961] mb-8 leading-relaxed">
 						Access your collection of premium 1:18 scale die-cast models
 					</p>
 					<div className="grid grid-cols-3 gap-6 mt-12">
 						<div className="text-center">
-							<div className="text-3xl font-bold text-[#D4AF37] mb-2">500+</div>
-							<div className="text-sm text-white/80">Premium Models</div>
+							<div className="text-3xl font-light text-[#C9A961] mb-2">500+</div>
+							<div className="text-sm text-white/60 font-light">Premium Models</div>
 						</div>
 						<div className="text-center">
-							<div className="text-3xl font-bold text-[#D4AF37] mb-2">10K+</div>
-							<div className="text-sm text-white/80">Collectors</div>
+							<div className="text-3xl font-light text-[#C9A961] mb-2">10K+</div>
+							<div className="text-sm text-white/60 font-light">Collectors</div>
 						</div>
 						<div className="text-center">
-							<div className="text-3xl font-bold text-[#D4AF37] mb-2">98%</div>
-							<div className="text-sm text-white/80">Satisfaction</div>
+							<div className="text-3xl font-light text-[#C9A961] mb-2">98%</div>
+							<div className="text-sm text-white/60 font-light">Satisfaction</div>
 						</div>
 					</div>
 				</div>
 				{/* Decorative pattern */}
-				<div className="absolute inset-0 opacity-10">
-					<div className="absolute top-20 left-20 w-64 h-64 border border-[#D4AF37] rounded-full" />
-					<div className="absolute bottom-20 right-20 w-48 h-48 border border-[#D4AF37] rounded-full" />
+				<div className="absolute inset-0 opacity-5">
+					<div className="absolute top-20 left-20 w-64 h-64 border border-[#B8941F] rounded-full" />
+					<div className="absolute bottom-20 right-20 w-48 h-48 border border-[#B8941F] rounded-full" />
 				</div>
 			</div>
 
@@ -69,7 +69,7 @@ export default async function LoginPage() {
 							className="h-14 w-auto"
 							priority
 						/>
-						<p className="text-sm text-[#6C757D] text-center">Premium Diecast Car Models</p>
+						<p className="text-sm text-[#6C757D] text-center font-light">Premium Diecast Car Models</p>
 					</Link>
 
 					<LoginForm />

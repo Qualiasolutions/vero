@@ -4,14 +4,39 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
+// Email validation regex
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Password validation: at least 8 chars, 1 uppercase, 1 lowercase, 1 number
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+function validateEmail(email: string): boolean {
+	return EMAIL_REGEX.test(email);
+}
+
+function validatePassword(password: string): string | null {
+	if (password.length < 8) {
+		return "Password must be at least 8 characters long";
+	}
+	if (!PASSWORD_REGEX.test(password)) {
+		return "Password must contain at least one uppercase letter, one lowercase letter, and one number";
+	}
+	return null;
+}
+
+function sanitizeInput(input: string): string {
+	return input.trim();
+}
+
 export async function signup(
 	_state: unknown,
 	formData: FormData,
 ): Promise<{ error?: string; success?: boolean } | undefined> {
 	const supabase = await createClient();
 
-	const name = formData.get("name") as string;
-	const email = formData.get("email") as string;
+	// Extract and sanitize inputs
+	const name = sanitizeInput(formData.get("name") as string);
+	const email = sanitizeInput(formData.get("email") as string).toLowerCase();
 	const password = formData.get("password") as string;
 	const confirmPassword = formData.get("confirmPassword") as string;
 
@@ -20,66 +45,120 @@ export async function signup(
 		return { error: "All fields are required" };
 	}
 
+	if (name.length < 2) {
+		return { error: "Name must be at least 2 characters long" };
+	}
+
+	if (!validateEmail(email)) {
+		return { error: "Please enter a valid email address" };
+	}
+
 	if (password !== confirmPassword) {
 		return { error: "Passwords do not match" };
 	}
 
-	if (password.length < 8) {
-		return { error: "Password must be at least 8 characters" };
+	const passwordError = validatePassword(password);
+	if (passwordError) {
+		return { error: passwordError };
 	}
 
-	// Sign up with Supabase Auth
-	const { data, error } = await supabase.auth.signUp({
-		email,
-		password,
-		options: {
-			data: {
-				full_name: name,
+	try {
+		// Sign up with Supabase Auth
+		const { data, error } = await supabase.auth.signUp({
+			email,
+			password,
+			options: {
+				data: {
+					full_name: name,
+				},
+				emailRedirectTo: `${process.env.NEXT_PUBLIC_URL || "http://localhost:3000"}/auth/callback`,
 			},
-		},
-	});
+		});
 
-	if (error) {
-		console.error("Signup error:", error);
-		return { error: error.message };
+		if (error) {
+			// Handle specific Supabase errors
+			if (error.message.includes("already registered")) {
+				return { error: "This email is already registered. Please sign in instead." };
+			}
+			if (error.message.includes("Invalid email")) {
+				return { error: "Please enter a valid email address" };
+			}
+			// Generic error for production (don't expose internal details)
+			return { error: "Unable to create account. Please try again later." };
+		}
+
+		if (!data.user) {
+			return { error: "Failed to create account. Please try again." };
+		}
+
+		// Check if email confirmation is required
+		if (data.user.identities && data.user.identities.length === 0) {
+			return { error: "This email is already registered. Please sign in instead." };
+		}
+
+		// Revalidate the cache
+		revalidatePath("/", "layout");
+
+		// Redirect to home page after successful signup
+		redirect("/");
+	} catch (error) {
+		// Catch unexpected errors
+		console.error("Unexpected signup error:", error);
+		return { error: "An unexpected error occurred. Please try again." };
 	}
-
-	if (!data.user) {
-		return { error: "Failed to create account. Please try again." };
-	}
-
-	// Revalidate the cache
-	revalidatePath("/", "layout");
-
-	// Redirect to home page after successful signup
-	redirect("/");
 }
 
 export async function login(_state: unknown, formData: FormData): Promise<{ error?: string } | undefined> {
 	const supabase = await createClient();
 
-	const email = formData.get("email") as string;
+	// Extract and sanitize inputs
+	const email = sanitizeInput(formData.get("email") as string).toLowerCase();
 	const password = formData.get("password") as string;
 
+	// Validation
 	if (!email || !password) {
 		return { error: "Email and password are required" };
 	}
 
-	const { error } = await supabase.auth.signInWithPassword({
-		email,
-		password,
-	});
-
-	if (error) {
-		console.error("Login error:", error);
-		return { error: "Invalid email or password" };
+	if (!validateEmail(email)) {
+		return { error: "Please enter a valid email address" };
 	}
 
-	// Revalidate the cache
-	revalidatePath("/", "layout");
+	try {
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		});
 
-	// Redirect to home page after successful login
-	redirect("/");
+		if (error) {
+			// Handle specific errors
+			if (error.message.includes("Invalid login credentials")) {
+				return { error: "Invalid email or password" };
+			}
+			if (error.message.includes("Email not confirmed")) {
+				return { error: "Please verify your email address before signing in" };
+			}
+			if (error.message.includes("Email link is invalid or has expired")) {
+				return { error: "Your session has expired. Please try again." };
+			}
+			// Generic error for production
+			return { error: "Unable to sign in. Please try again later." };
+		}
+
+		if (!data.user) {
+			return { error: "Authentication failed. Please try again." };
+		}
+
+		// Revalidate the cache
+		revalidatePath("/", "layout");
+
+		// Redirect to home page after successful login
+		redirect("/");
+	} catch (error) {
+		// Catch unexpected errors
+		console.error("Unexpected login error:", error);
+		return { error: "An unexpected error occurred. Please try again." };
+	}
 }
 
 export async function logout() {

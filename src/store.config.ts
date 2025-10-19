@@ -11,7 +11,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759069015843-XQ6Y657GDY19YBQ0GGTL/DSC07389.jpg",
 			badge: "NEW",
-			badgeColor: "bg-green-500 text-white shadow-md",
+			badgeColor: "bg-emerald-600 text-white shadow-lg",
 		},
 		{
 			name: "Special Price",
@@ -20,7 +20,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759069013979-BBM6TFNE5PSBYWVD01K7/Volvo%2BFH25%2BEvolution%2B500%2BHP%2BCab.png",
 			badge: "SALE",
-			badgeColor: "bg-red-500 text-white shadow-md",
+			badgeColor: "bg-rose-600 text-white shadow-lg",
 		},
 		{
 			name: "Limited Editions",
@@ -29,7 +29,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068995264-GPKHHZHUIETW1Z3OB1J8/gt341-toyota-supra-gr-fuji-speedway-edition-01-2.jpg",
 			badge: "LIMITED",
-			badgeColor: "bg-purple-500 text-white shadow-md",
+			badgeColor: "bg-violet-600 text-white shadow-lg",
 		},
 		{
 			name: "Rare Models",
@@ -38,7 +38,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068993890-PNRG69L3L6KO8UHVH89B/toyota-supra-3000-gt-trd-renaissance-red-1998.jpg",
 			badge: "RARE",
-			badgeColor: "bg-amber-500 text-white shadow-md",
+			badgeColor: "bg-orange-600 text-white shadow-lg",
 		},
 		{
 			name: "Pre-Order",
@@ -47,7 +47,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068996639-TWPXCZ2S0EH30Z78F3T2/Generated%2BImage%2BSeptember%2B27%252C%2B2025%2B-%2B11_37AM.png",
 			badge: "PRE-ORDER",
-			badgeColor: "bg-blue-500 text-white shadow-md",
+			badgeColor: "bg-sky-600 text-white shadow-lg",
 		},
 		{
 			name: "Coming Soon",
@@ -56,7 +56,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068991286-XEBWB6VLMWKEBXEEHAVC/subaru-impreza-22b-sonic-blue-1998-01.jpg",
 			badge: "SOON",
-			badgeColor: "bg-indigo-500 text-white shadow-md",
+			badgeColor: "bg-slate-700 text-white shadow-lg",
 		},
 	],
 

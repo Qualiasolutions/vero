@@ -11,7 +11,7 @@ export const SearchNav = async () => {
 			<Suspense fallback={<SearchInputPlaceholder placeholder={t("placeholder")} />}>
 				<SearchInput placeholder={t("placeholder")} />
 			</Suspense>
-			<SearchIcon className="xs:-ml-7 max-smb:cursor-pointer max-smb:z-10 block h-5 w-5" />
+			<SearchIcon className="xs:-ml-7 max-smb:cursor-pointer max-smb:z-10 block h-5 w-5 text-[#6C757D] hover:text-[#B8941F] transition-colors" strokeWidth={1.5} />
 		</label>
 	);
 };

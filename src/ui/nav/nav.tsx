@@ -2,14 +2,14 @@ import Image from "next/image";
 import { CartIcon } from "@/components/cart-icon";
 import { FavoritesIcon } from "@/components/favorites-icon";
 import { UserMenu } from "@/components/user-menu";
-import { auth } from "@/lib/auth";
+import { getUser } from "@/actions/auth-actions";
 import { NavMenu } from "@/ui/nav/nav-menu";
 import { SearchNav } from "@/ui/nav/search-nav";
 import { SeoH1 } from "@/ui/seo-h1";
 import { YnsLink } from "@/ui/yns-link";
 
 export const Nav = async () => {
-	const session = await auth();
+	const user = await getUser();
 
 	return (
 		<header className="z-50 py-5 sticky top-0 bg-white/98 backdrop-blur-lg border-b border-[#D4AF37]/20 shadow-lg shadow-black/5 transition-all duration-300">
@@ -19,14 +19,14 @@ export const Nav = async () => {
 					<Image
 						src="/veromodels-logo.webp"
 						alt="Veromodels"
-						width={240}
-						height={80}
-						className="h-12 w-auto sm:h-14 transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_16px_rgba(212,175,55,0.6)]"
+						width={320}
+						height={107}
+						className="h-16 w-auto sm:h-20 transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_16px_rgba(184,148,31,0.5)]"
 						priority
 					/>
 					<SeoH1 className="sr-only">Veromodels</SeoH1>
 					{/* Gold accent line on hover */}
-					<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#E6C757] transition-all duration-500 group-hover:w-full"></span>
+					<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B8941F] to-[#C9A961] transition-all duration-500 group-hover:w-full"></span>
 				</YnsLink>
 
 				{/* Navigation Menu */}
@@ -49,7 +49,7 @@ export const Nav = async () => {
 						<FavoritesIcon />
 						<CartIcon />
 					</div>
-					<UserMenu userEmail={session?.user.email} />
+					<UserMenu userEmail={user?.email} />
 				</div>
 			</div>
 		</header>

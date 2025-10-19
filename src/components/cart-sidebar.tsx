@@ -30,14 +30,11 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 	}
 
 	async function handleCheckout() {
-		try {
-			// Import the checkout action dynamically to avoid bundling it in client
-			const { createCheckoutSession } = await import("@/actions/checkout-actions");
-			await createCheckoutSession();
-		} catch (error) {
-			console.error("Checkout error:", error);
-			// Could show error toast here
-		}
+		// Import the checkout action dynamically to avoid bundling it in client
+		const { createCheckoutSession } = await import("@/actions/checkout-actions");
+		// createCheckoutSession() uses redirect() which will handle navigation
+		// We don't need to catch errors here - let Next.js handle the redirect
+		await createCheckoutSession();
 	}
 
 	if (!isOpen) return null;

@@ -90,14 +90,81 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 
 	const products = filteredProducts;
 
+	// Get hero background gradient based on category - darker, more premium colors
+	const getHeroGradient = (slug: string) => {
+		const gradients: Record<string, string> = {
+			"new-arrivals": "from-emerald-700 via-emerald-800 to-emerald-900",
+			"on-sale": "from-rose-700 via-rose-800 to-rose-900",
+			"limited-edition": "from-violet-700 via-violet-800 to-violet-900",
+			"rare": "from-orange-700 via-orange-800 to-orange-900",
+			"pre-order": "from-sky-700 via-sky-800 to-sky-900",
+			"coming-soon": "from-slate-800 via-slate-900 to-slate-950",
+		};
+		return gradients[slug] || "from-gray-700 via-gray-800 to-gray-900";
+	};
+
+	const getAccentColor = (slug: string) => {
+		const colors: Record<string, string> = {
+			"new-arrivals": "border-emerald-400/40",
+			"on-sale": "border-rose-400/40",
+			"limited-edition": "border-violet-400/40",
+			"rare": "border-orange-400/40",
+			"pre-order": "border-sky-400/40",
+			"coming-soon": "border-slate-400/40",
+		};
+		return colors[slug] || "border-gray-400/30";
+	};
+
+	const getPatternColor = (slug: string) => {
+		const colors: Record<string, string> = {
+			"new-arrivals": "border-emerald-300",
+			"on-sale": "border-rose-300",
+			"limited-edition": "border-violet-300",
+			"rare": "border-orange-300",
+			"pre-order": "border-sky-300",
+			"coming-soon": "border-slate-300",
+		};
+		return colors[slug] || "border-gray-400";
+	};
+
+	const getDescriptionColor = (slug: string) => {
+		const colors: Record<string, string> = {
+			"new-arrivals": "text-emerald-100",
+			"on-sale": "text-rose-100",
+			"limited-edition": "text-violet-100",
+			"rare": "text-orange-100",
+			"pre-order": "text-sky-100",
+			"coming-soon": "text-slate-100",
+		};
+		return colors[slug] || "text-gray-200";
+	};
+
+	const getCountColor = (slug: string) => {
+		const colors: Record<string, string> = {
+			"new-arrivals": "text-emerald-200",
+			"on-sale": "text-rose-200",
+			"limited-edition": "text-violet-200",
+			"rare": "text-orange-200",
+			"pre-order": "text-sky-200",
+			"coming-soon": "text-slate-200",
+		};
+		return colors[slug] || "text-gray-300";
+	};
+
 	return (
 		<main className="pb-16">
 			{/* Enhanced Category Header */}
-			<div className="relative bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A] border-b border-[#D4AF37]/30 overflow-hidden">
+			<div
+				className={`relative bg-gradient-to-br ${getHeroGradient(params.slug)} border-b ${getAccentColor(params.slug)} overflow-hidden`}
+			>
 				{/* Background Pattern */}
 				<div className="absolute inset-0 opacity-5">
-					<div className="absolute top-0 right-0 w-96 h-96 border border-[#D4AF37] rounded-full -translate-y-1/2 translate-x-1/2" />
-					<div className="absolute bottom-0 left-0 w-64 h-64 border border-[#D4AF37] rounded-full translate-y-1/2 -translate-x-1/2" />
+					<div
+						className={`absolute top-0 right-0 w-96 h-96 border ${getPatternColor(params.slug)} rounded-full -translate-y-1/2 translate-x-1/2`}
+					/>
+					<div
+						className={`absolute bottom-0 left-0 w-64 h-64 border ${getPatternColor(params.slug)} rounded-full translate-y-1/2 -translate-x-1/2`}
+					/>
 				</div>
 
 				<div className="relative container mx-auto px-4 py-10">
@@ -113,13 +180,15 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 									{category.name}
 								</h1>
 								{category.description && (
-									<p className="text-[#E6C757] text-sm md:text-base max-w-2xl">{category.description}</p>
+									<p className={`${getDescriptionColor(params.slug)} text-sm md:text-base max-w-2xl`}>
+										{category.description}
+									</p>
 								)}
 							</div>
 						</div>
 						<div className="flex items-center gap-3">
 							<div className="text-center bg-white/10 backdrop-blur-sm rounded-lg px-5 py-3 border border-white/20">
-								<div className="text-2xl font-bold text-[#D4AF37]">{products.length}</div>
+								<div className={`text-2xl font-bold ${getCountColor(params.slug)}`}>{products.length}</div>
 								<div className="text-xs text-white/80 uppercase tracking-wide">
 									{products.length === 1 ? "Model" : "Models"}
 								</div>
