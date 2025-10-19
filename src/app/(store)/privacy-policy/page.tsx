@@ -1,4 +1,4 @@
-import { Shield, Lock, Eye, FileText, UserCheck, Globe } from "lucide-react";
+import { Eye, FileText, Globe, Lock, Shield, UserCheck } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -24,9 +24,7 @@ export default function PrivacyPolicyPage() {
 						<h1 className="text-4xl lg:text-5xl font-light tracking-tight mb-4">
 							Privacy <span className="vero-elegant-text">Policy</span>
 						</h1>
-						<p className="text-base lg:text-lg text-white/80 leading-relaxed">
-							Last Updated: January 2025
-						</p>
+						<p className="text-base lg:text-lg text-white/80 leading-relaxed">Last Updated: January 2025</p>
 					</div>
 				</div>
 			</section>
@@ -43,9 +41,9 @@ export default function PrivacyPolicyPage() {
 							<div>
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">Introduction</h2>
 								<p className="text-[#6C757D] leading-relaxed">
-									Welcome to Veromodels. We respect your privacy and are committed to protecting your personal data.
-									This privacy policy will inform you about how we handle your personal data when you visit our website
-									and tell you about your privacy rights and how the law protects you.
+									Welcome to Veromodels. We respect your privacy and are committed to protecting your personal
+									data. This privacy policy will inform you about how we handle your personal data when you
+									visit our website and tell you about your privacy rights and how the law protects you.
 								</p>
 							</div>
 						</div>
@@ -65,23 +63,38 @@ export default function PrivacyPolicyPage() {
 								<ul className="space-y-3 text-[#6C757D]">
 									<li className="flex items-start gap-3">
 										<span className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2 flex-shrink-0" />
-										<span><strong className="text-[#212529]">Identity Data:</strong> First name, last name, username or similar identifier</span>
+										<span>
+											<strong className="text-[#212529]">Identity Data:</strong> First name, last name,
+											username or similar identifier
+										</span>
 									</li>
 									<li className="flex items-start gap-3">
 										<span className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2 flex-shrink-0" />
-										<span><strong className="text-[#212529]">Contact Data:</strong> Email address, telephone numbers, billing and delivery addresses</span>
+										<span>
+											<strong className="text-[#212529]">Contact Data:</strong> Email address, telephone
+											numbers, billing and delivery addresses
+										</span>
 									</li>
 									<li className="flex items-start gap-3">
 										<span className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2 flex-shrink-0" />
-										<span><strong className="text-[#212529]">Financial Data:</strong> Payment card details (processed securely through Stripe)</span>
+										<span>
+											<strong className="text-[#212529]">Financial Data:</strong> Payment card details
+											(processed securely through Stripe)
+										</span>
 									</li>
 									<li className="flex items-start gap-3">
 										<span className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2 flex-shrink-0" />
-										<span><strong className="text-[#212529]">Transaction Data:</strong> Details about payments and products you have purchased</span>
+										<span>
+											<strong className="text-[#212529]">Transaction Data:</strong> Details about payments and
+											products you have purchased
+										</span>
 									</li>
 									<li className="flex items-start gap-3">
 										<span className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2 flex-shrink-0" />
-										<span><strong className="text-[#212529]">Technical Data:</strong> IP address, browser type, device information</span>
+										<span>
+											<strong className="text-[#212529]">Technical Data:</strong> IP address, browser type,
+											device information
+										</span>
 									</li>
 								</ul>
 							</div>
@@ -97,8 +110,8 @@ export default function PrivacyPolicyPage() {
 							<div className="flex-1">
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">How We Use Your Information</h2>
 								<p className="text-[#6C757D] leading-relaxed mb-4">
-									We will only use your personal data when the law allows us to. Most commonly, we will use your
-									personal data in the following circumstances:
+									We will only use your personal data when the law allows us to. Most commonly, we will use
+									your personal data in the following circumstances:
 								</p>
 								<ul className="space-y-3 text-[#6C757D]">
 									<li className="flex items-start gap-3">
@@ -136,9 +149,10 @@ export default function PrivacyPolicyPage() {
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">Data Security</h2>
 								<p className="text-[#6C757D] leading-relaxed">
 									We have put in place appropriate security measures to prevent your personal data from being
-									accidentally lost, used or accessed in an unauthorized way, altered or disclosed. All payment
-									transactions are encrypted and processed securely through Stripe. We limit access to your personal
-									data to those employees, agents, contractors and other third parties who have a business need to know.
+									accidentally lost, used or accessed in an unauthorized way, altered or disclosed. All
+									payment transactions are encrypted and processed securely through Stripe. We limit access to
+									your personal data to those employees, agents, contractors and other third parties who have
+									a business need to know.
 								</p>
 							</div>
 						</div>
@@ -153,7 +167,8 @@ export default function PrivacyPolicyPage() {
 							<div className="flex-1">
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">Your Legal Rights</h2>
 								<p className="text-[#6C757D] leading-relaxed mb-4">
-									Under certain circumstances, you have rights under data protection laws in relation to your personal data:
+									Under certain circumstances, you have rights under data protection laws in relation to your
+									personal data:
 								</p>
 								<ul className="space-y-3 text-[#6C757D]">
 									<li className="flex items-start gap-3">
@@ -194,12 +209,19 @@ export default function PrivacyPolicyPage() {
 							<div>
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">Contact Us</h2>
 								<p className="text-[#6C757D] leading-relaxed mb-4">
-									If you have any questions about this privacy policy or our privacy practices, please contact us:
+									If you have any questions about this privacy policy or our privacy practices, please contact
+									us:
 								</p>
 								<div className="space-y-2 text-[#6C757D]">
-									<p><strong className="text-[#212529]">Email:</strong> info@veromodels.com</p>
-									<p><strong className="text-[#212529]">Phone:</strong> +1 (234) 567-890</p>
-									<p><strong className="text-[#212529]">Address:</strong> Cyprus, Nicosia</p>
+									<p>
+										<strong className="text-[#212529]">Email:</strong> info@veromodels.com
+									</p>
+									<p>
+										<strong className="text-[#212529]">Phone:</strong> +1 (234) 567-890
+									</p>
+									<p>
+										<strong className="text-[#212529]">Address:</strong> Cyprus, Nicosia
+									</p>
 								</div>
 							</div>
 						</div>

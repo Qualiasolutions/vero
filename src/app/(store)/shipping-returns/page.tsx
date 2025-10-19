@@ -1,4 +1,4 @@
-import { Package, Truck, RotateCcw, Clock, MapPin, CheckCircle, Shield } from "lucide-react";
+import { CheckCircle, Clock, MapPin, Package, RotateCcw, Shield, Truck } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -43,8 +43,8 @@ export default function ShippingReturnsPage() {
 							<div className="flex-1">
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">Shipping Information</h2>
 								<p className="text-[#6C757D] leading-relaxed mb-6">
-									We ship our premium die-cast models worldwide with the utmost care and attention to ensure they
-									arrive in perfect condition.
+									We ship our premium die-cast models worldwide with the utmost care and attention to ensure
+									they arrive in perfect condition.
 								</p>
 
 								<div className="grid md:grid-cols-2 gap-6">
@@ -108,15 +108,24 @@ export default function ShippingReturnsPage() {
 								<ul className="space-y-3 text-[#6C757D]">
 									<li className="flex items-start gap-3">
 										<CheckCircle className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-										<span><strong className="text-[#212529]">In-Stock Items:</strong> Processed within 1-2 business days</span>
+										<span>
+											<strong className="text-[#212529]">In-Stock Items:</strong> Processed within 1-2
+											business days
+										</span>
 									</li>
 									<li className="flex items-start gap-3">
 										<CheckCircle className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-										<span><strong className="text-[#212529]">Pre-Order Items:</strong> Shipped as soon as stock arrives (estimated dates provided)</span>
+										<span>
+											<strong className="text-[#212529]">Pre-Order Items:</strong> Shipped as soon as stock
+											arrives (estimated dates provided)
+										</span>
 									</li>
 									<li className="flex items-start gap-3">
 										<CheckCircle className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-										<span><strong className="text-[#212529]">Custom Orders:</strong> Processing time varies (we'll notify you)</span>
+										<span>
+											<strong className="text-[#212529]">Custom Orders:</strong> Processing time varies (we'll
+											notify you)
+										</span>
 									</li>
 								</ul>
 							</div>
@@ -165,9 +174,9 @@ export default function ShippingReturnsPage() {
 							<div>
 								<h2 className="text-2xl font-semibold text-[#212529] mb-3">Premium Packaging</h2>
 								<p className="text-[#6C757D] leading-relaxed">
-									Every model is double-boxed with protective foam padding to ensure it arrives in pristine condition.
-									We take extra care with limited edition and rare collectibles, using additional protective measures
-									to safeguard your investment.
+									Every model is double-boxed with protective foam padding to ensure it arrives in pristine
+									condition. We take extra care with limited edition and rare collectibles, using additional
+									protective measures to safeguard your investment.
 								</p>
 							</div>
 						</div>
@@ -269,7 +278,9 @@ export default function ShippingReturnsPage() {
 
 					{/* Contact CTA */}
 					<div className="vero-card rounded-xl p-8 border border-[#D4AF37]/20 text-center bg-gradient-to-br from-[#D4AF37]/5 to-white">
-						<h3 className="text-xl font-semibold text-[#212529] mb-3">Questions About Shipping or Returns?</h3>
+						<h3 className="text-xl font-semibold text-[#212529] mb-3">
+							Questions About Shipping or Returns?
+						</h3>
 						<p className="text-[#6C757D] mb-6">
 							Our team is here to help with any questions about your order.
 						</p>

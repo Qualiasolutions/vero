@@ -285,7 +285,10 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 								onCheckedChange={(checked) => handleAvailabilityToggle("in-stock", checked as boolean)}
 								className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
 							/>
-							<label htmlFor="in-stock" className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors">
+							<label
+								htmlFor="in-stock"
+								className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors"
+							>
 								In Stock
 							</label>
 						</div>
@@ -296,7 +299,10 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 								onCheckedChange={(checked) => handleAvailabilityToggle("pre-order", checked as boolean)}
 								className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
 							/>
-							<label htmlFor="pre-order" className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors">
+							<label
+								htmlFor="pre-order"
+								className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors"
+							>
 								Pre-Order
 							</label>
 						</div>
@@ -307,7 +313,10 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 								onCheckedChange={(checked) => handleAvailabilityToggle("limited", checked as boolean)}
 								className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
 							/>
-							<label htmlFor="limited" className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors">
+							<label
+								htmlFor="limited"
+								className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors"
+							>
 								Limited Edition
 							</label>
 						</div>

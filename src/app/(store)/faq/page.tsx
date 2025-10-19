@@ -1,12 +1,7 @@
 "use client";
 
-import { HelpCircle, Package, CreditCard, Truck, RotateCcw, Shield, Star, Clock } from "lucide-react";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/ui/shadcn/accordion";
+import { Clock, CreditCard, HelpCircle, Package, RotateCcw, Shield, Star, Truck } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/ui/shadcn/accordion";
 
 export default function FAQPage() {
 	const faqCategories = [
@@ -229,7 +224,8 @@ export default function FAQPage() {
 						<Clock className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
 						<h3 className="text-2xl font-semibold text-[#212529] mb-3">Still Have Questions?</h3>
 						<p className="text-[#6C757D] mb-6 max-w-2xl mx-auto">
-							Our collector support team is ready to assist you with any questions about our products or services.
+							Our collector support team is ready to assist you with any questions about our products or
+							services.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-3 justify-center">
 							<a

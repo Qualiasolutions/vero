@@ -113,9 +113,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 									{category.name}
 								</h1>
 								{category.description && (
-									<p className="text-[#E6C757] text-sm md:text-base max-w-2xl">
-										{category.description}
-									</p>
+									<p className="text-[#E6C757] text-sm md:text-base max-w-2xl">{category.description}</p>
 								)}
 							</div>
 						</div>

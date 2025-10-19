@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import { getTranslations } from "@/i18n/server";
 import { Newsletter } from "@/ui/footer/newsletter.client";
@@ -62,11 +62,15 @@ export async function Footer() {
 						<div className="space-y-3 pt-2">
 							<div className="flex items-center gap-3 text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-colors group">
 								<Mail className="w-4 h-4 text-[#D4AF37]" />
-								<a href="mailto:info@veromodels.com" className="text-sm">info@veromodels.com</a>
+								<a href="mailto:info@veromodels.com" className="text-sm">
+									info@veromodels.com
+								</a>
 							</div>
 							<div className="flex items-center gap-3 text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-colors group">
 								<Phone className="w-4 h-4 text-[#D4AF37]" />
-								<a href="tel:+1234567890" className="text-sm">+1 (234) 567-890</a>
+								<a href="tel:+1234567890" className="text-sm">
+									+1 (234) 567-890
+								</a>
 							</div>
 							<div className="flex items-start gap-3 text-[#F5E6D3]/60">
 								<MapPin className="w-4 h-4 text-[#D4AF37] mt-0.5" />
@@ -151,14 +155,14 @@ export async function Footer() {
 						<div className="flex items-center gap-4">
 							<div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-[#D4AF37]/20 rounded-lg">
 								<svg className="w-8 h-5" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect width="38" height="24" rx="4" fill="#1434CB"/>
-									<path d="M14 12L12 8h4l2 4-2 4h-4l2-4z" fill="#FF6E14"/>
-									<path d="M24 12L22 8h4l2 4-2 4h-4l2-4z" fill="#EB001B"/>
+									<rect width="38" height="24" rx="4" fill="#1434CB" />
+									<path d="M14 12L12 8h4l2 4-2 4h-4l2-4z" fill="#FF6E14" />
+									<path d="M24 12L22 8h4l2 4-2 4h-4l2-4z" fill="#EB001B" />
 								</svg>
 								<svg className="w-8 h-5" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect width="38" height="24" rx="4" fill="#00579F"/>
-									<circle cx="14" cy="12" r="6" fill="#EB001B"/>
-									<circle cx="24" cy="12" r="6" fill="#FF9800"/>
+									<rect width="38" height="24" rx="4" fill="#00579F" />
+									<circle cx="14" cy="12" r="6" fill="#EB001B" />
+									<circle cx="24" cy="12" r="6" fill="#FF9800" />
 								</svg>
 								<span className="text-[#F5E6D3]/60 text-xs ml-1">Secure Payment</span>
 							</div>
