@@ -130,20 +130,19 @@ export default async function Home() {
 					{/* Grid of 6 columns (1 on mobile, 3 on tablet, 6 on desktop) */}
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
 						{categoryProducts.map(({ category, products }) => {
-							// Map badge color to subtle Vero-themed background tint
+							// Map badge color to subtle background tint matching the vibrant badge
 							const getBgTint = (badgeColor: string) => {
 								// Extract the first class from badgeColor for matching
 								const firstClass = badgeColor.split(" ")[0] || "";
 								const colorMap: Record<string, string> = {
-									"bg-[#F5E6D3]": "bg-[#F5E6D3]/30 border-[#D4AF37]/20", // NEW
-									"bg-[#B8941F]": "bg-[#D4AF37]/10 border-[#D4AF37]/30", // SALE
-									"bg-[#0A0A0A]": "bg-[#1A1A1A]/5 border-[#D4AF37]/30", // LIMITED
-									"bg-gradient-to-r":
-										"bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/5 border-[#D4AF37]/30", // RARE
-									"bg-[#2A2A2A]": "bg-[#2A2A2A]/5 border-[#D4AF37]/20", // PRE-ORDER
-									"bg-[#1A1A1A]": "bg-[#1A1A1A]/5 border-[#E6C757]/20", // SOON
+									"bg-green-500": "bg-green-50 border-green-200", // NEW
+									"bg-red-500": "bg-red-50 border-red-200", // SALE
+									"bg-purple-500": "bg-purple-50 border-purple-200", // LIMITED
+									"bg-amber-500": "bg-amber-50 border-amber-200", // RARE
+									"bg-blue-500": "bg-blue-50 border-blue-200", // PRE-ORDER
+									"bg-indigo-500": "bg-indigo-50 border-indigo-200", // SOON
 								};
-								return colorMap[firstClass] || "bg-[#F5E6D3]/10 border-[#D4AF37]/20";
+								return colorMap[firstClass] || "bg-gray-50 border-gray-200";
 							};
 
 							return (
