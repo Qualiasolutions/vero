@@ -1,5 +1,4 @@
-import { ArrowRight, Award, Package, Star } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
 
 export function HeroSection() {
