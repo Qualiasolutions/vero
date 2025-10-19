@@ -1,5 +1,6 @@
 import { ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
+import { HeroVideo } from "./hero-video";
 
 export function HeroSection() {
 	return (
@@ -78,20 +79,8 @@ export function HeroSection() {
 								PREMIUM COLLECTION
 							</div>
 
-							{/* Video */}
-							<div className="relative aspect-video rounded-lg overflow-hidden">
-								<video
-									autoPlay
-									loop
-									muted
-									playsInline
-									className="w-full h-full object-cover"
-								>
-									<source src="/homepage-video-1.mp4" type="video/mp4" />
-									Your browser does not support the video tag.
-								</video>
-								<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-							</div>
+							{/* Video with Crossfade */}
+							<HeroVideo />
 						</div>
 
 						{/* Floating Elements */}
