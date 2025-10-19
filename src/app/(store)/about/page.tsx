@@ -10,14 +10,21 @@ export const metadata = {
 export default function AboutPage() {
 	return (
 		<div className="min-h-screen bg-white">
-			{/* Hero Section */}
-			<section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A]">
-				{/* Background Pattern */}
-				<div className="absolute inset-0 opacity-10">
-					<div className="absolute top-20 left-20 w-96 h-96 border border-[#D4AF37] rounded-full animate-float" />
-					<div className="absolute bottom-20 right-20 w-64 h-64 border border-[#D4AF37] rounded-full animate-float delay-1000" />
+			{/* Hero Section with Background Image */}
+			<section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+				{/* Background Image */}
+				<div className="absolute inset-0">
+					<Image
+						src="https://i.ibb.co/d4pc3pfB/Generated-Image-October-09-2025-3-08-PM.png"
+						alt="Veromodels Collection"
+						fill
+						className="object-cover"
+						sizes="100vw"
+						priority
+					/>
+					{/* Overlay */}
+					<div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
 				</div>
-				<div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A0A0A]/50 to-[#0A0A0A]" />
 
 				<div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
 					<div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-6 py-2 backdrop-blur-sm mb-8">

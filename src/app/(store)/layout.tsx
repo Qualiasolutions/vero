@@ -26,7 +26,7 @@ export default async function StoreLayout({
 					</a>
 					<Nav />
 					<TooltipProvider>
-						<main id="main-content" className="mx-auto flex w-full flex-1 flex-col px-4 pb-6 pt-2 sm:px-6 lg:px-8 xl:px-12 relative bg-white">
+						<main id="main-content" className="flex w-full flex-1 flex-col relative bg-white">
 							{children}
 						</main>
 						<Footer />

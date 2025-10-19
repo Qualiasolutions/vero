@@ -1,4 +1,5 @@
 import { Mail, MapPin, MessageSquare, Phone } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import StoreConfig from "@/store.config";
 
@@ -10,12 +11,20 @@ export const metadata = {
 export default function ContactPage() {
 	return (
 		<div className="min-h-screen bg-white">
-			{/* Hero Section */}
-			<section className="relative h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A]">
-				{/* Background Pattern */}
-				<div className="absolute inset-0 opacity-10">
-					<div className="absolute top-10 left-20 w-64 h-64 border border-[#D4AF37] rounded-full animate-float" />
-					<div className="absolute bottom-10 right-20 w-48 h-48 border border-[#E6C757] rounded-full animate-float delay-1000" />
+			{/* Hero Section with Background Image */}
+			<section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+				{/* Background Image */}
+				<div className="absolute inset-0">
+					<Image
+						src="https://i.ibb.co/9Hq5qzSH/Untitled-design.png"
+						alt="Contact Veromodels"
+						fill
+						className="object-cover"
+						sizes="100vw"
+						priority
+					/>
+					{/* Overlay */}
+					<div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
 				</div>
 
 				<div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
