@@ -29,7 +29,7 @@ export function CategoryContent({ products }: CategoryContentProps) {
 	};
 
 	return (
-		<div className="container mx-auto px-4 py-16">
+		<div className="container mx-auto px-4 pt-8 pb-16">
 			<div className="flex flex-col lg:flex-row gap-8">
 				{/* Sidebar Filters */}
 				<div className="lg:sticky lg:top-24 lg:self-start">

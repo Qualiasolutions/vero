@@ -25,16 +25,23 @@ export default async function AllProductsPage() {
 
 	return (
 		<main className="pb-16">
-			<div className="mb-8 sm:mb-12 text-center space-y-4">
-				<h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-wider vero-text-gradient uppercase px-4">
-					All Models
-				</h1>
-				<div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
-				<p className="text-xs sm:text-sm text-[#D4AF37] uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">
-					{products.length} Premium Diecast Models Available
-				</p>
+			{/* Compact Header */}
+			<div className="bg-white border-b border-[#D4AF37]/20">
+				<div className="container mx-auto px-4 py-6">
+					<div className="flex items-center justify-between">
+						<h1 className="text-2xl md:text-3xl font-light tracking-wider uppercase vero-text-gradient">
+							All Models
+						</h1>
+						<div className="text-sm text-[#D4AF37] font-medium">
+							{products.length} {products.length === 1 ? "Model" : "Models"}
+						</div>
+					</div>
+				</div>
 			</div>
-			<ProductList products={products} />
+
+			<div className="container mx-auto px-4 pt-8">
+				<ProductList products={products} />
+			</div>
 		</main>
 	);
 }

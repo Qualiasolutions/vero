@@ -92,24 +92,22 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 
 	return (
 		<main className="pb-16">
-			{/* Category Header */}
-			<div className="relative bg-gradient-to-b from-[#FDFBF7] to-white border-b border-[#D4AF37]/20">
-				<div className="container mx-auto px-4 py-16 md:py-24">
-					<div className="text-center space-y-6">
-						<div className="flex items-center justify-center gap-4">
+			{/* Compact Category Header */}
+			<div className="bg-white border-b border-[#D4AF37]/20">
+				<div className="container mx-auto px-4 py-6">
+					<div className="flex items-center justify-between">
+						<div className="flex items-center gap-3">
 							<span
-								className={`${category.badgeColor} text-white text-xs px-3 py-1 rounded-sm uppercase tracking-wider font-bold`}
+								className={`${category.badgeColor} text-white text-xs px-2 py-1 rounded-sm uppercase tracking-wider font-bold`}
 							>
 								{category.badge}
 							</span>
+							<h1 className="text-2xl md:text-3xl font-light tracking-wider uppercase vero-text-gradient">
+								{category.name}
+							</h1>
 						</div>
-						<h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-widest uppercase vero-text-gradient">
-							{category.name}
-						</h1>
-						<div className="w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto" />
-						<p className="text-lg text-[#6C757D] max-w-3xl mx-auto leading-relaxed">{category.description}</p>
-						<div className="text-sm text-[#D4AF37] font-medium uppercase tracking-[0.2em]">
-							{products.length} {products.length === 1 ? "Premium Model" : "Premium Models"} Available
+						<div className="text-sm text-[#D4AF37] font-medium">
+							{products.length} {products.length === 1 ? "Model" : "Models"}
 						</div>
 					</div>
 				</div>
@@ -119,20 +117,20 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			{products.length > 0 ? (
 				<CategoryContent products={products} />
 			) : (
-				<div className="container mx-auto px-4 py-20">
-					<div className="text-center py-16">
-						<div className="text-[#D4AF37]/40 text-6xl mb-6">🏎️</div>
-						<h3 className="text-2xl font-light text-[#212529] mb-4 uppercase tracking-wide">
+				<div className="container mx-auto px-4 py-12">
+					<div className="text-center py-12">
+						<div className="text-[#D4AF37]/40 text-4xl mb-4">🏎️</div>
+						<h3 className="text-xl font-light text-[#212529] mb-3 uppercase tracking-wide">
 							Models Coming Soon
 						</h3>
-						<p className="text-[#6C757D] max-w-2xl mx-auto">
+						<p className="text-[#6C757D] max-w-lg mx-auto text-sm">
 							We're currently curating the finest selection for {category.name.toLowerCase()}. Check back soon
 							or explore our other collections.
 						</p>
-						<div className="mt-8">
+						<div className="mt-6">
 							<a
 								href="/products"
-								className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors"
+								className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors text-sm"
 							>
 								View All Models →
 							</a>
