@@ -29,6 +29,17 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 		}
 	}
 
+	async function handleCheckout() {
+		try {
+			// Import the checkout action dynamically to avoid bundling it in client
+			const { createCheckoutSession } = await import("@/actions/checkout-actions");
+			await createCheckoutSession();
+		} catch (error) {
+			console.error("Checkout error:", error);
+			// Could show error toast here
+		}
+	}
+
 	if (!isOpen) return null;
 
 	return (
@@ -161,7 +172,10 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 									})}
 								</span>
 							</div>
-							<button className="vero-button w-full rounded-lg px-6 py-4 uppercase tracking-wider">
+							<button
+								onClick={handleCheckout}
+								className="vero-button w-full rounded-lg px-6 py-4 uppercase tracking-wider"
+							>
 								Proceed to Checkout
 							</button>
 							<p className="text-xs text-center text-[#6C757D]">Secure checkout powered by Stripe</p>
