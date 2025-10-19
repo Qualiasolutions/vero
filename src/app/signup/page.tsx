@@ -24,9 +24,9 @@ export default async function SignupPage() {
 						<Image
 							src="/veromodels-logo.webp"
 							alt="Veromodels"
-							width={240}
-							height={80}
-							className="h-20 w-auto brightness-0 invert"
+							width={480}
+							height={160}
+							className="h-40 w-auto"
 							priority
 						/>
 					</Link>
