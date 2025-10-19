@@ -519,7 +519,7 @@ export default async function SingleProductPage(props: {
 													<div>
 														<p className="text-sm font-bold text-green-900 mb-1">Free Shipping Available</p>
 														<p className="text-sm text-green-700">
-															Orders over €150 qualify for free standard shipping within the EU
+															Orders over AED 150 qualify for free standard shipping within the EU
 														</p>
 													</div>
 												</div>

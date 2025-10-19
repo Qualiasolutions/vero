@@ -93,25 +93,29 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 	const activeFilterCount = getActiveFilterCount();
 
 	return (
-		<aside className="w-full lg:w-64 space-y-6">
-			{/* Header */}
-			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-lg font-semibold tracking-wide uppercase text-gray-900 flex items-center gap-2">
-					<SlidersHorizontal className="h-5 w-5 text-[#D4AF37]" />
-					Filters
-					{activeFilterCount > 0 && (
-						<span className="ml-2 bg-[#D4AF37] text-white text-xs px-2 py-0.5 rounded-full font-bold">
-							{activeFilterCount}
-						</span>
-					)}
-				</h2>
+		<aside className="w-full lg:w-64 space-y-5">
+			{/* Header with Vero Styling */}
+			<div className="vero-glass-card rounded-lg p-5 border border-[#D4AF37]/20">
+				<div className="flex items-center justify-between">
+					<h2 className="text-lg font-semibold tracking-wider uppercase text-[#212529] flex items-center gap-2">
+						<SlidersHorizontal className="h-5 w-5 text-[#D4AF37]" />
+						Filters
+						{activeFilterCount > 0 && (
+							<span className="ml-2 bg-[#D4AF37] text-white text-xs px-2.5 py-1 rounded-full font-bold animate-fade-in">
+								{activeFilterCount}
+							</span>
+						)}
+					</h2>
+				</div>
 			</div>
 
-			{/* Sort By */}
-			<div className="space-y-3">
-				<label className="text-sm font-medium text-gray-700 uppercase tracking-wide">Sort By</label>
+			{/* Sort By - Enhanced Card */}
+			<div className="vero-card rounded-lg p-5 space-y-3 border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 transition-all duration-300">
+				<label className="text-sm font-semibold text-[#212529] uppercase tracking-wider flex items-center gap-2">
+					Sort By
+				</label>
 				<Select value={filters.sortBy} onValueChange={(value) => handleFilterUpdate({ sortBy: value })}>
-					<SelectTrigger className="w-full">
+					<SelectTrigger className="w-full h-11 border-[#D4AF37]/20 hover:border-[#D4AF37] transition-colors">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
@@ -124,168 +128,198 @@ export function CategoryFilters({ onFilterChange }: CategoryFiltersProps) {
 				</Select>
 			</div>
 
-			{/* Price Range */}
-			<Collapsible open={isPriceOpen} onOpenChange={setIsPriceOpen}>
-				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">Price Range</span>
-					<ChevronDown
-						className={`h-4 w-4 text-gray-500 transition-transform ${isPriceOpen ? "rotate-180" : ""}`}
-					/>
-				</CollapsibleTrigger>
-				<CollapsibleContent className="pt-4 space-y-3">
-					<Select
-						value={filters.priceRange}
-						onValueChange={(value) => handleFilterUpdate({ priceRange: value })}
-					>
-						<SelectTrigger className="w-full">
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="all">All Prices</SelectItem>
-							<SelectItem value="0-75">Under €75</SelectItem>
-							<SelectItem value="75-150">€75 - €150</SelectItem>
-							<SelectItem value="150-250">€150 - €250</SelectItem>
-							<SelectItem value="250-500">€250 - €500</SelectItem>
-							<SelectItem value="500+">€500+</SelectItem>
-						</SelectContent>
-					</Select>
-				</CollapsibleContent>
-			</Collapsible>
+			{/* Price Range - Enhanced Card */}
+			<div className="vero-card rounded-lg p-5 border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 transition-all duration-300">
+				<Collapsible open={isPriceOpen} onOpenChange={setIsPriceOpen}>
+					<CollapsibleTrigger className="flex items-center justify-between w-full group">
+						<span className="text-sm font-semibold text-[#212529] uppercase tracking-wider">Price Range</span>
+						<ChevronDown
+							className={`h-4 w-4 text-[#D4AF37] transition-transform duration-300 ${isPriceOpen ? "rotate-180" : ""}`}
+						/>
+					</CollapsibleTrigger>
+					<CollapsibleContent className="pt-4 space-y-3">
+						<Select
+							value={filters.priceRange}
+							onValueChange={(value) => handleFilterUpdate({ priceRange: value })}
+						>
+							<SelectTrigger className="w-full h-11 border-[#D4AF37]/20 hover:border-[#D4AF37] transition-colors">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="all">All Prices</SelectItem>
+								<SelectItem value="0-75">Under AED 75</SelectItem>
+								<SelectItem value="75-150">AED 75 - AED 150</SelectItem>
+								<SelectItem value="150-250">AED 150 - AED 250</SelectItem>
+								<SelectItem value="250-500">AED 250 - AED 500</SelectItem>
+								<SelectItem value="500+">AED 500+</SelectItem>
+							</SelectContent>
+						</Select>
+					</CollapsibleContent>
+				</Collapsible>
+			</div>
 
-			{/* Brand Filter */}
-			<Collapsible open={isBrandOpen} onOpenChange={setIsBrandOpen}>
-				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-						Brand {filters.brands.length > 0 && `(${filters.brands.length})`}
-					</span>
-					<ChevronDown
-						className={`h-4 w-4 text-gray-500 transition-transform ${isBrandOpen ? "rotate-180" : ""}`}
-					/>
-				</CollapsibleTrigger>
-				<CollapsibleContent className="pt-4 space-y-3 max-h-64 overflow-y-auto">
-					{StoreConfig.brands.map((brand) => (
-						<div key={brand} className="flex items-center space-x-2">
+			{/* Brand Filter - Enhanced Card */}
+			<div className="vero-card rounded-lg p-5 border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 transition-all duration-300">
+				<Collapsible open={isBrandOpen} onOpenChange={setIsBrandOpen}>
+					<CollapsibleTrigger className="flex items-center justify-between w-full group">
+						<span className="text-sm font-semibold text-[#212529] uppercase tracking-wider flex items-center gap-2">
+							Brand
+							{filters.brands.length > 0 && (
+								<span className="bg-[#D4AF37] text-white text-xs px-2 py-0.5 rounded-full font-bold">
+									{filters.brands.length}
+								</span>
+							)}
+						</span>
+						<ChevronDown
+							className={`h-4 w-4 text-[#D4AF37] transition-transform duration-300 ${isBrandOpen ? "rotate-180" : ""}`}
+						/>
+					</CollapsibleTrigger>
+					<CollapsibleContent className="pt-4 space-y-3 max-h-64 overflow-y-auto custom-scrollbar">
+						{StoreConfig.brands.map((brand) => (
+							<div key={brand} className="flex items-center space-x-2 group/item">
+								<Checkbox
+									id={`brand-${brand}`}
+									checked={filters.brands.includes(brand)}
+									onCheckedChange={(checked) => handleBrandToggle(brand, checked as boolean)}
+									className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
+								/>
+								<label
+									htmlFor={`brand-${brand}`}
+									className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors flex-1"
+								>
+									{brand}
+								</label>
+							</div>
+						))}
+					</CollapsibleContent>
+				</Collapsible>
+			</div>
+
+			{/* Scale Filter - Enhanced Card */}
+			<div className="vero-card rounded-lg p-5 border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 transition-all duration-300">
+				<Collapsible open={isScaleOpen} onOpenChange={setIsScaleOpen}>
+					<CollapsibleTrigger className="flex items-center justify-between w-full group">
+						<span className="text-sm font-semibold text-[#212529] uppercase tracking-wider flex items-center gap-2">
+							Scale
+							{filters.scales.length > 0 && (
+								<span className="bg-[#D4AF37] text-white text-xs px-2 py-0.5 rounded-full font-bold">
+									{filters.scales.length}
+								</span>
+							)}
+						</span>
+						<ChevronDown
+							className={`h-4 w-4 text-[#D4AF37] transition-transform duration-300 ${isScaleOpen ? "rotate-180" : ""}`}
+						/>
+					</CollapsibleTrigger>
+					<CollapsibleContent className="pt-4 space-y-3">
+						{SCALE_OPTIONS.map((scale) => (
+							<div key={scale} className="flex items-center space-x-2 group/item">
+								<Checkbox
+									id={`scale-${scale}`}
+									checked={filters.scales.includes(scale)}
+									onCheckedChange={(checked) => handleScaleToggle(scale, checked as boolean)}
+									className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
+								/>
+								<label
+									htmlFor={`scale-${scale}`}
+									className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors"
+								>
+									{scale}
+								</label>
+							</div>
+						))}
+					</CollapsibleContent>
+				</Collapsible>
+			</div>
+
+			{/* Year Range Filter - Enhanced Card */}
+			<div className="vero-card rounded-lg p-5 border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 transition-all duration-300">
+				<Collapsible open={isYearOpen} onOpenChange={setIsYearOpen}>
+					<CollapsibleTrigger className="flex items-center justify-between w-full group">
+						<span className="text-sm font-semibold text-[#212529] uppercase tracking-wider">Model Year</span>
+						<ChevronDown
+							className={`h-4 w-4 text-[#D4AF37] transition-transform duration-300 ${isYearOpen ? "rotate-180" : ""}`}
+						/>
+					</CollapsibleTrigger>
+					<CollapsibleContent className="pt-4 space-y-3">
+						<Select
+							value={filters.yearRange}
+							onValueChange={(value) => handleFilterUpdate({ yearRange: value })}
+						>
+							<SelectTrigger className="w-full h-11 border-[#D4AF37]/20 hover:border-[#D4AF37] transition-colors">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{YEAR_RANGES.map((range) => (
+									<SelectItem key={range.value} value={range.value}>
+										{range.label}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</CollapsibleContent>
+				</Collapsible>
+			</div>
+
+			{/* Availability - Enhanced Card */}
+			<div className="vero-card rounded-lg p-5 border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 transition-all duration-300">
+				<Collapsible open={isAvailabilityOpen} onOpenChange={setIsAvailabilityOpen}>
+					<CollapsibleTrigger className="flex items-center justify-between w-full group">
+						<span className="text-sm font-semibold text-[#212529] uppercase tracking-wider flex items-center gap-2">
+							Availability
+							{filters.availability.length > 0 && (
+								<span className="bg-[#D4AF37] text-white text-xs px-2 py-0.5 rounded-full font-bold">
+									{filters.availability.length}
+								</span>
+							)}
+						</span>
+						<ChevronDown
+							className={`h-4 w-4 text-[#D4AF37] transition-transform duration-300 ${isAvailabilityOpen ? "rotate-180" : ""}`}
+						/>
+					</CollapsibleTrigger>
+					<CollapsibleContent className="pt-4 space-y-3">
+						<div className="flex items-center space-x-2 group/item">
 							<Checkbox
-								id={`brand-${brand}`}
-								checked={filters.brands.includes(brand)}
-								onCheckedChange={(checked) => handleBrandToggle(brand, checked as boolean)}
+								id="in-stock"
+								checked={filters.availability.includes("in-stock")}
+								onCheckedChange={(checked) => handleAvailabilityToggle("in-stock", checked as boolean)}
+								className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
 							/>
-							<label
-								htmlFor={`brand-${brand}`}
-								className="text-sm text-gray-600 cursor-pointer hover:text-gray-900 flex-1"
-							>
-								{brand}
+							<label htmlFor="in-stock" className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors">
+								In Stock
 							</label>
 						</div>
-					))}
-				</CollapsibleContent>
-			</Collapsible>
-
-			{/* Scale Filter */}
-			<Collapsible open={isScaleOpen} onOpenChange={setIsScaleOpen}>
-				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-						Scale {filters.scales.length > 0 && `(${filters.scales.length})`}
-					</span>
-					<ChevronDown
-						className={`h-4 w-4 text-gray-500 transition-transform ${isScaleOpen ? "rotate-180" : ""}`}
-					/>
-				</CollapsibleTrigger>
-				<CollapsibleContent className="pt-4 space-y-3">
-					{SCALE_OPTIONS.map((scale) => (
-						<div key={scale} className="flex items-center space-x-2">
+						<div className="flex items-center space-x-2 group/item">
 							<Checkbox
-								id={`scale-${scale}`}
-								checked={filters.scales.includes(scale)}
-								onCheckedChange={(checked) => handleScaleToggle(scale, checked as boolean)}
+								id="pre-order"
+								checked={filters.availability.includes("pre-order")}
+								onCheckedChange={(checked) => handleAvailabilityToggle("pre-order", checked as boolean)}
+								className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
 							/>
-							<label
-								htmlFor={`scale-${scale}`}
-								className="text-sm text-gray-600 cursor-pointer hover:text-gray-900"
-							>
-								{scale}
+							<label htmlFor="pre-order" className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors">
+								Pre-Order
 							</label>
 						</div>
-					))}
-				</CollapsibleContent>
-			</Collapsible>
+						<div className="flex items-center space-x-2 group/item">
+							<Checkbox
+								id="limited"
+								checked={filters.availability.includes("limited")}
+								onCheckedChange={(checked) => handleAvailabilityToggle("limited", checked as boolean)}
+								className="border-[#D4AF37]/30 data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
+							/>
+							<label htmlFor="limited" className="text-sm text-[#6C757D] cursor-pointer hover:text-[#D4AF37] transition-colors">
+								Limited Edition
+							</label>
+						</div>
+					</CollapsibleContent>
+				</Collapsible>
+			</div>
 
-			{/* Year Range Filter */}
-			<Collapsible open={isYearOpen} onOpenChange={setIsYearOpen}>
-				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">Model Year</span>
-					<ChevronDown
-						className={`h-4 w-4 text-gray-500 transition-transform ${isYearOpen ? "rotate-180" : ""}`}
-					/>
-				</CollapsibleTrigger>
-				<CollapsibleContent className="pt-4 space-y-3">
-					<Select
-						value={filters.yearRange}
-						onValueChange={(value) => handleFilterUpdate({ yearRange: value })}
-					>
-						<SelectTrigger className="w-full">
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							{YEAR_RANGES.map((range) => (
-								<SelectItem key={range.value} value={range.value}>
-									{range.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				</CollapsibleContent>
-			</Collapsible>
-
-			{/* Availability */}
-			<Collapsible open={isAvailabilityOpen} onOpenChange={setIsAvailabilityOpen}>
-				<CollapsibleTrigger className="flex items-center justify-between w-full py-3 border-b border-gray-200 hover:border-[#D4AF37] transition-colors">
-					<span className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-						Availability {filters.availability.length > 0 && `(${filters.availability.length})`}
-					</span>
-					<ChevronDown
-						className={`h-4 w-4 text-gray-500 transition-transform ${isAvailabilityOpen ? "rotate-180" : ""}`}
-					/>
-				</CollapsibleTrigger>
-				<CollapsibleContent className="pt-4 space-y-3">
-					<div className="flex items-center space-x-2">
-						<Checkbox
-							id="in-stock"
-							checked={filters.availability.includes("in-stock")}
-							onCheckedChange={(checked) => handleAvailabilityToggle("in-stock", checked as boolean)}
-						/>
-						<label htmlFor="in-stock" className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
-							In Stock
-						</label>
-					</div>
-					<div className="flex items-center space-x-2">
-						<Checkbox
-							id="pre-order"
-							checked={filters.availability.includes("pre-order")}
-							onCheckedChange={(checked) => handleAvailabilityToggle("pre-order", checked as boolean)}
-						/>
-						<label htmlFor="pre-order" className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
-							Pre-Order
-						</label>
-					</div>
-					<div className="flex items-center space-x-2">
-						<Checkbox
-							id="limited"
-							checked={filters.availability.includes("limited")}
-							onCheckedChange={(checked) => handleAvailabilityToggle("limited", checked as boolean)}
-						/>
-						<label htmlFor="limited" className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
-							Limited Edition
-						</label>
-					</div>
-				</CollapsibleContent>
-			</Collapsible>
-
-			{/* Clear Filters */}
+			{/* Clear Filters - Enhanced Button */}
 			{activeFilterCount > 0 && (
 				<Button
 					variant="outline"
-					className="w-full mt-4 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white transition-colors"
+					className="w-full h-12 border-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white transition-all duration-300 font-semibold uppercase tracking-wider text-sm hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/20"
 					onClick={clearAllFilters}
 				>
 					<X className="h-4 w-4 mr-2" />

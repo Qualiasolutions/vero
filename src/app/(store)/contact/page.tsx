@@ -244,7 +244,7 @@ export default function ContactPage() {
 							<h3 className="font-semibold text-[#212529] mb-3">Order Processing</h3>
 							<p className="text-[#6C757D]">Orders placed before 2:00 PM CET</p>
 							<p className="text-[#6C757D]">ship same business day</p>
-							<p className="text-[#D4AF37] font-medium mt-2">Free shipping on orders €150+</p>
+							<p className="text-[#D4AF37] font-medium mt-2">Free shipping on orders AED 150+</p>
 						</div>
 					</div>
 				</div>

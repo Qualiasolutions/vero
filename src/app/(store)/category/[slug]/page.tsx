@@ -92,22 +92,40 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 
 	return (
 		<main className="pb-16">
-			{/* Compact Category Header */}
-			<div className="bg-white border-b border-[#D4AF37]/20">
-				<div className="container mx-auto px-4 py-6">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-3">
+			{/* Enhanced Category Header */}
+			<div className="relative bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A] border-b border-[#D4AF37]/30 overflow-hidden">
+				{/* Background Pattern */}
+				<div className="absolute inset-0 opacity-5">
+					<div className="absolute top-0 right-0 w-96 h-96 border border-[#D4AF37] rounded-full -translate-y-1/2 translate-x-1/2" />
+					<div className="absolute bottom-0 left-0 w-64 h-64 border border-[#D4AF37] rounded-full translate-y-1/2 -translate-x-1/2" />
+				</div>
+
+				<div className="relative container mx-auto px-4 py-10">
+					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+						<div className="flex items-center gap-4">
 							<span
-								className={`${category.badgeColor} text-white text-xs px-2 py-1 rounded-sm uppercase tracking-wider font-bold`}
+								className={`${category.badgeColor} text-white text-xs px-3 py-1.5 rounded-md uppercase tracking-wider font-bold shadow-lg`}
 							>
 								{category.badge}
 							</span>
-							<h1 className="text-2xl md:text-3xl font-light tracking-wider uppercase vero-text-gradient">
-								{category.name}
-							</h1>
+							<div>
+								<h1 className="text-3xl md:text-4xl font-light tracking-wider uppercase text-white mb-2">
+									{category.name}
+								</h1>
+								{category.description && (
+									<p className="text-[#E6C757] text-sm md:text-base max-w-2xl">
+										{category.description}
+									</p>
+								)}
+							</div>
 						</div>
-						<div className="text-sm text-[#D4AF37] font-medium">
-							{products.length} {products.length === 1 ? "Model" : "Models"}
+						<div className="flex items-center gap-3">
+							<div className="text-center bg-white/10 backdrop-blur-sm rounded-lg px-5 py-3 border border-white/20">
+								<div className="text-2xl font-bold text-[#D4AF37]">{products.length}</div>
+								<div className="text-xs text-white/80 uppercase tracking-wide">
+									{products.length === 1 ? "Model" : "Models"}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -118,19 +136,19 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 				<CategoryContent products={products} />
 			) : (
 				<div className="container mx-auto px-4 py-12">
-					<div className="text-center py-12">
-						<div className="text-[#D4AF37]/40 text-4xl mb-4">🏎️</div>
-						<h3 className="text-xl font-light text-[#212529] mb-3 uppercase tracking-wide">
+					<div className="vero-card rounded-2xl p-12 text-center border border-[#D4AF37]/20 max-w-2xl mx-auto">
+						<div className="text-[#D4AF37]/40 text-6xl mb-6">🏎️</div>
+						<h3 className="text-2xl font-light text-[#212529] mb-4 uppercase tracking-wide">
 							Models Coming Soon
 						</h3>
-						<p className="text-[#6C757D] max-w-lg mx-auto text-sm">
+						<p className="text-[#6C757D] leading-relaxed mb-8">
 							We're currently curating the finest selection for {category.name.toLowerCase()}. Check back soon
 							or explore our other collections.
 						</p>
 						<div className="mt-6">
 							<a
 								href="/products"
-								className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors text-sm"
+								className="inline-flex items-center gap-2 bg-[#D4AF37] hover:bg-[#B8941F] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/30 uppercase tracking-wide text-sm"
 							>
 								View All Models →
 							</a>

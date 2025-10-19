@@ -49,10 +49,10 @@ export default async function Home() {
 		<main className="min-h-screen bg-white">
 			{/* Announcement Banner */}
 			<section className="relative bg-gradient-to-r from-[#D4AF37] via-[#E6C757] to-[#D4AF37] text-white py-2.5">
-				<div className="w-full px-4 max-w-7xl mx-auto">
+				<div className="w-full px-6 lg:px-12">
 					<div className="flex items-center justify-center gap-2 text-xs md:text-sm font-semibold">
 						<Sparkles className="w-4 h-4 animate-pulse" />
-						<span>NEW ARRIVALS WEEKLY • FREE SHIPPING €150+ • EXCLUSIVE COLLECTIBLES</span>
+						<span>NEW ARRIVALS WEEKLY • FREE SHIPPING AED 550+ • EXCLUSIVE COLLECTIBLES</span>
 						<Sparkles className="w-4 h-4 animate-pulse" />
 					</div>
 				</div>
@@ -62,8 +62,8 @@ export default async function Home() {
 			<HeroSection />
 
 			{/* Feature Bar */}
-			<section className="w-full px-4 py-6 bg-white border-y border-[#D4AF37]/20">
-				<div className="max-w-[1600px] mx-auto">
+			<section className="w-full px-6 lg:px-12 xl:px-16 py-6 bg-white border-y border-[#D4AF37]/20">
+				<div className="w-full">
 					<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[#D4AF37]/10 to-white rounded-lg border border-[#D4AF37]/20">
 							<Shield className="w-8 h-8 text-[#D4AF37] flex-shrink-0" />
@@ -76,7 +76,7 @@ export default async function Home() {
 							<Package className="w-8 h-8 text-[#B8941F] flex-shrink-0" />
 							<div>
 								<p className="text-xs font-bold text-[#212529]">FREE SHIPPING</p>
-								<p className="text-[10px] text-[#6C757D]">Orders Over €150</p>
+								<p className="text-[10px] text-[#6C757D]">Orders Over AED 550</p>
 							</div>
 						</div>
 						<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[#F5E6D3]/50 to-white rounded-lg border border-[#D4AF37]/20">
@@ -98,8 +98,8 @@ export default async function Home() {
 			</section>
 
 			{/* Special Offers Banner - Vero Gold */}
-			<section className="w-full px-4 py-3 bg-gradient-to-r from-[#B8941F] via-[#D4AF37] to-[#B8941F]">
-				<div className="max-w-[1600px] mx-auto">
+			<section className="w-full px-6 lg:px-12 xl:px-16 py-3 bg-gradient-to-r from-[#B8941F] via-[#D4AF37] to-[#B8941F]">
+				<div className="w-full">
 					<div className="flex items-center justify-center gap-2 text-white">
 						<Zap className="w-5 h-5 animate-pulse" />
 						<p className="text-sm md:text-base font-bold uppercase tracking-wide">
@@ -113,9 +113,9 @@ export default async function Home() {
 			{/* Category Columns with Products - 6 Columns in Single Row */}
 			<section
 				id="categories"
-				className="w-full px-4 py-12 bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white"
+				className="w-full px-6 lg:px-12 xl:px-16 py-12 bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white"
 			>
-				<div className="max-w-[1600px] mx-auto">
+				<div className="w-full">
 					{/* Section Header */}
 					<div className="text-center mb-12">
 						<h2 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-3">

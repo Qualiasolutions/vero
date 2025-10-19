@@ -12,29 +12,43 @@ export const Nav = async () => {
 	const session = await auth();
 
 	return (
-		<header className="z-50 py-6 sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#D4AF37]/20 shadow-sm">
-			<div className="w-full flex items-center gap-2 px-4 flex-row sm:px-6 lg:px-8 xl:px-12">
-				<YnsLink href="/" className="group flex items-center">
+		<header className="z-50 py-5 sticky top-0 bg-white/98 backdrop-blur-lg border-b border-[#D4AF37]/20 shadow-lg shadow-black/5 transition-all duration-300">
+			<div className="w-full flex items-center gap-3 px-4 flex-row sm:px-6 lg:px-8 xl:px-12">
+				{/* Logo */}
+				<YnsLink href="/" className="group flex items-center relative">
 					<Image
 						src="/veromodels-logo.webp"
 						alt="Veromodels"
 						width={240}
 						height={80}
-						className="h-14 w-auto sm:h-16 transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]"
+						className="h-12 w-auto sm:h-14 transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_16px_rgba(212,175,55,0.6)]"
 						priority
 					/>
 					<SeoH1 className="sr-only">Veromodels</SeoH1>
+					{/* Gold accent line on hover */}
+					<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#E6C757] transition-all duration-500 group-hover:w-full"></span>
 				</YnsLink>
 
+				{/* Navigation Menu */}
 				<div className="flex-1 flex items-center justify-center sm:mr-auto max-sm:order-2">
 					<NavMenu />
 				</div>
+
+				{/* Search */}
 				<div className="mr-3 ml-auto sm:ml-0">
 					<SearchNav />
 				</div>
-				<div className="flex items-center gap-4">
-					<FavoritesIcon />
-					<CartIcon />
+
+				{/* Icons Group */}
+				<div className="flex items-center gap-3 md:gap-4">
+					<div className="hidden sm:flex items-center gap-3 md:gap-4 border-r border-[#D4AF37]/20 pr-3 md:pr-4">
+						<FavoritesIcon />
+						<CartIcon />
+					</div>
+					<div className="sm:hidden flex items-center gap-3">
+						<FavoritesIcon />
+						<CartIcon />
+					</div>
 					<UserMenu userEmail={session?.user.email} />
 				</div>
 			</div>

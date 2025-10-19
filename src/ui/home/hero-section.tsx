@@ -4,21 +4,20 @@ import Link from "next/link";
 
 export function HeroSection() {
 	return (
-		<section className="relative w-full min-h-[85vh] bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A] overflow-hidden">
+		<section className="relative w-full bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A] overflow-hidden">
 			{/* Background Pattern */}
 			<div className="absolute inset-0 opacity-10">
-				<div className="absolute top-20 left-20 w-96 h-96 border border-[#D4AF37] rounded-full animate-float" />
-				<div className="absolute bottom-20 right-20 w-64 h-64 border border-[#D4AF37] rounded-full animate-float delay-1000" />
-				<div className="absolute top-1/2 left-1/3 w-48 h-48 border border-[#E6C757] rounded-full animate-float delay-2000" />
+				<div className="absolute top-10 left-20 w-64 h-64 border border-[#D4AF37] rounded-full animate-float" />
+				<div className="absolute bottom-10 right-20 w-48 h-48 border border-[#D4AF37] rounded-full animate-float delay-1000" />
 			</div>
 
 			{/* Gradient Overlay */}
 			<div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A0A0A]/50 to-[#0A0A0A]" />
 
-			<div className="relative z-10 max-w-[1600px] mx-auto px-4 py-16 lg:py-20">
-				<div className="grid lg:grid-cols-2 gap-12 items-center">
+			<div className="relative z-10 w-full px-6 lg:px-12 xl:px-16 py-6 lg:py-8">
+				<div className="grid lg:grid-cols-2 gap-6 items-center max-w-[1800px] mx-auto">
 					{/* Left Content */}
-					<div className="text-white space-y-8">
+					<div className="text-white space-y-4">
 						{/* Badge */}
 						<div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-4 py-2 backdrop-blur-sm">
 							<Star className="w-4 h-4 text-[#D4AF37]" fill="#D4AF37" />
@@ -26,67 +25,67 @@ export function HeroSection() {
 						</div>
 
 						{/* Main Heading */}
-						<div className="space-y-4">
-							<h1 className="text-5xl lg:text-7xl font-light tracking-tight">
+						<div className="space-y-2">
+							<h1 className="text-3xl lg:text-5xl font-light tracking-tight">
 								Collect The
-								<span className="block mt-2 vero-elegant-text">Extraordinary</span>
+								<span className="block mt-1 vero-elegant-text">Extraordinary</span>
 							</h1>
-							<p className="text-xl lg:text-2xl text-white/80 leading-relaxed max-w-xl">
+							<p className="text-base lg:text-lg text-white/80 leading-relaxed max-w-xl">
 								Discover exclusive die-cast model cars from legendary brands. Limited editions, rare
 								collectibles, and pre-order releases.
 							</p>
 						</div>
 
 						{/* CTAs */}
-						<div className="flex flex-col sm:flex-row gap-4">
+						<div className="flex flex-col sm:flex-row gap-2">
 							<Link
 								href="#categories"
-								className="inline-flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-[#E6C757] text-black font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#D4AF37]/50"
+								className="inline-flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-[#E6C757] text-black font-semibold px-5 py-2.5 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#D4AF37]/50 text-sm"
 							>
 								Shop Collection
-								<ArrowRight className="w-5 h-5" />
+								<ArrowRight className="w-4 h-4" />
 							</Link>
 							<Link
 								href="/category/new-arrivals"
-								className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-lg border-2 border-white/20 hover:border-[#D4AF37] transition-all duration-300 backdrop-blur-sm"
+								className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-lg border-2 border-white/20 hover:border-[#D4AF37] transition-all duration-300 backdrop-blur-sm text-sm"
 							>
 								New Arrivals
 							</Link>
 						</div>
 
 						{/* Stats */}
-						<div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
+						<div className="grid grid-cols-3 gap-3 pt-3 border-t border-white/10">
 							<div>
-								<div className="text-3xl font-bold text-[#D4AF37]">500+</div>
-								<div className="text-sm text-white/60 mt-1">Premium Models</div>
+								<div className="text-xl lg:text-2xl font-bold text-[#D4AF37]">500+</div>
+								<div className="text-xs text-white/60 mt-0.5">Premium Models</div>
 							</div>
 							<div>
-								<div className="text-3xl font-bold text-[#D4AF37]">50+</div>
-								<div className="text-sm text-white/60 mt-1">Top Brands</div>
+								<div className="text-xl lg:text-2xl font-bold text-[#D4AF37]">50+</div>
+								<div className="text-xs text-white/60 mt-0.5">Top Brands</div>
 							</div>
 							<div>
-								<div className="text-3xl font-bold text-[#D4AF37]">10K+</div>
-								<div className="text-sm text-white/60 mt-1">Happy Collectors</div>
+								<div className="text-xl lg:text-2xl font-bold text-[#D4AF37]">10K+</div>
+								<div className="text-xs text-white/60 mt-0.5">Happy Collectors</div>
 							</div>
 						</div>
 					</div>
 
 					{/* Right Content - Featured Product Showcase */}
-					<div className="relative">
+					<div className="relative hidden lg:block">
 						{/* Main Product Card */}
-						<div className="relative vero-glass-dark rounded-2xl p-8 backdrop-blur-xl">
+						<div className="relative vero-glass-dark rounded-xl p-4 backdrop-blur-xl">
 							{/* Featured Badge */}
-							<div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-black font-bold text-sm px-6 py-2 rounded-full shadow-lg">
-								FEATURED THIS WEEK
+							<div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-black font-bold text-xs px-3 py-1 rounded-full shadow-lg">
+								FEATURED
 							</div>
 
 							{/* Product Image */}
-							<div className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-white/5 to-white/10 mb-6 group">
+							<div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-white/5 to-white/10 mb-3 group">
 								<Image
 									src="https://i.ibb.co/c1KJ2Lm/image-2.webp"
 									alt="Featured Model"
 									fill
-									className="object-contain p-8 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"
+									className="object-contain p-3 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"
 									sizes="(max-width: 768px) 100vw, 50vw"
 									priority
 								/>
@@ -94,56 +93,49 @@ export function HeroSection() {
 							</div>
 
 							{/* Product Info */}
-							<div className="space-y-4">
+							<div className="space-y-2">
 								<div>
-									<h3 className="text-2xl font-bold text-white mb-2">Ferrari F40 - Rosso Corsa</h3>
-									<p className="text-white/60 text-sm">Limited Edition 1:18 Scale Model</p>
+									<h3 className="text-lg font-bold text-white mb-0.5">Ferrari F40</h3>
+									<p className="text-white/60 text-xs">Limited Edition 1:18</p>
 								</div>
 
 								{/* Features */}
-								<div className="flex flex-wrap gap-2">
-									<div className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full text-xs text-white/90">
-										<Award className="w-3.5 h-3.5 text-[#D4AF37]" />
+								<div className="flex flex-wrap gap-1.5">
+									<div className="inline-flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-white/90">
+										<Award className="w-3 h-3 text-[#D4AF37]" />
 										Authentic
 									</div>
-									<div className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full text-xs text-white/90">
-										<Package className="w-3.5 h-3.5 text-[#D4AF37]" />
-										Free Shipping
+									<div className="inline-flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-white/90">
+										<Package className="w-3 h-3 text-[#D4AF37]" />
+										Free Ship
 									</div>
-									<div className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full text-xs text-white/90">
-										<Star className="w-3.5 h-3.5 text-[#D4AF37]" fill="#D4AF37" />
+									<div className="inline-flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-white/90">
+										<Star className="w-3 h-3 text-[#D4AF37]" fill="#D4AF37" />
 										Limited
 									</div>
 								</div>
 
 								{/* Price & CTA */}
-								<div className="flex items-center justify-between pt-4 border-t border-white/10">
+								<div className="flex items-center justify-between pt-2 border-t border-white/10">
 									<div>
-										<div className="text-sm text-white/60">Starting at</div>
-										<div className="text-3xl font-bold text-[#D4AF37]">€89.99</div>
+										<div className="text-xs text-white/60">Starting at</div>
+										<div className="text-xl font-bold text-[#D4AF37]">AED 330</div>
 									</div>
 									<Link
 										href="/product/ferrari-f40-rosso-corsa"
-										className="inline-flex items-center gap-2 bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-[#D4AF37] transition-all duration-300 hover:scale-105"
+										className="inline-flex items-center gap-1.5 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#D4AF37] transition-all duration-300 hover:scale-105 text-xs"
 									>
-										View Details
-										<ArrowRight className="w-4 h-4" />
+										View
+										<ArrowRight className="w-3.5 h-3.5" />
 									</Link>
 								</div>
 							</div>
 						</div>
 
 						{/* Floating Elements */}
-						<div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-[#D4AF37] to-[#E6C757] rounded-full blur-3xl opacity-30 animate-pulse" />
-						<div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-[#E6C757] to-[#D4AF37] rounded-full blur-3xl opacity-20 animate-pulse delay-1000" />
+						<div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-[#D4AF37] to-[#E6C757] rounded-full blur-3xl opacity-30 animate-pulse" />
+						<div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-[#E6C757] to-[#D4AF37] rounded-full blur-3xl opacity-20 animate-pulse delay-1000" />
 					</div>
-				</div>
-			</div>
-
-			{/* Scroll Indicator */}
-			<div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-				<div className="w-6 h-10 border-2 border-white/30 rounded-full p-1">
-					<div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mx-auto animate-pulse" />
 				</div>
 			</div>
 		</section>

@@ -17,9 +17,16 @@ export default async function StoreLayout({
 		<CartProvider>
 			<FavoritesProvider>
 				<div className="relative min-h-screen bg-white">
+					{/* Skip to main content link for keyboard navigation */}
+					<a
+						href="#main-content"
+						className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-[#D4AF37] focus:text-white focus:rounded-lg focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:ring-offset-2"
+					>
+						Skip to main content
+					</a>
 					<Nav />
 					<TooltipProvider>
-						<main className="mx-auto flex w-full flex-1 flex-col px-4 pb-6 pt-2 sm:px-6 lg:px-8 xl:px-12 relative bg-white">
+						<main id="main-content" className="mx-auto flex w-full flex-1 flex-col px-4 pb-6 pt-2 sm:px-6 lg:px-8 xl:px-12 relative bg-white">
 							{children}
 						</main>
 						<Footer />
