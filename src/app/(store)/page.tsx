@@ -7,7 +7,7 @@ import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
 import { publicUrl } from "@/env.mjs";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
-import { CompactSlideshow } from "@/ui/home/compact-slideshow";
+import { HeroSection } from "@/ui/home/hero-section";
 import { Badge } from "@/ui/shadcn/badge";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
 
@@ -46,24 +46,20 @@ export default async function Home() {
 	});
 
 	return (
-		<main className="min-h-screen bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white">
+		<main className="min-h-screen bg-white">
 			{/* Announcement Banner */}
-			<section className="relative bg-gradient-to-r from-[#D4AF37] via-[#E6C757] to-[#D4AF37] text-white py-2">
+			<section className="relative bg-gradient-to-r from-[#D4AF37] via-[#E6C757] to-[#D4AF37] text-white py-2.5">
 				<div className="w-full px-4 max-w-7xl mx-auto">
-					<div className="flex items-center justify-center gap-2 text-xs md:text-sm font-medium">
-						<Sparkles className="w-4 h-4" />
-						<span>🎉 NEW ARRIVALS WEEKLY • FREE SHIPPING €150+ • EXCLUSIVE COLLECTIBLES</span>
-						<Sparkles className="w-4 h-4" />
+					<div className="flex items-center justify-center gap-2 text-xs md:text-sm font-semibold">
+						<Sparkles className="w-4 h-4 animate-pulse" />
+						<span>NEW ARRIVALS WEEKLY • FREE SHIPPING €150+ • EXCLUSIVE COLLECTIBLES</span>
+						<Sparkles className="w-4 h-4 animate-pulse" />
 					</div>
 				</div>
 			</section>
 
-			{/* Compact Slideshow */}
-			<section className="w-full px-4 py-4 bg-white">
-				<div className="max-w-[1600px] mx-auto">
-					<CompactSlideshow />
-				</div>
-			</section>
+			{/* Hero Section */}
+			<HeroSection />
 
 			{/* Feature Bar */}
 			<section className="w-full px-4 py-6 bg-white border-y border-[#D4AF37]/20">
@@ -115,11 +111,20 @@ export default async function Home() {
 			</section>
 
 			{/* Category Columns with Products - 6 Columns in Single Row */}
-			<section className="w-full px-4 py-8 bg-transparent">
+			<section
+				id="categories"
+				className="w-full px-4 py-12 bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white"
+			>
 				<div className="max-w-[1600px] mx-auto">
-					<h2 className="text-2xl md:text-3xl font-light text-center text-[#212529] uppercase tracking-wider mb-6">
-						Shop By Category
-					</h2>
+					{/* Section Header */}
+					<div className="text-center mb-12">
+						<h2 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-3">
+							Shop By Category
+						</h2>
+						<p className="text-[#6C757D] text-lg max-w-2xl mx-auto">
+							Explore our curated collection of premium 1:18 scale die-cast models
+						</p>
+					</div>
 					{/* Grid of 6 columns (1 on mobile, 3 on tablet, 6 on desktop) */}
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
 						{categoryProducts.map(({ category, products }) => {
@@ -249,31 +254,48 @@ export default async function Home() {
 			</section>
 
 			{/* Why Choose Us Section */}
-			<section className="w-full px-4 py-8 bg-gradient-to-b from-[#FDFBF7] to-white border-y border-[#D4AF37]/20">
+			<section className="w-full px-4 py-16 bg-gradient-to-b from-[#FDFBF7] to-white border-y border-[#D4AF37]/20">
 				<div className="max-w-[1600px] mx-auto">
-					<h3 className="text-xl md:text-2xl font-light text-center text-[#212529] uppercase tracking-wider mb-6">
-						Why Collectors Choose Veromodels
-					</h3>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-						<div className="text-center p-6 bg-white rounded-xl border border-[#D4AF37]/20 hover:shadow-lg transition-all">
-							<Award className="w-12 h-12 text-[#D4AF37] mx-auto mb-3" />
-							<h4 className="font-bold text-[#212529] mb-2">Authenticity Guaranteed</h4>
-							<p className="text-sm text-[#6C757D]">
-								Every model is officially licensed and comes with certificates of authenticity
+					{/* Section Header */}
+					<div className="text-center mb-12">
+						<h3 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-3">
+							Why Collectors Choose Veromodels
+						</h3>
+						<p className="text-[#6C757D] text-lg max-w-2xl mx-auto">
+							Premium quality, authenticity, and exceptional service for every collector
+						</p>
+					</div>
+
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+						<div className="group text-center p-8 bg-white rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-2">
+							<div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+								<Award className="w-10 h-10 text-[#D4AF37]" />
+							</div>
+							<h4 className="text-xl font-semibold text-[#212529] mb-3">Authenticity Guaranteed</h4>
+							<p className="text-[#6C757D] leading-relaxed">
+								Every model is officially licensed and comes with certificates of authenticity from verified
+								manufacturers
 							</p>
 						</div>
-						<div className="text-center p-6 bg-white rounded-xl border border-[#D4AF37]/20 hover:shadow-lg transition-all">
-							<Package className="w-12 h-12 text-[#D4AF37] mx-auto mb-3" />
-							<h4 className="font-bold text-[#212529] mb-2">Secure Packaging</h4>
-							<p className="text-sm text-[#6C757D]">
-								Double-boxed with protective foam to ensure safe delivery of your collectible
+
+						<div className="group text-center p-8 bg-white rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-2">
+							<div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+								<Package className="w-10 h-10 text-[#D4AF37]" />
+							</div>
+							<h4 className="text-xl font-semibold text-[#212529] mb-3">Secure Packaging</h4>
+							<p className="text-[#6C757D] leading-relaxed">
+								Double-boxed with protective foam to ensure safe delivery of your precious collectible items
 							</p>
 						</div>
-						<div className="text-center p-6 bg-white rounded-xl border border-[#D4AF37]/20 hover:shadow-lg transition-all">
-							<Shield className="w-12 h-12 text-[#D4AF37] mx-auto mb-3" />
-							<h4 className="font-bold text-[#212529] mb-2">Quality Assurance</h4>
-							<p className="text-sm text-[#6C757D]">
-								Inspected and verified before shipment with premium 1:18 scale craftsmanship
+
+						<div className="group text-center p-8 bg-white rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-2">
+							<div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+								<Shield className="w-10 h-10 text-[#D4AF37]" />
+							</div>
+							<h4 className="text-xl font-semibold text-[#212529] mb-3">Quality Assurance</h4>
+							<p className="text-[#6C757D] leading-relaxed">
+								Inspected and verified before shipment with premium 1:18 scale craftsmanship and attention to
+								detail
 							</p>
 						</div>
 					</div>

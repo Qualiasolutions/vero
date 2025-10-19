@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { supabase } from "@/lib/supabase";
-import { getCartAction, clearCartAction } from "./cart-actions-new";
+import { clearCartAction, getCartAction } from "./cart-actions-new";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 	apiVersion: "2025-08-27.basil",

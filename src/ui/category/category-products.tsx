@@ -1,7 +1,7 @@
+import type { Product } from "@/lib/product-service";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { CategoryContent } from "@/ui/category/category-content";
-import type { Product } from "@/lib/product-service";
 
 interface CategoryProductsProps {
 	categorySlug: string;

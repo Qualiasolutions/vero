@@ -1,3 +1,4 @@
+import { createServerClient } from "@supabase/ssr";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { type NextRequest, NextResponse } from "next/server";
@@ -16,16 +17,51 @@ const ratelimit = process.env.UPSTASH_REDIS_REST_URL
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
-	const response = NextResponse.next();
+
+	// Create Supabase client with middleware cookie handling
+	let supabaseResponse = NextResponse.next({
+		request,
+	});
+
+	const supabase = createServerClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+		{
+			cookies: {
+				getAll() {
+					return request.cookies.getAll();
+				},
+				setAll(cookiesToSet) {
+					for (const { name, value } of cookiesToSet) {
+						request.cookies.set(name, value);
+					}
+					supabaseResponse = NextResponse.next({
+						request,
+					});
+					for (const { name, value, options } of cookiesToSet) {
+						supabaseResponse.cookies.set(name, value, options);
+					}
+				},
+			},
+		},
+	);
+
+	// Refresh session if expired
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
 
 	// Add security headers
-	response.headers.set("X-Frame-Options", "DENY");
-	response.headers.set("X-Content-Type-Options", "nosniff");
-	response.headers.set("X-XSS-Protection", "1; mode=block");
-	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-	response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
-	response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
-	response.headers.set(
+	supabaseResponse.headers.set("X-Frame-Options", "DENY");
+	supabaseResponse.headers.set("X-Content-Type-Options", "nosniff");
+	supabaseResponse.headers.set("X-XSS-Protection", "1; mode=block");
+	supabaseResponse.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+	supabaseResponse.headers.set(
+		"Permissions-Policy",
+		"camera=(), microphone=(), geolocation=(), interest-cohort=()",
+	);
+	supabaseResponse.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+	supabaseResponse.headers.set(
 		"Content-Security-Policy",
 		[
 			"default-src 'self'",
@@ -33,7 +69,7 @@ export async function middleware(request: NextRequest) {
 			"style-src 'self' 'unsafe-inline'",
 			"img-src 'self' blob: data: https: http:",
 			"font-src 'self' data:",
-			"connect-src 'self' https://api.stripe.com https://checkout.stripe.com",
+			"connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://zskfdlqyzhkzefafqkpx.supabase.co",
 			"frame-src 'self' https://js.stripe.com https://checkout.stripe.com",
 			"object-src 'none'",
 			"base-uri 'self'",
@@ -48,9 +84,9 @@ export async function middleware(request: NextRequest) {
 		const ip = request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip") ?? "127.0.0.1";
 		const { success, limit, reset, remaining } = await ratelimit.limit(ip);
 
-		response.headers.set("X-RateLimit-Limit", limit.toString());
-		response.headers.set("X-RateLimit-Remaining", remaining.toString());
-		response.headers.set("X-RateLimit-Reset", new Date(reset).toISOString());
+		supabaseResponse.headers.set("X-RateLimit-Limit", limit.toString());
+		supabaseResponse.headers.set("X-RateLimit-Remaining", remaining.toString());
+		supabaseResponse.headers.set("X-RateLimit-Reset", new Date(reset).toISOString());
 
 		if (!success) {
 			return new NextResponse("Too Many Requests", {
@@ -65,24 +101,13 @@ export async function middleware(request: NextRequest) {
 	// Check protected paths
 	const isProtectedPath = ProtectedPaths.some((p) => pathname.startsWith(p));
 
-	if (isProtectedPath) {
-		// Check if user has a valid session cookie
-		const sessionCookie = request.cookies.get("veromodels-session");
-
-		if (!sessionCookie) {
-			const url = new URL("/login", request.url);
-			url.searchParams.set("from", pathname);
-			return NextResponse.redirect(url);
-		}
-
-		// Note: Full email verification and admin checks are done in the route handlers
-		// Middleware only does basic session check for performance in edge runtime
+	if (isProtectedPath && !user) {
+		const url = new URL("/login", request.url);
+		url.searchParams.set("from", pathname);
+		return NextResponse.redirect(url);
 	}
 
-	// Note: Session renewal is handled in individual route handlers
-	// to avoid edge runtime compatibility issues
-
-	return response;
+	return supabaseResponse;
 }
 
 export const config = {

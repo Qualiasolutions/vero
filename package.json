@@ -39,6 +39,7 @@
 		"@splinetool/runtime": "1.10.56",
 		"@stripe/react-stripe-js": "3.9.0",
 		"@stripe/stripe-js": "7.9.0",
+		"@supabase/ssr": "0.7.0",
 		"@supabase/supabase-js": "2.75.1",
 		"@t3-oss/env-nextjs": "0.13.8",
 		"@tsparticles/engine": "3.9.1",
