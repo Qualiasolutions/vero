@@ -65,7 +65,7 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 					});
 
 					if (prices.data.length > 0) {
-						price = prices.data[0];
+						price = prices.data[0] || null;
 					}
 				}
 
