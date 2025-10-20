@@ -44,11 +44,30 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 		items.map(async (item) => {
 			try {
 				// Fetch product from Stripe
-				const product = await stripe.products.retrieve(item.product_id, {
-					expand: ["default_price"],
-				});
+				const product = await stripe.products.retrieve(item.product_id);
 
-				const price = product.default_price as Stripe.Price;
+				// Fetch prices for this product (handles both default_price and standalone prices)
+				let price: Stripe.Price | null = null;
+
+				// Try to get default_price if it exists
+				if (product.default_price) {
+					if (typeof product.default_price === "string") {
+						price = await stripe.prices.retrieve(product.default_price);
+					} else {
+						price = product.default_price as Stripe.Price;
+					}
+				} else {
+					// If no default_price, fetch the first active price for this product
+					const prices = await stripe.prices.list({
+						product: item.product_id,
+						active: true,
+						limit: 1,
+					});
+
+					if (prices.data.length > 0) {
+						price = prices.data[0];
+					}
+				}
 
 				// Validate that we got a valid price
 				if (!price || typeof price.unit_amount !== "number") {
