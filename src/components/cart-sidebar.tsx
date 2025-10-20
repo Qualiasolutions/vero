@@ -163,7 +163,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 								<span className="text-sm uppercase tracking-wider text-[#6C757D]">Total:</span>
 								<span className="text-2xl font-semibold vero-text-gradient">
 									{formatMoney({
-										amount: Math.round((cart.total || 0) * 100), // Convert to cents
+										amount: cart.total || 0, // Already in fils (smallest unit)
 										currency: cart.currency || "aed",
 										locale: "en-US",
 									})}
