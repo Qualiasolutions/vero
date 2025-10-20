@@ -43,7 +43,8 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 	// Default currency fallback
 	let cartCurrency = "eur";
 
-	const cartItems = await Promise.all(
+	// Process items and capture currency separately
+	const results = await Promise.all(
 		items.map(async (item) => {
 			try {
 				// Fetch product from Stripe
@@ -83,20 +84,23 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 					);
 				}
 
+				// Return both the cart item AND the currency as a tuple
 				return {
-					id: item.id,
-					productId: item.product_id,
-					variantId: item.product_id,
-					quantity: item.quantity,
-					price: price.unit_amount,
-					currency: price.currency, // Store on item for extraction
-					product: {
-						id: product.id,
-						name: product.name,
-						description: product.description || undefined,
-						images: product.images || [],
-						metadata: product.metadata || {},
+					cartItem: {
+						id: item.id,
+						productId: item.product_id,
+						variantId: item.product_id,
+						quantity: item.quantity,
+						price: price.unit_amount,
+						product: {
+							id: product.id,
+							name: product.name,
+							description: product.description || undefined,
+							images: product.images || [],
+							metadata: product.metadata || {},
+						},
 					},
+					currency: price.currency,
 				};
 			} catch (error) {
 				// Enhanced error logging with more context
@@ -117,18 +121,20 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 		}),
 	);
 
+	// Extract cart items and currency
+	const cartItems = results.map((r) => r.cartItem);
+
+	// Get currency from first item
+	if (results.length > 0) {
+		cartCurrency = results[0].currency;
+		console.log("✓ Extracted currency from first product price:", cartCurrency);
+	} else {
+		console.log("⚠️ No items in cart, using default currency:", cartCurrency);
+	}
+
 	// Price is already in smallest currency unit (cents/fils/etc), so total is also in smallest unit
 	// No need to divide by 100 - that's only for display formatting
 	const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-	// Extract currency from first item (all items should have same currency)
-	if (cartItems.length > 0 && (cartItems[0] as any).currency) {
-		cartCurrency = (cartItems[0] as any).currency;
-		console.log("✓ Extracted currency from first cart item:", cartCurrency);
-	} else {
-		console.log("⚠️ No currency found on first cart item, using default:", cartCurrency);
-		console.log("   First cart item:", JSON.stringify(cartItems[0], null, 2));
-	}
 
 	return {
 		id: items[0]?.id || "empty",
