@@ -67,6 +67,7 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 					variantId: item.product_id,
 					quantity: item.quantity,
 					price: price.unit_amount,
+					currency: price.currency, // Store currency from Stripe price
 					product: {
 						id: product.id,
 						name: product.name,
@@ -94,15 +95,18 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 		}),
 	);
 
-	// Price is already in fils (smallest unit), so total is also in fils
+	// Price is already in smallest currency unit (cents/fils/etc), so total is also in smallest unit
 	// No need to divide by 100 - that's only for display formatting
 	const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+	// Use currency from first item (all items should have same currency)
+	const currency = cartItems[0]?.currency || "eur";
 
 	return {
 		id: items[0]?.id || "empty",
 		items: cartItems,
 		total,
-		currency: "aed",
+		currency,
 	};
 }
 

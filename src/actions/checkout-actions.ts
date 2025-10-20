@@ -37,7 +37,7 @@ export async function createCheckoutSession() {
 		// Create Stripe line items from cart
 		const lineItems = cart.items.map((item) => ({
 			price_data: {
-				currency: "aed",
+				currency: cart.currency, // Use currency from cart (derived from Stripe products)
 				product_data: {
 					name: item.product?.name || "Product",
 					images: item.product?.images || [],
