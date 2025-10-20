@@ -57,12 +57,17 @@ export async function createCheckoutSession() {
 		);
 
 		// Create Stripe Checkout session
+		// Use NEXT_PUBLIC_URL if available, fallback to VERCEL_URL (auto-set by Vercel)
+		const baseUrl =
+			process.env.NEXT_PUBLIC_URL ||
+			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
 			line_items: lineItems,
 			mode: "payment",
-			success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${process.env.NEXT_PUBLIC_URL}/checkout/cancel`,
+			success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${baseUrl}/checkout/cancel`,
 			metadata: {
 				cart_items: JSON.stringify(cart.items.map((i) => ({ id: i.productId, quantity: i.quantity }))),
 			},

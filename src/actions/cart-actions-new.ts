@@ -94,7 +94,9 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 		}),
 	);
 
-	const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity) / 100, 0);
+	// Price is already in fils (smallest unit), so total is also in fils
+	// No need to divide by 100 - that's only for display formatting
+	const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
 	return {
 		id: items[0]?.id || "empty",

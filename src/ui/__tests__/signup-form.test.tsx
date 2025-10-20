@@ -48,7 +48,7 @@ describe("SignupForm", () => {
 	it("should render signup form with all required fields", () => {
 		render(<SignupForm />);
 
-		expect(screen.getByText("Create Account")).toBeInTheDocument();
+		expect(screen.getByRole("heading", { name: "Create Account" })).toBeInTheDocument();
 		expect(screen.getByText("Join the Veromodels collector community")).toBeInTheDocument();
 		expect(screen.getByLabelText("Full Name")).toBeInTheDocument();
 		expect(screen.getByLabelText("Email Address")).toBeInTheDocument();
@@ -175,7 +175,7 @@ describe("SignupForm", () => {
 		render(<SignupForm />);
 
 		// Check for heading
-		const heading = screen.getByText("Create Account");
+		const heading = screen.getByRole("heading", { name: "Create Account" });
 		expect(heading).toBeInTheDocument();
 
 		// Check for subtitle

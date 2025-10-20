@@ -48,10 +48,10 @@ describe("LoginForm", () => {
 	it("should render login form with all fields", () => {
 		render(<LoginForm />);
 
-		expect(screen.getByText("Sign In")).toBeInTheDocument();
+		expect(screen.getByRole("heading", { name: "Sign In" })).toBeInTheDocument();
 		expect(screen.getByText("Access your premium collection")).toBeInTheDocument();
-		expect(screen.getByLabelText("Email Address")).toBeInTheDocument();
-		expect(screen.getByLabelText("Password")).toBeInTheDocument();
+		expect(screen.getByPlaceholderText("your@email.com")).toBeInTheDocument();
+		expect(screen.getByPlaceholderText("Enter your password")).toBeInTheDocument();
 		expect(screen.getByRole("button", { name: "Sign In" })).toBeInTheDocument();
 	});
 
