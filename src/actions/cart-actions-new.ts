@@ -125,7 +125,7 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 	const cartItems = results.map((r) => r.cartItem);
 
 	// Get currency from first item
-	if (results.length > 0) {
+	if (results.length > 0 && results[0]) {
 		cartCurrency = results[0].currency;
 		console.log("✓ Extracted currency from first product price:", cartCurrency);
 	} else {
