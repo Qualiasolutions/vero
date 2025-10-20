@@ -34,6 +34,10 @@ export async function createCheckoutSession() {
 			);
 		}
 
+		// Debug: Log cart details
+		console.log("🛒 Cart currency:", cart.currency);
+		console.log("🛒 Cart items:", JSON.stringify(cart.items, null, 2));
+
 		// Create Stripe line items from cart
 		const lineItems = cart.items.map((item) => ({
 			price_data: {
@@ -48,12 +52,14 @@ export async function createCheckoutSession() {
 		}));
 
 		console.log("💳 Creating Stripe checkout session with", lineItems.length, "items");
+		console.log("💳 Line items:", JSON.stringify(lineItems, null, 2));
 		console.log(
 			"   Total amount:",
 			cart.total,
-			"AED (",
+			cart.currency.toUpperCase(),
+			"(",
 			lineItems.reduce((sum, item) => sum + item.price_data.unit_amount * item.quantity, 0),
-			"fils)",
+			"smallest units)",
 		);
 
 		// Create Stripe Checkout session
