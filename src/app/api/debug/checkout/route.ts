@@ -31,6 +31,13 @@ export async function GET() {
 			process.env.NEXT_PUBLIC_URL ||
 			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
+		// Debug environment
+		console.log("Environment check:");
+		console.log("  NEXT_PUBLIC_URL:", process.env.NEXT_PUBLIC_URL);
+		console.log("  VERCEL_URL:", process.env.VERCEL_URL);
+		console.log("  Computed baseUrl:", baseUrl);
+		console.log("  success_url will be:", `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`);
+
 		// Try to create Stripe session
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
