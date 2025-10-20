@@ -68,6 +68,9 @@ export async function createCheckoutSession() {
 			process.env.NEXT_PUBLIC_URL ||
 			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
+		console.log("🔍 About to create Stripe session with currency:", cart.currency);
+		console.log("🔍 Line items currency check:", lineItems.map((i) => i.price_data.currency));
+
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
 			line_items: lineItems,
