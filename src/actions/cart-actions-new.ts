@@ -50,12 +50,23 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 
 				const price = product.default_price as Stripe.Price;
 
+				// Validate that we got a valid price
+				if (!price || typeof price.unit_amount !== "number") {
+					console.error(
+						`❌ STRIPE PRICING ERROR: Product ${item.product_id} has no valid price. Price object:`,
+						price,
+					);
+					throw new Error(
+						`Product ${product.name || item.product_id} is missing price information in Stripe. Please check Stripe Dashboard.`,
+					);
+				}
+
 				return {
 					id: item.id,
 					productId: item.product_id,
 					variantId: item.product_id,
 					quantity: item.quantity,
-					price: typeof price.unit_amount === "number" ? price.unit_amount : 0,
+					price: price.unit_amount,
 					product: {
 						id: product.id,
 						name: product.name,
@@ -65,15 +76,20 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 					},
 				};
 			} catch (error) {
-				console.error(`Error fetching product ${item.product_id}:`, error);
-				// Return item with minimal data if Stripe fetch fails
-				return {
-					id: item.id,
-					productId: item.product_id,
-					variantId: item.product_id,
-					quantity: item.quantity,
-					price: 0,
-				};
+				// Enhanced error logging with more context
+				console.error(`❌ CRITICAL STRIPE ERROR: Failed to fetch product ${item.product_id}`);
+				console.error("Error details:", error);
+				console.error("This usually means:");
+				console.error("  1. Stripe API keys are invalid or missing");
+				console.error("  2. Product doesn't exist in Stripe");
+				console.error("  3. Network/API connectivity issue");
+
+				// Don't silently fail - this will break checkout
+				throw new Error(
+					`Unable to load product pricing for ${item.product_id}. ${
+						error instanceof Error ? error.message : "Unknown error"
+					}`,
+				);
 			}
 		}),
 	);

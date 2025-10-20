@@ -14,7 +14,24 @@ export async function createCheckoutSession() {
 		const cart = await getCartAction();
 
 		if (!cart || cart.items.length === 0) {
+			console.error("❌ CHECKOUT ERROR: Cart is empty");
 			redirect("/cart");
+		}
+
+		// Validate cart has valid prices
+		const invalidItems = cart.items.filter((item) => !item.price || item.price === 0);
+		if (invalidItems.length > 0) {
+			console.error("❌ CHECKOUT ERROR: Cart contains items with invalid prices:");
+			console.error(
+				invalidItems.map((item) => ({
+					productId: item.productId,
+					name: item.product?.name,
+					price: item.price,
+				})),
+			);
+			throw new Error(
+				`Cannot proceed to checkout: ${invalidItems.length} item(s) have invalid pricing. Please remove these items and try again.`,
+			);
 		}
 
 		// Create Stripe line items from cart
@@ -30,6 +47,15 @@ export async function createCheckoutSession() {
 			quantity: item.quantity,
 		}));
 
+		console.log("💳 Creating Stripe checkout session with", lineItems.length, "items");
+		console.log(
+			"   Total amount:",
+			cart.total,
+			"AED (",
+			lineItems.reduce((sum, item) => sum + item.price_data.unit_amount * item.quantity, 0),
+			"fils)",
+		);
+
 		// Create Stripe Checkout session
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
@@ -42,10 +68,19 @@ export async function createCheckoutSession() {
 			},
 		});
 
+		console.log("✅ Stripe checkout session created:", session.id);
+
 		// Redirect to Stripe Checkout
 		redirect(session.url!);
 	} catch (error) {
-		console.error("Error creating checkout session:", error);
+		console.error("❌ CRITICAL CHECKOUT ERROR:");
+		console.error(error);
+
+		if (error instanceof Error) {
+			console.error("Error message:", error.message);
+			console.error("Error stack:", error.stack);
+		}
+
 		throw error;
 	}
 }
