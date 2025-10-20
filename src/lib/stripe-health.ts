@@ -46,7 +46,7 @@ export async function validateStripeConfig(): Promise<StripeHealthCheck> {
 	}
 
 	// Check if secret key looks valid (starts with sk_test_ or sk_live_)
-	const secretKey = process.env.STRIPE_SECRET_KEY;
+	const secretKey = process.env.STRIPE_SECRET_KEY!; // We already checked existence above
 	if (!secretKey.startsWith("sk_test_") && !secretKey.startsWith("sk_live_")) {
 		return {
 			isValid: false,
