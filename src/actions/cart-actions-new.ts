@@ -124,6 +124,10 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 	// Extract currency from first item (all items should have same currency)
 	if (cartItems.length > 0 && (cartItems[0] as any).currency) {
 		cartCurrency = (cartItems[0] as any).currency;
+		console.log("✓ Extracted currency from first cart item:", cartCurrency);
+	} else {
+		console.log("⚠️ No currency found on first cart item, using default:", cartCurrency);
+		console.log("   First cart item:", JSON.stringify(cartItems[0], null, 2));
 	}
 
 	return {
