@@ -95,6 +95,11 @@ export async function createCheckoutSession() {
 			console.error("Error stack:", error.stack);
 		}
 
+		// Log Stripe-specific error details if available
+		if (typeof error === "object" && error !== null) {
+			console.error("Full error object:", JSON.stringify(error, null, 2));
+		}
+
 		throw error;
 	}
 }
