@@ -40,8 +40,11 @@ interface DbCartItem {
 
 // Helper to transform DB cart items to Cart type
 async function transformCart(items: DbCartItem[]): Promise<Cart> {
+	// Track currency from first item
+	let cartCurrency = "eur"; // Default fallback
+
 	const cartItems = await Promise.all(
-		items.map(async (item) => {
+		items.map(async (item, index) => {
 			try {
 				// Fetch product from Stripe
 				const product = await stripe.products.retrieve(item.product_id);
@@ -80,13 +83,17 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 					);
 				}
 
+				// Store currency from first item (all items should use same currency)
+				if (index === 0 && price.currency) {
+					cartCurrency = price.currency;
+				}
+
 				return {
 					id: item.id,
 					productId: item.product_id,
 					variantId: item.product_id,
 					quantity: item.quantity,
 					price: price.unit_amount,
-					currency: price.currency, // Store currency from Stripe price
 					product: {
 						id: product.id,
 						name: product.name,
@@ -118,14 +125,11 @@ async function transformCart(items: DbCartItem[]): Promise<Cart> {
 	// No need to divide by 100 - that's only for display formatting
 	const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-	// Use currency from first item (all items should have same currency)
-	const currency = cartItems[0]?.currency || "eur";
-
 	return {
 		id: items[0]?.id || "empty",
 		items: cartItems,
 		total,
-		currency,
+		currency: cartCurrency, // Use currency captured from first item's price
 	};
 }
 

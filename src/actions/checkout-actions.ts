@@ -56,7 +56,7 @@ export async function createCheckoutSession() {
 		console.log(
 			"   Total amount:",
 			cart.total,
-			cart.currency.toUpperCase(),
+			(cart.currency || "unknown").toUpperCase(),
 			"(",
 			lineItems.reduce((sum, item) => sum + item.price_data.unit_amount * item.quantity, 0),
 			"smallest units)",
