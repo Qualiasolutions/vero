@@ -28,10 +28,10 @@ const csvProducts = [];
 fs.createReadStream(CSV_FILE)
 	.pipe(csv())
 	.on("data", (row) => {
-		const sku = row["SKU"]?.trim();
+		const sku = row.SKU?.trim();
 		const slug = row["Product URL"]?.trim();
 		const category = row["Product Page"]?.trim();
-		const title = row["Title"]?.trim();
+		const title = row.Title?.trim();
 
 		if (sku && slug && title) {
 			csvProducts.push({ sku, slug, category, title });

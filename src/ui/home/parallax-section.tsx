@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function ParallaxSection() {
-
 	return (
 		<section className="relative w-full h-[70vh] min-h-[500px] overflow-hidden">
 			{/* Fixed Background Image */}

@@ -52,22 +52,6 @@ export function HeroSection() {
 								New Arrivals
 							</Link>
 						</div>
-
-						{/* Stats */}
-						<div className="grid grid-cols-3 gap-3 pt-3 border-t border-white/10">
-							<div>
-								<div className="text-xl lg:text-2xl font-bold text-[#D4AF37]">500+</div>
-								<div className="text-xs text-white/60 mt-0.5">Premium Models</div>
-							</div>
-							<div>
-								<div className="text-xl lg:text-2xl font-bold text-[#D4AF37]">50+</div>
-								<div className="text-xs text-white/60 mt-0.5">Top Brands</div>
-							</div>
-							<div>
-								<div className="text-xl lg:text-2xl font-bold text-[#D4AF37]">10K+</div>
-								<div className="text-xs text-white/60 mt-0.5">Happy Collectors</div>
-							</div>
-						</div>
 					</div>
 
 					{/* Right Content - Video Showcase */}

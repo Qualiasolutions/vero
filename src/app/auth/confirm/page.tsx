@@ -20,12 +20,7 @@ export default function ConfirmEmailPage() {
 
 					<div className="mb-6">
 						<div className="w-16 h-16 rounded-full bg-[#B8941F]/10 flex items-center justify-center mx-auto mb-4 border border-[#B8941F]/30">
-							<svg
-								className="w-8 h-8 text-[#C9A961]"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
+							<svg className="w-8 h-8 text-[#C9A961]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"
@@ -34,12 +29,8 @@ export default function ConfirmEmailPage() {
 								/>
 							</svg>
 						</div>
-						<h1 className="text-2xl font-light text-white mb-2 tracking-wide">
-							Check Your Email
-						</h1>
-						<p className="text-[#C9A961] mb-6 font-light">
-							We've sent you a verification link
-						</p>
+						<h1 className="text-2xl font-light text-white mb-2 tracking-wide">Check Your Email</h1>
+						<p className="text-[#C9A961] mb-6 font-light">We've sent you a verification link</p>
 					</div>
 
 					<div className="space-y-4 text-sm text-white/60 mb-8 text-left font-light">
@@ -58,7 +49,11 @@ export default function ConfirmEmailPage() {
 						<Button asChild className="w-full vero-button h-12">
 							<Link href="/">Return to Home</Link>
 						</Button>
-						<Button asChild variant="outline" className="w-full h-12 border-[#B8941F]/30 hover:border-[#C9A961]">
+						<Button
+							asChild
+							variant="outline"
+							className="w-full h-12 border-[#B8941F]/30 hover:border-[#C9A961]"
+						>
 							<Link href="/login">Go to Login</Link>
 						</Button>
 					</div>

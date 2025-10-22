@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
-import { getCartAction } from "@/actions/cart-actions-new";
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-	apiVersion: "2025-08-27.basil",
-});
+import { getCartAction } from "@/actions/cart-actions";
+import { env } from "@/env.mjs";
+import { getStripeClient } from "@/lib/stripe";
 
 export async function GET() {
 	try {
+		const stripe = getStripeClient();
 		const cart = await getCartAction();
 
 		if (!cart || cart.items.length === 0) {
@@ -28,12 +26,12 @@ export async function GET() {
 		}));
 
 		const baseUrl =
-			process.env.NEXT_PUBLIC_URL ||
+			env.NEXT_PUBLIC_URL ||
 			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 		// Debug environment
 		console.log("Environment check:");
-		console.log("  NEXT_PUBLIC_URL:", process.env.NEXT_PUBLIC_URL);
+		console.log("  NEXT_PUBLIC_URL:", env.NEXT_PUBLIC_URL);
 		console.log("  VERCEL_URL:", process.env.VERCEL_URL);
 		console.log("  Computed baseUrl:", baseUrl);
 		console.log("  success_url will be:", `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`);
@@ -70,14 +68,17 @@ export async function GET() {
 			})),
 		});
 	} catch (error) {
+		const errorObject =
+			typeof error === "object" && error !== null ? (error as Record<string, unknown>) : undefined;
+
 		// Return error details as JSON so we can see them
 		const errorDetails = {
 			message: error instanceof Error ? error.message : "Unknown error",
-			type: error?.constructor?.name,
-			code: (error as any)?.code,
-			statusCode: (error as any)?.statusCode,
-			raw: (error as any)?.raw,
-			requestId: (error as any)?.requestId,
+			type: error instanceof Error ? error.constructor.name : undefined,
+			code: typeof errorObject?.code === "string" ? errorObject.code : undefined,
+			statusCode: typeof errorObject?.statusCode === "number" ? errorObject.statusCode : undefined,
+			raw: errorObject && "raw" in errorObject ? errorObject.raw : undefined,
+			requestId: typeof errorObject?.requestId === "string" ? errorObject.requestId : undefined,
 			// Full error object
 			full: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
 		};

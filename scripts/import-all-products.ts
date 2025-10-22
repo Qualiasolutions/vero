@@ -191,10 +191,11 @@ async function importProducts() {
 
 			// Rate limiting
 			await new Promise((resolve) => setTimeout(resolve, 100));
-		} catch (error: any) {
-			console.error(`❌ Error creating product ${sku}:`, error.message);
+		} catch (error) {
+			const message = error instanceof Error ? error.message : String(error);
+			console.error(`❌ Error creating product ${sku}:`, message);
 			errorCount++;
-			errors.push({ sku, error: error.message });
+			errors.push({ sku, error: message });
 		}
 	}
 

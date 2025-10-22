@@ -2,7 +2,7 @@ import { ArrowRight, Grid3x3, LayoutGrid, Search, Sparkles, Star } from "lucide-
 import Image from "next/image";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { getProducts, type Product } from "@/lib/product-service";
 import { ProductList } from "@/ui/products/product-list";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -14,7 +14,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function AllProductsPage() {
-	let products: any[] = [];
+	let products: Product[] = [];
 
 	try {
 		const result = await getProducts(100);
@@ -69,9 +69,7 @@ export default async function AllProductsPage() {
 					{/* Stats Bar */}
 					<div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-8">
 						<div className="text-center">
-							<div className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1">
-								{products.length}+
-							</div>
+							<div className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1">{products.length}+</div>
 							<div className="text-sm text-white/80 uppercase tracking-wide">Premium Models</div>
 						</div>
 						<div className="hidden md:block w-px h-12 bg-white/20" />

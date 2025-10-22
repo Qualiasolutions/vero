@@ -96,7 +96,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "from-emerald-700 via-emerald-800 to-emerald-900",
 			"on-sale": "from-rose-700 via-rose-800 to-rose-900",
 			"limited-edition": "from-violet-700 via-violet-800 to-violet-900",
-			"rare": "from-orange-700 via-orange-800 to-orange-900",
+			rare: "from-orange-700 via-orange-800 to-orange-900",
 			"pre-order": "from-sky-700 via-sky-800 to-sky-900",
 			"coming-soon": "from-slate-800 via-slate-900 to-slate-950",
 		};
@@ -108,7 +108,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "border-emerald-400/40",
 			"on-sale": "border-rose-400/40",
 			"limited-edition": "border-violet-400/40",
-			"rare": "border-orange-400/40",
+			rare: "border-orange-400/40",
 			"pre-order": "border-sky-400/40",
 			"coming-soon": "border-slate-400/40",
 		};
@@ -120,7 +120,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "border-emerald-300",
 			"on-sale": "border-rose-300",
 			"limited-edition": "border-violet-300",
-			"rare": "border-orange-300",
+			rare: "border-orange-300",
 			"pre-order": "border-sky-300",
 			"coming-soon": "border-slate-300",
 		};
@@ -132,7 +132,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "text-emerald-100",
 			"on-sale": "text-rose-100",
 			"limited-edition": "text-violet-100",
-			"rare": "text-orange-100",
+			rare: "text-orange-100",
 			"pre-order": "text-sky-100",
 			"coming-soon": "text-slate-100",
 		};
@@ -144,7 +144,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "text-emerald-200",
 			"on-sale": "text-rose-200",
 			"limited-edition": "text-violet-200",
-			"rare": "text-orange-200",
+			rare: "text-orange-200",
 			"pre-order": "text-sky-200",
 			"coming-soon": "text-slate-200",
 		};

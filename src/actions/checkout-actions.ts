@@ -1,16 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
+import { env } from "@/env.mjs";
+import { getStripeClient } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
-import { clearCartAction, getCartAction } from "./cart-actions-new";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-	apiVersion: "2025-08-27.basil",
-});
+import { clearCartAction, getCartAction } from "./cart-actions";
 
 export async function createCheckoutSession() {
 	try {
+		const stripe = getStripeClient();
 		const cart = await getCartAction();
 
 		if (!cart || cart.items.length === 0) {
@@ -65,11 +63,14 @@ export async function createCheckoutSession() {
 		// Create Stripe Checkout session
 		// Use NEXT_PUBLIC_URL if available, fallback to VERCEL_URL (auto-set by Vercel)
 		const baseUrl =
-			process.env.NEXT_PUBLIC_URL ||
+			env.NEXT_PUBLIC_URL ||
 			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 		console.log("🔍 About to create Stripe session with currency:", cart.currency);
-		console.log("🔍 Line items currency check:", lineItems.map((i) => i.price_data.currency));
+		console.log(
+			"🔍 Line items currency check:",
+			lineItems.map((i) => i.price_data.currency),
+		);
 
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
@@ -106,6 +107,7 @@ export async function createCheckoutSession() {
 
 export async function createOrderFromCheckout(sessionId: string) {
 	try {
+		const stripe = getStripeClient();
 		// Retrieve the Stripe session
 		const session = await stripe.checkout.sessions.retrieve(sessionId);
 
@@ -125,8 +127,8 @@ export async function createOrderFromCheckout(sessionId: string) {
 			.insert({
 				stripe_checkout_session_id: sessionId,
 				stripe_payment_intent_id: session.payment_intent as string,
-				total_amount: session.amount_total! / 100, // Convert from cents
-				currency: session.currency || "aed",
+				total_amount: session.amount_total ?? 0,
+				currency: (session.currency || env.STRIPE_CURRENCY || "usd").toUpperCase(),
 				status: "pending",
 			})
 			.select()
@@ -138,12 +140,16 @@ export async function createOrderFromCheckout(sessionId: string) {
 
 		// Create order items
 		for (const item of cartItems) {
-			await supabase.from("order_items").insert({
+			const { error: orderItemError } = await supabase.from("order_items").insert({
 				order_id: order.id,
 				product_id: item.id,
 				quantity: item.quantity,
 				price_at_time: 0, // TODO: Get actual price from Stripe
 			});
+
+			if (orderItemError) {
+				throw orderItemError;
+			}
 		}
 
 		// Clear the cart

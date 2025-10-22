@@ -1,10 +1,11 @@
-import { Award, Eye, Package, Shield, ShoppingCart, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { Award, Eye, Package, Shield, Sparkles, TrendingUp, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next/types";
 import { AddToCart } from "@/components/add-to-cart";
 import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
 import { publicUrl } from "@/env.mjs";
+import { getPremiumPlaceholder, getProductImage } from "@/lib/product-image-mapping";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { HeroSection } from "@/ui/home/hero-section";
@@ -128,41 +129,26 @@ export default async function Home() {
 						</p>
 					</div>
 					{/* Grid of 6 columns (1 on mobile, 3 on tablet, 6 on desktop) */}
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
 						{categoryProducts.map(({ category, products }) => {
-							// Map badge color to subtle background tint matching the premium darker badges
-							const getBgTint = (badgeColor: string) => {
-								// Extract the first class from badgeColor for matching
-								const firstClass = badgeColor.split(" ")[0] || "";
-								const colorMap: Record<string, string> = {
-									"bg-emerald-600": "bg-emerald-50 border-emerald-300", // NEW
-									"bg-rose-600": "bg-rose-50 border-rose-300", // SALE
-									"bg-violet-600": "bg-violet-50 border-violet-300", // LIMITED
-									"bg-orange-600": "bg-orange-50 border-orange-300", // RARE
-									"bg-sky-600": "bg-sky-50 border-sky-300", // PRE-ORDER
-									"bg-slate-700": "bg-slate-50 border-slate-300", // SOON
-								};
-								return colorMap[firstClass] || "bg-gray-50 border-gray-200";
-							};
-
 							return (
 								<div
 									key={category.slug}
-									className={`flex flex-col space-y-3 p-3 rounded-xl border ${getBgTint(category.badgeColor)} transition-all duration-300 hover:shadow-lg`}
+									className="flex flex-col space-y-3 p-6 rounded-xl border border-[#D4AF37]/20 bg-white transition-all duration-300 hover:shadow-lg hover:border-[#D4AF37]/40"
 								>
-									{/* Category Badge on Top - Wider and Professional */}
-									<div className="relative">
+									{/* Category Badge */}
+									<div className="relative mb-4">
 										<Badge
-											className={`${category.badgeColor} text-white text-xs font-bold px-4 py-1.5 rounded-t-lg absolute -top-3 left-1/2 -translate-x-1/2 z-10 shadow-lg w-[85%] justify-center`}
+											className={`${category.badgeColor} text-xs font-bold px-6 py-2 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 z-10 shadow-lg`}
 										>
 											{category.badge}
 										</Badge>
 									</div>
 
-									{/* Category Header */}
+									{/* Category Header with Image */}
 									<Link
 										href={`/category/${category.slug}`}
-										className="group relative overflow-hidden rounded-lg aspect-[4/3] hover:scale-[1.02] transition-all duration-300 mt-2"
+										className="group relative overflow-hidden rounded-lg aspect-[4/3] hover:scale-[1.02] transition-all duration-300 vero-card"
 									>
 										<div className="relative w-full h-full">
 											<Image
@@ -173,66 +159,109 @@ export default async function Home() {
 												sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
 											/>
 										</div>
-										<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-2.5">
-											<h2 className="text-white font-bold text-sm uppercase tracking-wide text-center">
+										<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4">
+											<h2 className="text-white font-bold text-lg uppercase tracking-wide text-center drop-shadow-lg">
 												{category.name}
 											</h2>
 										</div>
 									</Link>
 
-									{/* 3 Products under this category */}
-									<div className="space-y-2.5">
+									{/* Clean separator */}
+									<div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent my-6"></div>
+
+									{/* Exactly 3 Products under this category */}
+									<div className="space-y-4">
 										{products.slice(0, 3).map((product) => (
 											<div
 												key={product.id}
 												className="group bg-white rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100"
 											>
-												{/* Product Image */}
+												{/* Product Image with enhanced hover */}
 												<Link href={`/product/${product.slug || product.id}`} className="block">
-													<div className="relative aspect-square w-full bg-white">
-														{product.images && product.images.length > 0 && product.images[0] ? (
-															<Image
-																src={product.images[0]}
-																alt={product.name}
-																fill
-																className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-																sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-															/>
-														) : (
-															<div className="w-full h-full flex items-center justify-center text-[#6C757D] text-xs">
-																No Image
-															</div>
-														)}
-														<FavoriteHeartIcon product={product} />
+													<div className="relative aspect-square w-full bg-gray-50 group-hover:bg-[#FDFBF7] transition-colors duration-300">
+														{(() => {
+															// Try to get image from mapping first
+															const mappedImage = getProductImage(product.slug);
+															if (mappedImage) {
+																return (
+																	<Image
+																		src={mappedImage}
+																		alt={product.name}
+																		fill
+																		className="object-contain p-3 transition-all duration-500 group-hover:scale-105"
+																		sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+																	/>
+																);
+															}
+
+															// Use product images if available
+															if (product.images && product.images.length > 0 && product.images[0]) {
+																return (
+																	<Image
+																		src={product.images[0]}
+																		alt={product.name}
+																		fill
+																		className="object-contain p-3 transition-all duration-500 group-hover:scale-105"
+																		sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+																	/>
+																);
+															}
+
+															// Use premium placeholder based on product name
+															const isSports =
+																product.name.toLowerCase().includes("porsche") ||
+																product.name.toLowerCase().includes("ferrari") ||
+																product.name.toLowerCase().includes("lamborghini");
+															const isLuxury =
+																product.name.toLowerCase().includes("mercedes") ||
+																product.name.toLowerCase().includes("bmw") ||
+																product.name.toLowerCase().includes("aston");
+															const placeholderType = isSports ? "sports" : isLuxury ? "luxury" : "classic";
+															const placeholderImage = getPremiumPlaceholder(placeholderType, product.slug);
+
+															return (
+																<Image
+																	src={placeholderImage}
+																	alt={product.name}
+																	fill
+																	className="object-contain p-3 transition-all duration-500 group-hover:scale-105"
+																	sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+																/>
+															);
+														})()}
+														<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+															<FavoriteHeartIcon product={product} />
+														</div>
 													</div>
 												</Link>
 
-												{/* Product Info - Compact */}
-												<div className="p-2 bg-white space-y-1.5">
-													<Link href={`/product/${product.slug || product.id}`}>
-														<h3 className="text-xs text-black font-semibold line-clamp-2 group-hover:text-[#D4AF37] transition-colors leading-snug">
+												{/* Enhanced Product Info */}
+												<div className="p-3 bg-white space-y-2 group-hover:bg-[#FDFBF7] transition-colors duration-300">
+													<Link href={`/product/${product.slug || product.id}`} className="block">
+														<h3 className="text-sm font-semibold text-[#212529] line-clamp-2 group-hover:text-[#D4AF37] transition-colors leading-snug mb-2">
 															{product.name}
 														</h3>
+														<div className="flex flex-col gap-2">
+															<p className="text-lg font-bold text-[#D4AF37]">
+																€{(product.price / 100).toFixed(2)}
+															</p>
+															<div className="flex gap-1.5">
+																<AddToCart
+																	variantId={product.id}
+																	className="flex-1 items-center justify-center gap-1 rounded-md bg-[#D4AF37] px-2 py-1.5 text-xs font-semibold text-white transition-colors duration-300 hover:bg-[#B8941F]"
+																>
+																	<span className="uppercase tracking-wide text-xs">Add</span>
+																</AddToCart>
+																<Link
+																	href={`/product/${product.slug || product.id}`}
+																	className="flex-1 inline-flex items-center justify-center gap-1 rounded-md border border-[#D4AF37]/40 px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#D4AF37] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-white"
+																>
+																	<Eye className="h-3 w-3" />
+																	<span className="text-xs">View</span>
+																</Link>
+															</div>
+														</div>
 													</Link>
-													<p className="text-sm font-bold text-[#D4AF37]">
-														€{(product.price / 100).toFixed(2)}
-													</p>
-													<div className="flex gap-1">
-														<AddToCart
-															variantId={product.id}
-															className="flex-1 !py-1.5 !px-2 text-[10px] !rounded-sm"
-														>
-															<ShoppingCart className="h-3 w-3" />
-															ADD
-														</AddToCart>
-														<Link
-															href={`/product/${product.slug || product.id}`}
-															className="flex-1 flex items-center justify-center gap-1 bg-[#212529] hover:bg-[#1A1A1A] text-white py-1.5 px-2 text-[10px] font-semibold rounded-sm uppercase tracking-wide transition-colors"
-														>
-															<Eye className="h-3 w-3" />
-															DETAILS
-														</Link>
-													</div>
 												</div>
 											</div>
 										))}

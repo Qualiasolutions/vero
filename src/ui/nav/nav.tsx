@@ -1,55 +1,95 @@
 import Image from "next/image";
 import { CartIcon } from "@/components/cart-icon";
 import { FavoritesIcon } from "@/components/favorites-icon";
-import { UserMenu } from "@/components/user-menu";
-import { getUser } from "@/actions/auth-actions";
+import { UserMenuClient } from "@/components/user-menu-client";
 import { NavMenu } from "@/ui/nav/nav-menu";
 import { SearchNav } from "@/ui/nav/search-nav";
 import { SeoH1 } from "@/ui/seo-h1";
 import { YnsLink } from "@/ui/yns-link";
 
 export const Nav = async () => {
-	const user = await getUser();
-
 	return (
-		<header className="z-50 py-5 sticky top-0 bg-white/98 backdrop-blur-lg border-b border-[#D4AF37]/20 shadow-lg shadow-black/5 transition-all duration-300">
-			<div className="w-full flex items-center gap-3 px-4 flex-row sm:px-6 lg:px-8 xl:px-12">
-				{/* Logo */}
-				<YnsLink href="/" className="group flex items-center relative">
-					<Image
-						src="/veromodels-logo.webp"
-						alt="Veromodels"
-						width={320}
-						height={107}
-						className="h-16 w-auto sm:h-20 transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_16px_rgba(184,148,31,0.5)]"
-						priority
-					/>
-					<SeoH1 className="sr-only">Veromodels</SeoH1>
-					{/* Gold accent line on hover */}
-					<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B8941F] to-[#C9A961] transition-all duration-500 group-hover:w-full"></span>
-				</YnsLink>
+		<header className="sticky top-0 z-50 w-full border-b border-[#D4AF37]/20 bg-white/95 backdrop-blur-md">
+			<div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+				{/* Desktop Header - Single Row */}
+				<div className="hidden lg:flex items-center justify-between py-6 w-full">
+					{/* Logo - Far Left */}
+					<YnsLink
+						href="/"
+						className="relative flex items-center rounded-full px-2 py-1 transition-transform duration-300 hover:scale-[1.02] flex-shrink-0"
+					>
+						<Image
+							src="/veromodels-logo.webp"
+							alt="Veromodels"
+							width={260}
+							height={90}
+							className="h-14 w-auto object-contain transition-transform duration-500"
+							priority
+							unoptimized={false}
+						/>
+						<SeoH1 className="sr-only">Veromodels</SeoH1>
+					</YnsLink>
 
-				{/* Navigation Menu */}
-				<div className="flex-1 flex items-center justify-center sm:mr-auto max-sm:order-2">
-					<NavMenu />
+					{/* Center Navigation */}
+					<div className="flex items-center gap-6 flex-1 justify-center min-w-0 px-8">
+						<NavMenu />
+						<SearchNav />
+					</div>
+
+					{/* Account Icons - Far Right */}
+					<div className="flex items-center gap-3 flex-shrink-0">
+						<FavoritesIcon variant="pill" showLabel />
+						<CartIcon variant="pill" showLabel />
+						<UserMenuClient variant="pill" />
+					</div>
 				</div>
 
-				{/* Search */}
-				<div className="mr-3 ml-auto sm:ml-0">
-					<SearchNav />
-				</div>
+				{/* Mobile Header */}
+				<div className="lg:hidden flex flex-col gap-3 py-3">
+					<div className="flex items-center justify-between gap-4">
+						<YnsLink
+							href="/"
+							className="flex items-center rounded-full px-2 py-1 transition-transform duration-300 hover:scale-[1.02] flex-shrink-0"
+						>
+							<Image
+								src="/veromodels-logo.webp"
+								alt="Veromodels"
+								width={220}
+								height={72}
+								className="h-12 w-auto object-contain"
+								priority
+								unoptimized={false}
+							/>
+							<SeoH1 className="sr-only">Veromodels</SeoH1>
+						</YnsLink>
 
-				{/* Icons Group */}
-				<div className="flex items-center gap-3 md:gap-4">
-					<div className="hidden sm:flex items-center gap-3 md:gap-4 border-r border-[#D4AF37]/20 pr-3 md:pr-4">
-						<FavoritesIcon />
-						<CartIcon />
+						<div className="flex items-center gap-2 flex-shrink-0">
+							<YnsLink
+								href="/search"
+								className="flex h-10 w-10 items-center justify-center rounded-full border border-[#D4AF37]/20 text-[#6C757D] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37]/10"
+							>
+								<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+									/>
+								</svg>
+							</YnsLink>
+							<FavoritesIcon />
+							<CartIcon />
+							<UserMenuClient />
+						</div>
 					</div>
-					<div className="sm:hidden flex items-center gap-3">
-						<FavoritesIcon />
-						<CartIcon />
+
+					<div className="border-t border-[#D4AF37]/10 pt-3">
+						<NavMenu />
 					</div>
-					<UserMenu userEmail={user?.email} />
+
+					<div>
+						<SearchNav />
+					</div>
 				</div>
 			</div>
 		</header>

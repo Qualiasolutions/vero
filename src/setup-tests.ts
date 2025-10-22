@@ -1,7 +1,8 @@
-import { expect, afterEach, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
 import * as matchers from "@testing-library/jest-dom/matchers";
+import { cleanup } from "@testing-library/react";
+import type { ComponentProps } from "react";
 import { createElement } from "react";
+import { afterEach, expect, vi } from "vitest";
 
 // Extend Vitest's expect with jest-dom matchers
 expect.extend(matchers);
@@ -14,14 +15,16 @@ afterEach(() => {
 });
 
 // Mock Next.js Image component
+type ImgProps = ComponentProps<"img">;
+type AnchorProps = ComponentProps<"a">;
+
 vi.mock("next/image", () => ({
-	default: (props: any) => createElement("img", props),
+	default: (props: ImgProps) => createElement("img", props),
 }));
 
 // Mock Next.js Link component
 vi.mock("next/link", () => ({
-	default: ({ href, children, ...props }: any) =>
-		createElement("a", { href, ...props }, children),
+	default: ({ href, children, ...props }: AnchorProps) => createElement("a", { href, ...props }, children),
 }));
 
 // Mock next/navigation

@@ -198,10 +198,11 @@ async function migrateProducts() {
 
 			// Rate limiting: wait a bit between requests
 			await new Promise((resolve) => setTimeout(resolve, 150));
-		} catch (error: any) {
-			console.error(`❌ Error creating product "${title}":`, error.message);
+		} catch (error) {
+			const message = error instanceof Error ? error.message : String(error);
+			console.error(`❌ Error creating product "${title}":`, message);
 			errorCount++;
-			errors.push({ sku: productUrl || title, error: error.message });
+			errors.push({ sku: productUrl || title, error: message });
 		}
 	}
 

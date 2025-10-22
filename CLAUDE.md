@@ -6,6 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Your Next Store (YNS) is a Next.js 15 e-commerce boilerplate tightly integrated with Stripe for payment processing. It's built with React 19, TypeScript, and uses Bun as the package manager and runtime.
 
+## Prerequisites & Environment Setup
+
+### System Requirements
+- **Node.js**: Version 20+ (as specified in package.json engines)
+- **Package Manager**: Bun 1.0+ (recommended, but npm/yarn supported)
+- **Platform**: Linux, macOS, or Windows with WSL2
+
+### Installing Bun
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Environment Variables
+Create a `.env` file in the root directory with required variables (see Environment Configuration section below).
+
+**Docker Setup**: Set `DOCKER=1` in environment when building for Docker deployment.
+
 ## Development Commands
 
 ### Package Management & Installation
@@ -15,7 +32,7 @@ bun install                    # Install dependencies
 
 ### Development Server
 ```bash
-bun run dev                   # Start development server with Turbo
+bun run dev                   # Start development server with Turbo (Turbopack)
 ```
 
 ### Building & Production
@@ -32,6 +49,22 @@ bun test [pattern]           # Run specific test file(s) matching pattern
 tsgo                         # TypeScript type checking (use tsgo command)
 ```
 
+**Testing Framework**: Vitest with React Testing Library
+**Test Files**: `**/*.{test,spec}.{ts,tsx}` - Located in `__tests__` directories
+**Setup**: Global test setup in `src/setup-tests.ts`
+**Coverage**: Generated in `coverage/` directory with HTML output
+**Environment**: jsdom with React JSX runtime automatic
+**Path Aliases**: Configured to match project structure (`@/components/ui` → `src/ui/shadcn`)
+
+### Package Management & Installation
+```bash
+bun install                    # Install dependencies (uses Bun package manager)
+```
+
+**Node Version**: 20+ (specified in package.json engines)
+**Package Manager**: Bun 1.0+ (recommended, supports npm/yarn)
+**Corepack**: Set `ENABLE_EXPERIMENTAL_COREPACK=1` for Vercel deployments
+
 ### Docker
 ```bash
 bun run docker:build        # Build Docker image
@@ -46,17 +79,25 @@ node scripts/sync-stripe-products.js --sku=12345  # Sync specific product by SKU
 node scripts/sync-stripe-products.js --csv=./path # Use custom CSV file
 ```
 
+**Dependencies**: Requires `stripe` package (`bun install stripe`)
+**Environment**: `STRIPE_SECRET_KEY` and `STRIPE_CURRENCY` must be set in `.env`
+**Required Metadata**: Products must have `slug`, `category`, and `sku` metadata to appear on website
+**Script Location**: See `scripts/README.md` for detailed usage and troubleshooting
+
 ## Architecture & Structure
 
 ### Core Technologies
-- **Framework**: Next.js 15 with App Router
-- **Runtime**: React 19 with React Compiler enabled
+- **Framework**: Next.js 15 with App Router and MDX support
+- **Runtime**: React 19 with React Compiler enabled (experimental)
+- **Development Server**: Turbo with Turbopack for fast development
 - **TypeScript**: Strict configuration with path aliases
 - **Styling**: Tailwind CSS v4 with Radix UI components
 - **State Management**: React Context for cart functionality
 - **Payment Processing**: Stripe integration via commerce-kit
 - **Testing**: Vitest with Testing Library
 - **Linting**: Biome (replaces ESLint/Prettier)
+- **Package Manager**: Bun with Corepack support
+- **Build**: Standalone Docker support available
 
 ### Directory Structure
 ```
@@ -80,11 +121,15 @@ src/
 
 ### Key Architectural Patterns
 - **Route Groups**: `(store)` group for main store pages with shared layout
-- **Server Components**: Extensive use for performance optimization
+- **Server Components**: Extensive use for performance optimization (use by default)
 - **Server Actions**: Form handling and data mutations
 - **Dynamic Routes**: `[slug]` for products and categories
 - **Catch-all Routes**: `[...segments]` for flexible routing
 - **Parallel Routing**: Modal implementations using `@modal` slots
+- **Optimistic UI**: Cart operations use `useOptimistic` for instant feedback
+- **Cookie Persistence**: Cart state maintained via cart-cookies
+- **Structured Cloning**: Stripe SDK data sanitized for client components
+- **React Compiler**: Experimental feature for automatic optimizations (enabled in next.config.ts)
 
 ### Path Aliases
 - `@/*` → `./src/*`
@@ -98,6 +143,7 @@ src/
 - `STRIPE_CURRENCY` - Currency code (e.g., "usd")
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Stripe publishable key
 - `NEXT_PUBLIC_URL` - Store URL (optional on Vercel)
+- `ENABLE_EXPERIMENTAL_COREPACK` - Set to "1" for Vercel deployments
 
 ### Optional Environment Variables
 - `ENABLE_STRIPE_TAX` - Enable Stripe Tax calculations
@@ -119,19 +165,26 @@ src/
 - **Trailing Commas**: Always
 - **Semicolons**: Always required
 - **Arrow Parentheses**: Always
+- **Import Type Enforcement**: Enforced for type-only imports
+- **VCS Integration**: Git enabled with ignore file support
+- **Lint-staged**: Runs on staged files via Husky pre-commit hooks
 
 ### TypeScript Standards
 - Strict mode enabled with additional strictness (`noUncheckedIndexedAccess`)
 - No unused locals enforced
 - Import type enforcement for type-only imports
 - Path aliases configured for clean imports
+- Target: ES2022 with Node.js resolution
+- Build excludes: `src/script/**/*.ts` and `scripts/**/*.ts`
 
 ## Testing
 
 - **Framework**: Vitest with React Testing Library
 - **Setup**: Global test setup in `src/setup-tests.ts`
-- **Pattern**: `**/?(*.)test.?(c|m)[jt]s?(x)`
+- **Pattern**: `**/*.{test,spec}.{ts,tsx}`
 - **Mocking**: Automatic mock clearing/resetting between tests
+- **Coverage**: v8 provider with text, json, and html reporters
+- **Environment**: jsdom with automatic JSX runtime
 
 ## Commerce Integration
 
@@ -240,6 +293,16 @@ Produces actionable prioritized fixes and refactoring recommendations.
 - Development server runs in background - don't use `bun run dev`, just ask about checking if needed
 - Use `structuredClone()` when passing Stripe SDK data from server to client components (eliminates class instances)
 
+## Next.js Configuration
+
+Key Next.js configuration in `next.config.ts`:
+- **MDX Support**: Enabled via `@next/mdx` plugin
+- **Docker**: Standalone output when `DOCKER=1` environment variable set
+- **Images**: Optimized with AVIF/WebP formats and remote patterns for Stripe, CDN, and blob storage
+- **Experimental Features**: React Compiler, PPR disabled, scroll restoration, MDX RS, inline CSS
+- **Webpack**: Extension aliases for `.js/.jsx` files
+- **Rewrites**: Analytics proxy to umami.is
+
 ## Stripe Product Management
 
 Products are synced from CSV files to Stripe using the sync script in `scripts/`:
@@ -247,6 +310,7 @@ Products are synced from CSV files to Stripe using the sync script in `scripts/`
 - Optional metadata: `category`, `order`, `sku` for organization
 - Images can be included via URLs or uploaded separately
 - The sync script handles creating/updating products and prices
+- Script supports dry-run mode and individual product syncing by SKU
 - See `scripts/README.md` for detailed usage instructions
 
 ## DESIGN SYSTEM - MANDATORY FOR ALL DEVELOPMENT

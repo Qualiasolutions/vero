@@ -28,9 +28,9 @@ const csvProducts = [];
 fs.createReadStream(CSV_FILE)
 	.pipe(csv())
 	.on("data", (row) => {
-		const sku = row["SKU"]?.trim();
-		const price = row["Price"]?.trim();
-		const title = row["Title"]?.trim();
+		const sku = row.SKU?.trim();
+		const price = row.Price?.trim();
+		const title = row.Title?.trim();
 
 		if (sku && price && title) {
 			// Convert price to cents (EUR)

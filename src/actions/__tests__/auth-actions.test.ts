@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { signup, login, logout, getUser } from "../auth-actions";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getUser, login, logout, signup } from "../auth-actions";
 
 // Mock Supabase client
 vi.mock("@/lib/supabase/server", () => ({
@@ -23,6 +23,11 @@ vi.mock("next/navigation", () => ({
 		throw new Error(`REDIRECT:${url}`);
 	}),
 }));
+
+const getCreateClientMock = async () => {
+	const module = await import("@/lib/supabase/server");
+	return vi.mocked(module.createClient);
+};
 
 describe("Authentication Actions", () => {
 	describe("signup", () => {
@@ -87,13 +92,13 @@ describe("Authentication Actions", () => {
 		});
 
 		it("should sanitize and lowercase email", async () => {
-			const { createClient } = await import("@/lib/supabase/server");
+			const createClientMock = await getCreateClientMock();
 			const mockSignUp = vi.fn().mockResolvedValue({
 				data: { user: { id: "123", email: "test@example.com" } },
 				error: null,
 			});
 
-			(createClient as any).mockReturnValue({
+			createClientMock.mockReturnValue({
 				auth: { signUp: mockSignUp },
 			});
 
@@ -103,11 +108,7 @@ describe("Authentication Actions", () => {
 			formData.append("password", "Password123");
 			formData.append("confirmPassword", "Password123");
 
-			try {
-				await signup(null, formData);
-			} catch (error: any) {
-				expect(error.message).toContain("REDIRECT");
-			}
+			await expect(signup(null, formData)).rejects.toThrow(/REDIRECT/);
 
 			expect(mockSignUp).toHaveBeenCalledWith({
 				email: "test@example.com",
@@ -141,13 +142,13 @@ describe("Authentication Actions", () => {
 		});
 
 		it("should handle invalid credentials", async () => {
-			const { createClient } = await import("@/lib/supabase/server");
+			const createClientMock = await getCreateClientMock();
 			const mockSignIn = vi.fn().mockResolvedValue({
 				data: { user: null },
 				error: { message: "Invalid login credentials" },
 			});
 
-			(createClient as any).mockReturnValue({
+			createClientMock.mockReturnValue({
 				auth: { signInWithPassword: mockSignIn },
 			});
 
@@ -161,13 +162,13 @@ describe("Authentication Actions", () => {
 		});
 
 		it("should successfully login with valid credentials", async () => {
-			const { createClient } = await import("@/lib/supabase/server");
+			const createClientMock = await getCreateClientMock();
 			const mockSignIn = vi.fn().mockResolvedValue({
 				data: { user: { id: "123", email: "test@example.com" } },
 				error: null,
 			});
 
-			(createClient as any).mockReturnValue({
+			createClientMock.mockReturnValue({
 				auth: { signInWithPassword: mockSignIn },
 			});
 
@@ -175,28 +176,20 @@ describe("Authentication Actions", () => {
 			formData.append("email", "test@example.com");
 			formData.append("password", "Password123");
 
-			try {
-				await login(null, formData);
-			} catch (error: any) {
-				expect(error.message).toContain("REDIRECT:/");
-			}
+			await expect(login(null, formData)).rejects.toThrow("REDIRECT:/");
 		});
 	});
 
 	describe("logout", () => {
 		it("should call signOut and redirect", async () => {
-			const { createClient } = await import("@/lib/supabase/server");
+			const createClientMock = await getCreateClientMock();
 			const mockSignOut = vi.fn().mockResolvedValue({ error: null });
 
-			(createClient as any).mockReturnValue({
+			createClientMock.mockReturnValue({
 				auth: { signOut: mockSignOut },
 			});
 
-			try {
-				await logout();
-			} catch (error: any) {
-				expect(error.message).toContain("REDIRECT");
-			}
+			await expect(logout()).rejects.toThrow(/REDIRECT/);
 
 			expect(mockSignOut).toHaveBeenCalled();
 		});
@@ -204,13 +197,13 @@ describe("Authentication Actions", () => {
 
 	describe("getUser", () => {
 		it("should return current user", async () => {
-			const { createClient } = await import("@/lib/supabase/server");
+			const createClientMock = await getCreateClientMock();
 			const mockUser = { id: "123", email: "test@example.com" };
 			const mockGetUser = vi.fn().mockResolvedValue({
 				data: { user: mockUser },
 			});
 
-			(createClient as any).mockReturnValue({
+			createClientMock.mockReturnValue({
 				auth: { getUser: mockGetUser },
 			});
 

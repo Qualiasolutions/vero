@@ -2,6 +2,7 @@
 
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import { useCart } from "@/context/cart-context";
 import { formatMoney } from "@/lib/utils";
 
@@ -12,6 +13,7 @@ interface CartSidebarProps {
 
 export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 	const { cart, itemCount, optimisticUpdate, optimisticRemove } = useCart();
+	const [isCheckingOut, setIsCheckingOut] = useState(false);
 
 	async function handleUpdateQuantity(variantId: string, quantity: number) {
 		try {
@@ -30,11 +32,22 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 	}
 
 	async function handleCheckout() {
-		// Import the checkout action dynamically to avoid bundling it in client
-		const { createCheckoutSession } = await import("@/actions/checkout-actions");
-		// createCheckoutSession() uses redirect() which will handle navigation
-		// We don't need to catch errors here - let Next.js handle the redirect
-		await createCheckoutSession();
+		if (isCheckingOut) return;
+
+		setIsCheckingOut(true);
+		try {
+			// Import the checkout action dynamically to avoid bundling it in client
+			const { createCheckoutSession } = await import("@/actions/checkout-actions");
+			// createCheckoutSession() uses redirect() which will handle navigation
+			await createCheckoutSession();
+		} catch (error) {
+			console.error("Checkout error:", error);
+			alert("Checkout failed. Please try again or contact support.");
+			// Could show a toast notification here in the future
+			// For now, the error is already logged in the server action
+		} finally {
+			setIsCheckingOut(false);
+		}
 	}
 
 	if (!isOpen) return null;
@@ -171,9 +184,32 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 							</div>
 							<button
 								onClick={handleCheckout}
-								className="vero-button w-full rounded-lg px-6 py-4 uppercase tracking-wider"
+								disabled={isCheckingOut}
+								className="vero-button w-full rounded-lg px-6 py-4 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 							>
-								Proceed to Checkout
+								{isCheckingOut ? (
+									<>
+										<svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+											<circle
+												className="opacity-25"
+												cx="12"
+												cy="12"
+												r="10"
+												stroke="currentColor"
+												strokeWidth="4"
+												fill="none"
+											/>
+											<path
+												className="opacity-75"
+												fill="currentColor"
+												d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+											/>
+										</svg>
+										Processing...
+									</>
+								) : (
+									"Proceed to Checkout"
+								)}
 							</button>
 							<p className="text-xs text-center text-[#6C757D]">Secure checkout powered by Stripe</p>
 						</div>

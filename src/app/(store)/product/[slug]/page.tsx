@@ -12,7 +12,6 @@ import {
 	Truck,
 } from "lucide-react";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { Suspense } from "react";
 import { ProductImageModal } from "@/app/(store)/product/[slug]/product-image-modal";
@@ -32,7 +31,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
-import { getProductBySlug } from "@/lib/product-service";
 import { deslugify, formatMoney } from "@/lib/utils";
 import { JsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
@@ -40,17 +38,15 @@ import { MainProductImage } from "@/ui/products/main-product-image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/shadcn/card";
 import { Separator } from "@/ui/shadcn/separator";
 import { YnsLink } from "@/ui/yns-link";
+import { getProductData } from "./product-data";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
 	searchParams: Promise<{ variant?: string }>;
 }): Promise<Metadata> => {
 	const params = await props.params;
-	const product = await getProductBySlug(params.slug);
+	const product = await getProductData(params.slug);
 
-	if (!product) {
-		return notFound();
-	}
 	const t = await getTranslations("/product.metadata");
 
 	const canonical = new URL(`${publicUrl}/product/${params.slug}`);
@@ -68,11 +64,7 @@ export default async function SingleProductPage(props: {
 }) {
 	const params = await props.params;
 
-	const product = await getProductBySlug(params.slug);
-
-	if (!product) {
-		return notFound();
-	}
+	const product = await getProductData(params.slug);
 
 	const t = await getTranslations("/product.page");
 	const locale = await getLocale();
@@ -218,6 +210,31 @@ export default async function SingleProductPage(props: {
 										</AlertDescription>
 									</Alert>
 								)}
+
+								{/* Action Buttons - Prominent Position */}
+								<Card className="border-2 border-[#D4AF37]/30 shadow-lg bg-gradient-to-br from-[#D4AF37]/5 to-white">
+									<CardContent className="p-6">
+										<div className="flex gap-3">
+											<AddToCart
+												variantId={product.id}
+												className="vero-button flex-1 py-4 text-base font-semibold"
+											>
+												Add to Cart
+											</AddToCart>
+											<FavoriteButton
+												product={{
+													id: product.id,
+													name: product.name,
+													slug: product.slug,
+													price: product.price,
+													images: product.images,
+													metadata: product.metadata,
+												}}
+												className="py-4 border-2 border-black/10"
+											/>
+										</div>
+									</CardContent>
+								</Card>
 							</CardContent>
 						</Card>
 
@@ -528,30 +545,6 @@ export default async function SingleProductPage(props: {
 									</div>
 								</TabsContent>
 							</Tabs>
-						</Card>
-
-						<Card className="border-2 border-black/10 shadow-lg bg-white">
-							<CardContent className="p-6">
-								<div className="flex gap-3">
-									<AddToCart
-										variantId={product.id}
-										className="vero-button flex-1 py-4 text-base font-semibold"
-									>
-										Add to Cart
-									</AddToCart>
-									<FavoriteButton
-										product={{
-											id: product.id,
-											name: product.name,
-											slug: product.slug,
-											price: product.price,
-											images: product.images,
-											metadata: product.metadata,
-										}}
-										className="py-4 border-2 border-black/10"
-									/>
-								</div>
-							</CardContent>
 						</Card>
 					</div>
 				</div>

@@ -6,6 +6,9 @@ import Link from "next/link";
 import { useCart } from "@/context/cart-context";
 import { useFavorites } from "@/context/favorites-context";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/ui/shadcn/badge";
+import { Button } from "@/ui/shadcn/button";
+import { Card, CardContent } from "@/ui/shadcn/card";
 
 interface CompactProductCardProps {
 	product: {
@@ -87,51 +90,62 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 
 	return (
 		<Link href={`/product/${product.slug}`} className="group block">
-			<div className="vero-card overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.03]">
-				<div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
-					{/* Badge */}
+			<Card className="vero-card overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl">
+				<div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#0A0A0A] to-[#1A1A1A]">
+					{/* Badge using Shadcn Badge */}
 					{badge && (
 						<div className="absolute top-2 left-2 z-10">
-							<div
+							<Badge
+								variant="secondary"
 								className={cn(
 									"px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-sm shadow-lg",
 									badge.color,
 								)}
 							>
 								{badge.text}
-							</div>
+							</Badge>
 						</div>
 					)}
 
-					{/* Favorite Button - Vero Gold Theme */}
-					<button
+					{/* Favorite Button using Shadcn Button */}
+					<Button
+						variant="outline"
+						size="sm"
 						onClick={handleToggleFavorite}
 						className={cn(
 							"absolute top-2 right-2 z-10 p-1.5 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 shadow-md",
 							isFavorite(product.id)
-								? "bg-[#D4AF37] text-white"
-								: "bg-white/90 text-[#6C757D] hover:bg-white hover:text-[#D4AF37]",
+								? "bg-[#D4AF37] text-white border-[#D4AF37] hover:bg-[#B8941F]"
+								: "bg-white/90 text-[#6C757D] border-white hover:bg-white hover:text-[#D4AF37]",
 						)}
 						aria-label={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}
 						title={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}
 					>
 						<Heart className={cn("h-4 w-4 transition-all", isFavorite(product.id) && "fill-current")} />
-					</button>
+					</Button>
 
-					{/* Product Image */}
-					<Image
-						src={imageUrl}
-						alt={product.name}
-						fill
-						className="object-cover transition-transform duration-500 group-hover:scale-110"
-						sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-					/>
+					{/* Product Image with enhanced hover */}
+					<div className="relative h-full w-full">
+						<Image
+							src={imageUrl}
+							alt={product.name}
+							fill
+							className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+							sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+						/>
+						{/* Enhanced overlay with gold glow effect */}
+						<div className="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/0 via-transparent to-transparent group-hover:from-[#D4AF37]/10 transition-all duration-500"></div>
+					</div>
 
-					{/* Overlay gradient for better visual depth */}
-					<div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+					{/* Pre-order Release Date Overlay */}
+					{isPreorder && product.metadata?.releaseDate && (
+						<div className="absolute bottom-0 left-0 right-0 bg-black/80 text-[#D4AF37] p-2 text-[10px] text-center uppercase tracking-wider font-semibold border-t border-[#D4AF37]/30">
+							Release: {product.metadata.releaseDate}
+						</div>
+					)}
 				</div>
 
-				<div className="p-4 space-y-2 bg-white">
+				<CardContent className="p-4 space-y-3">
 					{/* Brand */}
 					{product.metadata?.brand && (
 						<div className="text-[10px] text-[#D4AF37] uppercase tracking-widest font-semibold">
@@ -149,35 +163,43 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 						<div className="flex items-baseline gap-1.5">
 							{isOnSale && originalPrice && originalPrice > product.price ? (
 								<>
-									<span className="text-lg font-semibold text-[#D4AF37]">
+									<span className="text-lg font-semibold vero-text-gradient">
 										{currency}
 										{(product.price / 100).toFixed(2)}
 									</span>
-									<span className="text-xs text-gray-400 line-through">
+									<span className="text-xs text-[#6C757D] line-through">
 										{currency}
 										{(originalPrice / 100).toFixed(2)}
 									</span>
+									<Badge
+										variant="secondary"
+										className="text-xs text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded"
+									>
+										-{Math.round(((originalPrice - product.price) / originalPrice) * 100)}%
+									</Badge>
 								</>
 							) : (
-								<span className="text-lg font-semibold text-[#D4AF37]">
+								<span className="text-lg font-semibold vero-text-gradient">
 									{currency}
 									{(product.price / 100).toFixed(2)}
 								</span>
 							)}
 						</div>
 
-						{/* Quick Add to Cart Button */}
-						<button
+						{/* Quick Add to Cart Button using Shadcn Button */}
+						<Button
+							variant="default"
+							size="sm"
 							onClick={handleAddToCart}
-							className="flex-shrink-0 p-2 rounded-md bg-[#D4AF37] hover:bg-[#B8941F] text-white transition-all duration-300 hover:scale-110 shadow-md hover:shadow-xl"
+							className="flex-shrink-0 vero-button p-2 hover:scale-110 transition-all duration-300"
 							aria-label="Add to cart"
 							title="Add to cart"
 						>
 							<Plus className="h-4 w-4" />
-						</button>
+						</Button>
 					</div>
-				</div>
-			</div>
+				</CardContent>
+			</Card>
 		</Link>
 	);
 }

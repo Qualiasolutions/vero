@@ -89,7 +89,7 @@ export type CardItemProps = {
 	rotateX?: number | string;
 	rotateY?: number | string;
 	rotateZ?: number | string;
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 export const CardItem = ({
 	as: Tag = "div",
@@ -103,7 +103,7 @@ export const CardItem = ({
 	rotateZ = 0,
 	...rest
 }: CardItemProps) => {
-	const ref = useRef<any>(null);
+	const elementRef = useRef<HTMLElement | null>(null);
 	const [isMouseEntered] = useMouseEnter();
 
 	useEffect(() => {
@@ -111,18 +111,22 @@ export const CardItem = ({
 	}, [isMouseEntered]);
 
 	const handleAnimations = () => {
-		if (!ref.current) return;
+		if (!elementRef.current) return;
 		if (isMouseEntered) {
-			ref.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+			elementRef.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
 		} else {
-			ref.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
+			elementRef.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
 		}
+	};
+
+	const assignRef = (node: Element | null) => {
+		elementRef.current = node as HTMLElement | null;
 	};
 
 	return React.createElement(
 		Tag,
 		{
-			ref,
+			ref: assignRef,
 			className: cn("w-fit transition duration-200 ease-linear", className),
 			...rest,
 		},

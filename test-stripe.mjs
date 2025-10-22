@@ -18,9 +18,7 @@ if (!stripeKey) {
 
 console.log("🔑 Stripe Key Found:", stripeKey.substring(0, 20) + "...");
 
-const stripe = new Stripe(stripeKey, {
-	apiVersion: "2025-08-27.basil",
-});
+const stripe = new Stripe(stripeKey);
 
 async function testStripe() {
 	try {
