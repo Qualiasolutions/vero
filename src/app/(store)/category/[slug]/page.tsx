@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { getProducts, getProductsByCategory, type Product } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { CategoryContent } from "@/ui/category/category-content";
 
@@ -28,67 +28,67 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 		return notFound();
 	}
 
-	// Get all products and filter based on category logic
-	const allProductsResult = await getProducts(100);
-	const allProducts = allProductsResult.data || [];
-	let filteredProducts = allProducts;
+	// Try to get products by category using metadata first
+	let products: Product[] = [];
 
-	// Apply category filtering based on product metadata and category type
-	switch (params.slug) {
-		case "new-arrivals":
-			// Show first 12 products as "new arrivals"
-			filteredProducts = allProducts.slice(0, 12);
-			break;
-		case "on-sale":
-			// Show some mid-range products as "on sale"
-			filteredProducts = allProducts.slice(12, 24);
-			break;
-		case "limited-edition":
-			// Show products with "limited" in name or premium models
-			filteredProducts = allProducts.filter(
-				(p) =>
-					p.name.toLowerCase().includes("limited") ||
-					p.name.toLowerCase().includes("edition") ||
-					p.price > 150,
-			);
-			// Fallback if no matches
-			if (filteredProducts.length === 0) {
-				filteredProducts = allProducts.slice(24, 36);
+	try {
+		// For specific categories that match our Stripe metadata, use the metadata-based filtering
+		if (params.slug === "pre-order" || params.slug === "collection") {
+			products = await getProductsByCategory(params.slug, 100);
+		} else {
+			// For other categories, get all products and apply custom logic
+			const allProductsResult = await getProducts(100);
+			const allProducts = allProductsResult.data || [];
+
+			// Apply category filtering based on product metadata and category type
+			switch (params.slug) {
+				case "new-arrivals":
+					// Show first 12 products as "new arrivals"
+					products = allProducts.slice(0, 12);
+					break;
+				case "on-sale":
+					// Show some mid-range products as "on sale"
+					products = allProducts.slice(12, 24);
+					break;
+				case "limited-edition":
+					// Show products with "limited" in name or premium models
+					products = allProducts.filter(
+						(p) =>
+							p.name.toLowerCase().includes("limited") ||
+							p.name.toLowerCase().includes("edition") ||
+							p.price > 150,
+					);
+					// Fallback if no matches
+					if (products.length === 0) {
+						products = allProducts.slice(24, 36);
+					}
+					break;
+				case "rare":
+					// Show premium/older models
+					products = allProducts.filter(
+						(p) =>
+							p.name.toLowerCase().includes("rare") ||
+							p.name.toLowerCase().includes("vintage") ||
+							p.name.toLowerCase().includes("classic"),
+					);
+					// Fallback if no matches
+					if (products.length === 0) {
+						products = allProducts.slice(36, 48);
+					}
+					break;
+				case "coming-soon":
+					// Show remaining products as "coming soon"
+					products = allProducts.slice(60);
+					break;
+				default:
+					// If no matching category, return empty
+					products = [];
 			}
-			break;
-		case "rare":
-			// Show premium/older models
-			filteredProducts = allProducts.filter(
-				(p) =>
-					p.name.toLowerCase().includes("rare") ||
-					p.name.toLowerCase().includes("vintage") ||
-					p.name.toLowerCase().includes("classic"),
-			);
-			// Fallback if no matches
-			if (filteredProducts.length === 0) {
-				filteredProducts = allProducts.slice(36, 48);
-			}
-			break;
-		case "pre-order":
-			// Show some premium models as "pre-order"
-			filteredProducts = allProducts.filter(
-				(p) => p.name.toLowerCase().includes("2025") || p.name.toLowerCase().includes("pre-order"),
-			);
-			// Fallback if no matches
-			if (filteredProducts.length === 0) {
-				filteredProducts = allProducts.slice(48, 60);
-			}
-			break;
-		case "coming-soon":
-			// Show remaining products as "coming soon"
-			filteredProducts = allProducts.slice(60);
-			break;
-		default:
-			// If no matching category, return empty
-			filteredProducts = [];
+		}
+	} catch (error) {
+		console.error(`Error fetching products for category ${params.slug}:`, error);
+		products = [];
 	}
-
-	const products = filteredProducts;
 
 	// Get hero background gradient based on category - darker, more premium colors
 	const getHeroGradient = (slug: string) => {

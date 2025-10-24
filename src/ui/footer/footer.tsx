@@ -35,7 +35,7 @@ const sections = [
 
 export async function Footer() {
 	return (
-		<footer className="w-full border-t border-[#D4AF37]/30 bg-white py-6">
+		<footer className="w-full border-t border-[var(--selfridges-border-light)] bg-[var(--selfridges-bg-primary)] py-6">
 			<div className="container mx-auto px-4 max-w-6xl">
 				{/* Main Footer Content */}
 				<div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
@@ -49,7 +49,7 @@ export async function Footer() {
 								height={60}
 								className="h-12 w-auto object-contain"
 							/>
-							<p className="text-[#6C757D] text-sm leading-relaxed mt-2">
+							<p className="text-[var(--selfridges-text-muted)] text-sm leading-relaxed mt-2">
 								Premium 1:18 scale diecast collectibles
 							</p>
 							<div className="flex items-center gap-2 mt-3">
@@ -57,7 +57,7 @@ export async function Footer() {
 									href="https://facebook.com"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-[#6C757D]/60 hover:text-[#D4AF37] transition-colors p-2 rounded-full bg-[#F5E6D3]/10 hover:bg-[#D4AF37]/20"
+									className="text-[var(--selfridges-text-muted)]/60 hover:text-[var(--selfridges-text-secondary)] transition-colors p-2 rounded-full bg-[var(--selfridges-bg-secondary)] hover:bg-[var(--selfridges-bg-tertiary)]"
 								>
 									<Facebook className="w-4 h-4" />
 								</a>
@@ -65,7 +65,7 @@ export async function Footer() {
 									href="https://instagram.com"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-[#6C757D]/60 hover:text-[#D4AF37] transition-colors p-2 rounded-full bg-[#F5E6D3]/10 hover:bg-[#D4AF37]/20"
+									className="text-[var(--selfridges-text-muted)]/60 hover:text-[var(--selfridges-text-secondary)] transition-colors p-2 rounded-full bg-[var(--selfridges-bg-secondary)] hover:bg-[var(--selfridges-bg-tertiary)]"
 								>
 									<Instagram className="w-4 h-4" />
 								</a>
@@ -77,14 +77,14 @@ export async function Footer() {
 					<nav className="md:col-span-2 grid grid-cols-2 gap-8">
 						{sections.slice(0, 2).map((section) => (
 							<div key={section.header}>
-								<h4 className="font-semibold text-[#D4AF37] uppercase tracking-wider text-xs mb-3">
+								<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
 									{section.header}
 								</h4>
 								<ul role="list" className="space-y-2">
 									{section.links.map((link) => (
 										<li key={link.label}>
 											<YnsLink
-												className="text-[#6C757D] hover:text-[#D4AF37] transition-colors text-sm"
+												className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors text-sm"
 												href={link.href}
 											>
 												{link.label}
@@ -100,12 +100,14 @@ export async function Footer() {
 					<div className="md:col-span-1 space-y-4">
 						{/* Company Links */}
 						<div>
-							<h4 className="font-semibold text-[#D4AF37] uppercase tracking-wider text-xs mb-3">Company</h4>
+							<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
+								Company
+							</h4>
 							<ul role="list" className="space-y-2">
 								{sections[2]?.links.map((link) => (
 									<li key={link.label}>
 										<YnsLink
-											className="text-[#6C757D] hover:text-[#D4AF37] transition-colors text-sm"
+											className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors text-sm"
 											href={link.href}
 										>
 											{link.label}
@@ -117,24 +119,24 @@ export async function Footer() {
 
 						{/* Contact */}
 						<div>
-							<h4 className="font-semibold text-[#D4AF37] uppercase tracking-wider text-xs mb-3">
+							<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
 								Get in Touch
 							</h4>
 							<div className="space-y-2">
 								<a
 									href="mailto:info@veromodels.com"
-									className="text-[#6C757D] hover:text-[#D4AF37] transition-colors flex items-center gap-2 text-sm"
+									className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors flex items-center gap-2 text-sm"
 								>
 									<Mail className="w-4 h-4" />
 									<span>info@veromodels.com</span>
 								</a>
 								<div className="flex items-center gap-2">
-									<span className="text-[#6C757D] text-sm">Follow us:</span>
+									<span className="text-[var(--selfridges-text-muted)] text-sm">Follow us:</span>
 									<a
 										href="https://facebook.com/veromodels"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="text-[#D4AF37] hover:text-[#B8941F] transition-colors"
+										className="text-[var(--selfridges-text-secondary)] hover:text-[var(--selfridges-text-primary)] transition-colors"
 									>
 										Facebook
 									</a>
@@ -145,20 +147,20 @@ export async function Footer() {
 				</div>
 
 				{/* Bottom Bar */}
-				<div className="border-t border-[#D4AF37]/20 pt-4">
+				<div className="border-t border-[var(--selfridges-border-light)] pt-4">
 					<div className="flex flex-col md:flex-row items-center justify-between gap-4">
 						{/* Copyright */}
 						<div className="text-center md:text-left">
-							<p className="text-[#6C757D] text-xs">
+							<p className="text-[var(--selfridges-text-muted)] text-xs">
 								© {new Date().getFullYear()} Veromodels. All rights reserved.
 							</p>
-							<p className="text-[#6C757D]/50 text-xs mt-1">
+							<p className="text-[var(--selfridges-text-muted)]/70 text-xs mt-1">
 								Developed by{" "}
 								<a
 									href="https://qualiasolutions.net"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-[#D4AF37] hover:text-[#B8941F] transition-colors"
+									className="text-[var(--selfridges-text-secondary)] hover:text-[var(--selfridges-text-primary)] transition-colors"
 								>
 									Qualia Solutions
 								</a>
@@ -167,10 +169,14 @@ export async function Footer() {
 
 						{/* Payment Methods */}
 						<div className="flex items-center gap-4">
-							<span className="text-[#6C757D] text-xs">Secure Payment:</span>
+							<span className="text-[var(--selfridges-text-muted)] text-xs">Secure Payment:</span>
 							<div className="flex items-center gap-2">
 								{/* Stripe Icon */}
-								<svg className="w-6 h-4 text-[#6C757D]" viewBox="0 0 24 24" fill="currentColor">
+								<svg
+									className="w-6 h-4 text-[var(--selfridges-text-muted)]"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+								>
 									<path d="M13.5 0C12.254 0 0 7.246 0 1.75v6.504c0 1.273.446.205.446.205.446h12.254l1.415 2.415c0 1.273.0 2.446-.695L13.5 15.75c0 1.424-.287.863-.717.863-.717C15.75 16.5 18 15.75c-3.774 4.62-5.379 8.246-5.379C3.754 8.246c-1.426-1.426-1.426 0-1 0h-2.876c0 1.426.71.429 2.446.714.29-2.446.714-.29 0-.571.571-1.426-1.426v-4c0 2.285 0 4.62z" />
 								</svg>
 								<span className="text-[#6C757D] text-xs ml-2">Visa</span>

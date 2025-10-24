@@ -321,7 +321,7 @@ export async function getProductsByCategory(categorySlug: string, limit = 3): Pr
 						id: product.id,
 						name: product.name,
 						slug: product.metadata.slug || product.id,
-						price: price.unit_amount || 0, // Keep in cents for consistency
+						price: price.unit_amount ? Math.round(price.unit_amount / 100) : 0, // Convert from cents to euros
 						images: product.images || [],
 						metadata: product.metadata || {},
 						description: cleanProductDescription(product.description),

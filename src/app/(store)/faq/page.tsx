@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, CreditCard, HelpCircle, Package, RotateCcw, Shield, Star, Truck } from "lucide-react";
+import { Clock, CreditCard, Info, Package, RotateCcw, Shield, Star, Truck } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/ui/shadcn/accordion";
 
 export default function FAQPage() {
@@ -138,7 +138,7 @@ export default function FAQPage() {
 			],
 		},
 		{
-			icon: HelpCircle,
+			icon: Info,
 			title: "General Questions",
 			questions: [
 				{
@@ -172,7 +172,7 @@ export default function FAQPage() {
 				<div className="relative z-10 w-full px-6 lg:px-12 xl:px-16 py-16 lg:py-20">
 					<div className="max-w-4xl mx-auto text-center">
 						<div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-4 py-2 backdrop-blur-sm mb-6">
-							<HelpCircle className="w-4 h-4 text-[#D4AF37]" />
+							<Info className="w-4 h-4 text-[#D4AF37]" />
 							<span className="text-sm font-medium text-[#E6C757]">We're Here to Help</span>
 						</div>
 						<h1 className="text-4xl lg:text-5xl font-light tracking-tight mb-4">

@@ -1,32 +1,92 @@
+"use client";
+
 import { ArrowRight, Grid3x3, LayoutGrid, Search, Sparkles, Star } from "lucide-react";
 import Image from "next/image";
-import type { Metadata } from "next/types";
-import { publicUrl } from "@/env.mjs";
+import React, { useEffect, useMemo, useState } from "react";
 import { getProducts, type Product } from "@/lib/product-service";
+import ProductFiltersClient from "@/ui/products/product-filters-client";
 import { ProductList } from "@/ui/products/product-list";
 
-export const generateMetadata = async (): Promise<Metadata> => {
-	return {
-		title: "All Models - Veromodels",
-		description: "Browse our complete collection of premium 1:18 scale diecast model cars",
-		alternates: { canonical: `${publicUrl}/products` },
-	};
-};
+export default function AllProductsPage() {
+	const [products, setProducts] = useState<Product[]>([]);
+	const [filters, setFilters] = useState({
+		search: "",
+		category: "",
+		brand: "",
+		priceRange: null as { min: number; max: number } | null,
+		sortBy: "name-asc",
+	});
 
-export default async function AllProductsPage() {
-	let products: Product[] = [];
+	// Load products on mount
+	useEffect(() => {
+		async function loadProducts() {
+			try {
+				const result = await getProducts(100);
+				setProducts(result.data || []);
+				console.log(`✅ Loaded ${result.data?.length || 0} products from Stripe on /products`);
+			} catch (error) {
+				console.error("Error loading products:", error);
+				setProducts([]);
+			}
+		}
 
-	try {
-		const result = await getProducts(100);
-		products = result.data || [];
-		console.log(`✅ Loaded ${products.length} products from Stripe on /products`);
-	} catch (error) {
-		console.error("Error loading products:", error);
-		products = [];
-	}
+		loadProducts();
+	}, []);
+
+	// Apply filters and sorting
+	const filteredProducts = useMemo(() => {
+		let filtered = products.filter((product) => {
+			// Search filter
+			if (filters.search) {
+				const searchLower = filters.search.toLowerCase();
+				const nameMatch = product.name.toLowerCase().includes(searchLower);
+				const brandMatch = product.metadata?.brand?.toLowerCase().includes(searchLower);
+				const categoryMatch = product.metadata?.category?.toLowerCase().includes(searchLower);
+
+				if (!nameMatch && !brandMatch && !categoryMatch) return false;
+			}
+
+			// Category filter
+			if (filters.category && product.metadata?.category !== filters.category) {
+				return false;
+			}
+
+			// Brand filter
+			if (filters.brand && product.metadata?.brand !== filters.brand) {
+				return false;
+			}
+
+			// Price range filter
+			if (filters.priceRange) {
+				if (product.price < filters.priceRange.min || product.price > filters.priceRange.max) {
+					return false;
+				}
+			}
+
+			return true;
+		});
+
+		// Apply sorting
+		return filtered.sort((a, b) => {
+			switch (filters.sortBy) {
+				case "name-asc":
+					return a.name.localeCompare(b.name);
+				case "name-desc":
+					return b.name.localeCompare(a.name);
+				case "price-asc":
+					return a.price - b.price;
+				case "price-desc":
+					return b.price - a.price;
+				case "brand":
+					return (a.metadata?.brand || "").localeCompare(b.metadata?.brand || "");
+				default:
+					return 0;
+			}
+		});
+	}, [products, filters]);
 
 	return (
-		<main className="min-h-screen bg-white">
+		<main className="min-h-screen bg-[var(--selfridges-bg-primary)]">
 			{/* Hero Section with Background Image */}
 			<section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
 				{/* Background Image with Parallax Effect */}
@@ -47,12 +107,12 @@ export default async function AllProductsPage() {
 				{/* Hero Content */}
 				<div className="relative z-10 h-full flex flex-col items-center justify-center px-6 lg:px-12">
 					{/* Premium Badge */}
-					<div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37]/50 rounded-full px-6 py-2.5 backdrop-blur-md mb-6 animate-fade-in">
-						<Star className="w-5 h-5 text-[#D4AF37]" fill="#D4AF37" />
+					<div className="inline-flex items-center gap-2 bg-[var(--vero-gold-accent)]/20 border border-[var(--vero-gold-accent)]/50 rounded-full px-6 py-2.5 backdrop-blur-md mb-6 animate-fade-in">
+						<Star className="w-5 h-5 text-[var(--vero-gold-accent)]" fill="var(--vero-gold-accent)" />
 						<span className="text-sm font-semibold text-white tracking-wide uppercase">
 							Complete Collection
 						</span>
-						<Star className="w-5 h-5 text-[#D4AF37]" fill="#D4AF37" />
+						<Star className="w-5 h-5 text-[var(--vero-gold-accent)]" fill="var(--vero-gold-accent)" />
 					</div>
 
 					{/* Main Heading */}
@@ -69,25 +129,25 @@ export default async function AllProductsPage() {
 					{/* Stats Bar */}
 					<div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-8">
 						<div className="text-center">
-							<div className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1">{products.length}+</div>
-							<div className="text-sm text-white/80 uppercase tracking-wide">Premium Models</div>
+							<div className="text-3xl md:text-4xl font-bold text-white mb-1">{products.length}+</div>
+							<div className="text-sm text-white/90 uppercase tracking-wide">Premium Models</div>
 						</div>
 						<div className="hidden md:block w-px h-12 bg-white/20" />
 						<div className="text-center">
-							<div className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1">50+</div>
-							<div className="text-sm text-white/80 uppercase tracking-wide">Top Brands</div>
+							<div className="text-3xl md:text-4xl font-bold text-white mb-1">50+</div>
+							<div className="text-sm text-white/90 uppercase tracking-wide">Top Brands</div>
 						</div>
 						<div className="hidden md:block w-px h-12 bg-white/20" />
 						<div className="text-center">
-							<div className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1">100%</div>
-							<div className="text-sm text-white/80 uppercase tracking-wide">Authentic</div>
+							<div className="text-3xl md:text-4xl font-bold text-white mb-1">100%</div>
+							<div className="text-sm text-white/90 uppercase tracking-wide">Authentic</div>
 						</div>
 					</div>
 
 					{/* CTA Button */}
 					<a
 						href="#collection"
-						className="inline-flex items-center gap-3 bg-[#D4AF37] hover:bg-[#E6C757] text-black font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#D4AF37]/50 group"
+						className="inline-flex items-center gap-3 bg-[var(--vero-gold-accent)] hover:bg-[var(--vero-gold-accent-dark)] text-black font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[var(--vero-gold-accent)]/50 group"
 					>
 						<LayoutGrid className="w-5 h-5" />
 						<span className="uppercase tracking-wide">Browse Collection</span>
@@ -96,17 +156,17 @@ export default async function AllProductsPage() {
 				</div>
 
 				{/* Decorative Elements */}
-				<div className="absolute top-10 left-10 w-32 h-32 border border-[#D4AF37]/30 rounded-full blur-sm animate-float hidden lg:block" />
-				<div className="absolute bottom-10 right-10 w-24 h-24 border border-[#D4AF37]/30 rounded-full blur-sm animate-float delay-1000 hidden lg:block" />
+				<div className="absolute top-10 left-10 w-32 h-32 border border-[var(--vero-gold-accent)]/30 rounded-full blur-sm animate-float hidden lg:block" />
+				<div className="absolute bottom-10 right-10 w-24 h-24 border border-[var(--vero-gold-accent)]/30 rounded-full blur-sm animate-float delay-1000 hidden lg:block" />
 			</section>
 
 			{/* Feature Highlights Bar */}
-			<section className="w-full border-y border-[#D4AF37]/20 bg-gradient-to-r from-white via-[#FDFBF7] to-white">
+			<section className="w-full border-y border-[var(--vero-gold-accent)]/20 bg-gradient-to-r from-white via-[#FDFBF7] to-white">
 				<div className="container mx-auto px-4 py-6">
 					<div className="flex flex-wrap items-center justify-center gap-6 md:gap-12">
 						<div className="flex items-center gap-3">
-							<div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37]/20 to-[#E6C757]/10 rounded-full flex items-center justify-center">
-								<Sparkles className="w-6 h-6 text-[#D4AF37]" />
+							<div className="w-12 h-12 bg-gradient-to-br from-[var(--vero-gold-accent)]/20 to-[var(--vero-gold-accent)]/10 rounded-full flex items-center justify-center">
+								<Sparkles className="w-6 h-6 text-[var(--vero-gold-accent)]" />
 							</div>
 							<div>
 								<p className="text-sm font-bold text-[#212529]">Limited Editions</p>
@@ -114,11 +174,11 @@ export default async function AllProductsPage() {
 							</div>
 						</div>
 
-						<div className="hidden md:block w-px h-10 bg-[#D4AF37]/20" />
+						<div className="hidden md:block w-px h-10 bg-[var(--vero-gold-accent)]/20" />
 
 						<div className="flex items-center gap-3">
-							<div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37]/20 to-[#E6C757]/10 rounded-full flex items-center justify-center">
-								<Grid3x3 className="w-6 h-6 text-[#D4AF37]" />
+							<div className="w-12 h-12 bg-gradient-to-br from-[var(--vero-gold-accent)]/20 to-[var(--vero-gold-accent)]/10 rounded-full flex items-center justify-center">
+								<Grid3x3 className="w-6 h-6 text-[var(--vero-gold-accent)]" />
 							</div>
 							<div>
 								<p className="text-sm font-bold text-[#212529]">All Categories</p>
@@ -126,11 +186,11 @@ export default async function AllProductsPage() {
 							</div>
 						</div>
 
-						<div className="hidden md:block w-px h-10 bg-[#D4AF37]/20" />
+						<div className="hidden md:block w-px h-10 bg-[var(--vero-gold-accent)]/20" />
 
 						<div className="flex items-center gap-3">
-							<div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37]/20 to-[#E6C757]/10 rounded-full flex items-center justify-center">
-								<Search className="w-6 h-6 text-[#D4AF37]" />
+							<div className="w-12 h-12 bg-gradient-to-br from-[var(--vero-gold-accent)]/20 to-[var(--vero-gold-accent)]/10 rounded-full flex items-center justify-center">
+								<Search className="w-6 h-6 text-[var(--vero-gold-accent)]" />
 							</div>
 							<div>
 								<p className="text-sm font-bold text-[#212529]">Easy Search</p>
@@ -141,23 +201,33 @@ export default async function AllProductsPage() {
 				</div>
 			</section>
 
-			{/* Product Grid Section */}
-			<section id="collection" className="w-full bg-gradient-to-b from-white via-[#FDFBF7]/30 to-white py-12">
-				<div className="container mx-auto px-4">
-					{/* Section Header */}
-					<div className="text-center mb-8">
-						<h2 className="text-2xl md:text-3xl font-light text-[#212529] uppercase tracking-wider mb-3">
-							Our Complete <span className="vero-text-gradient">Collection</span>
-						</h2>
-						<p className="text-[#6C757D] max-w-2xl mx-auto">
-							{products.length} premium die-cast models crafted with precision and authenticity
-						</p>
+			{/* Filters and Results */}
+			<div className="container mx-auto px-4 py-8">
+				<div className="flex flex-col lg:flex-row gap-8">
+					{/* Filters Sidebar */}
+					<div className="lg:w-80 flex-shrink-0">
+						<ProductFiltersClient products={products} filters={filters} onFiltersChange={setFilters} />
 					</div>
 
-					{/* Product List */}
-					<ProductList products={products} />
+					{/* Results */}
+					<div className="flex-1">
+						{/* Results Header */}
+						<div className="flex items-center justify-between mb-6">
+							<h2 className="text-2xl md:text-3xl font-light text-[var(--selfridges-text-primary)] uppercase tracking-wider">
+								{filteredProducts.length} Premium Model{filteredProducts.length !== 1 ? "s" : ""}
+							</h2>
+							{filteredProducts.length !== products.length && (
+								<p className="text-sm text-[var(--selfridges-text-secondary)]">
+									Showing {filteredProducts.length} of {products.length} models
+								</p>
+							)}
+						</div>
+
+						{/* Product Grid */}
+						<ProductList products={filteredProducts} />
+					</div>
 				</div>
-			</section>
+			</div>
 		</main>
 	);
 }

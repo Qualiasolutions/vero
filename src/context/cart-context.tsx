@@ -1,7 +1,7 @@
 "use client";
 
 import type { Cart, ProductInfo } from "commerce-kit";
-import { createContext, type ReactNode, useContext, useEffect, useOptimistic, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useOptimistic, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
 	addToCartAction,
@@ -14,7 +14,8 @@ type CartAction =
 	| { type: "ADD_ITEM"; variantId: string; quantity: number; product?: ProductInfo }
 	| { type: "UPDATE_ITEM"; variantId: string; quantity: number }
 	| { type: "REMOVE_ITEM"; variantId: string }
-	| { type: "SYNC_CART"; cart: Cart | null };
+	| { type: "SYNC_CART"; cart: Cart | null }
+	| { type: "FORCE_SYNC_CART"; cart: Cart | null };
 
 interface CartContextType {
 	cart: Cart | null;
@@ -124,6 +125,10 @@ function cartReducer(state: Cart | null, action: CartAction): Cart | null {
 			return action.cart;
 		}
 
+		case "FORCE_SYNC_CART": {
+			return action.cart;
+		}
+
 		default:
 			return state;
 	}
@@ -135,6 +140,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 	const [actualCart, setActualCart] = useState<Cart | null>(null);
 	const [optimisticCart, setOptimisticCart] = useOptimistic(actualCart, cartReducer);
 	const [isCartOpen, setIsCartOpen] = useState(false);
+	const pendingOperations = useRef<Set<string>>(new Set());
 
 	// Calculate item count from optimistic cart
 	const itemCount = optimisticCart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
@@ -146,15 +152,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
 		});
 	}, []);
 
-	// Sync optimistic cart with actual cart when it changes
+	// Sync optimistic cart with actual cart when it changes (but don't override pending operations)
 	useEffect(() => {
-		setOptimisticCart({ type: "SYNC_CART", cart: actualCart });
-	}, [actualCart, setOptimisticCart]);
+		// Only sync if there are no pending operations
+		if (pendingOperations.current.size === 0) {
+			setOptimisticCart({ type: "SYNC_CART", cart: actualCart });
+		}
+	}, [actualCart]);
 
 	const openCart = () => setIsCartOpen(true);
 	const closeCart = () => setIsCartOpen(false);
 
 	const optimisticAdd = async (variantId: string, quantity = 1, product?: ProductInfo) => {
+		// Mark operation as pending
+		pendingOperations.current.add(variantId);
+
 		// Optimistically update UI
 		setOptimisticCart({ type: "ADD_ITEM", variantId, quantity, product });
 
@@ -174,10 +186,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
 				description: "Please try again later",
 			});
 			throw error;
+		} finally {
+			// Clear pending operation
+			pendingOperations.current.delete(variantId);
 		}
 	};
 
 	const optimisticUpdate = async (variantId: string, quantity: number) => {
+		// Mark operation as pending
+		pendingOperations.current.add(variantId);
+
 		// Optimistically update UI
 		setOptimisticCart({ type: "UPDATE_ITEM", variantId, quantity });
 
@@ -189,10 +207,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			// Rollback will happen automatically via useEffect
 			console.error("Failed to update cart item:", error);
 			throw error;
+		} finally {
+			// Clear pending operation
+			pendingOperations.current.delete(variantId);
 		}
 	};
 
 	const optimisticRemove = async (variantId: string) => {
+		// Mark operation as pending
+		pendingOperations.current.add(variantId);
+
 		// Optimistically update UI
 		setOptimisticCart({ type: "REMOVE_ITEM", variantId });
 
@@ -200,6 +224,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			// Perform server action
 			const updatedCart = await removeFromCartAction(variantId);
 			setActualCart(updatedCart);
+			// Force sync to ensure optimistic state matches server state
+			setOptimisticCart({ type: "FORCE_SYNC_CART", cart: updatedCart });
 			toast.success("Removed from cart", {
 				description: "Item removed successfully",
 			});
@@ -210,6 +236,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 				description: "Please try again later",
 			});
 			throw error;
+		} finally {
+			// Clear pending operation
+			pendingOperations.current.delete(variantId);
 		}
 	};
 

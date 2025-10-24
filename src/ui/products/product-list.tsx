@@ -97,16 +97,16 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 								<CardContent className="p-5 space-y-3">
 									{/* Product name with hover effect */}
 									<YnsLink href={`/product/${product.slug}`}>
-										<h2 className="text-base font-light text-[#212529] group-hover:text-[#D4AF37] transition-colors duration-300 tracking-wide line-clamp-2">
+										<h2 className="text-base font-medium text-[var(--selfridges-text-primary)] group-hover:text-[var(--selfridges-text-secondary)] transition-colors duration-300 tracking-wide line-clamp-2">
 											{product.name}
 										</h2>
 									</YnsLink>
 
 									{/* Price display */}
-									<div className="pt-2 border-t border-[#D4AF37]/20">
+									<div className="pt-2 border-t border-[var(--selfridges-border-light)]">
 										{product.price && (
 											<div className="flex items-center justify-between">
-												<p className="text-xl font-semibold vero-text-gradient">
+												<p className="text-xl font-semibold text-[var(--selfridges-text-primary)]">
 													{formatMoney({
 														amount: product.price,
 														currency: product.currency,
