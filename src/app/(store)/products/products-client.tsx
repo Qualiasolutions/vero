@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Grid3x3, LayoutGrid, Search, Sparkles, Star } from "lucide-react";
+import { ArrowRight, Search, Sparkles } from "lucide-react";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import type { Product } from "@/lib/product-service";
