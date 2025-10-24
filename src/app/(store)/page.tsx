@@ -49,7 +49,7 @@ export default async function Home() {
 	});
 
 	return (
-		<main className="min-h-screen bg-[var(--selfridges-background)] relative overflow-hidden">
+		<div className="bg-[var(--selfridges-background)] relative overflow-hidden">
 			{/* Parallax Background */}
 			<div className="fixed inset-0 z-0">
 				<div className="absolute inset-0 bg-gradient-to-b from-[var(--selfridges-background)] via-[var(--selfridges-bg-secondary)] to-[var(--selfridges-bg-tertiary)]"></div>
@@ -407,6 +407,6 @@ export default async function Home() {
 					</div>
 				</section>
 			</div>
-		</main>
+		</div>
 	);
 }
