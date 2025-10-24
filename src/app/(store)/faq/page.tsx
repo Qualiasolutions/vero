@@ -143,11 +143,11 @@ export default function FAQPage() {
 			questions: [
 				{
 					q: "How can I contact customer service?",
-					a: "You can reach us via email at info@veromodels.com or call +1 (234) 567-890. We typically respond within 24 hours during business days. You can also use our contact form for detailed inquiries.",
+					a: "You can reach us via email at info@veromodels.com. For phone numbers, business hours, and our office address, please visit our Contact Us page. We typically respond within 24 hours during business days.",
 				},
 				{
 					q: "Do you have a physical store?",
-					a: "We are currently an online-only retailer based in Cyprus, Nicosia. This allows us to offer competitive pricing and a wider selection of collectibles.",
+					a: "We are currently an online-only retailer. This allows us to offer competitive pricing and a wider selection of collectibles. For our office location and contact details, please visit our Contact Us page.",
 				},
 				{
 					q: "Do you offer bulk or wholesale pricing?",

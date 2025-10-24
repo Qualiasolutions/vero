@@ -209,20 +209,15 @@ export default function PrivacyPolicyPage() {
 							<div>
 								<h2 className="text-2xl font-semibold text-[#111827] mb-3">Contact Us</h2>
 								<p className="text-[#6B7280] leading-relaxed mb-4">
-									If you have any questions about this privacy policy or our privacy practices, please contact
-									us:
+									If you have any questions about this privacy policy or our privacy practices, please visit
+									our Contact Us page for all contact details and business hours.
 								</p>
-								<div className="space-y-2 text-[#6B7280]">
-									<p>
-										<strong className="text-[#111827]">Email:</strong> info@veromodels.com
-									</p>
-									<p>
-										<strong className="text-[#111827]">Phone:</strong> +1 (234) 567-890
-									</p>
-									<p>
-										<strong className="text-[#111827]">Address:</strong> Cyprus, Nicosia
-									</p>
-								</div>
+								<a
+									href="/contact"
+									className="inline-flex items-center gap-2 bg-[#C4A962] hover:bg-[#D4B673] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300"
+								>
+									Visit Contact Page
+								</a>
 							</div>
 						</div>
 					</div>
