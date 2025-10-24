@@ -49,17 +49,9 @@ export default async function Home() {
 	});
 
 	return (
-		<div className="bg-[var(--selfridges-background)] relative overflow-hidden">
-			{/* Parallax Background */}
-			<div className="fixed inset-0 z-0">
-				<div className="absolute inset-0 bg-gradient-to-b from-[var(--selfridges-background)] via-[var(--selfridges-bg-secondary)] to-[var(--selfridges-bg-tertiary)]"></div>
-				<div className="parallax-bg absolute inset-0 opacity-5">
-					<div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600"></div>
-				</div>
-			</div>
-
+		<div className="bg-[var(--selfridges-background)] relative">
 			{/* Content */}
-			<div className="relative z-10">
+			<div className="relative">
 				{/* Announcement Banner */}
 				<section className="relative bg-[var(--selfridges-gray-light)] text-[var(--selfridges-text-primary)] py-2 border-b border-[var(--selfridges-border-light)]">
 					<div className="w-full px-6 lg:px-12">
