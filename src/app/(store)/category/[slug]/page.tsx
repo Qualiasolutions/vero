@@ -203,19 +203,19 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 				<CategoryContent products={products} />
 			) : (
 				<div className="container mx-auto px-4 py-12">
-					<div className="vero-card rounded-2xl p-12 text-center border border-[#D4AF37]/20 max-w-2xl mx-auto">
-						<div className="text-[#D4AF37]/40 text-6xl mb-6">🏎️</div>
-						<h3 className="text-2xl font-light text-[#212529] mb-4 uppercase tracking-wide">
+					<div className="vero-card rounded-2xl p-12 text-center border border-[#C4A962]/20 max-w-2xl mx-auto">
+						<div className="text-[#C4A962]/40 text-6xl mb-6">🏎️</div>
+						<h3 className="text-2xl font-light text-[#111827] mb-4 uppercase tracking-wide">
 							Models Coming Soon
 						</h3>
-						<p className="text-[#6C757D] leading-relaxed mb-8">
+						<p className="text-[#6B7280] leading-relaxed mb-8">
 							We're currently curating the finest selection for {category.name.toLowerCase()}. Check back soon
 							or explore our other collections.
 						</p>
 						<div className="mt-6">
 							<a
 								href="/products"
-								className="inline-flex items-center gap-2 bg-[#D4AF37] hover:bg-[#B8941F] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/30 uppercase tracking-wide text-sm"
+								className="inline-flex items-center gap-2 bg-[#C4A962] hover:bg-[#A89050] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#C4A962]/30 uppercase tracking-wide text-sm"
 							>
 								View All Models →
 							</a>

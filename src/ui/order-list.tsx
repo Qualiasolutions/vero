@@ -34,13 +34,13 @@ export function OrderList() {
 	if (orders.length === 0) {
 		return (
 			<div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-				<div className="mb-6 p-8 rounded-full bg-[#D4AF37]/10">
-					<Package className="h-16 w-16 text-[#D4AF37]" />
+				<div className="mb-6 p-8 rounded-full bg-[#C4A962]/10">
+					<Package className="h-16 w-16 text-[#C4A962]" />
 				</div>
-				<h2 className="text-2xl md:text-3xl font-light text-[#212529] mb-4 uppercase tracking-wider">
+				<h2 className="text-2xl md:text-3xl font-light text-[#111827] mb-4 uppercase tracking-wider">
 					No Orders Yet
 				</h2>
-				<p className="text-base text-[#6C757D] mb-8 max-w-md">
+				<p className="text-base text-[#6B7280] mb-8 max-w-md">
 					You haven&apos;t placed any orders yet. Start exploring our premium collection!
 				</p>
 				<Link

@@ -19,7 +19,7 @@ export default function ConfirmEmailPage() {
 					</Link>
 
 					<div className="mb-6">
-						<div className="w-16 h-16 rounded-full bg-[#B8941F]/10 flex items-center justify-center mx-auto mb-4 border border-[#B8941F]/30">
+						<div className="w-16 h-16 rounded-full bg-[#A89050]/10 flex items-center justify-center mx-auto mb-4 border border-[#A89050]/30">
 							<svg className="w-8 h-8 text-[#C9A961]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path
 									strokeLinecap="round"
@@ -52,7 +52,7 @@ export default function ConfirmEmailPage() {
 						<Button
 							asChild
 							variant="outline"
-							className="w-full h-12 border-[#B8941F]/30 hover:border-[#C9A961]"
+							className="w-full h-12 border-[#A89050]/30 hover:border-[#C9A961]"
 						>
 							<Link href="/login">Go to Login</Link>
 						</Button>
@@ -61,7 +61,7 @@ export default function ConfirmEmailPage() {
 
 				<p className="text-center text-sm text-white/50 mt-6 font-light">
 					Didn't receive the email?{" "}
-					<a href="mailto:support@veromodels.com" className="text-[#C9A961] hover:text-[#D4AF37]">
+					<a href="mailto:support@veromodels.com" className="text-[#C9A961] hover:text-[#C4A962]">
 						Contact Support
 					</a>
 				</p>

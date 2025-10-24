@@ -44,7 +44,7 @@ export default function AuthErrorPage() {
 						<Button
 							asChild
 							variant="outline"
-							className="w-full h-12 border-[#B8941F]/30 hover:border-[#C9A961]"
+							className="w-full h-12 border-[#A89050]/30 hover:border-[#C9A961]"
 						>
 							<Link href="/login">Back to Login</Link>
 						</Button>
@@ -53,7 +53,7 @@ export default function AuthErrorPage() {
 
 				<p className="text-center text-sm text-white/50 mt-6 font-light">
 					Need help?{" "}
-					<a href="mailto:support@veromodels.com" className="text-[#C9A961] hover:text-[#D4AF37]">
+					<a href="mailto:support@veromodels.com" className="text-[#C9A961] hover:text-[#C4A962]">
 						Contact Support
 					</a>
 				</p>

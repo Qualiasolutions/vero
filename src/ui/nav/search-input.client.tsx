@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/ui/shadcn/input";
 
 const inputClasses = cn(
-	"vero-search-input appearance-none rounded-lg absolute border-[#D4AF37]/20 bg-white/90 backdrop-blur-sm py-2 pl-4 pr-10 w-9 opacity-0 transition-all ease-linear shadow-sm",
+	"vero-search-input appearance-none rounded-lg absolute border-[#C4A962]/20 bg-white/90 backdrop-blur-sm py-2 pl-4 pr-10 w-9 opacity-0 transition-all ease-linear shadow-sm",
 	"max-sm:focus:w-[calc(100vw-2rem)] max-sm:cursor-default max-sm:focus:left-4 max-sm:focus:z-20 max-sm:focus:opacity-100",
 	"sm:opacity-100 sm:w-full sm:pl-4 sm:pr-10 sm:inline-block sm:static",
 	"md:pl-3 md:pr-9 md:max-w-xs lg:max-w-sm",
 	"lg:pl-4 lg:pr-10 lg:max-w-md",
-	"focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 focus:shadow-lg focus:shadow-[#D4AF37]/10",
-	"hover:border-[#E6C757]/40 placeholder:text-[#6C757D]/60 text-[#212529] h-9 text-sm",
+	"focus:border-[#C4A962] focus:ring-2 focus:ring-[#C4A962]/20 focus:shadow-lg focus:shadow-[#C4A962]/10",
+	"hover:border-[#D4B673]/40 placeholder:text-[#6B7280]/60 text-[#111827] h-9 text-sm",
 );
 
 export const SearchInputPlaceholder = ({ placeholder }: { placeholder: string }) => {

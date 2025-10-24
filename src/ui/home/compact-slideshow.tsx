@@ -123,7 +123,7 @@ export function CompactSlideshow() {
 					e.preventDefault();
 					prevSlide();
 				}}
-				className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] transition-all"
+				className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-[#C4A962]/30 text-white hover:bg-[#C4A962] transition-all"
 				aria-label="Previous slide"
 			>
 				<ChevronLeft className="h-4 w-4" />
@@ -134,7 +134,7 @@ export function CompactSlideshow() {
 					e.preventDefault();
 					nextSlide();
 				}}
-				className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] transition-all"
+				className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-[#C4A962]/30 text-white hover:bg-[#C4A962] transition-all"
 				aria-label="Next slide"
 			>
 				<ChevronRight className="h-4 w-4" />
@@ -151,7 +151,7 @@ export function CompactSlideshow() {
 						}}
 						className={cn(
 							"w-2 h-2 rounded-full transition-all duration-300",
-							index === currentSlide ? "bg-[#D4AF37] w-6" : "bg-white/40 hover:bg-white/60",
+							index === currentSlide ? "bg-[#C4A962] w-6" : "bg-white/40 hover:bg-white/60",
 						)}
 						aria-label={`Go to slide ${index + 1}`}
 					/>

@@ -169,8 +169,8 @@ export default function AllProductsPage() {
 								<Sparkles className="w-6 h-6 text-[var(--vero-gold-accent)]" />
 							</div>
 							<div>
-								<p className="text-sm font-bold text-[#212529]">Limited Editions</p>
-								<p className="text-xs text-[#6C757D]">Rare & Exclusive</p>
+								<p className="text-sm font-bold text-[#111827]">Limited Editions</p>
+								<p className="text-xs text-[#6B7280]">Rare & Exclusive</p>
 							</div>
 						</div>
 
@@ -181,8 +181,8 @@ export default function AllProductsPage() {
 								<Grid3x3 className="w-6 h-6 text-[var(--vero-gold-accent)]" />
 							</div>
 							<div>
-								<p className="text-sm font-bold text-[#212529]">All Categories</p>
-								<p className="text-xs text-[#6C757D]">Complete Range</p>
+								<p className="text-sm font-bold text-[#111827]">All Categories</p>
+								<p className="text-xs text-[#6B7280]">Complete Range</p>
 							</div>
 						</div>
 
@@ -193,8 +193,8 @@ export default function AllProductsPage() {
 								<Search className="w-6 h-6 text-[var(--vero-gold-accent)]" />
 							</div>
 							<div>
-								<p className="text-sm font-bold text-[#212529]">Easy Search</p>
-								<p className="text-xs text-[#6C757D]">Find Your Model</p>
+								<p className="text-sm font-bold text-[#111827]">Easy Search</p>
+								<p className="text-xs text-[#6B7280]">Find Your Model</p>
 							</div>
 						</div>
 					</div>

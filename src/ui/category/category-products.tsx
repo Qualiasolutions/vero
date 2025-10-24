@@ -79,10 +79,10 @@ export async function CategoryProducts({ categorySlug }: CategoryProductsProps) 
 		return (
 			<div className="container mx-auto px-4 py-12">
 				<div className="text-center py-12">
-					<h3 className="text-xl font-light text-[#212529] mb-3 uppercase tracking-wide">
+					<h3 className="text-xl font-light text-[#111827] mb-3 uppercase tracking-wide">
 						Category Not Found
 					</h3>
-					<p className="text-[#6C757D] max-w-lg mx-auto text-sm">
+					<p className="text-[#6B7280] max-w-lg mx-auto text-sm">
 						The category you're looking for doesn't exist. Explore our other collections.
 					</p>
 				</div>
@@ -93,7 +93,7 @@ export async function CategoryProducts({ categorySlug }: CategoryProductsProps) 
 	return (
 		<main className="pb-16">
 			{/* Compact Category Header */}
-			<div className="bg-white border-b border-[#D4AF37]/20">
+			<div className="bg-white border-b border-[#C4A962]/20">
 				<div className="container mx-auto px-4 py-6">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-3">
@@ -106,7 +106,7 @@ export async function CategoryProducts({ categorySlug }: CategoryProductsProps) 
 								{category.name}
 							</h1>
 						</div>
-						<div className="text-sm text-[#D4AF37] font-medium">
+						<div className="text-sm text-[#C4A962] font-medium">
 							{products.length} {products.length === 1 ? "Model" : "Models"}
 						</div>
 					</div>
@@ -119,18 +119,18 @@ export async function CategoryProducts({ categorySlug }: CategoryProductsProps) 
 			) : (
 				<div className="container mx-auto px-4 py-12">
 					<div className="text-center py-12">
-						<div className="text-[#D4AF37]/40 text-4xl mb-4">🏎️</div>
-						<h3 className="text-xl font-light text-[#212529] mb-3 uppercase tracking-wide">
+						<div className="text-[#C4A962]/40 text-4xl mb-4">🏎️</div>
+						<h3 className="text-xl font-light text-[#111827] mb-3 uppercase tracking-wide">
 							Models Coming Soon
 						</h3>
-						<p className="text-[#6C757D] max-w-lg mx-auto text-sm">
+						<p className="text-[#6B7280] max-w-lg mx-auto text-sm">
 							We're currently curating the finest selection for {category.name.toLowerCase()}. Check back soon
 							or explore our other collections.
 						</p>
 						<div className="mt-6">
 							<a
 								href="/products"
-								className="inline-flex items-center text-[#D4AF37] hover:text-[#B8941F] font-medium tracking-wide transition-colors text-sm"
+								className="inline-flex items-center text-[#C4A962] hover:text-[#A89050] font-medium tracking-wide transition-colors text-sm"
 							>
 								View All Models →
 							</a>

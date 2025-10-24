@@ -18,7 +18,7 @@ export function ParallaxSection() {
 				/>
 				{/* Sophisticated Gradient Overlay */}
 				<div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
-				<div className="absolute inset-0 bg-gradient-to-r from-[#B8941F]/5 via-transparent to-[#B8941F]/5" />
+				<div className="absolute inset-0 bg-gradient-to-r from-[#A89050]/5 via-transparent to-[#A89050]/5" />
 			</div>
 
 			{/* Content */}
@@ -34,7 +34,7 @@ export function ParallaxSection() {
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<Link
 							href="/products"
-							className="inline-flex items-center justify-center gap-2 bg-[#B8941F] hover:bg-[#C9A961] text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#B8941F]/30 uppercase tracking-wide"
+							className="inline-flex items-center justify-center gap-2 bg-[#A89050] hover:bg-[#C9A961] text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#A89050]/30 uppercase tracking-wide"
 						>
 							Explore Collection
 						</Link>

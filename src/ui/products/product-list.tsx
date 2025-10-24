@@ -33,19 +33,19 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 										{/* Badge overlays */}
 										<div className="absolute top-3 left-3 z-10 flex gap-2">
 											{isNew && (
-												<Badge className="bg-[#F5E6D3] text-[#B8941F] border border-[#D4AF37]/30 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm">
+												<Badge className="bg-[#F5E6D3] text-[#A89050] border border-[#C4A962]/30 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm">
 													New
 												</Badge>
 											)}
 											{isSpecial && (
-												<Badge className="bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-white shadow-lg px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm">
+												<Badge className="bg-gradient-to-r from-[#C4A962] to-[#D4B673] text-white shadow-lg px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-sm">
 													Premium
 												</Badge>
 											)}
 										</div>
 
 										{/* Product image with enhanced border effect */}
-										<div className="relative h-full w-full border-2 border-transparent group-hover:border-[#D4AF37]/50 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+										<div className="relative h-full w-full border-2 border-transparent group-hover:border-[#C4A962]/50 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]">
 											<YnsLink href={`/product/${product.slug}`}>
 												<Image
 													className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
@@ -59,7 +59,7 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 												/>
 											</YnsLink>
 											{/* Overlay glow effect on hover */}
-											<div className="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/0 via-transparent to-transparent group-hover:from-[#D4AF37]/10 transition-all duration-500"></div>
+											<div className="absolute inset-0 bg-gradient-to-t from-[#C4A962]/0 via-transparent to-transparent group-hover:from-[#C4A962]/10 transition-all duration-500"></div>
 										</div>
 
 										{/* Favorite heart icon */}
@@ -84,7 +84,7 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 												{/* Add to cart button - using the AddToCart component */}
 												<AddToCart
 													variantId={product.id}
-													className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#D4AF37] px-5 text-sm font-semibold uppercase tracking-wide text-white transition-all duration-300 hover:bg-[#B8941F]"
+													className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#C4A962] px-5 text-sm font-semibold uppercase tracking-wide text-white transition-all duration-300 hover:bg-[#A89050]"
 												>
 													<ShoppingCart className="h-5 w-5" />
 													Quick Add
@@ -116,7 +116,7 @@ export const ProductList = async ({ products }: { products: Product[] }) => {
 												{isSpecial && (
 													<Badge
 														variant="secondary"
-														className="text-xs text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded"
+														className="text-xs text-[#C4A962] bg-[#C4A962]/10 px-2 py-0.5 rounded"
 													>
 														Exclusive
 													</Badge>

@@ -37,8 +37,8 @@ export function FavoriteButton({ product, className = "" }: FavoriteButtonProps)
 			className={cn(
 				"flex items-center justify-center gap-2 rounded-lg px-6 py-3 transition-all duration-300 border-2",
 				isProductFavorite
-					? "bg-[#D4AF37] border-[#D4AF37] text-white hover:bg-[#E6C757] hover:border-[#E6C757]"
-					: "bg-white border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]",
+					? "bg-[#C4A962] border-[#C4A962] text-white hover:bg-[#D4B673] hover:border-[#D4B673]"
+					: "bg-white border-[#C4A962]/30 text-[#C4A962] hover:bg-[#C4A962]/10 hover:border-[#C4A962]",
 				className,
 			)}
 			aria-label={isProductFavorite ? "Remove from favorites" : "Add to favorites"}

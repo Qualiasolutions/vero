@@ -68,19 +68,19 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 		const category = product.metadata?.category?.toLowerCase();
 
 		if (isOnSale) {
-			return { text: "SALE", color: "bg-[#B8941F] text-white shadow-md" };
+			return { text: "SALE", color: "bg-[#A89050] text-white shadow-md" };
 		}
 		if (isPreorder && product.metadata?.releaseDate) {
-			return { text: "PRE-ORDER", color: "bg-[#2A2A2A] text-[#F5E6D3] border border-[#D4AF37]/20" };
+			return { text: "PRE-ORDER", color: "bg-[#2A2A2A] text-[#F5E6D3] border border-[#C4A962]/20" };
 		}
 		if (category?.includes("rare") || product.name.toLowerCase().includes("rare")) {
-			return { text: "RARE", color: "bg-gradient-to-r from-[#D4AF37] to-[#E6C757] text-white shadow-lg" };
+			return { text: "RARE", color: "bg-gradient-to-r from-[#C4A962] to-[#D4B673] text-white shadow-lg" };
 		}
 		if (category?.includes("limited") || product.name.toLowerCase().includes("limited")) {
-			return { text: "LIMITED", color: "bg-[#0A0A0A] border-2 border-[#D4AF37] text-[#D4AF37]" };
+			return { text: "LIMITED", color: "bg-[#0A0A0A] border-2 border-[#C4A962] text-[#C4A962]" };
 		}
 		if (category?.includes("new") || category?.includes("collection")) {
-			return { text: "NEW", color: "bg-[#F5E6D3] text-[#B8941F] border border-[#D4AF37]/30" };
+			return { text: "NEW", color: "bg-[#F5E6D3] text-[#A89050] border border-[#C4A962]/30" };
 		}
 		return null;
 	};
@@ -115,8 +115,8 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 						className={cn(
 							"absolute top-2 right-2 z-10 p-1.5 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 shadow-md",
 							isFavorite(product.id)
-								? "bg-[#D4AF37] text-white border-[#D4AF37] hover:bg-[#B8941F]"
-								: "bg-white/90 text-[#6C757D] border-white hover:bg-white hover:text-[#D4AF37]",
+								? "bg-[#C4A962] text-white border-[#C4A962] hover:bg-[#A89050]"
+								: "bg-white/90 text-[#6B7280] border-white hover:bg-white hover:text-[#C4A962]",
 						)}
 						aria-label={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}
 						title={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}
@@ -134,12 +134,12 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 							sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
 						/>
 						{/* Enhanced overlay with gold glow effect */}
-						<div className="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/0 via-transparent to-transparent group-hover:from-[#D4AF37]/10 transition-all duration-500"></div>
+						<div className="absolute inset-0 bg-gradient-to-t from-[#C4A962]/0 via-transparent to-transparent group-hover:from-[#C4A962]/10 transition-all duration-500"></div>
 					</div>
 
 					{/* Pre-order Release Date Overlay */}
 					{isPreorder && product.metadata?.releaseDate && (
-						<div className="absolute bottom-0 left-0 right-0 bg-black/80 text-[#D4AF37] p-2 text-[10px] text-center uppercase tracking-wider font-semibold border-t border-[#D4AF37]/30">
+						<div className="absolute bottom-0 left-0 right-0 bg-black/80 text-[#C4A962] p-2 text-[10px] text-center uppercase tracking-wider font-semibold border-t border-[#C4A962]/30">
 							Release: {product.metadata.releaseDate}
 						</div>
 					)}
@@ -148,13 +148,13 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 				<CardContent className="p-4 space-y-3">
 					{/* Brand */}
 					{product.metadata?.brand && (
-						<div className="text-[10px] text-[#D4AF37] uppercase tracking-widest font-semibold">
+						<div className="text-[10px] text-[#C4A962] uppercase tracking-widest font-semibold">
 							{product.metadata.brand}
 						</div>
 					)}
 
 					{/* Product Name */}
-					<h3 className="font-medium text-sm md:text-base leading-snug line-clamp-2 text-[#212529] group-hover:text-[#D4AF37] transition-colors duration-300">
+					<h3 className="font-medium text-sm md:text-base leading-snug line-clamp-2 text-[#111827] group-hover:text-[#C4A962] transition-colors duration-300">
 						{product.name}
 					</h3>
 
@@ -167,13 +167,13 @@ export function CompactProductCard({ product, currency = "AED" }: CompactProduct
 										{currency}
 										{(product.price / 100).toFixed(2)}
 									</span>
-									<span className="text-xs text-[#6C757D] line-through">
+									<span className="text-xs text-[#6B7280] line-through">
 										{currency}
 										{(originalPrice / 100).toFixed(2)}
 									</span>
 									<Badge
 										variant="secondary"
-										className="text-xs text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded"
+										className="text-xs text-[#C4A962] bg-[#C4A962]/10 px-2 py-0.5 rounded"
 									>
 										-{Math.round(((originalPrice - product.price) / originalPrice) * 100)}%
 									</Badge>

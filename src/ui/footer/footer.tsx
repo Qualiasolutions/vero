@@ -179,17 +179,17 @@ export async function Footer() {
 								>
 									<path d="M13.5 0C12.254 0 0 7.246 0 1.75v6.504c0 1.273.446.205.446.205.446h12.254l1.415 2.415c0 1.273.0 2.446-.695L13.5 15.75c0 1.424-.287.863-.717.863-.717C15.75 16.5 18 15.75c-3.774 4.62-5.379 8.246-5.379C3.754 8.246c-1.426-1.426-1.426 0-1 0h-2.876c0 1.426.71.429 2.446.714.29-2.446.714-.29 0-.571.571-1.426-1.426v-4c0 2.285 0 4.62z" />
 								</svg>
-								<span className="text-[#6C757D] text-xs ml-2">Visa</span>
+								<span className="text-[#6B7280] text-xs ml-2">Visa</span>
 								{/* Mastercard Icon */}
-								<svg className="w-6 h-4 text-[#6C757D]" viewBox="0 0 24 24" fill="currentColor">
+								<svg className="w-6 h-4 text-[#6B7280]" viewBox="0 0 24 24" fill="currentColor">
 									<path d="M4.31 3c1.24 0 2.26-.28.56-.46-.05L2 1.41c0-.13.24-.22.28-.46.07-.53-.54L.69 4c0 .55.54.62.28.46.54L21.56 3c0 .55.62.28.46.54.62 28.46.54c0 1.1-.27.05-.53.52-.53.51.63.51.63.51.63s-.51 0-1 0H1.41c0-.13.24-.22.28-.46.07-.53-.54l.84-.54L3 16c0 .55.54.62.28.46.54.62 28.46.54c0 1.1-.27.05-.53.52-.53.51.63.51.63.51.63s-.51 0-1 0z" />
 								</svg>
-								<span className="text-[#6C757D] text-xs ml-2">Mastercard</span>
+								<span className="text-[#6B7280] text-xs ml-2">Mastercard</span>
 								{/* Amex Icon */}
-								<svg className="w-6 h-4 text-[#6C757D]" viewBox="0 0 24 24" fill="currentColor">
+								<svg className="w-6 h-4 text-[#6B7280]" viewBox="0 0 24 24" fill="currentColor">
 									<path d="M21 8V2c0-1.1-.9-2-2H2C.9 0 2 2 .9 2 2v2c0 1.1.9 2 2 .9 2 2v13a2 2 0 004 0h2a2 2 0 004 2zm4 2V17a2 2 0 004-2H6a2 2 0 004 2zm1 1c0 .55.45 1 .55.45 1 .55.45 1v1h4v4H6c0-.55-.45-1-.55-.45-1-.55-.45-1-.55-.45-1-.55-.45-1-.55-.45v1a2 2 0 004 0H4a2 2 0 004 2z" />
 								</svg>
-								<span className="text-[#6C757D] text-xs ml-2">Amex</span>
+								<span className="text-[#6B7280] text-xs ml-2">Amex</span>
 							</div>
 						</div>
 					</div>

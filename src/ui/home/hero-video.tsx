@@ -31,7 +31,7 @@ export function HeroVideo() {
 
 			{/* Car Title Overlay */}
 			<div className="absolute bottom-4 left-4 right-4 z-10">
-				<div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-[#D4AF37]/20">
+				<div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-[#C4A962]/20">
 					<h3 className="text-white font-semibold text-sm md:text-base vero-elegant-text">
 						Premium Collection
 					</h3>

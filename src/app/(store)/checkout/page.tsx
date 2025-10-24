@@ -12,10 +12,10 @@ export default function CheckoutPage() {
 			<div className="container mx-auto px-4 py-8">
 				<div className="max-w-2xl mx-auto">
 					<div className="text-center mb-8">
-						<h1 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-3">
+						<h1 className="text-3xl md:text-4xl font-light text-[#111827] uppercase tracking-wider mb-3">
 							Secure Checkout
 						</h1>
-						<p className="text-[#6C757D] text-lg max-w-2xl mx-auto">
+						<p className="text-[#6B7280] text-lg max-w-2xl mx-auto">
 							Complete your order with our secure payment system
 						</p>
 					</div>
@@ -24,7 +24,7 @@ export default function CheckoutPage() {
 						<CheckoutForm cart={cart} />
 					) : (
 						<div className="text-center py-12">
-							<p className="text-[#6C757D]">Your cart is empty</p>
+							<p className="text-[#6B7280]">Your cart is empty</p>
 							<Link href="/products" className="vero-button inline-block mt-4">
 								Continue Shopping
 							</Link>

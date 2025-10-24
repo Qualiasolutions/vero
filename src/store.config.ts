@@ -10,7 +10,7 @@ export const config = {
 			description: "Latest additions to our collection",
 			image: "https://i.ibb.co/xqHXVyhP/Generated-Image-October-19-2025-7-48-PM.png",
 			badge: "NEW",
-			badgeColor: "bg-[#FFD700] text-[#212121] shadow-lg font-semibold",
+			badgeColor: "bg-[#C4A962] text-[#0F0F0F] shadow-lg font-semibold",
 		},
 		{
 			name: "Special Price",
@@ -19,7 +19,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759069013979-BBM6TFNE5PSBYWVD01K7/Volvo%2BFH25%2BEvolution%2B500%2BHP%2BCab.png",
 			badge: "SALE",
-			badgeColor: "bg-[#1A1A1A] text-[#FFD700] shadow-lg font-semibold",
+			badgeColor: "bg-[#0F0F0F] text-[#C4A962] shadow-lg font-semibold",
 		},
 		{
 			name: "Limited Editions",
@@ -28,7 +28,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068995264-GPKHHZHUIETW1Z3OB1J8/gt341-toyota-supra-gr-fuji-speedway-edition-01-2.jpg",
 			badge: "LIMITED",
-			badgeColor: "bg-[#8B0000] text-[#FFFFFF] shadow-lg font-semibold",
+			badgeColor: "bg-[#8B1538] text-[#FFFFFF] shadow-lg font-semibold",
 		},
 		{
 			name: "Rare Models",
@@ -37,7 +37,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068993890-PNRG69L3L6KO8UHVH89B/toyota-supra-3000-gt-trd-renaissance-red-1998.jpg",
 			badge: "RARE",
-			badgeColor: "bg-[#2C3E50] text-[#FFD700] shadow-lg font-semibold",
+			badgeColor: "bg-[#B76E79] text-[#FFFFFF] shadow-lg font-semibold",
 		},
 		{
 			name: "Pre-Order",
@@ -46,7 +46,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068996639-TWPXCZ2S0EH30Z78F3T2/Generated%2BImage%2BSeptember%2B27%252C%2B2025%2B-%2B11_37AM.png",
 			badge: "PRE-ORDER",
-			badgeColor: "bg-[#FFFFFF] text-[#1A1A1A] border border-[#FFD700] shadow-lg font-semibold",
+			badgeColor: "bg-[#FFFFFF] text-[#0F0F0F] border border-[#C4A962] shadow-lg font-semibold",
 		},
 		{
 			name: "Coming Soon",
@@ -55,7 +55,7 @@ export const config = {
 			image:
 				"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1759068991286-XEBWB6VLMWKEBXEEHAVC/subaru-impreza-22b-sonic-blue-1998-01.jpg",
 			badge: "SOON",
-			badgeColor: "bg-[#4A4A4A] text-[#FFFFFF] shadow-lg font-semibold",
+			badgeColor: "bg-[#2A2A2A] text-[#FFFFFF] shadow-lg font-semibold",
 		},
 	],
 

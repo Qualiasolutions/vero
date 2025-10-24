@@ -166,14 +166,14 @@ export default function FAQPage() {
 			{/* Hero Section */}
 			<section className="relative w-full bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#2A2A2A] text-white overflow-hidden">
 				<div className="absolute inset-0 opacity-10">
-					<div className="absolute top-10 left-20 w-64 h-64 border border-[#D4AF37] rounded-full animate-float" />
-					<div className="absolute bottom-10 right-20 w-48 h-48 border border-[#D4AF37] rounded-full animate-float delay-1000" />
+					<div className="absolute top-10 left-20 w-64 h-64 border border-[#C4A962] rounded-full animate-float" />
+					<div className="absolute bottom-10 right-20 w-48 h-48 border border-[#C4A962] rounded-full animate-float delay-1000" />
 				</div>
 				<div className="relative z-10 w-full px-6 lg:px-12 xl:px-16 py-16 lg:py-20">
 					<div className="max-w-4xl mx-auto text-center">
-						<div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-4 py-2 backdrop-blur-sm mb-6">
-							<Info className="w-4 h-4 text-[#D4AF37]" />
-							<span className="text-sm font-medium text-[#E6C757]">We're Here to Help</span>
+						<div className="inline-flex items-center gap-2 bg-[#C4A962]/10 border border-[#C4A962]/30 rounded-full px-4 py-2 backdrop-blur-sm mb-6">
+							<Info className="w-4 h-4 text-[#C4A962]" />
+							<span className="text-sm font-medium text-[#D4B673]">We're Here to Help</span>
 						</div>
 						<h1 className="text-4xl lg:text-5xl font-light tracking-tight mb-4">
 							Frequently Asked <span className="vero-elegant-text">Questions</span>
@@ -191,12 +191,12 @@ export default function FAQPage() {
 					{faqCategories.map((category, categoryIndex) => {
 						const IconComponent = category.icon;
 						return (
-							<div key={categoryIndex} className="vero-card rounded-xl p-8 border border-[#D4AF37]/20">
+							<div key={categoryIndex} className="vero-card rounded-xl p-8 border border-[#C4A962]/20">
 								<div className="flex items-center gap-4 mb-6">
-									<div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-										<IconComponent className="w-6 h-6 text-[#D4AF37]" />
+									<div className="w-12 h-12 bg-gradient-to-br from-[#C4A962]/10 to-[#D4B673]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+										<IconComponent className="w-6 h-6 text-[#C4A962]" />
 									</div>
-									<h2 className="text-2xl font-semibold text-[#212529]">{category.title}</h2>
+									<h2 className="text-2xl font-semibold text-[#111827]">{category.title}</h2>
 								</div>
 
 								<Accordion type="single" collapsible className="space-y-4">
@@ -204,12 +204,12 @@ export default function FAQPage() {
 										<AccordionItem
 											key={faqIndex}
 											value={`item-${categoryIndex}-${faqIndex}`}
-											className="border border-[#D4AF37]/10 rounded-lg px-5 bg-gradient-to-br from-[#F5E6D3]/10 to-white"
+											className="border border-[#C4A962]/10 rounded-lg px-5 bg-gradient-to-br from-[#F5E6D3]/10 to-white"
 										>
-											<AccordionTrigger className="text-left hover:text-[#D4AF37] transition-colors py-4 text-[#212529] font-medium">
+											<AccordionTrigger className="text-left hover:text-[#C4A962] transition-colors py-4 text-[#111827] font-medium">
 												{faq.q}
 											</AccordionTrigger>
-											<AccordionContent className="text-[#6C757D] leading-relaxed pb-4">
+											<AccordionContent className="text-[#6B7280] leading-relaxed pb-4">
 												{faq.a}
 											</AccordionContent>
 										</AccordionItem>
@@ -220,23 +220,23 @@ export default function FAQPage() {
 					})}
 
 					{/* Still Have Questions CTA */}
-					<div className="vero-card rounded-xl p-8 border border-[#D4AF37]/20 text-center bg-gradient-to-br from-[#D4AF37]/5 to-white">
-						<Clock className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
-						<h3 className="text-2xl font-semibold text-[#212529] mb-3">Still Have Questions?</h3>
-						<p className="text-[#6C757D] mb-6 max-w-2xl mx-auto">
+					<div className="vero-card rounded-xl p-8 border border-[#C4A962]/20 text-center bg-gradient-to-br from-[#C4A962]/5 to-white">
+						<Clock className="w-12 h-12 text-[#C4A962] mx-auto mb-4" />
+						<h3 className="text-2xl font-semibold text-[#111827] mb-3">Still Have Questions?</h3>
+						<p className="text-[#6B7280] mb-6 max-w-2xl mx-auto">
 							Our collector support team is ready to assist you with any questions about our products or
 							services.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-3 justify-center">
 							<a
 								href="mailto:info@veromodels.com"
-								className="inline-flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-[#E6C757] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300"
+								className="inline-flex items-center justify-center gap-2 bg-[#C4A962] hover:bg-[#D4B673] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300"
 							>
 								Email Support
 							</a>
 							<a
 								href="/contact"
-								className="inline-flex items-center justify-center gap-2 bg-white hover:bg-[#F5E6D3] text-[#212529] font-semibold px-6 py-3 rounded-lg border-2 border-[#D4AF37]/20 hover:border-[#D4AF37] transition-all duration-300"
+								className="inline-flex items-center justify-center gap-2 bg-white hover:bg-[#F5E6D3] text-[#111827] font-semibold px-6 py-3 rounded-lg border-2 border-[#C4A962]/20 hover:border-[#C4A962] transition-all duration-300"
 							>
 								Contact Form
 							</a>
