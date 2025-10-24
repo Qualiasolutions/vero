@@ -450,627 +450,631 @@ input[type="search" i]::-webkit-search-cancel-button {
 /* LUXURY GRADIENTS                                                             */
 /* ============================================================================ */
 
-.vero-gradient-primary {
-	background: linear-gradient(135deg, var(--vero-white-pure) 0%, var(--vero-white-off) 100%);
-}
-
-.vero-gradient-secondary {
-	background: linear-gradient(135deg, var(--vero-white-off) 0%, var(--vero-cream) 100%);
-}
-
-.vero-gradient-black {
-	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
-}
-
-.vero-gradient-luxury {
-	background: linear-gradient(
-		135deg,
-		var(--vero-black-pure) 0%,
-		var(--vero-black-soft) 50%,
-		var(--vero-black-medium) 100%
-	);
-}
-
-.vero-gradient-gold {
-	background: linear-gradient(135deg, var(--vero-gold-champagne) 0%, var(--vero-gold-light) 100%);
-}
-
-.vero-gradient-rose {
-	background: linear-gradient(135deg, var(--vero-rose-gold) 0%, var(--vero-rose-gold-light) 100%);
-}
-
-.vero-gradient-hero {
-	background: linear-gradient(
-		135deg,
-		var(--vero-black-pure) 0%,
-		var(--vero-black-charcoal) 40%,
-		var(--vero-black-soft) 100%
-	);
-}
-
-.vero-text-gradient {
-	background: linear-gradient(
-		135deg,
-		var(--vero-gold-champagne) 0%,
-		var(--vero-gold-light) 50%,
-		var(--vero-gold-champagne) 100%
-	);
-	background-size: 200% auto;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-}
-
-.vero-elegant-text {
-	background: linear-gradient(
-		90deg,
-		var(--vero-gold-champagne) 0%,
-		var(--vero-gold-light) 25%,
-		var(--vero-gold-champagne) 50%,
-		var(--vero-gold-light) 75%,
-		var(--vero-gold-champagne) 100%
-	);
-	background-size: 200% auto;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-	animation: shimmer 4s linear infinite;
-}
-
-/* ============================================================================ */
-/* GLASS MORPHISM EFFECTS                                                       */
-/* ============================================================================ */
-
-.vero-glass {
-	background: rgba(255, 255, 255, 0.92);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid var(--vero-border-light);
-}
-
-.vero-glass-dark {
-	background: rgba(15, 15, 15, 0.92);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(196, 169, 98, 0.2);
-}
-
-.vero-glass-gold {
-	background: rgba(196, 169, 98, 0.12);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(196, 169, 98, 0.3);
-}
-
-/* ============================================================================ */
-/* PREMIUM CARD COMPONENTS                                                      */
-/* ============================================================================ */
-
-.vero-card {
-	background: var(--vero-white-pure);
-	border: 1px solid var(--vero-border-light);
-	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	position: relative;
-	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.vero-card::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(196, 169, 98, 0.08), transparent);
-	transition: left 0.6s ease;
-	z-index: 1;
-	pointer-events: none;
-}
-
-.vero-card:hover::before {
-	left: 100%;
-}
-
-.vero-card:hover {
-	border-color: var(--vero-gold-champagne);
-	transform: translateY(-2px);
-	box-shadow:
-		0 8px 24px rgba(0, 0, 0, 0.08),
-		0 2px 8px rgba(196, 169, 98, 0.15);
-}
-
-.vero-card-dark {
-	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
-	border: 1px solid rgba(196, 169, 98, 0.2);
-	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	position: relative;
-	overflow: hidden;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-.vero-card-dark::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(196, 169, 98, 0.15), transparent);
-	transition: left 0.6s ease;
-	z-index: 1;
-	pointer-events: none;
-}
-
-.vero-card-dark:hover::before {
-	left: 100%;
-}
-
-.vero-card-dark:hover {
-	border-color: var(--vero-gold-champagne);
-	transform: translateY(-3px);
-	box-shadow:
-		0 12px 32px rgba(0, 0, 0, 0.4),
-		0 0 24px var(--vero-gold-glow);
-}
-
-.vero-card-premium {
-	background: linear-gradient(135deg, var(--vero-white-pure) 0%, var(--vero-white-off) 100%);
-	border: 1px solid var(--vero-border-light);
-	border-radius: 1rem;
-	padding: 2rem;
-	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	position: relative;
-	overflow: hidden;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.vero-card-premium:hover {
-	transform: translateY(-4px);
-	border-color: var(--vero-gold-champagne);
-	box-shadow:
-		0 12px 32px rgba(0, 0, 0, 0.1),
-		0 4px 16px rgba(196, 169, 98, 0.2);
-}
-
-/* ============================================================================ */
-/* PREMIUM BUTTON COMPONENTS                                                    */
-/* ============================================================================ */
-
-.vero-button {
-	background: var(--vero-black-pure);
-	color: var(--vero-white-pure);
-	font-weight: 600;
-	letter-spacing: 0.3px;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	position: relative;
-	overflow: hidden;
-	border: none;
-	padding: 0.75rem 1.5rem;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.vero-button::before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.2);
-	transform: translate(-50%, -50%);
-	transition:
-		width 0.5s,
-		height 0.5s;
-}
-
-.vero-button:hover::before {
-	width: 300px;
-	height: 300px;
-}
-
-.vero-button:hover {
-	background: var(--vero-gold-champagne);
-	color: var(--vero-black-pure);
-	transform: translateY(-1px);
-	box-shadow:
-		0 6px 20px rgba(0, 0, 0, 0.2),
-		0 0 20px var(--vero-gold-glow);
-}
-
-.vero-button-outline {
-	background: transparent;
-	color: var(--vero-black-pure);
-	border: 1.5px solid var(--vero-black-pure);
-	font-weight: 600;
-	letter-spacing: 0.3px;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	position: relative;
-	overflow: hidden;
-	padding: 0.75rem 1.5rem;
-}
-
-.vero-button-outline::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: var(--vero-black-pure);
-	transition: left 0.3s ease;
-	z-index: -1;
-}
-
-.vero-button-outline:hover::before {
-	left: 0;
-}
-
-.vero-button-outline:hover {
-	color: var(--vero-white-pure);
-	border-color: var(--vero-gold-champagne);
-}
-
-.vero-button-gold {
-	background: var(--vero-gold-champagne);
-	color: var(--vero-black-pure);
-	font-weight: 600;
-	letter-spacing: 0.3px;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	border: none;
-	padding: 0.75rem 1.5rem;
-	box-shadow: 0 2px 8px var(--vero-gold-glow);
-}
-
-.vero-button-gold:hover {
-	background: var(--vero-gold-dark);
-	transform: translateY(-1px);
-	box-shadow:
-		0 6px 20px var(--vero-gold-glow),
-		0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* ============================================================================ */
-/* PREMIUM INPUT FIELDS                                                         */
-/* ============================================================================ */
-
-.vero-input {
-	background: var(--vero-white-pure);
-	border: 1px solid var(--vero-border-light);
-	border-radius: 0.5rem;
-	padding: 0.75rem 1rem;
-	transition: all 0.3s ease;
-	font-size: 0.875rem;
-	color: var(--vero-text-primary);
-}
-
-.vero-input:focus {
-	outline: none;
-	border-color: var(--vero-gold-champagne);
-	box-shadow: 0 0 0 3px var(--vero-gold-glow);
-}
-
-.vero-input:hover:not(:focus) {
-	border-color: var(--vero-border-medium);
-}
-
-.vero-input::placeholder {
-	color: var(--vero-text-light);
-}
-
-/* ============================================================================ */
-/* BADGE COMPONENTS                                                             */
-/* ============================================================================ */
-
-.vero-badge {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0.375rem 0.875rem;
-	font-size: 0.75rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	border-radius: 0.375rem;
-	transition: all 0.3s ease;
-	position: relative;
-	overflow: hidden;
-}
-
-.vero-badge::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-	transform: translateX(-100%);
-	transition: transform 0.6s ease;
-}
-
-.vero-badge:hover::before {
-	transform: translateX(100%);
-}
-
-.vero-badge-gold {
-	background: var(--vero-gold-champagne);
-	color: var(--vero-black-pure);
-	border: 1px solid var(--vero-gold-dark);
-}
-
-.vero-badge-black {
-	background: var(--vero-black-pure);
-	color: var(--vero-gold-champagne);
-	border: 1px solid var(--vero-gold-champagne);
-}
-
-.vero-badge-burgundy {
-	background: var(--vero-burgundy);
-	color: var(--vero-white-pure);
-}
-
-.vero-badge-success {
-	background: var(--vero-success);
-	color: var(--vero-white-pure);
-}
-
-/* ============================================================================ */
-/* NAVIGATION STYLES                                                            */
-/* ============================================================================ */
-
-.nav-border-reveal::after {
-	@apply content-[''] w-full h-px absolute bottom-0;
-	background: var(--vero-border-light);
-	animation: nav-border-reveal;
-	animation-timeline: scroll();
-	animation-range: 0 100px;
-}
-
-@keyframes nav-border-reveal {
-	0% {
-		opacity: 0%;
+@layer components {
+	.vero-gradient-primary {
+		background: linear-gradient(135deg, var(--vero-white-pure) 0%, var(--vero-white-off) 100%);
 	}
-	100% {
-		opacity: 100%;
+
+	.vero-gradient-secondary {
+		background: linear-gradient(135deg, var(--vero-white-off) 0%, var(--vero-cream) 100%);
 	}
-}
 
-/* ============================================================================ */
-/* IMAGE HOVER EFFECTS                                                          */
-/* ============================================================================ */
-
-.vero-image-hover {
-	position: relative;
-	overflow: hidden;
-}
-
-.vero-image-hover img {
-	transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.vero-image-hover:hover img {
-	transform: scale(1.05);
-}
-
-.vero-image-hover::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(135deg, rgba(196, 169, 98, 0.1) 0%, transparent 60%);
-	opacity: 0;
-	transition: opacity 0.4s ease;
-}
-
-.vero-image-hover:hover::after {
-	opacity: 1;
-}
-
-/* ============================================================================ */
-/* UTILITY CLASSES                                                              */
-/* ============================================================================ */
-
-.vero-divider {
-	height: 1px;
-	background: linear-gradient(90deg, transparent 0%, var(--vero-gold-champagne) 50%, transparent 100%);
-	margin: 3rem 0;
-}
-
-.vero-grid-pattern {
-	background-image:
-		linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-	background-size: 20px 20px;
-}
-
-.vero-section {
-	padding-top: 5rem;
-	padding-bottom: 5rem;
-}
-
-@media (min-width: 768px) {
-	.vero-section {
-		padding-top: 6rem;
-		padding-bottom: 6rem;
+	.vero-gradient-black {
+		background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
 	}
-}
 
-@media (min-width: 1024px) {
-	.vero-section {
-		padding-top: 8rem;
-		padding-bottom: 8rem;
+	.vero-gradient-luxury {
+		background: linear-gradient(
+			135deg,
+			var(--vero-black-pure) 0%,
+			var(--vero-black-soft) 50%,
+			var(--vero-black-medium) 100%
+		);
 	}
-}
 
-/* ============================================================================ */
-/* SCROLLBAR CUSTOMIZATION                                                      */
-/* ============================================================================ */
+	.vero-gradient-gold {
+		background: linear-gradient(135deg, var(--vero-gold-champagne) 0%, var(--vero-gold-light) 100%);
+	}
 
-::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
+	.vero-gradient-rose {
+		background: linear-gradient(135deg, var(--vero-rose-gold) 0%, var(--vero-rose-gold-light) 100%);
+	}
 
-::-webkit-scrollbar-track {
-	background: var(--vero-bg-secondary);
-	border-left: 1px solid var(--vero-border-light);
-}
+	.vero-gradient-hero {
+		background: linear-gradient(
+			135deg,
+			var(--vero-black-pure) 0%,
+			var(--vero-black-charcoal) 40%,
+			var(--vero-black-soft) 100%
+		);
+	}
 
-::-webkit-scrollbar-thumb {
-	background: var(--vero-gray-medium);
-	border-radius: 5px;
-	transition: background 0.3s ease;
-}
+	.vero-text-gradient {
+		background: linear-gradient(
+			135deg,
+			var(--vero-gold-champagne) 0%,
+			var(--vero-gold-light) 50%,
+			var(--vero-gold-champagne) 100%
+		);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
 
-::-webkit-scrollbar-thumb:hover {
-	background: var(--vero-gold-champagne);
-}
+	.vero-elegant-text {
+		background: linear-gradient(
+			90deg,
+			var(--vero-gold-champagne) 0%,
+			var(--vero-gold-light) 25%,
+			var(--vero-gold-champagne) 50%,
+			var(--vero-gold-light) 75%,
+			var(--vero-gold-champagne) 100%
+		);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: shimmer 4s linear infinite;
+	}
 
-.custom-scrollbar::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
-}
+	/* ============================================================================ */
+	/* GLASS MORPHISM EFFECTS                                                       */
+	/* ============================================================================ */
 
-.custom-scrollbar::-webkit-scrollbar-track {
-	background: var(--vero-gray-light);
-	border-radius: 3px;
-}
+	.vero-glass {
+		background: rgba(255, 255, 255, 0.92);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid var(--vero-border-light);
+	}
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-	background: var(--vero-gray-medium);
-	border-radius: 3px;
-	transition: background 0.3s ease;
-}
+	.vero-glass-dark {
+		background: rgba(15, 15, 15, 0.92);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid rgba(196, 169, 98, 0.2);
+	}
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-	background: var(--vero-gold-champagne);
-}
+	.vero-glass-gold {
+		background: rgba(196, 169, 98, 0.12);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid rgba(196, 169, 98, 0.3);
+	}
 
-/* ============================================================================ */
-/* FOCUS STATES FOR ACCESSIBILITY                                               */
-/* ============================================================================ */
+	/* ============================================================================ */
+	/* PREMIUM CARD COMPONENTS                                                      */
+	/* ============================================================================ */
 
-*:focus-visible {
-	outline: 2px solid var(--vero-gold-champagne);
-	outline-offset: 2px;
-}
+	@layer components {
+		.vero-card {
+			background: var(--vero-white-pure);
+			border: 1px solid var(--vero-border-light);
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+		}
 
-/* ============================================================================ */
-/* PAGE TRANSITIONS                                                             */
-/* ============================================================================ */
+		.vero-card::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(196, 169, 98, 0.08), transparent);
+			transition: left 0.6s ease;
+			z-index: 1;
+			pointer-events: none;
+		}
 
-@keyframes page-enter {
-	from {
+		.vero-card:hover::before {
+			left: 100%;
+		}
+
+		.vero-card:hover {
+			border-color: var(--vero-gold-champagne);
+			transform: translateY(-2px);
+			box-shadow:
+				0 8px 24px rgba(0, 0, 0, 0.08),
+				0 2px 8px rgba(196, 169, 98, 0.15);
+		}
+
+		.vero-card-dark {
+			background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
+			border: 1px solid rgba(196, 169, 98, 0.2);
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+		}
+
+		.vero-card-dark::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(196, 169, 98, 0.15), transparent);
+			transition: left 0.6s ease;
+			z-index: 1;
+			pointer-events: none;
+		}
+
+		.vero-card-dark:hover::before {
+			left: 100%;
+		}
+
+		.vero-card-dark:hover {
+			border-color: var(--vero-gold-champagne);
+			transform: translateY(-3px);
+			box-shadow:
+				0 12px 32px rgba(0, 0, 0, 0.4),
+				0 0 24px var(--vero-gold-glow);
+		}
+
+		.vero-card-premium {
+			background: linear-gradient(135deg, var(--vero-white-pure) 0%, var(--vero-white-off) 100%);
+			border: 1px solid var(--vero-border-light);
+			border-radius: 1rem;
+			padding: 2rem;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+		}
+
+		.vero-card-premium:hover {
+			transform: translateY(-4px);
+			border-color: var(--vero-gold-champagne);
+			box-shadow:
+				0 12px 32px rgba(0, 0, 0, 0.1),
+				0 4px 16px rgba(196, 169, 98, 0.2);
+		}
+	}
+
+	/* ============================================================================ */
+	/* PREMIUM BUTTON COMPONENTS                                                    */
+	/* ============================================================================ */
+
+	.vero-button {
+		background: var(--vero-black-pure);
+		color: var(--vero-white-pure);
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		border: none;
+		padding: 0.75rem 1.5rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	}
+
+	.vero-button::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.2);
+		transform: translate(-50%, -50%);
+		transition:
+			width 0.5s,
+			height 0.5s;
+	}
+
+	.vero-button:hover::before {
+		width: 300px;
+		height: 300px;
+	}
+
+	.vero-button:hover {
+		background: var(--vero-gold-champagne);
+		color: var(--vero-black-pure);
+		transform: translateY(-1px);
+		box-shadow:
+			0 6px 20px rgba(0, 0, 0, 0.2),
+			0 0 20px var(--vero-gold-glow);
+	}
+
+	.vero-button-outline {
+		background: transparent;
+		color: var(--vero-black-pure);
+		border: 1.5px solid var(--vero-black-pure);
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		padding: 0.75rem 1.5rem;
+	}
+
+	.vero-button-outline::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: var(--vero-black-pure);
+		transition: left 0.3s ease;
+		z-index: -1;
+	}
+
+	.vero-button-outline:hover::before {
+		left: 0;
+	}
+
+	.vero-button-outline:hover {
+		color: var(--vero-white-pure);
+		border-color: var(--vero-gold-champagne);
+	}
+
+	.vero-button-gold {
+		background: var(--vero-gold-champagne);
+		color: var(--vero-black-pure);
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: none;
+		padding: 0.75rem 1.5rem;
+		box-shadow: 0 2px 8px var(--vero-gold-glow);
+	}
+
+	.vero-button-gold:hover {
+		background: var(--vero-gold-dark);
+		transform: translateY(-1px);
+		box-shadow:
+			0 6px 20px var(--vero-gold-glow),
+			0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	/* ============================================================================ */
+	/* PREMIUM INPUT FIELDS                                                         */
+	/* ============================================================================ */
+
+	.vero-input {
+		background: var(--vero-white-pure);
+		border: 1px solid var(--vero-border-light);
+		border-radius: 0.5rem;
+		padding: 0.75rem 1rem;
+		transition: all 0.3s ease;
+		font-size: 0.875rem;
+		color: var(--vero-text-primary);
+	}
+
+	.vero-input:focus {
+		outline: none;
+		border-color: var(--vero-gold-champagne);
+		box-shadow: 0 0 0 3px var(--vero-gold-glow);
+	}
+
+	.vero-input:hover:not(:focus) {
+		border-color: var(--vero-border-medium);
+	}
+
+	.vero-input::placeholder {
+		color: var(--vero-text-light);
+	}
+
+	/* ============================================================================ */
+	/* BADGE COMPONENTS                                                             */
+	/* ============================================================================ */
+
+	.vero-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.375rem 0.875rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		border-radius: 0.375rem;
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.vero-badge::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+		transform: translateX(-100%);
+		transition: transform 0.6s ease;
+	}
+
+	.vero-badge:hover::before {
+		transform: translateX(100%);
+	}
+
+	.vero-badge-gold {
+		background: var(--vero-gold-champagne);
+		color: var(--vero-black-pure);
+		border: 1px solid var(--vero-gold-dark);
+	}
+
+	.vero-badge-black {
+		background: var(--vero-black-pure);
+		color: var(--vero-gold-champagne);
+		border: 1px solid var(--vero-gold-champagne);
+	}
+
+	.vero-badge-burgundy {
+		background: var(--vero-burgundy);
+		color: var(--vero-white-pure);
+	}
+
+	.vero-badge-success {
+		background: var(--vero-success);
+		color: var(--vero-white-pure);
+	}
+
+	/* ============================================================================ */
+	/* NAVIGATION STYLES                                                            */
+	/* ============================================================================ */
+
+	.nav-border-reveal::after {
+		@apply content-[''] w-full h-px absolute bottom-0;
+		background: var(--vero-border-light);
+		animation: nav-border-reveal;
+		animation-timeline: scroll();
+		animation-range: 0 100px;
+	}
+
+	@keyframes nav-border-reveal {
+		0% {
+			opacity: 0%;
+		}
+		100% {
+			opacity: 100%;
+		}
+	}
+
+	/* ============================================================================ */
+	/* IMAGE HOVER EFFECTS                                                          */
+	/* ============================================================================ */
+
+	.vero-image-hover {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.vero-image-hover img {
+		transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.vero-image-hover:hover img {
+		transform: scale(1.05);
+	}
+
+	.vero-image-hover::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, rgba(196, 169, 98, 0.1) 0%, transparent 60%);
 		opacity: 0;
-		transform: translateY(20px);
+		transition: opacity 0.4s ease;
 	}
-	to {
+
+	.vero-image-hover:hover::after {
 		opacity: 1;
-		transform: translateY(0);
 	}
-}
 
-.page-transition {
-	animation: page-enter 0.5s ease-out forwards;
-}
+	/* ============================================================================ */
+	/* UTILITY CLASSES                                                              */
+	/* ============================================================================ */
 
-/* ============================================================================ */
-/* PARALLAX EFFECTS                                                             */
-/* ============================================================================ */
+	.vero-divider {
+		height: 1px;
+		background: linear-gradient(90deg, transparent 0%, var(--vero-gold-champagne) 50%, transparent 100%);
+		margin: 3rem 0;
+	}
 
-.parallax-bg {
-	will-change: transform;
-	animation: parallaxScroll 20s ease-in-out infinite;
-}
+	.vero-grid-pattern {
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+		background-size: 20px 20px;
+	}
 
-.parallax-bg-scroll {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	will-change: transform;
-	background: linear-gradient(
-		45deg,
-		rgba(196, 169, 98, 0.02) 0%,
-		rgba(229, 228, 226, 0.03) 25%,
-		rgba(196, 169, 98, 0.02) 50%,
-		rgba(229, 228, 226, 0.03) 75%,
-		rgba(196, 169, 98, 0.02) 100%
-	);
-	z-index: 0;
-}
+	.vero-section {
+		padding-top: 5rem;
+		padding-bottom: 5rem;
+	}
 
-/* ============================================================================ */
-/* LEGACY COMPATIBILITY ALIASES                                                 */
-/* ============================================================================ */
+	@media (min-width: 768px) {
+		.vero-section {
+			padding-top: 6rem;
+			padding-bottom: 6rem;
+		}
+	}
 
-.vero-black-gradient {
-	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
-}
+	@media (min-width: 1024px) {
+		.vero-section {
+			padding-top: 8rem;
+			padding-bottom: 8rem;
+		}
+	}
 
-.vero-gold-gradient {
-	background: linear-gradient(135deg, var(--vero-gold-champagne) 0%, var(--vero-gold-light) 100%);
-}
+	/* ============================================================================ */
+	/* SCROLLBAR CUSTOMIZATION                                                      */
+	/* ============================================================================ */
 
-.vero-luxury-gradient {
-	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-soft) 100%);
-}
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
 
-.selfridges-card {
-	@apply vero-card;
-}
+	::-webkit-scrollbar-track {
+		background: var(--vero-bg-secondary);
+		border-left: 1px solid var(--vero-border-light);
+	}
 
-.selfridges-button {
-	@apply vero-button;
-}
+	::-webkit-scrollbar-thumb {
+		background: var(--vero-gray-medium);
+		border-radius: 5px;
+		transition: background 0.3s ease;
+	}
 
-.selfridges-button-outline {
-	@apply vero-button-outline;
-}
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--vero-gold-champagne);
+	}
 
-/* Legacy CSS Variables for Backward Compatibility */
-:root {
-	--selfridges-black: var(--vero-black-pure);
-	--selfridges-gray-medium: var(--vero-gray-dark);
-	--selfridges-gray-light: var(--vero-gray-light);
-	--selfridges-gray-lighter: var(--vero-gray-lightest);
-	--selfridges-gray-border: var(--vero-border-light);
-	--selfridges-white: var(--vero-white-pure);
-	--selfridges-red: var(--vero-error);
-	--selfridges-red-light: var(--vero-error-light);
-	--selfridges-text-primary: var(--vero-text-primary);
-	--selfridges-text-secondary: var(--vero-text-secondary);
-	--selfridges-text-muted: var(--vero-text-muted);
-	--selfridges-bg-primary: var(--vero-bg-primary);
-	--selfridges-bg-secondary: var(--vero-bg-secondary);
-	--selfridges-bg-tertiary: var(--vero-bg-tertiary);
-	--selfridges-background: var(--vero-bg-primary);
-	--selfridges-background-muted: var(--vero-bg-secondary);
-	--selfridges-cream: var(--vero-cream);
-	--selfridges-border-light: var(--vero-border-light);
-	--selfridges-border-medium: var(--vero-border-medium);
-	--selfridges-border-dark: var(--vero-border-dark);
-	--selfridges-hover-bg: var(--vero-hover-bg);
-	--selfridges-active-bg: var(--vero-active-bg);
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
 
-	--vero-gold-accent: var(--vero-gold-champagne);
-	--vero-gold-accent-light: var(--vero-gold-light);
-	--vero-gold-accent-dark: var(--vero-gold-dark);
-	--vero-gold-accent-glow: var(--vero-gold-glow);
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: var(--vero-gray-light);
+		border-radius: 3px;
+	}
 
-	--verogold: var(--vero-gold-champagne);
-	--verogold-light: var(--vero-gold-light);
-	--verogold-dark: var(--vero-gold-dark);
-	--verogold-champagne: var(--vero-gold-pale);
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background: var(--vero-gray-medium);
+		border-radius: 3px;
+		transition: background 0.3s ease;
+	}
 
-	--veroblack: var(--vero-black-pure);
-	--veroblack-charcoal: var(--vero-black-charcoal);
-	--veroblack-soft: var(--vero-black-soft);
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: var(--vero-gold-champagne);
+	}
 
-	--verowhite: var(--vero-white-pure);
-	--verocream: var(--vero-cream);
-	--verogray: var(--vero-gray-light);
-	--verogray-dark: var(--vero-gray-dark);
-	--verotext: var(--vero-text-primary);
+	/* ============================================================================ */
+	/* FOCUS STATES FOR ACCESSIBILITY                                               */
+	/* ============================================================================ */
+
+	*:focus-visible {
+		outline: 2px solid var(--vero-gold-champagne);
+		outline-offset: 2px;
+	}
+
+	/* ============================================================================ */
+	/* PAGE TRANSITIONS                                                             */
+	/* ============================================================================ */
+
+	@keyframes page-enter {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.page-transition {
+		animation: page-enter 0.5s ease-out forwards;
+	}
+
+	/* ============================================================================ */
+	/* PARALLAX EFFECTS                                                             */
+	/* ============================================================================ */
+
+	.parallax-bg {
+		will-change: transform;
+		animation: parallaxScroll 20s ease-in-out infinite;
+	}
+
+	.parallax-bg-scroll {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		will-change: transform;
+		background: linear-gradient(
+			45deg,
+			rgba(196, 169, 98, 0.02) 0%,
+			rgba(229, 228, 226, 0.03) 25%,
+			rgba(196, 169, 98, 0.02) 50%,
+			rgba(229, 228, 226, 0.03) 75%,
+			rgba(196, 169, 98, 0.02) 100%
+		);
+		z-index: 0;
+	}
+
+	/* ============================================================================ */
+	/* LEGACY COMPATIBILITY ALIASES                                                 */
+	/* ============================================================================ */
+
+	.vero-black-gradient {
+		background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
+	}
+
+	.vero-gold-gradient {
+		background: linear-gradient(135deg, var(--vero-gold-champagne) 0%, var(--vero-gold-light) 100%);
+	}
+
+	.vero-luxury-gradient {
+		background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-soft) 100%);
+	}
+
+	.selfridges-card {
+		@apply vero-card;
+	}
+
+	.selfridges-button {
+		@apply vero-button;
+	}
+
+	.selfridges-button-outline {
+		@apply vero-button-outline;
+	}
+
+	/* Legacy CSS Variables for Backward Compatibility */
+	:root {
+		--selfridges-black: var(--vero-black-pure);
+		--selfridges-gray-medium: var(--vero-gray-dark);
+		--selfridges-gray-light: var(--vero-gray-light);
+		--selfridges-gray-lighter: var(--vero-gray-lightest);
+		--selfridges-gray-border: var(--vero-border-light);
+		--selfridges-white: var(--vero-white-pure);
+		--selfridges-red: var(--vero-error);
+		--selfridges-red-light: var(--vero-error-light);
+		--selfridges-text-primary: var(--vero-text-primary);
+		--selfridges-text-secondary: var(--vero-text-secondary);
+		--selfridges-text-muted: var(--vero-text-muted);
+		--selfridges-bg-primary: var(--vero-bg-primary);
+		--selfridges-bg-secondary: var(--vero-bg-secondary);
+		--selfridges-bg-tertiary: var(--vero-bg-tertiary);
+		--selfridges-background: var(--vero-bg-primary);
+		--selfridges-background-muted: var(--vero-bg-secondary);
+		--selfridges-cream: var(--vero-cream);
+		--selfridges-border-light: var(--vero-border-light);
+		--selfridges-border-medium: var(--vero-border-medium);
+		--selfridges-border-dark: var(--vero-border-dark);
+		--selfridges-hover-bg: var(--vero-hover-bg);
+		--selfridges-active-bg: var(--vero-active-bg);
+
+		--vero-gold-accent: var(--vero-gold-champagne);
+		--vero-gold-accent-light: var(--vero-gold-light);
+		--vero-gold-accent-dark: var(--vero-gold-dark);
+		--vero-gold-accent-glow: var(--vero-gold-glow);
+
+		--verogold: var(--vero-gold-champagne);
+		--verogold-light: var(--vero-gold-light);
+		--verogold-dark: var(--vero-gold-dark);
+		--verogold-champagne: var(--vero-gold-pale);
+
+		--veroblack: var(--vero-black-pure);
+		--veroblack-charcoal: var(--vero-black-charcoal);
+		--veroblack-soft: var(--vero-black-soft);
+
+		--verowhite: var(--vero-white-pure);
+		--verocream: var(--vero-cream);
+		--verogray: var(--vero-gray-light);
+		--verogray-dark: var(--vero-gray-dark);
+		--verotext: var(--vero-text-primary);
+	}
 }
 
 /* ============================================================================ */
