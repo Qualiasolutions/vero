@@ -2,9 +2,6 @@ import { commerce } from "./commerce";
 import { performanceMonitor } from "./performance";
 import { getStripeClient } from "./stripe";
 
-// Note: In Next.js runtime, STRIPE_SECRET_KEY should be available from environment
-const stripe = getStripeClient();
-
 // Simple in-memory cache with 5-minute TTL
 const productCache = new Map<string, { product: Product; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -101,9 +98,17 @@ export interface ProductBrowseResult {
 }
 
 export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
+	// Initialize Stripe client only when needed
+	const stripe = getStripeClient();
+
 	try {
 		// Try commerce-kit first (much faster - gets products with prices in one call)
 		try {
+			// Only use commerce if it's available (server-side)
+			if (!commerce) {
+				throw new Error("Commerce is not available on client side");
+			}
+
 			const products = await commerce.product.browse({
 				first: limit,
 			});
@@ -173,6 +178,8 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
 	const endTimer = performanceMonitor.startTimer("getProductBySlug", { slug });
+	// Initialize Stripe client only when needed
+	const stripe = getStripeClient();
 
 	// Check cache first
 	const cached = productCache.get(slug);
@@ -185,6 +192,11 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 	try {
 		// Try commerce-kit first (much faster)
 		try {
+			// Only use commerce if it's available (server-side)
+			if (!commerce) {
+				throw new Error("Commerce is not available on client side");
+			}
+
 			const commerceProducts = await commerce.product.browse({
 				first: 100,
 			});
@@ -303,6 +315,9 @@ export async function searchProducts(query: string): Promise<Product[]> {
 }
 
 export async function getProductsByCategory(categorySlug: string, limit = 3): Promise<Product[]> {
+	// Initialize Stripe client only when needed
+	const stripe = getStripeClient();
+
 	try {
 		const products = await stripe.products.list({
 			limit: 100,

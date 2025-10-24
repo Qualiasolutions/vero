@@ -2,7 +2,9 @@
 import { Commerce } from "commerce-kit/stripe";
 
 // Configure Stripe provider for commerce operations
-// Zero-config: reads STRIPE_SECRET_KEY and STRIPE_CURRENCY from environment
-export const commerce = new Commerce();
+// Only initialize if we're on the server side
+const isServer = typeof window === "undefined";
+
+export const commerce = isServer ? new Commerce() : null;
 
 export default commerce;

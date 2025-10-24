@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getLocale } from "@/i18n/server";
-import { commerce } from "@/lib/commerce";
+import { getProductBySlug } from "@/lib/product-service";
 import { formatMoney } from "@/lib/utils";
 
 export const size = {
@@ -20,8 +20,8 @@ export default async function Image(props: { params: Promise<{ slug: string }> }
 	// const geistBold = fetch(new URL("./Geist-Bold.ttf", import.meta.url)).then((res) =>
 	// 	res.arrayBuffer(),
 	// );
-	// Note: accountGet not available in new SDK, using product only
-	const product = await commerce.product.get({ slug: params.slug });
+	// Fetch product using product-service instead of commerce directly
+	const product = await getProductBySlug(params.slug);
 
 	if (!product) {
 		return null;
@@ -55,7 +55,7 @@ export default async function Image(props: { params: Promise<{ slug: string }> }
 							locale,
 						})}
 					</p>
-					<p tw="font-normal text-xl max-h-[7rem]">{product.summary || ""}</p>
+					<p tw="font-normal text-xl max-h-[7rem]">{product.description || ""}</p>
 				</div>
 			</div>
 		</div>,

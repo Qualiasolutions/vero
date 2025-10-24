@@ -9,11 +9,34 @@ declare global {
 const globalStripe = globalThis as typeof globalThis & { __stripeClient?: Stripe };
 
 const createStripeClient = (): Stripe => {
-	if (!env.STRIPE_SECRET_KEY) {
-		throw new Error("Stripe secret key is not configured. Set STRIPE_SECRET_KEY in your environment.");
+	const secretKey = env.STRIPE_SECRET_KEY;
+
+	if (!secretKey) {
+		// Provide more detailed error information
+		const isDevelopment = process.env.NODE_ENV === "development";
+		const isProduction = process.env.NODE_ENV === "production";
+
+		console.error("Stripe Configuration Error:", {
+			isDevelopment,
+			isProduction,
+			hasSecretKey: !!secretKey,
+			nodeEnv: process.env.NODE_ENV,
+		});
+
+		throw new Error(
+			`Stripe secret key is not configured. Set STRIPE_SECRET_KEY in your environment. ` +
+				`Current environment: ${process.env.NODE_ENV || "unknown"}`,
+		);
 	}
 
-	return new Stripe(env.STRIPE_SECRET_KEY);
+	// Log successful configuration (only in development)
+	if (process.env.NODE_ENV === "development") {
+		console.log("Stripe client initialized successfully");
+	}
+
+	return new Stripe(secretKey, {
+		apiVersion: "2025-08-27.basil",
+	});
 };
 
 /**

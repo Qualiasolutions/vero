@@ -4,6 +4,12 @@ import { simpleSearch } from "./simplesearch";
 
 export const searchProducts = unstable_cache(
 	async (query: string) => {
+		// Only use commerce if it's available (server-side)
+		if (!commerce) {
+			console.error("Commerce is not available on client side");
+			return [];
+		}
+
 		const result = await commerce.product.browse({ first: 100 });
 		const products = result.data;
 		const searchResults = simpleSearch(products, query);

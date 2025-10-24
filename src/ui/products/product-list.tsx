@@ -4,16 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { AddToCart } from "@/components/add-to-cart";
 import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
-import { getLocale } from "@/i18n/server";
 import { formatMoney } from "@/lib/utils";
 import { JsonLd, mappedProductsToJsonLd } from "@/ui/json-ld";
 import { Badge } from "@/ui/shadcn/badge";
 import { Card, CardContent } from "@/ui/shadcn/card";
 import { YnsLink } from "@/ui/yns-link";
 
-export const ProductList = async ({ products }: { products: Product[] }) => {
-	const locale = await getLocale();
-
+export const ProductList = ({ products, locale = "en-US" }: { products: Product[]; locale?: string }) => {
 	return (
 		<>
 			<div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
