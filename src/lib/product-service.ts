@@ -108,6 +108,11 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 				first: limit,
 			});
 
+			// Check if products.data exists and is an array
+			if (!products || !products.data || !Array.isArray(products.data)) {
+				throw new Error("Commerce-kit returned invalid data structure");
+			}
+
 			const enrichedProducts: Product[] = products.data.map((product) => ({
 				id: product.id,
 				name: product.name,
