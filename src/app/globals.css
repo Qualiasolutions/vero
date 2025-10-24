@@ -59,17 +59,6 @@
 	}
 }
 
-@utility container {
-	margin-inline: auto;
-	padding-inline: 2rem;
-	@media (width >= --theme(--breakpoint-xs)) {
-		max-width: none;
-	}
-	@media (width >= 1400px) {
-		max-width: 1400px;
-	}
-}
-
 @layer base {
 	*,
 	::after,
@@ -78,23 +67,42 @@
 	::file-selector-button {
 		border-color: var(--color-gray-200, currentColor);
 	}
+
+	.container {
+		margin-inline: auto;
+		padding-inline: 2rem;
+	}
+
+	@media (width >= 400px) {
+		.container {
+			max-width: none;
+		}
+	}
+
+	@media (width >= 1400px) {
+		.container {
+			max-width: 1400px;
+		}
+	}
 }
 
-@utility text-pretty {
-	text-wrap: balance;
-	text-wrap: pretty;
-}
+@layer utilities {
+	.text-pretty {
+		text-wrap: balance;
+		text-wrap: pretty;
+	}
 
-@utility animation-fade-in {
-	animation: fade-in 0.2s ease-out forwards;
-}
+	.animation-fade-in {
+		animation: fade-in 0.2s ease-out forwards;
+	}
 
-@utility animate-fade-in {
-	animation: fade-in 0.8s ease-out forwards;
-}
+	.animate-fade-in {
+		animation: fade-in 0.8s ease-out forwards;
+	}
 
-@utility animation-slide-from-right {
-	animation: slide-from-right 0.2s ease-out forwards;
+	.animation-slide-from-right {
+		animation: slide-from-right 0.2s ease-out forwards;
+	}
 }
 
 /* ============================================================================ */
@@ -411,24 +419,26 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 }
 
-@utility animate-shimmer {
-	animation: shimmer 3s linear infinite;
-}
+@layer utilities {
+	.animate-shimmer {
+		animation: shimmer 3s linear infinite;
+	}
 
-@utility animate-glow {
-	animation: glow 2s ease-in-out infinite;
-}
+	.animate-glow {
+		animation: glow 2s ease-in-out infinite;
+	}
 
-@utility animate-float {
-	animation: float 3s ease-in-out infinite;
-}
+	.animate-float {
+		animation: float 3s ease-in-out infinite;
+	}
 
-@utility animate-lift {
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+	.animate-lift {
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
 
-@utility animate-meteor {
-	animation: var(--animate-meteor-effect);
+	.animate-meteor {
+		animation: var(--animate-meteor-effect);
+	}
 }
 
 .animate-lift:hover {
