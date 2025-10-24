@@ -83,7 +83,7 @@ export const Nav = () => {
 						{/* Desktop Navigation - Center */}
 						<nav className="hidden lg:flex items-center justify-center flex-1 mx-4 xl:mx-8">
 							<ul className="flex items-center gap-1 lg:gap-1.5 xl:gap-2">
-								{navLinks.map((link, index) => (
+								{navLinks.map((link) => (
 									<li key={link.href} className="relative whitespace-nowrap">
 										<Link
 											href={link.href}

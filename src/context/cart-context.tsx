@@ -50,10 +50,11 @@ function cartReducer(state: Cart | null, action: CartAction): Cart | null {
 				};
 			}
 
-			// Check if item already exists
-			const existingItemIndex = state.items.findIndex(
-				(item) => (item.variantId || item.productId) === action.variantId,
-			);
+			// Check if item already exists using consistent identifier
+			const existingItemIndex = state.items.findIndex((item) => {
+				const itemId = item.productId || item.variantId || item.id;
+				return itemId === action.variantId;
+			});
 
 			if (existingItemIndex >= 0) {
 				// Update existing item
@@ -95,12 +96,16 @@ function cartReducer(state: Cart | null, action: CartAction): Cart | null {
 				// Remove item if quantity is 0 or less
 				return {
 					...state,
-					items: state.items.filter((item) => (item.variantId || item.productId) !== action.variantId),
+					items: state.items.filter((item) => {
+						const itemId = item.productId || item.variantId || item.id;
+						return itemId !== action.variantId;
+					}),
 				};
 			}
 
 			const updatedItems = state.items.map((item) => {
-				if ((item.variantId || item.productId) === action.variantId) {
+				const itemId = item.productId || item.variantId || item.id;
+				if (itemId === action.variantId) {
 					return { ...item, quantity: action.quantity };
 				}
 				return item;
@@ -115,9 +120,13 @@ function cartReducer(state: Cart | null, action: CartAction): Cart | null {
 		case "REMOVE_ITEM": {
 			if (!state) return state;
 
+			// Filter out the item using productId as primary identifier
 			return {
 				...state,
-				items: state.items.filter((item) => (item.variantId || item.productId) !== action.variantId),
+				items: state.items.filter((item) => {
+					const itemId = item.productId || item.variantId || item.id;
+					return itemId !== action.variantId;
+				}),
 			};
 		}
 

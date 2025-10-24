@@ -159,10 +159,10 @@
 		--vero-black-medium: #374151;
 
 		/* Luxury Metallic Gold - Premium & Bright */
-		--vero-gold-champagne: #D4AF37;
-		--vero-gold-light: #E8C468;
-		--vero-gold-dark: #B8941F;
-		--vero-gold-pale: #F5E6C3;
+		--vero-gold-champagne: #d4af37;
+		--vero-gold-light: #e8c468;
+		--vero-gold-dark: #b8941f;
+		--vero-gold-pale: #f5e6c3;
 		--vero-gold-glow: rgba(212, 175, 55, 0.3);
 
 		/* Rose Gold - Luxury Accent */
@@ -1096,6 +1096,188 @@ input[type="search" i]::-webkit-search-cancel-button {
 		--verogray: var(--vero-gray-light);
 		--verogray-dark: var(--vero-gray-dark);
 		--verotext: var(--vero-text-primary);
+	}
+}
+
+/* ============================================================================ */
+/* ENHANCED CART & UI POLISH                                                    */
+/* ============================================================================ */
+
+@layer components {
+	/* Cart Sidebar Enhancements */
+	.cart-sidebar-overlay {
+		backdrop-filter: blur(8px);
+		background: rgba(0, 0, 0, 0.4);
+		transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.cart-sidebar {
+		transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow:
+			0 25px 50px -12px rgba(0, 0, 0, 0.25),
+			0 0 40px rgba(196, 169, 98, 0.1);
+	}
+
+	.cart-item {
+		transition: all 250ms ease;
+	}
+
+	.cart-item:hover {
+		background: var(--vero-bg-secondary);
+	}
+
+	/* Smooth Button Transitions */
+	.vero-button,
+	button[class*="vero"],
+	.cart-sidebar button {
+		transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+		transform: translateZ(0);
+		will-change: transform, background-color, border-color;
+	}
+
+	.vero-button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 8px 16px rgba(196, 169, 98, 0.2);
+	}
+
+	.vero-button:active {
+		transform: translateY(0);
+	}
+
+	/* Enhanced Product Card Hover */
+	.product-card {
+		transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.product-card:hover {
+		transform: translateY(-4px);
+		box-shadow:
+			0 20px 40px rgba(0, 0, 0, 0.1),
+			0 0 0 1px rgba(196, 169, 98, 0.2);
+	}
+
+	/* Loading Skeleton Pulse */
+	.skeleton-pulse {
+		animation: skeleton-pulse 1.5s ease-in-out infinite;
+		background: linear-gradient(
+			90deg,
+			var(--vero-gray-light) 0%,
+			var(--vero-gray-lightest) 50%,
+			var(--vero-gray-light) 100%
+		);
+		background-size: 200% 100%;
+	}
+
+	@keyframes skeleton-pulse {
+		0% {
+			background-position: 200% 0;
+		}
+		100% {
+			background-position: -200% 0;
+		}
+	}
+
+	/* Toast Notifications Polish */
+	[data-sonner-toast] {
+		border: 1px solid var(--vero-border-light);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	[data-sonner-toast][data-type="success"] {
+		border-left: 3px solid var(--vero-success);
+	}
+
+	[data-sonner-toast][data-type="error"] {
+		border-left: 3px solid var(--vero-error);
+	}
+
+	/* Enhanced Focus States */
+	button:focus-visible,
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible {
+		outline: 2px solid var(--vero-gold-champagne);
+		outline-offset: 2px;
+		box-shadow: 0 0 0 4px var(--vero-gold-glow);
+	}
+
+	/* Smooth Scrollbar */
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: var(--vero-bg-secondary);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: var(--vero-gray-medium);
+		border-radius: 5px;
+		border: 2px solid var(--vero-bg-secondary);
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--vero-gold-champagne);
+	}
+
+	/* Empty State Enhancements */
+	.empty-state {
+		opacity: 0;
+		animation: fade-in-up 600ms ease-out forwards;
+	}
+
+	@keyframes fade-in-up {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* Micro-interactions */
+	.icon-button {
+		transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.icon-button:hover {
+		transform: scale(1.1);
+	}
+
+	.icon-button:active {
+		transform: scale(0.95);
+	}
+
+	/* Badge Pulse Animation */
+	.badge-pulse {
+		animation: badge-pulse 2s ease-in-out infinite;
+	}
+
+	@keyframes badge-pulse {
+		0%,
+		100% {
+			box-shadow: 0 0 0 0 currentColor;
+		}
+		50% {
+			box-shadow: 0 0 0 4px transparent;
+		}
+	}
+
+	/* Spinner Animation */
+	.spinner {
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 }
 

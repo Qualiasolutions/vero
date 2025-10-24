@@ -197,3 +197,220 @@ The project is configured for Vercel deployment with:
 - Component testing with Testing Library
 - E2E testing capabilities (though not currently implemented)
 - Type checking as the first line of defense
+
+## Security Best Practices
+
+### Environment Variables
+- **NEVER** commit `.env`, `.env.local`, or `.env.production.local` files
+- Use `.env.example` as a template only
+- Store production secrets in Vercel/hosting environment variables
+- Rotate API keys immediately if accidentally exposed
+- Prefix client-side variables with `NEXT_PUBLIC_`
+
+### Authentication & Authorization
+- Always verify user authentication in Server Actions
+- Use Row Level Security (RLS) in Supabase
+- Never trust client-side data - validate server-side
+- Implement proper session management
+- Use Supabase Auth for authentication
+
+### Input Validation
+- Validate all user inputs with Zod schemas
+- Sanitize HTML content to prevent XSS
+- Use parameterized queries (Prisma handles this)
+- Never use `eval()` or execute user-provided code
+- Validate file uploads (type, size, content)
+
+### API Security
+- Verify Stripe webhook signatures
+- Implement rate limiting (Upstash Redis is installed)
+- Use HTTPS in production
+- Set proper CORS headers
+- Validate Content-Type headers
+
+### Data Protection
+- Never log sensitive data (passwords, credit cards, tokens)
+- Use the `logger` utility (filters sensitive data)
+- Encrypt sensitive data at rest
+- Use Stripe for payment processing (never store card details)
+- Implement proper error messages (don't expose internals)
+
+### Code Security
+- Keep dependencies updated (`bun update`)
+- Run security audits (`bun audit` or `npm audit`)
+- Use TypeScript strict mode
+- Enable all ESLint/Biome security rules
+- Review code changes for security issues
+
+## Troubleshooting Guide
+
+### Common Issues
+
+#### Database Connection Errors
+**Symptom**: `Can't reach database server` or `Connection timeout`
+
+**Solutions**:
+1. Verify `DATABASE_URL` in `.env.local`
+2. Check PostgreSQL is running: `pg_isready`
+3. Test connection: `bunx prisma db push`
+4. Verify firewall/network settings
+5. Check Supabase dashboard for service status
+
+#### Stripe Webhook Not Working
+**Symptom**: Orders not created, webhooks timing out
+
+**Solutions**:
+1. Verify webhook endpoint in Stripe Dashboard
+2. Check `STRIPE_WEBHOOK_SECRET` matches
+3. Test locally with Stripe CLI:
+   ```bash
+   stripe listen --forward-to localhost:3000/api/webhooks/stripe
+   ```
+4. Check webhook logs in Stripe Dashboard
+5. Verify webhook signature validation code
+6. Check server logs for error details
+
+#### Build Errors
+**Symptom**: Build fails with TypeScript or module errors
+
+**Solutions**:
+1. Clear Next.js cache: `rm -rf .next`
+2. Regenerate Prisma client: `bunx prisma generate`
+3. Clear node_modules: `rm -rf node_modules && bun install`
+4. Check TypeScript errors: `bunx tsc --noEmit`
+5. Verify all environment variables are set
+6. Check for circular dependencies
+
+#### Authentication Issues
+**Symptom**: Users can't sign in, sessions expire immediately
+
+**Solutions**:
+1. Verify Supabase URL and keys in `.env.local`
+2. Check Supabase Auth settings in dashboard
+3. Clear browser cookies and localStorage
+4. Check middleware.ts for auth logic
+5. Verify email verification settings
+6. Test with Supabase Auth UI
+
+#### Environment Variables Not Loading
+**Symptom**: `undefined` or validation errors for env vars
+
+**Solutions**:
+1. Restart dev server after changing `.env.local`
+2. Don't use quotes in .env files: `KEY=value` not `KEY="value"`
+3. Check `src/env.mjs` for validation errors
+4. Verify variable names match exactly (case-sensitive)
+5. Check for typos in variable names
+6. Clear `.next` cache and rebuild
+
+#### Hydration Errors
+**Symptom**: React hydration mismatch warnings
+
+**Solutions**:
+1. Ensure server and client render the same HTML
+2. Check for browser-only APIs in Server Components
+3. Use `useEffect` for client-only code
+4. Verify dates/times use consistent timezone
+5. Check for non-serializable data in props
+6. Use `suppressHydrationWarning` sparingly
+
+#### Slow Performance
+**Symptom**: Pages load slowly, high response times
+
+**Solutions**:
+1. Check database query performance
+2. Enable caching where appropriate
+3. Optimize images with Next.js Image
+4. Use React Server Components for data fetching
+5. Implement pagination for large lists
+6. Profile with Vercel Speed Insights
+7. Check for N+1 queries in database
+8. Use `loading.tsx` for better UX
+
+### Debugging Tips
+
+#### Enable Verbose Logging
+```typescript
+// In development, the logger shows all messages
+// Set NODE_ENV=development for detailed logs
+```
+
+#### Check Server Logs
+```bash
+# Local development
+# Logs appear in terminal where `bun dev` is running
+
+# Vercel production
+# View logs in Vercel Dashboard > Deployments > Logs
+```
+
+#### Debug Stripe Issues
+```bash
+# Test Stripe locally
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+
+# Test payment
+stripe trigger payment_intent.succeeded
+```
+
+#### Database Inspection
+```bash
+# Open Prisma Studio
+bunx prisma studio
+
+# Check database directly
+psql $DATABASE_URL
+
+# View migration status
+bunx prisma migrate status
+```
+
+#### Network Issues
+```bash
+# Check if ports are in use
+lsof -i :3000
+
+# Test API endpoints
+curl http://localhost:3000/api/auth/check
+
+# Check DNS resolution
+nslookup your-domain.com
+```
+
+### Performance Optimization
+
+#### Image Optimization
+- Use Next.js `<Image>` component
+- Serve images from CDN (Vercel Blob, Cloudinary)
+- Use modern formats (WebP, AVIF)
+- Implement lazy loading
+- Optimize image sizes for different viewports
+
+#### Database Optimization
+- Add indexes for frequently queried fields
+- Use database connection pooling
+- Implement caching for product data
+- Paginate large result sets
+- Use `select` to fetch only needed fields
+
+#### React Optimization
+- Use React Server Components by default
+- Implement code splitting with `next/dynamic`
+- Memoize expensive calculations
+- Use `useCallback` and `useMemo` appropriately
+- Implement virtual scrolling for long lists
+
+#### Caching Strategy
+- Enable Next.js caching for static pages
+- Use `revalidate` for ISR (Incremental Static Regeneration)
+- Implement Redis caching for frequently accessed data
+- Cache Stripe product data locally
+- Use Vercel Edge Config for feature flags
+
+### Getting Help
+
+1. **Check Documentation**: Read README.md, CLAUDE.md, API.md
+2. **Search Issues**: Check GitHub Issues for similar problems
+3. **View Logs**: Check server logs for detailed error messages
+4. **Ask for Help**: Create a GitHub Issue with reproduction steps
+5. **Community**: Join Next.js, Stripe, or Supabase Discord communities

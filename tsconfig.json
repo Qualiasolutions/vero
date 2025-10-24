@@ -15,10 +15,12 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
-		"allowUnreachableCode": true,
+		"allowUnreachableCode": false,
 		"noUnusedLocals": true,
-		"noUnusedParameters": false,
+		"noUnusedParameters": true,
 		"noUncheckedIndexedAccess": true,
+		"noImplicitReturns": true,
+		// "exactOptionalPropertyTypes": true, // Disabled temporarily - causes issues with optional props
 		"plugins": [
 			{
 				"name": "next"

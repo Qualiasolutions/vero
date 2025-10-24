@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { createOrderFromCheckout } from "@/actions/checkout-actions";
 import { env } from "@/env.mjs";
+import { sendOrderConfirmationEmail } from "@/lib/email";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { getStripeClient } from "@/lib/stripe";
 
@@ -16,14 +18,14 @@ export async function POST(req: Request) {
 	const endpointSecret = env.STRIPE_WEBHOOK_SECRET;
 
 	if (!endpointSecret) {
-		console.error("Stripe webhook secret is not configured.");
+		logger.error("Stripe webhook secret is not configured");
 		return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 });
 	}
 
 	try {
 		event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
 	} catch (err) {
-		console.error("Webhook signature verification failed:", err);
+		logger.error("Webhook signature verification failed", err);
 		return NextResponse.json({ error: "Webhook signature verification failed" }, { status: 400 });
 	}
 
@@ -33,10 +35,45 @@ export async function POST(req: Request) {
 				const session = event.data.object as Stripe.Checkout.Session;
 
 				// Create order from successful checkout
-				await createOrderFromCheckout(session.id);
+				const order = await createOrderFromCheckout(session.id);
 
-				// TODO: Send order confirmation email
-				console.log("Order created for session:", session.id);
+				// Send order confirmation email
+				try {
+					const stripe = getStripeClient();
+					const sessionWithLineItems = await stripe.checkout.sessions.retrieve(session.id, {
+						expand: ["line_items"],
+					});
+
+					const items =
+						sessionWithLineItems.line_items?.data.map((item) => ({
+							productId:
+								typeof item.price?.product === "string"
+									? item.price.product
+									: item.price?.product?.id || "unknown",
+							quantity: item.quantity || 1,
+							priceAtTime: item.price?.unit_amount || 0,
+						})) || [];
+
+					await sendOrderConfirmationEmail({
+						orderId: order.id,
+						customerEmail:
+							session.customer_details?.email || session.customer_email || "customer@example.com",
+						totalAmount: session.amount_total || 0,
+						currency: (session.currency || "usd").toUpperCase(),
+						items,
+					});
+
+					logger.info("Order created and confirmation email sent", {
+						orderId: order.id,
+						sessionId: session.id,
+					});
+				} catch (emailError) {
+					// Don't fail the webhook if email sending fails
+					logger.error("Failed to send order confirmation email", emailError, {
+						orderId: order.id,
+						sessionId: session.id,
+					});
+				}
 				break;
 			}
 
@@ -164,17 +201,17 @@ export async function POST(req: Request) {
 			case "customer.subscription.updated":
 			case "customer.subscription.deleted": {
 				// Handle subscription events if needed in future
-				console.log("Subscription event:", event.type);
+				logger.info("Subscription event received", { eventType: event.type });
 				break;
 			}
 
 			default:
-				console.log(`Unhandled event type: ${event.type}`);
+				logger.debug("Unhandled webhook event type", { eventType: event.type });
 		}
 
 		return NextResponse.json({ received: true });
 	} catch (error) {
-		console.error("Error processing webhook:", error);
+		logger.error("Error processing webhook", error);
 		return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
 	}
 }

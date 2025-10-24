@@ -42,7 +42,7 @@ export function HeroSection() {
 						<div className="flex flex-col sm:flex-row gap-2">
 							<Link
 								href="#categories"
-								className="inline-flex items-center justify-center gap-2 vero-button text-sm"
+								className="inline-flex items-center justify-center gap-2 vero-button-outline text-sm rounded-lg px-6 py-3"
 							>
 								Shop Collection
 								<ArrowRight className="w-4 h-4" />

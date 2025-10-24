@@ -25,13 +25,15 @@ export function FavoriteHeartIcon({ product, className = "" }: FavoriteHeartIcon
 		e.stopPropagation();
 
 		// Toggle favorite (no auth required - uses local storage)
+		const slug = product.slug ?? product.id;
+		const metadata = product.metadata ?? {};
 		toggleFavorite({
 			id: product.id,
 			name: product.name,
-			slug: product.slug || product.id,
+			slug,
 			price: product.price,
 			images: product.images,
-			metadata: product.metadata,
+			metadata,
 		});
 	};
 

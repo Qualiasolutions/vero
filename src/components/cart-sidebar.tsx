@@ -15,19 +15,19 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 	const { cart, itemCount, optimisticUpdate, optimisticRemove } = useCart();
 	const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-	async function handleUpdateQuantity(variantId: string, quantity: number) {
+	async function handleUpdateQuantity(productId: string, quantity: number) {
 		try {
-			await optimisticUpdate(variantId, quantity);
+			await optimisticUpdate(productId, quantity);
 		} catch (error) {
-			// Error is already logged in context, could show toast here
+			console.error("Failed to update quantity:", error);
 		}
 	}
 
-	async function handleRemoveItem(variantId: string) {
+	async function handleRemoveItem(productId: string) {
 		try {
-			await optimisticRemove(variantId);
+			await optimisticRemove(productId);
 		} catch (error) {
-			// Error is already logged in context, could show toast here
+			console.error("Failed to remove item:", error);
 		}
 	}
 
@@ -95,7 +95,9 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 								{cart.items.map((item) => {
 									// Product info is now directly available in item.product
 									const product = item.product;
-									const price = item.price; // Already in dollars
+									const price = item.price;
+									// Use productId as the primary identifier for cart operations
+									const itemId = item.productId || item.variantId || item.id;
 
 									return (
 										<div key={item.id} className="flex items-start gap-3 border-b border-[#C4A962]/20 pb-4">
@@ -133,19 +135,19 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 											{/* Quantity Controls */}
 											<div className="flex flex-col items-end gap-2">
 												<button
-													onClick={() => handleRemoveItem(item.variantId || item.productId)}
+													onClick={() => handleRemoveItem(itemId)}
 													className="text-red-500 hover:text-red-600 p-1 transition-colors"
 													aria-label="Remove item"
+													title="Remove from cart"
 												>
 													<X className="h-4 w-4" />
 												</button>
 												<div className="flex items-center gap-1 bg-[#C4A962]/10 border border-[#C4A962]/30 rounded-full px-2 py-1">
 													<button
-														onClick={() =>
-															handleUpdateQuantity(item.variantId || item.productId, item.quantity - 1)
-														}
+														onClick={() => handleUpdateQuantity(itemId, item.quantity - 1)}
 														className="rounded-full p-1 hover:bg-[#C4A962]/20 text-[#C4A962] transition-colors"
 														disabled={item.quantity <= 1}
+														aria-label="Decrease quantity"
 													>
 														<Minus className="h-3 w-3" />
 													</button>
@@ -153,10 +155,9 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 														{item.quantity}
 													</span>
 													<button
-														onClick={() =>
-															handleUpdateQuantity(item.variantId || item.productId, item.quantity + 1)
-														}
+														onClick={() => handleUpdateQuantity(itemId, item.quantity + 1)}
 														className="rounded-full p-1 hover:bg-[#C4A962]/20 text-[#C4A962] transition-colors"
+														aria-label="Increase quantity"
 													>
 														<Plus className="h-3 w-3" />
 													</button>

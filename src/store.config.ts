@@ -85,8 +85,8 @@ export const config = {
 
 	contact: {
 		email: "info@veromodels.com",
-		phone: "+971 50 123 4567", // Update with actual number
-		address: "Dubai, UAE", // Update with actual address
+		phone: "", // Refer to contact page
+		address: "Dubai, UAE",
 	},
 
 	// Feature flags

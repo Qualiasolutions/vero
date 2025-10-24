@@ -551,7 +551,11 @@ export default async function SingleProductPage(props: {
 			</div>
 
 			<Suspense>
-				<SimilarProducts id={product.id} />
+				<SimilarProducts
+					id={product.id}
+					{...(product.metadata?.category && { category: product.metadata.category })}
+					{...(product.metadata?.brand && { brand: product.metadata.brand })}
+				/>
 			</Suspense>
 
 			<Suspense>
@@ -577,7 +581,81 @@ export default async function SingleProductPage(props: {
 	);
 }
 
-async function SimilarProducts({ id }: { id: string }) {
-	// TODO: Implement similar products functionality
-	return null;
+async function SimilarProducts({ id, category, brand }: { id: string; category?: string; brand?: string }) {
+	try {
+		// Fetch products from Stripe
+		const stripe = await import("@/lib/stripe").then((m) => m.getStripeClient());
+		const allProducts = await stripe.products.list({
+			active: true,
+			expand: ["data.default_price"],
+			limit: 20,
+		});
+
+		// Filter similar products (same category or brand, excluding current product)
+		const similar = allProducts.data
+			.filter((p) => {
+				if (p.id === id) return false;
+				const pCategory = p.metadata?.category || "";
+				const pBrand = p.metadata?.brand || "";
+
+				// Match by brand (higher priority) or category
+				return (
+					(brand && pBrand.toLowerCase() === brand.toLowerCase()) ||
+					(category && pCategory.toLowerCase() === category.toLowerCase())
+				);
+			})
+			.slice(0, 4);
+
+		if (similar.length === 0) return null;
+
+		return (
+			<section className="mt-16">
+				<h2 className="text-2xl font-bold mb-6">Similar Products</h2>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+					{similar.map((product) => {
+						const price = product.default_price;
+						const priceAmount = price && typeof price === "object" ? price.unit_amount : null;
+						const currency = price && typeof price === "object" ? price.currency : "usd";
+
+						return (
+							<a
+								key={product.id}
+								href={`/product/${product.metadata?.slug || product.id}`}
+								className="group block border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+							>
+								<div className="aspect-square relative bg-gray-100">
+									{product.images && product.images[0] ? (
+										<Image
+											src={product.images[0]}
+											alt={product.name}
+											fill
+											className="object-cover group-hover:scale-105 transition-transform"
+										/>
+									) : (
+										<div className="w-full h-full flex items-center justify-center">
+											<ImageIcon className="w-12 h-12 text-gray-400" />
+										</div>
+									)}
+								</div>
+								<div className="p-4">
+									<h3 className="font-semibold text-sm line-clamp-2 mb-2">{product.name}</h3>
+									{priceAmount !== null && (
+										<p className="text-lg font-bold text-[#C4A962]">
+											{new Intl.NumberFormat("en-US", {
+												style: "currency",
+												currency: currency.toUpperCase(),
+											}).format(priceAmount / 100)}
+										</p>
+									)}
+								</div>
+							</a>
+						);
+					})}
+				</div>
+			</section>
+		);
+	} catch (error) {
+		// Silently fail - similar products are non-critical
+		return null;
+	}
 }

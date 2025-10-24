@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
-	output: process.env.DOCKER ? "standalone" : undefined,
+	...(process.env.DOCKER && { output: "standalone" as const }),
 	logging: {
 		fetches: {
 			fullUrl: true,

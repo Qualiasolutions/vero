@@ -57,7 +57,7 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should handle full checkout process: add to cart → checkout → clear cart", async () => {
 			const { getCartId, setCartId, clearCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
-			const getCartIdMock = vi.mocked(getCartId);
+			const getCartIdMock = vi.fn(getCartId);
 			const commerceMock = vi.mocked(commerce, true);
 
 			const mockCart = {

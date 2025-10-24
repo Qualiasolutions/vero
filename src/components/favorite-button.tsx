@@ -21,13 +21,15 @@ export function FavoriteButton({ product, className = "" }: FavoriteButtonProps)
 	const isProductFavorite = isFavorite(product.id);
 
 	const handleToggleFavorite = () => {
+		const slug = product.slug ?? product.id;
+		const metadata = product.metadata ?? {};
 		toggleFavorite({
 			id: product.id,
 			name: product.name,
-			slug: product.slug || product.id,
+			slug,
 			price: product.price,
 			images: product.images,
-			metadata: product.metadata,
+			metadata,
 		});
 	};
 

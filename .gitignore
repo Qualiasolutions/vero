@@ -32,6 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+.env.vercel
+.env.vercel.preview
+.env.vercel.production
 
 # typescript
 *.tsbuildinfo
@@ -44,4 +47,11 @@ next-env.d.ts
 
 .env.production
 .env.production.local
-.env.vercel
+
+# Data files and backups
+*.csv
+*.backup
+*corrupted*
+
+# Deployment artifacts
+vero-new-deploy/

@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { env } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 import { getStripeClient } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
 import { clearCartAction, getCartAction } from "./cart-actions";
@@ -12,29 +13,31 @@ export async function createCheckoutSession() {
 		const cart = await getCartAction();
 
 		if (!cart || cart.items.length === 0) {
-			console.error("❌ CHECKOUT ERROR: Cart is empty");
+			logger.error("Checkout attempted with empty cart");
 			redirect("/cart");
 		}
 
 		// Validate cart has valid prices
 		const invalidItems = cart.items.filter((item) => !item.price || item.price === 0);
 		if (invalidItems.length > 0) {
-			console.error("❌ CHECKOUT ERROR: Cart contains items with invalid prices:");
-			console.error(
-				invalidItems.map((item) => ({
+			logger.error("Cart contains items with invalid prices", undefined, {
+				invalidItems: invalidItems.map((item) => ({
 					productId: item.productId,
 					name: item.product?.name,
 					price: item.price,
 				})),
-			);
+			});
 			throw new Error(
 				`Cannot proceed to checkout: ${invalidItems.length} item(s) have invalid pricing. Please remove these items and try again.`,
 			);
 		}
 
 		// Debug: Log cart details
-		console.log("🛒 Cart currency:", cart.currency);
-		console.log("🛒 Cart items:", JSON.stringify(cart.items, null, 2));
+		logger.debug("Creating checkout session", {
+			cartCurrency: cart.currency,
+			itemCount: cart.items.length,
+			total: cart.total,
+		});
 
 		// Create Stripe line items from cart
 		const lineItems = cart.items.map((item) => ({
@@ -49,16 +52,11 @@ export async function createCheckoutSession() {
 			quantity: item.quantity,
 		}));
 
-		console.log("💳 Creating Stripe checkout session with", lineItems.length, "items");
-		console.log("💳 Line items:", JSON.stringify(lineItems, null, 2));
-		console.log(
-			"   Total amount:",
-			cart.total,
-			(cart.currency || "unknown").toUpperCase(),
-			"(",
-			lineItems.reduce((sum, item) => sum + item.price_data.unit_amount * item.quantity, 0),
-			"smallest units)",
-		);
+		logger.checkoutEvent("creating_stripe_session", {
+			lineItemsCount: lineItems.length,
+			totalAmount: cart.total,
+			currency: (cart.currency || "unknown").toUpperCase(),
+		});
 
 		// Create Stripe Checkout session
 		// Use NEXT_PUBLIC_URL if available, fallback to VERCEL_URL (auto-set by Vercel)
@@ -77,23 +75,12 @@ export async function createCheckoutSession() {
 			},
 		});
 
-		console.log("✅ Stripe checkout session created:", session.id);
+		logger.checkoutEvent("stripe_session_created", { sessionId: session.id });
 
 		// Redirect to Stripe Checkout
 		redirect(session.url!);
 	} catch (error) {
-		console.error("❌ CRITICAL CHECKOUT ERROR:");
-		console.error(error);
-
-		if (error instanceof Error) {
-			console.error("Error message:", error.message);
-			console.error("Error stack:", error.stack);
-		}
-
-		// Log Stripe-specific error details if available
-		if (typeof error === "object" && error !== null) {
-			console.error("Full error object:", JSON.stringify(error, null, 2));
-		}
+		logger.error("Critical checkout error", error);
 
 		throw error;
 	}
@@ -102,8 +89,10 @@ export async function createCheckoutSession() {
 export async function createOrderFromCheckout(sessionId: string) {
 	try {
 		const stripe = getStripeClient();
-		// Retrieve the Stripe session
-		const session = await stripe.checkout.sessions.retrieve(sessionId);
+		// Retrieve the Stripe session with line items to get actual prices
+		const session = await stripe.checkout.sessions.retrieve(sessionId, {
+			expand: ["line_items", "line_items.data.price"],
+		});
 
 		if (session.payment_status !== "paid") {
 			throw new Error("Payment not completed");
@@ -114,6 +103,18 @@ export async function createOrderFromCheckout(sessionId: string) {
 			id: string;
 			quantity: number;
 		}>;
+
+		// Create a map of product IDs to prices from the session line items
+		const priceMap = new Map<string, number>();
+		if (session.line_items?.data) {
+			for (const lineItem of session.line_items.data) {
+				const productId =
+					typeof lineItem.price?.product === "string" ? lineItem.price.product : lineItem.price?.product?.id;
+				if (productId && lineItem.price?.unit_amount) {
+					priceMap.set(productId, lineItem.price.unit_amount);
+				}
+			}
+		}
 
 		// Create order in Supabase
 		const { data: order, error } = await supabase
@@ -132,13 +133,14 @@ export async function createOrderFromCheckout(sessionId: string) {
 			throw new Error("Failed to create order");
 		}
 
-		// Create order items
+		// Create order items with actual prices from Stripe
 		for (const item of cartItems) {
+			const priceAtTime = priceMap.get(item.id) || 0;
 			const { error: orderItemError } = await supabase.from("order_items").insert({
 				order_id: order.id,
 				product_id: item.id,
 				quantity: item.quantity,
-				price_at_time: 0, // TODO: Get actual price from Stripe
+				price_at_time: priceAtTime,
 			});
 
 			if (orderItemError) {
@@ -151,7 +153,7 @@ export async function createOrderFromCheckout(sessionId: string) {
 
 		return order;
 	} catch (error) {
-		console.error("Error creating order from checkout:", error);
+		logger.error("Error creating order from checkout", error, { sessionId });
 		throw error;
 	}
 }

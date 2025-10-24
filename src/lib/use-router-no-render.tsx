@@ -3,10 +3,10 @@ import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.
 export const useRouterNoRender = () => {
 	// @todo implement other methods from `AppRouterInstance` if needed
 	return {
-		replace(href: string, options?: unknown): void {
+		replace(href: string, _options?: unknown): void {
 			window.history.replaceState(null, "", href);
 		},
-		push(href: string, options?: unknown): void {
+		push(href: string, _options?: unknown): void {
 			window.history.pushState(null, "", href);
 		},
 	} satisfies Partial<AppRouterInstance>;

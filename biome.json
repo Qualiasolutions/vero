@@ -33,7 +33,7 @@
 			"correctness": {
 				"noEmptyPattern": "off",
 				"noPrecisionLoss": "error",
-				"noUnusedVariables": "off"
+				"noUnusedVariables": "warn"
 			},
 			"style": {
 				"noDefaultExport": "off",
@@ -47,6 +47,7 @@
 				"useShorthandFunctionType": "error"
 			},
 			"suspicious": {
+				"noConsole": "warn",
 				"noEmptyBlockStatements": "off",
 				"noEmptyInterface": "off",
 				"noExplicitAny": "error",
@@ -86,6 +87,16 @@
 				"rules": {
 					"style": {
 						"noDefaultExport": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["scripts/**/*.ts", "scripts/**/*.js", "scripts/**/*.mjs"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
 					}
 				}
 			}
