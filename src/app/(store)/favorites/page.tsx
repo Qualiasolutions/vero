@@ -11,13 +11,13 @@ export default function FavoritesPage() {
 	if (favorites.length === 0) {
 		return (
 			<div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-				<div className="mb-6 p-8 rounded-full bg-[#D4AF37]/10">
-					<Heart className="h-16 w-16 text-[#D4AF37]" />
+				<div className="mb-6 p-8 rounded-full bg-[#C4A962]/10">
+					<Heart className="h-16 w-16 text-[#C4A962]" />
 				</div>
-				<h1 className="text-3xl md:text-4xl font-light text-[#212529] mb-4 uppercase tracking-wider">
+				<h1 className="text-3xl md:text-4xl font-light text-[#111827] mb-4 uppercase tracking-wider">
 					Your Favorites
 				</h1>
-				<p className="text-lg text-[#6C757D] mb-8 max-w-md">
+				<p className="text-lg text-[#6B7280] mb-8 max-w-md">
 					You haven&apos;t added any favorites yet. Start exploring our collection to save your favorite
 					models!
 				</p>
@@ -36,12 +36,12 @@ export default function FavoritesPage() {
 		<div className="max-w-7xl mx-auto py-12 px-4">
 			{/* Header */}
 			<div className="mb-12">
-				<div className="flex items-center justify-between border-b border-[#D4AF37]/20 pb-6">
+				<div className="flex items-center justify-between border-b border-[#C4A962]/20 pb-6">
 					<div>
-						<h1 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-2">
+						<h1 className="text-3xl md:text-4xl font-light text-[#111827] uppercase tracking-wider mb-2">
 							Your Favorites
 						</h1>
-						<p className="text-base text-[#6C757D]">
+						<p className="text-base text-[#6B7280]">
 							{favorites.length} {favorites.length === 1 ? "item" : "items"} saved
 						</p>
 					</div>

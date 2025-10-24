@@ -1,14 +1,10 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 import { createOrderFromCheckout } from "@/actions/checkout-actions";
+import { env } from "@/env.mjs";
 import { prisma } from "@/lib/prisma";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-	apiVersion: "2025-08-27.basil",
-});
-
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+import { getStripeClient } from "@/lib/stripe";
 
 export async function POST(req: Request) {
 	const body = await req.text();
@@ -16,6 +12,13 @@ export async function POST(req: Request) {
 	const sig = headersList.get("stripe-signature")!;
 
 	let event: Stripe.Event;
+	const stripe = getStripeClient();
+	const endpointSecret = env.STRIPE_WEBHOOK_SECRET;
+
+	if (!endpointSecret) {
+		console.error("Stripe webhook secret is not configured.");
+		return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 });
+	}
 
 	try {
 		event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
@@ -63,12 +66,17 @@ export async function POST(req: Request) {
 				});
 
 				if (order) {
+					const existingMetadata =
+						typeof order.metadata === "object" && order.metadata !== null && !Array.isArray(order.metadata)
+							? (order.metadata as Record<string, unknown>)
+							: {};
+
 					await prisma.order.update({
 						where: { id: order.id },
 						data: {
 							status: "CANCELLED",
 							metadata: {
-								...(order.metadata as any),
+								...existingMetadata,
 								failureReason: paymentIntent.last_payment_error?.message,
 							},
 						},

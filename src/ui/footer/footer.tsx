@@ -1,7 +1,5 @@
-import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
-import { getTranslations } from "@/i18n/server";
-import { Newsletter } from "@/ui/footer/newsletter.client";
 import { YnsLink } from "@/ui/yns-link";
 
 const sections = [
@@ -36,135 +34,162 @@ const sections = [
 ];
 
 export async function Footer() {
-	const t = await getTranslations("Global.footer");
-
 	return (
-		<footer className="w-full border-t border-[#D4AF37]/30 vero-black-gradient p-6 text-[#F5E6D3]/70 md:py-12 relative overflow-hidden">
-			{/* Subtle background pattern */}
-			<div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNENEFGMzciIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTMwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHpNNiAzNGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')] pointer-events-none"></div>
-
-			<div className="container flex max-w-7xl flex-row flex-wrap justify-center gap-16 text-sm sm:justify-between relative z-10">
-				<div className="max-w-sm">
-					<div className="flex flex-col gap-5">
-						<Image
-							src="/veromodels-logo.webp"
-							alt="Veromodels"
-							width={360}
-							height={120}
-							className="h-20 w-auto mb-2 object-contain"
-						/>
-						<p className="text-[#F5E6D3]/70 leading-relaxed text-sm">
-							Premium 1:18 scale diecast car models. Luxury collectibles from the world's most prestigious
-							automobile manufacturers.
-						</p>
-
-						{/* Contact Information */}
-						<div className="space-y-3 pt-2">
-							<div className="flex items-center gap-3 text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-colors group">
-								<Mail className="w-4 h-4 text-[#D4AF37]" />
-								<a href="mailto:info@veromodels.com" className="text-sm">
-									info@veromodels.com
-								</a>
-							</div>
-							<div className="flex items-center gap-3 text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-colors group">
-								<Phone className="w-4 h-4 text-[#D4AF37]" />
-								<a href="tel:+1234567890" className="text-sm">
-									+1 (234) 567-890
-								</a>
-							</div>
-							<div className="flex items-start gap-3 text-[#F5E6D3]/60">
-								<MapPin className="w-4 h-4 text-[#D4AF37] mt-0.5" />
-								<span className="text-sm">Cyprus, Nicosia</span>
-							</div>
-						</div>
-
-						{/* Social Media */}
-						<div className="pt-4">
-							<h3 className="font-semibold text-[#D4AF37] uppercase tracking-wider text-xs mb-3">
-								Follow Us
-							</h3>
-							<div className="flex items-center gap-3">
+		<footer className="w-full border-t border-[var(--selfridges-border-light)] bg-[var(--selfridges-bg-primary)] py-6">
+			<div className="container mx-auto px-4 max-w-6xl">
+				{/* Main Footer Content */}
+				<div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
+					{/* Brand Info */}
+					<div className="md:col-span-1">
+						<div className="flex flex-col gap-4">
+							<Image
+								src="/veromodels-logo.webp"
+								alt="Veromodels"
+								width={160}
+								height={60}
+								className="h-12 w-auto object-contain"
+							/>
+							<p className="text-[var(--selfridges-text-muted)] text-sm leading-relaxed mt-2">
+								Premium 1:18 scale diecast collectibles
+							</p>
+							<div className="flex items-center gap-2 mt-3">
 								<a
 									href="https://facebook.com"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="w-10 h-10 rounded-lg bg-white/5 border border-[#D4AF37]/20 flex items-center justify-center text-[#F5E6D3]/60 hover:text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110"
+									className="text-[var(--selfridges-text-muted)]/60 hover:text-[var(--selfridges-text-secondary)] transition-colors p-2 rounded-full bg-[var(--selfridges-bg-secondary)] hover:bg-[var(--selfridges-bg-tertiary)]"
 								>
-									<Facebook className="w-5 h-5" />
+									<Facebook className="w-4 h-4" />
 								</a>
 								<a
 									href="https://instagram.com"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="w-10 h-10 rounded-lg bg-white/5 border border-[#D4AF37]/20 flex items-center justify-center text-[#F5E6D3]/60 hover:text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110"
+									className="text-[var(--selfridges-text-muted)]/60 hover:text-[var(--selfridges-text-secondary)] transition-colors p-2 rounded-full bg-[var(--selfridges-bg-secondary)] hover:bg-[var(--selfridges-bg-tertiary)]"
 								>
-									<Instagram className="w-5 h-5" />
+									<Instagram className="w-4 h-4" />
 								</a>
 							</div>
 						</div>
-
-						{/* Newsletter */}
-						<div className="pt-4 border-t border-[#D4AF37]/20">
-							<h3 className="font-semibold text-[#D4AF37] uppercase tracking-wider text-xs mb-3">
-								{t("newsletterTitle")}
-							</h3>
-							<Newsletter />
-						</div>
 					</div>
-				</div>
 
-				<nav className="grid grid-cols-1 md:grid-cols-3 gap-12">
-					{sections.map((section) => (
-						<section key={section.header}>
-							<h3 className="mb-5 font-semibold text-[#D4AF37] uppercase tracking-wider text-xs border-b border-[#D4AF37]/20 pb-3">
-								{section.header}
-							</h3>
-							<ul role="list" className="grid gap-3">
-								{section.links.map((link) => (
+					{/* Navigation Links */}
+					<nav className="md:col-span-2 grid grid-cols-2 gap-8">
+						{sections.slice(0, 2).map((section) => (
+							<div key={section.header}>
+								<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
+									{section.header}
+								</h4>
+								<ul role="list" className="space-y-2">
+									{section.links.map((link) => (
+										<li key={link.label}>
+											<YnsLink
+												className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors text-sm"
+												href={link.href}
+											>
+												{link.label}
+											</YnsLink>
+										</li>
+									))}
+								</ul>
+							</div>
+						))}
+					</nav>
+
+					{/* Company & Contact */}
+					<div className="md:col-span-1 space-y-4">
+						{/* Company Links */}
+						<div>
+							<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
+								Company
+							</h4>
+							<ul role="list" className="space-y-2">
+								{sections[2]?.links.map((link) => (
 									<li key={link.label}>
 										<YnsLink
-											className="text-[#F5E6D3]/60 hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1 inline-block text-sm group flex items-center gap-2"
+											className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors text-sm"
 											href={link.href}
 										>
-											<span className="w-0 h-px bg-[#D4AF37] transition-all duration-300 group-hover:w-3"></span>
 											{link.label}
 										</YnsLink>
 									</li>
 								))}
 							</ul>
-						</section>
-					))}
-				</nav>
-			</div>
+						</div>
 
-			{/* Bottom Section - Enhanced */}
-			<div className="container mt-16 max-w-7xl relative z-10">
-				<div className="border-t border-[#D4AF37]/30 pt-8 pb-4">
-					<div className="flex flex-col md:flex-row items-center justify-between gap-6">
+						{/* Contact */}
+						<div>
+							<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
+								Get in Touch
+							</h4>
+							<div className="space-y-2">
+								<a
+									href="mailto:info@veromodels.com"
+									className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors flex items-center gap-2 text-sm"
+								>
+									<Mail className="w-4 h-4" />
+									<span>info@veromodels.com</span>
+								</a>
+								<div className="flex items-center gap-2">
+									<span className="text-[var(--selfridges-text-muted)] text-sm">Follow us:</span>
+									<a
+										href="https://facebook.com/veromodels"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-[var(--selfridges-text-secondary)] hover:text-[var(--selfridges-text-primary)] transition-colors"
+									>
+										Facebook
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Bottom Bar */}
+				<div className="border-t border-[var(--selfridges-border-light)] pt-4">
+					<div className="flex flex-col md:flex-row items-center justify-between gap-4">
 						{/* Copyright */}
 						<div className="text-center md:text-left">
-							<p className="text-[#F5E6D3]/70 text-sm font-medium">
+							<p className="text-[var(--selfridges-text-muted)] text-xs">
 								© {new Date().getFullYear()} Veromodels. All rights reserved.
 							</p>
-							<p className="text-[#F5E6D3]/50 text-xs mt-1.5">
-								Premium diecast collectibles for discerning collectors worldwide.
+							<p className="text-[var(--selfridges-text-muted)]/70 text-xs mt-1">
+								Developed by{" "}
+								<a
+									href="https://qualiasolutions.net"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[var(--selfridges-text-secondary)] hover:text-[var(--selfridges-text-primary)] transition-colors"
+								>
+									Qualia Solutions
+								</a>
 							</p>
 						</div>
 
-						{/* Payment/Trust Badges */}
+						{/* Payment Methods */}
 						<div className="flex items-center gap-4">
-							<div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-[#D4AF37]/20 rounded-lg">
-								<svg className="w-8 h-5" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect width="38" height="24" rx="4" fill="#1434CB" />
-									<path d="M14 12L12 8h4l2 4-2 4h-4l2-4z" fill="#FF6E14" />
-									<path d="M24 12L22 8h4l2 4-2 4h-4l2-4z" fill="#EB001B" />
+							<span className="text-[var(--selfridges-text-muted)] text-xs">Secure Payment:</span>
+							<div className="flex items-center gap-2">
+								{/* Stripe Icon */}
+								<svg
+									className="w-6 h-4 text-[var(--selfridges-text-muted)]"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+								>
+									<path d="M13.5 0C12.254 0 0 7.246 0 1.75v6.504c0 1.273.446.205.446.205.446h12.254l1.415 2.415c0 1.273.0 2.446-.695L13.5 15.75c0 1.424-.287.863-.717.863-.717C15.75 16.5 18 15.75c-3.774 4.62-5.379 8.246-5.379C3.754 8.246c-1.426-1.426-1.426 0-1 0h-2.876c0 1.426.71.429 2.446.714.29-2.446.714-.29 0-.571.571-1.426-1.426v-4c0 2.285 0 4.62z" />
 								</svg>
-								<svg className="w-8 h-5" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect width="38" height="24" rx="4" fill="#00579F" />
-									<circle cx="14" cy="12" r="6" fill="#EB001B" />
-									<circle cx="24" cy="12" r="6" fill="#FF9800" />
+								<span className="text-[#6B7280] text-xs ml-2">Visa</span>
+								{/* Mastercard Icon */}
+								<svg className="w-6 h-4 text-[#6B7280]" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M4.31 3c1.24 0 2.26-.28.56-.46-.05L2 1.41c0-.13.24-.22.28-.46.07-.53-.54L.69 4c0 .55.54.62.28.46.54L21.56 3c0 .55.62.28.46.54.62 28.46.54c0 1.1-.27.05-.53.52-.53.51.63.51.63.51.63s-.51 0-1 0H1.41c0-.13.24-.22.28-.46.07-.53-.54l.84-.54L3 16c0 .55.54.62.28.46.54.62 28.46.54c0 1.1-.27.05-.53.52-.53.51.63.51.63.51.63s-.51 0-1 0z" />
 								</svg>
-								<span className="text-[#F5E6D3]/60 text-xs ml-1">Secure Payment</span>
+								<span className="text-[#6B7280] text-xs ml-2">Mastercard</span>
+								{/* Amex Icon */}
+								<svg className="w-6 h-4 text-[#6B7280]" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M21 8V2c0-1.1-.9-2-2H2C.9 0 2 2 .9 2 2v2c0 1.1.9 2 2 .9 2 2v13a2 2 0 004 0h2a2 2 0 004 2zm4 2V17a2 2 0 004-2H6a2 2 0 004 2zm1 1c0 .55.45 1 .55.45 1 .55.45 1v1h4v4H6c0-.55-.45-1-.55-.45-1-.55-.45-1-.55-.45-1-.55-.45-1-.55-.45v1a2 2 0 004 0H4a2 2 0 004 2z" />
+								</svg>
+								<span className="text-[#6B7280] text-xs ml-2">Amex</span>
 							</div>
 						</div>
 					</div>

@@ -34,7 +34,7 @@ export function Home1Client({ products }: Home1ClientProps) {
 			color: string;
 		}[] = [];
 
-		const colors = ["#D4AF37", "#E6C757", "#B8941F", "#F5E6D3"] as const;
+		const colors = ["#C4A962", "#D4B673", "#A89050", "#F5E6D3"] as const;
 
 		// Create initial particles
 		for (let i = 0; i < 100; i++) {
@@ -45,7 +45,7 @@ export function Home1Client({ products }: Home1ClientProps) {
 				vy: (Math.random() - 0.5) * 2,
 				size: Math.random() * 3 + 1,
 				life: Math.random() * 100,
-				color: colors[Math.floor(Math.random() * colors.length)] ?? "#D4AF37",
+				color: colors[Math.floor(Math.random() * colors.length)] ?? "#C4A962",
 			});
 		}
 
@@ -126,9 +126,9 @@ export function Home1Client({ products }: Home1ClientProps) {
 			<section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
 				{/* Animated gradient orbs */}
 				<div className="absolute inset-0 overflow-hidden">
-					<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#D4AF37] rounded-full blur-[120px] opacity-20 animate-float" />
+					<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#C4A962] rounded-full blur-[120px] opacity-20 animate-float" />
 					<div
-						className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E6C757] rounded-full blur-[120px] opacity-20 animate-float"
+						className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#D4B673] rounded-full blur-[120px] opacity-20 animate-float"
 						style={{ animationDelay: "2s" }}
 					/>
 				</div>
@@ -138,11 +138,11 @@ export function Home1Client({ products }: Home1ClientProps) {
 					<div className="space-y-8 animate-fade-in">
 						{/* Explosive Title */}
 						<h1 className="text-7xl md:text-9xl font-light tracking-tight text-white relative">
-							<span className="inline-block animate-shimmer bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent bg-[length:200%_100%]">
+							<span className="inline-block animate-shimmer bg-gradient-to-r from-white via-[#C4A962] to-white bg-clip-text text-transparent bg-[length:200%_100%]">
 								VERO
 							</span>
 							<br />
-							<span className="text-5xl md:text-7xl block mt-4 text-[#D4AF37] vero-elegant-text">
+							<span className="text-5xl md:text-7xl block mt-4 text-[#C4A962] vero-elegant-text">
 								Premium Die-Cast Collection
 							</span>
 						</h1>
@@ -156,14 +156,14 @@ export function Home1Client({ products }: Home1ClientProps) {
 						<div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
 							<Link
 								href="/"
-								className="group relative px-12 py-5 bg-gradient-to-r from-[#D4AF37] to-[#B8941F] text-white font-semibold text-lg rounded-lg overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-[#D4AF37]/50"
+								className="group relative px-12 py-5 bg-gradient-to-r from-[#C4A962] to-[#A89050] text-white font-semibold text-lg rounded-lg overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-[#C4A962]/50"
 							>
 								<span className="relative z-10 uppercase tracking-wider">Explore Collection</span>
-								<div className="absolute inset-0 bg-gradient-to-r from-[#B8941F] to-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+								<div className="absolute inset-0 bg-gradient-to-r from-[#A89050] to-[#C4A962] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 							</Link>
 							<Link
 								href="/category/limited-editions"
-								className="group px-12 py-5 border-2 border-[#D4AF37] text-[#D4AF37] font-semibold text-lg rounded-lg transition-all duration-500 hover:bg-[#D4AF37] hover:text-black hover:scale-110 hover:shadow-2xl hover:shadow-[#D4AF37]/30"
+								className="group px-12 py-5 border-2 border-[#C4A962] text-[#C4A962] font-semibold text-lg rounded-lg transition-all duration-500 hover:bg-[#C4A962] hover:text-black hover:scale-110 hover:shadow-2xl hover:shadow-[#C4A962]/30"
 							>
 								<span className="uppercase tracking-wider">Limited Editions</span>
 							</Link>
@@ -173,8 +173,8 @@ export function Home1Client({ products }: Home1ClientProps) {
 
 				{/* Scroll Indicator */}
 				<div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
-					<div className="w-6 h-10 border-2 border-[#D4AF37] rounded-full flex justify-center pt-2">
-						<div className="w-1 h-3 bg-[#D4AF37] rounded-full animate-pulse" />
+					<div className="w-6 h-10 border-2 border-[#C4A962] rounded-full flex justify-center pt-2">
+						<div className="w-1 h-3 bg-[#C4A962] rounded-full animate-pulse" />
 					</div>
 				</div>
 			</section>
@@ -204,14 +204,14 @@ export function Home1Client({ products }: Home1ClientProps) {
 								}}
 							>
 								<div
-									className="relative bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] rounded-2xl overflow-hidden border border-[#D4AF37]/20 transition-all duration-700 hover:border-[#D4AF37] hover:-translate-y-4 hover:rotate-1 hover:scale-105"
+									className="relative bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] rounded-2xl overflow-hidden border border-[#C4A962]/20 transition-all duration-700 hover:border-[#C4A962] hover:-translate-y-4 hover:rotate-1 hover:scale-105"
 									style={{
 										transformStyle: "preserve-3d",
 										perspective: "1000px",
 									}}
 								>
 									{/* Glow Effect */}
-									<div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/0 via-[#D4AF37]/0 to-[#D4AF37]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+									<div className="absolute inset-0 bg-gradient-to-br from-[#C4A962]/0 via-[#C4A962]/0 to-[#C4A962]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
 									{/* Product Image */}
 									<div className="relative aspect-[4/3] overflow-hidden bg-black/50">
@@ -229,22 +229,22 @@ export function Home1Client({ products }: Home1ClientProps) {
 
 									{/* Product Info */}
 									<div className="relative p-6 space-y-3">
-										<h3 className="text-xl font-semibold text-white group-hover:text-[#D4AF37] transition-colors duration-300">
+										<h3 className="text-xl font-semibold text-white group-hover:text-[#C4A962] transition-colors duration-300">
 											{product.name}
 										</h3>
 										{product.description && (
 											<p className="text-sm text-gray-400 line-clamp-2">{product.description}</p>
 										)}
 										<div className="flex items-center justify-between pt-4">
-											<span className="text-2xl font-bold text-[#D4AF37]">€{product.price.toFixed(2)}</span>
-											<span className="px-4 py-2 bg-[#D4AF37]/10 text-[#D4AF37] rounded-full text-sm font-semibold uppercase tracking-wide group-hover:bg-[#D4AF37] group-hover:text-black transition-all duration-300">
+											<span className="text-2xl font-bold text-[#C4A962]">€{product.price.toFixed(2)}</span>
+											<span className="px-4 py-2 bg-[#C4A962]/10 text-[#C4A962] rounded-full text-sm font-semibold uppercase tracking-wide group-hover:bg-[#C4A962] group-hover:text-black transition-all duration-300">
 												View
 											</span>
 										</div>
 									</div>
 
 									{/* Corner Accent */}
-									<div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#D4AF37]/30 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+									<div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#C4A962]/30 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 								</div>
 							</Link>
 						))}
@@ -255,18 +255,18 @@ export function Home1Client({ products }: Home1ClientProps) {
 			{/* Parallax Stats Section */}
 			<section className="relative z-10 py-24 px-4">
 				<div className="container mx-auto max-w-7xl">
-					<div className="vero-glass-dark rounded-3xl p-12 border border-[#D4AF37]/30">
+					<div className="vero-glass-dark rounded-3xl p-12 border border-[#C4A962]/30">
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
 							<div className="space-y-4">
-								<div className="text-6xl font-light text-[#D4AF37] vero-elegant-text">500+</div>
+								<div className="text-6xl font-light text-[#C4A962] vero-elegant-text">500+</div>
 								<div className="text-xl text-gray-300 font-light">Premium Models</div>
 							</div>
 							<div className="space-y-4">
-								<div className="text-6xl font-light text-[#D4AF37] vero-elegant-text">1:18</div>
+								<div className="text-6xl font-light text-[#C4A962] vero-elegant-text">1:18</div>
 								<div className="text-xl text-gray-300 font-light">Scale Perfection</div>
 							</div>
 							<div className="space-y-4">
-								<div className="text-6xl font-light text-[#D4AF37] vero-elegant-text">100%</div>
+								<div className="text-6xl font-light text-[#C4A962] vero-elegant-text">100%</div>
 								<div className="text-xl text-gray-300 font-light">Authentic Detail</div>
 							</div>
 						</div>
@@ -286,7 +286,7 @@ export function Home1Client({ products }: Home1ClientProps) {
 						</p>
 						<Link
 							href="/"
-							className="inline-block px-16 py-6 bg-gradient-to-r from-[#D4AF37] to-[#B8941F] text-white font-bold text-xl rounded-full uppercase tracking-widest transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-[#D4AF37]/50 mt-8"
+							className="inline-block px-16 py-6 bg-gradient-to-r from-[#C4A962] to-[#A89050] text-white font-bold text-xl rounded-full uppercase tracking-widest transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-[#C4A962]/50 mt-8"
 						>
 							Explore Now
 						</Link>

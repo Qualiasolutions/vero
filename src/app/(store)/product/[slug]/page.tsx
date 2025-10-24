@@ -12,7 +12,6 @@ import {
 	Truck,
 } from "lucide-react";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { Suspense } from "react";
 import { ProductImageModal } from "@/app/(store)/product/[slug]/product-image-modal";
@@ -32,7 +31,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
-import { getProductBySlug } from "@/lib/product-service";
 import { deslugify, formatMoney } from "@/lib/utils";
 import { JsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
@@ -40,17 +38,15 @@ import { MainProductImage } from "@/ui/products/main-product-image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/shadcn/card";
 import { Separator } from "@/ui/shadcn/separator";
 import { YnsLink } from "@/ui/yns-link";
+import { getProductData } from "./product-data";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
 	searchParams: Promise<{ variant?: string }>;
 }): Promise<Metadata> => {
 	const params = await props.params;
-	const product = await getProductBySlug(params.slug);
+	const product = await getProductData(params.slug);
 
-	if (!product) {
-		return notFound();
-	}
 	const t = await getTranslations("/product.metadata");
 
 	const canonical = new URL(`${publicUrl}/product/${params.slug}`);
@@ -68,11 +64,7 @@ export default async function SingleProductPage(props: {
 }) {
 	const params = await props.params;
 
-	const product = await getProductBySlug(params.slug);
-
-	if (!product) {
-		return notFound();
-	}
+	const product = await getProductData(params.slug);
 
 	const t = await getTranslations("/product.page");
 	const locale = await getLocale();
@@ -95,7 +87,7 @@ export default async function SingleProductPage(props: {
 						<BreadcrumbItem>
 							<BreadcrumbLink
 								asChild
-								className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]"
+								className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#C4A962] hover:text-[#A89050]"
 							>
 								<YnsLink href="/products">{t("allProducts")}</YnsLink>
 							</BreadcrumbLink>
@@ -105,7 +97,7 @@ export default async function SingleProductPage(props: {
 								<BreadcrumbSeparator className="text-gray-400" />
 								<BreadcrumbItem>
 									<BreadcrumbLink
-										className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#D4AF37] hover:text-[#B8941F]"
+										className="inline-flex min-h-12 min-w-12 items-center justify-center text-[#C4A962] hover:text-[#A89050]"
 										asChild
 									>
 										<YnsLink href={`/category/${category}`}>{deslugify(category)}</YnsLink>
@@ -196,7 +188,7 @@ export default async function SingleProductPage(props: {
 								</div>
 
 								<div className="flex items-baseline gap-2">
-									<p className="text-3xl sm:text-4xl font-bold text-[#D4AF37]">
+									<p className="text-3xl sm:text-4xl font-bold text-[#C4A962]">
 										{formatMoney({
 											amount: product.price * 100,
 											currency: product.currency,
@@ -218,6 +210,31 @@ export default async function SingleProductPage(props: {
 										</AlertDescription>
 									</Alert>
 								)}
+
+								{/* Action Buttons - Prominent Position */}
+								<Card className="border-2 border-[#C4A962]/30 shadow-lg bg-gradient-to-br from-[#C4A962]/5 to-white">
+									<CardContent className="p-6">
+										<div className="flex gap-3">
+											<AddToCart
+												variantId={product.id}
+												className="vero-button flex-1 py-4 text-base font-semibold"
+											>
+												Add to Cart
+											</AddToCart>
+											<FavoriteButton
+												product={{
+													id: product.id,
+													name: product.name,
+													slug: product.slug,
+													price: product.price,
+													images: product.images,
+													metadata: product.metadata,
+												}}
+												className="py-4 border-2 border-black/10"
+											/>
+										</div>
+									</CardContent>
+								</Card>
 							</CardContent>
 						</Card>
 
@@ -225,7 +242,7 @@ export default async function SingleProductPage(props: {
 						<Card className="border-2 border-black/10 shadow-md bg-gradient-to-br from-gray-50 to-white">
 							<CardHeader className="border-b border-black/5 pb-4">
 								<CardTitle className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-									<Sparkles className="w-5 h-5 text-[#D4AF37]" />
+									<Sparkles className="w-5 h-5 text-[#C4A962]" />
 									Key Features
 								</CardTitle>
 							</CardHeader>
@@ -241,14 +258,14 @@ export default async function SingleProductPage(props: {
 									</div>
 									<div className="space-y-2 p-3 bg-white rounded-lg border border-black/5">
 										<p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Brand</p>
-										<Badge variant="outline" className="border-[#D4AF37]/40 text-[#D4AF37] font-bold">
+										<Badge variant="outline" className="border-[#C4A962]/40 text-[#C4A962] font-bold">
 											<Award className="w-3 h-3 mr-1" />
 											{product.metadata?.brand || "Premium"}
 										</Badge>
 									</div>
 									<div className="space-y-2 p-3 bg-white rounded-lg border border-black/5">
 										<p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Condition</p>
-										<Badge className="bg-[#D4AF37]/10 text-[#B8941F] border-0 font-bold">
+										<Badge className="bg-[#C4A962]/10 text-[#A89050] border-0 font-bold">
 											<Star className="w-3 h-3 mr-1" />
 											Brand New
 										</Badge>
@@ -263,25 +280,25 @@ export default async function SingleProductPage(props: {
 								<TabsList className="grid w-full grid-cols-4 bg-gray-100 border-b-2 border-black/10">
 									<TabsTrigger
 										value="description"
-										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#D4AF37] data-[state=active]:font-semibold"
+										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#C4A962] data-[state=active]:font-semibold"
 									>
 										Description
 									</TabsTrigger>
 									<TabsTrigger
 										value="specifications"
-										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#D4AF37] data-[state=active]:font-semibold"
+										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#C4A962] data-[state=active]:font-semibold"
 									>
 										Specs
 									</TabsTrigger>
 									<TabsTrigger
 										value="details"
-										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#D4AF37] data-[state=active]:font-semibold"
+										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#C4A962] data-[state=active]:font-semibold"
 									>
 										Features
 									</TabsTrigger>
 									<TabsTrigger
 										value="shipping"
-										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#D4AF37] data-[state=active]:font-semibold"
+										className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:border-b-4 data-[state=active]:border-[#C4A962] data-[state=active]:font-semibold"
 									>
 										Shipping
 									</TabsTrigger>
@@ -301,7 +318,7 @@ export default async function SingleProductPage(props: {
 										</div>
 										<div className="flex justify-between items-center py-4 px-5 border-b-2 border-black/5 bg-white">
 											<span className="text-gray-600 font-medium">Manufacturer</span>
-											<Badge variant="outline" className="border-[#D4AF37]/40 text-[#D4AF37] font-bold">
+											<Badge variant="outline" className="border-[#C4A962]/40 text-[#C4A962] font-bold">
 												<Award className="w-3 h-3 mr-1" />
 												{product.metadata?.brand || "Premium Brand"}
 											</Badge>
@@ -324,7 +341,7 @@ export default async function SingleProductPage(props: {
 										</div>
 										<div className="flex justify-between items-center py-4 px-5 border-b-2 border-black/5 bg-gray-50">
 											<span className="text-gray-600 font-medium">Condition</span>
-											<Badge className="bg-[#D4AF37]/10 text-[#B8941F] border border-[#D4AF37]/20 font-bold">
+											<Badge className="bg-[#C4A962]/10 text-[#A89050] border border-[#C4A962]/20 font-bold">
 												<Star className="w-3 h-3 mr-1" />
 												Brand New in Box
 											</Badge>
@@ -345,28 +362,28 @@ export default async function SingleProductPage(props: {
 										<Card className="border-2 border-black/5 bg-gradient-to-br from-gray-50 to-white">
 											<CardHeader className="border-b-2 border-black/5 pb-4">
 												<CardTitle className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
-													<Shield className="w-4 h-4 text-[#D4AF37]" />
+													<Shield className="w-4 h-4 text-[#C4A962]" />
 													Authenticity & Quality
 												</CardTitle>
 											</CardHeader>
 											<CardContent className="pt-4">
 												<div className="space-y-3 text-sm">
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Officially Licensed:</span> Authentic
 															collectible with manufacturer approval
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Premium Construction:</span>{" "}
 															High-grade die-cast metal with precision engineering
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Quality Control:</span> Inspected and
 															verified before shipment
@@ -379,35 +396,35 @@ export default async function SingleProductPage(props: {
 										<Card className="border-2 border-black/5 bg-gradient-to-br from-white to-gray-50">
 											<CardHeader className="border-b-2 border-black/5 pb-4">
 												<CardTitle className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
-													<Sparkles className="w-4 h-4 text-[#D4AF37]" />
+													<Sparkles className="w-4 h-4 text-[#C4A962]" />
 													Detail & Craftsmanship
 												</CardTitle>
 											</CardHeader>
 											<CardContent className="pt-4">
 												<div className="space-y-3 text-sm">
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Interior:</span> Fully detailed
 															dashboard, seats, and trim
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Exterior:</span> Accurate paint finish
 															with precise decals
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Engine:</span> Detailed engine bay
 															(where applicable)
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Display Ready:</span> Comes with
 															presentation base/case
@@ -417,10 +434,10 @@ export default async function SingleProductPage(props: {
 											</CardContent>
 										</Card>
 
-										<Card className="border-2 border-[#D4AF37]/30 bg-gradient-to-br from-[#D4AF37]/5 to-white">
-											<CardHeader className="border-b-2 border-[#D4AF37]/20 pb-4">
+										<Card className="border-2 border-[#C4A962]/30 bg-gradient-to-br from-[#C4A962]/5 to-white">
+											<CardHeader className="border-b-2 border-[#C4A962]/20 pb-4">
 												<CardTitle className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
-													<Star className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37]" />
+													<Star className="w-4 h-4 text-[#C4A962] fill-[#C4A962]" />
 													Collector's Note
 												</CardTitle>
 											</CardHeader>
@@ -440,7 +457,7 @@ export default async function SingleProductPage(props: {
 										<Card className="border-2 border-black/5 bg-gradient-to-br from-gray-50 to-white">
 											<CardHeader className="border-b-2 border-black/5 pb-4">
 												<CardTitle className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
-													<Package className="w-4 h-4 text-[#D4AF37]" />
+													<Package className="w-4 h-4 text-[#C4A962]" />
 													Shipping Information
 												</CardTitle>
 											</CardHeader>
@@ -481,28 +498,28 @@ export default async function SingleProductPage(props: {
 										<Card className="border-2 border-black/5 bg-gradient-to-br from-white to-gray-50">
 											<CardHeader className="border-b-2 border-black/5 pb-4">
 												<CardTitle className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
-													<Shield className="w-4 h-4 text-[#D4AF37]" />
+													<Shield className="w-4 h-4 text-[#C4A962]" />
 													Packaging & Protection
 												</CardTitle>
 											</CardHeader>
 											<CardContent className="pt-4">
 												<div className="space-y-3 text-sm">
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Secure Packaging:</span> Double-boxed
 															with protective foam
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Insured Shipping:</span> All items
 															fully insured during transit
 														</p>
 													</div>
 													<div className="flex items-start gap-3">
-														<Check className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" strokeWidth={3} />
+														<Check className="w-5 h-5 text-[#C4A962] mt-0.5 flex-shrink-0" strokeWidth={3} />
 														<p className="text-gray-600">
 															<span className="font-bold text-gray-900">Tracking Included:</span> Track your
 															order every step of the way
@@ -528,30 +545,6 @@ export default async function SingleProductPage(props: {
 									</div>
 								</TabsContent>
 							</Tabs>
-						</Card>
-
-						<Card className="border-2 border-black/10 shadow-lg bg-white">
-							<CardContent className="p-6">
-								<div className="flex gap-3">
-									<AddToCart
-										variantId={product.id}
-										className="vero-button flex-1 py-4 text-base font-semibold"
-									>
-										Add to Cart
-									</AddToCart>
-									<FavoriteButton
-										product={{
-											id: product.id,
-											name: product.name,
-											slug: product.slug,
-											price: product.price,
-											images: product.images,
-											metadata: product.metadata,
-										}}
-										className="py-4 border-2 border-black/10"
-									/>
-								</div>
-							</CardContent>
 						</Card>
 					</div>
 				</div>

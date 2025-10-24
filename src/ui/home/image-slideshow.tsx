@@ -34,10 +34,10 @@ export function ImageSlideshow() {
 			<div className="max-w-[1400px] mx-auto">
 				{/* Section Header */}
 				<div className="text-center mb-12">
-					<h2 className="text-3xl md:text-4xl font-light text-[#212529] uppercase tracking-wider mb-4">
+					<h2 className="text-3xl md:text-4xl font-light text-[#111827] uppercase tracking-wider mb-4">
 						Our Premium <span className="vero-elegant-text">Collection</span>
 					</h2>
-					<p className="text-lg text-[#6C757D] max-w-2xl mx-auto">
+					<p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
 						Discover the finest die-cast models from legendary manufacturers
 					</p>
 				</div>
@@ -72,7 +72,7 @@ export function ImageSlideshow() {
 								key={index}
 								onClick={() => setCurrentSlide(index)}
 								className={`w-3 h-3 rounded-full transition-all duration-300 ${
-									index === currentSlide ? "bg-[#D4AF37] w-8" : "bg-white/50 hover:bg-white/80"
+									index === currentSlide ? "bg-[#C4A962] w-8" : "bg-white/50 hover:bg-white/80"
 								}`}
 								aria-label={`Go to slide ${index + 1}`}
 							/>

@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import type { ComponentProps } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { LoginForm } from "../login-form";
 
 // Mock the auth action
@@ -7,35 +8,54 @@ vi.mock("@/actions/auth-actions", () => ({
 	login: vi.fn(),
 }));
 
+type AlertProps = ComponentProps<"div"> & { variant?: string };
+type ButtonProps = ComponentProps<"button">;
+type InputProps = ComponentProps<"input">;
+type LabelProps = ComponentProps<"label">;
+type UseActionStateResult = [unknown, (...args: unknown[]) => Promise<unknown> | unknown, boolean];
+type UseActionStateArgs = [
+	action: (...args: unknown[]) => Promise<unknown> | unknown,
+	initialState: unknown,
+	permalink?: unknown,
+];
+
 // Mock shadcn components
 vi.mock("@/components/ui/alert", () => ({
-	Alert: ({ children, variant }: any) => <div data-variant={variant}>{children}</div>,
-	AlertDescription: ({ children }: any) => <div>{children}</div>,
+	Alert: ({ children, variant, ...rest }: AlertProps) => (
+		<div data-variant={variant} {...rest}>
+			{children}
+		</div>
+	),
+	AlertDescription: ({ children, ...rest }: ComponentProps<"div">) => <div {...rest}>{children}</div>,
 }));
 
 vi.mock("@/components/ui/button", () => ({
-	Button: ({ children, disabled, type, className }: any) => (
-		<button type={type} disabled={disabled} className={className}>
+	Button: ({ children, disabled, type, className, ...rest }: ButtonProps) => (
+		<button type={type} disabled={disabled} className={className} {...rest}>
 			{children}
 		</button>
 	),
 }));
 
 vi.mock("@/components/ui/input", () => ({
-	Input: (props: any) => <input {...props} />,
+	Input: (props: InputProps) => <input {...props} />,
 }));
 
 vi.mock("@/components/ui/label", () => ({
-	Label: ({ children, htmlFor }: any) => <label htmlFor={htmlFor}>{children}</label>,
+	Label: ({ children, htmlFor, ...rest }: LabelProps) => (
+		<label htmlFor={htmlFor} {...rest}>
+			{children}
+		</label>
+	),
 }));
 
 // Mock useActionState hook
-const mockUseActionState = vi.fn();
+const mockUseActionState = vi.fn<UseActionStateResult, UseActionStateArgs>();
 vi.mock("react", async () => {
-	const actual = await vi.importActual("react");
+	const actual = await vi.importActual<typeof import("react")>("react");
 	return {
 		...actual,
-		useActionState: (...args: any[]) => mockUseActionState(...args),
+		useActionState: (...args: UseActionStateArgs) => mockUseActionState(...args),
 	};
 });
 
@@ -48,10 +68,10 @@ describe("LoginForm", () => {
 	it("should render login form with all fields", () => {
 		render(<LoginForm />);
 
-		expect(screen.getByText("Sign In")).toBeInTheDocument();
+		expect(screen.getByRole("heading", { name: "Sign In" })).toBeInTheDocument();
 		expect(screen.getByText("Access your premium collection")).toBeInTheDocument();
-		expect(screen.getByLabelText("Email Address")).toBeInTheDocument();
-		expect(screen.getByLabelText("Password")).toBeInTheDocument();
+		expect(screen.getByPlaceholderText("your@email.com")).toBeInTheDocument();
+		expect(screen.getByPlaceholderText("Enter your password")).toBeInTheDocument();
 		expect(screen.getByRole("button", { name: "Sign In" })).toBeInTheDocument();
 	});
 

@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { addToCartAction, getCartAction, clearCartAction } from "@/actions/cart-actions";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { addToCartAction, clearCartAction, getCartAction } from "@/actions/cart-actions";
 import { createCheckoutSession } from "@/actions/checkout-actions";
 
 // Mock dependencies
@@ -57,6 +57,8 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should handle full checkout process: add to cart → checkout → clear cart", async () => {
 			const { getCartId, setCartId, clearCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
+			const getCartIdMock = vi.mocked(getCartId);
+			const commerceMock = vi.mocked(commerce, true);
 
 			const mockCart = {
 				id: "cart_123",
@@ -82,16 +84,16 @@ describe("Checkout Flow Integration Tests", () => {
 			};
 
 			// Step 1: Add item to cart
-			(getCartId as any).mockResolvedValue(null);
-			(commerce.cart.add as any).mockResolvedValue(mockCart);
+			getCartIdMock.mockResolvedValue(null);
+			commerceMock.cart.add.mockResolvedValue(mockCart);
 
 			const cart = await addToCartAction("var_ferrari", 1);
 			expect(cart).toEqual(mockCart);
 			expect(setCartId).toHaveBeenCalledWith("cart_123");
 
 			// Step 2: Get cart for checkout
-			(getCartId as any).mockResolvedValue("cart_123");
-			(commerce.cart.get as any).mockResolvedValue(mockCart);
+			getCartIdMock.mockResolvedValue("cart_123");
+			commerceMock.cart.get.mockResolvedValue(mockCart);
 
 			const checkoutCart = await getCartAction();
 			expect(checkoutCart).toEqual(mockCart);
@@ -105,6 +107,8 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should handle multiple items in checkout", async () => {
 			const { getCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
+			const getCartIdMock = vi.mocked(getCartId);
+			const commerceMock = vi.mocked(commerce, true);
 
 			const multiItemCart = {
 				id: "cart_456",
@@ -144,8 +148,8 @@ describe("Checkout Flow Integration Tests", () => {
 				metadata: {},
 			};
 
-			(getCartId as any).mockResolvedValue("cart_456");
-			(commerce.cart.get as any).mockResolvedValue(multiItemCart);
+			getCartIdMock.mockResolvedValue("cart_456");
+			commerceMock.cart.get.mockResolvedValue(multiItemCart);
 
 			const cart = await getCartAction();
 
@@ -155,8 +159,9 @@ describe("Checkout Flow Integration Tests", () => {
 
 		it("should prevent checkout with empty cart", async () => {
 			const { getCartId } = await import("@/lib/cart-cookies");
+			const getCartIdMock = vi.mocked(getCartId);
 
-			(getCartId as any).mockResolvedValue(null);
+			getCartIdMock.mockResolvedValue(null);
 
 			await expect(async () => {
 				await createCheckoutSession();
@@ -168,6 +173,8 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should maintain cart state across page refreshes", async () => {
 			const { getCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
+			const getCartIdMock = vi.mocked(getCartId);
+			const commerceMock = vi.mocked(commerce, true);
 
 			const persistentCart = {
 				id: "cart_persistent",
@@ -192,8 +199,8 @@ describe("Checkout Flow Integration Tests", () => {
 				metadata: {},
 			};
 
-			(getCartId as any).mockResolvedValue("cart_persistent");
-			(commerce.cart.get as any).mockResolvedValue(persistentCart);
+			getCartIdMock.mockResolvedValue("cart_persistent");
+			commerceMock.cart.get.mockResolvedValue(persistentCart);
 
 			// Simulate multiple page loads
 			const cart1 = await getCartAction();
@@ -211,9 +218,11 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should handle cart retrieval errors gracefully", async () => {
 			const { getCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
+			const getCartIdMock = vi.mocked(getCartId);
+			const commerceMock = vi.mocked(commerce, true);
 
-			(getCartId as any).mockResolvedValue("cart_error");
-			(commerce.cart.get as any).mockRejectedValue(new Error("Network error"));
+			getCartIdMock.mockResolvedValue("cart_error");
+			commerceMock.cart.get.mockRejectedValue(new Error("Network error"));
 
 			const cart = await getCartAction();
 
@@ -223,9 +232,11 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should rollback on add to cart failure", async () => {
 			const { getCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
+			const getCartIdMock = vi.mocked(getCartId);
+			const commerceMock = vi.mocked(commerce, true);
 
-			(getCartId as any).mockResolvedValue("cart_123");
-			(commerce.cart.add as any).mockRejectedValue(new Error("Add failed"));
+			getCartIdMock.mockResolvedValue("cart_123");
+			commerceMock.cart.add.mockRejectedValue(new Error("Add failed"));
 
 			await expect(addToCartAction("var_invalid", 1)).rejects.toThrow("Add failed");
 		});
@@ -235,6 +246,8 @@ describe("Checkout Flow Integration Tests", () => {
 		it("should correctly calculate cart total for multiple quantities", async () => {
 			const { getCartId } = await import("@/lib/cart-cookies");
 			const { commerce } = await import("@/lib/commerce");
+			const getCartIdMock = vi.mocked(getCartId);
+			const commerceMock = vi.mocked(commerce, true);
 
 			const cart = {
 				id: "cart_calc",
@@ -259,8 +272,8 @@ describe("Checkout Flow Integration Tests", () => {
 				metadata: {},
 			};
 
-			(getCartId as any).mockResolvedValue("cart_calc");
-			(commerce.cart.get as any).mockResolvedValue(cart);
+			getCartIdMock.mockResolvedValue("cart_calc");
+			commerceMock.cart.get.mockResolvedValue(cart);
 
 			const result = await getCartAction();
 

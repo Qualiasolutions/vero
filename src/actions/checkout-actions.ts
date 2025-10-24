@@ -1,16 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
+import { env } from "@/env.mjs";
+import { getStripeClient } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
-import { clearCartAction, getCartAction } from "./cart-actions-new";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-	apiVersion: "2025-08-27.basil",
-});
+import { clearCartAction, getCartAction } from "./cart-actions";
 
 export async function createCheckoutSession() {
 	try {
+		const stripe = getStripeClient();
 		const cart = await getCartAction();
 
 		if (!cart || cart.items.length === 0) {
@@ -34,10 +32,14 @@ export async function createCheckoutSession() {
 			);
 		}
 
+		// Debug: Log cart details
+		console.log("🛒 Cart currency:", cart.currency);
+		console.log("🛒 Cart items:", JSON.stringify(cart.items, null, 2));
+
 		// Create Stripe line items from cart
 		const lineItems = cart.items.map((item) => ({
 			price_data: {
-				currency: "aed",
+				currency: cart.currency, // Use currency from cart (derived from Stripe products)
 				product_data: {
 					name: item.product?.name || "Product",
 					images: item.product?.images || [],
@@ -48,21 +50,28 @@ export async function createCheckoutSession() {
 		}));
 
 		console.log("💳 Creating Stripe checkout session with", lineItems.length, "items");
+		console.log("💳 Line items:", JSON.stringify(lineItems, null, 2));
 		console.log(
 			"   Total amount:",
 			cart.total,
-			"AED (",
+			(cart.currency || "unknown").toUpperCase(),
+			"(",
 			lineItems.reduce((sum, item) => sum + item.price_data.unit_amount * item.quantity, 0),
-			"fils)",
+			"smallest units)",
 		);
 
 		// Create Stripe Checkout session
+		// Use NEXT_PUBLIC_URL if available, fallback to VERCEL_URL (auto-set by Vercel)
+		const baseUrl =
+			env.NEXT_PUBLIC_URL ||
+			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
 			line_items: lineItems,
 			mode: "payment",
-			success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${process.env.NEXT_PUBLIC_URL}/checkout/cancel`,
+			success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${baseUrl}/checkout/cancel`,
 			metadata: {
 				cart_items: JSON.stringify(cart.items.map((i) => ({ id: i.productId, quantity: i.quantity }))),
 			},
@@ -81,12 +90,18 @@ export async function createCheckoutSession() {
 			console.error("Error stack:", error.stack);
 		}
 
+		// Log Stripe-specific error details if available
+		if (typeof error === "object" && error !== null) {
+			console.error("Full error object:", JSON.stringify(error, null, 2));
+		}
+
 		throw error;
 	}
 }
 
 export async function createOrderFromCheckout(sessionId: string) {
 	try {
+		const stripe = getStripeClient();
 		// Retrieve the Stripe session
 		const session = await stripe.checkout.sessions.retrieve(sessionId);
 
@@ -106,8 +121,8 @@ export async function createOrderFromCheckout(sessionId: string) {
 			.insert({
 				stripe_checkout_session_id: sessionId,
 				stripe_payment_intent_id: session.payment_intent as string,
-				total_amount: session.amount_total! / 100, // Convert from cents
-				currency: session.currency || "aed",
+				total_amount: session.amount_total ?? 0,
+				currency: (session.currency || env.STRIPE_CURRENCY || "usd").toUpperCase(),
 				status: "pending",
 			})
 			.select()
@@ -119,12 +134,16 @@ export async function createOrderFromCheckout(sessionId: string) {
 
 		// Create order items
 		for (const item of cartItems) {
-			await supabase.from("order_items").insert({
+			const { error: orderItemError } = await supabase.from("order_items").insert({
 				order_id: order.id,
 				product_id: item.id,
 				quantity: item.quantity,
 				price_at_time: 0, // TODO: Get actual price from Stripe
 			});
+
+			if (orderItemError) {
+				throw orderItemError;
+			}
 		}
 
 		// Clear the cart

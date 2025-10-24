@@ -14,49 +14,105 @@
 
 /**
  * Veromodels Luxury Palette
- * The core brand colors that define the premium black & gold aesthetic
+ * Professional automotive-inspired color scheme with sophisticated champagne gold
  */
 export const colors = {
-	// Gold Palette (Primary Brand Color)
+	// Champagne Gold Palette (Primary Luxury Brand Color)
 	gold: {
-		primary: "#D4AF37",
-		light: "#E6C757",
-		dark: "#B8941F",
-		champagne: "#F5E6D3",
+		champagne: "#C4A962",
+		light: "#D4B673",
+		dark: "#A89050",
+		pale: "#E8DCC4",
 	},
 
-	// Black Palette
+	// Rose Gold (Premium Accent)
+	roseGold: {
+		primary: "#B76E79",
+		light: "#D4909C",
+		dark: "#8E5560",
+	},
+
+	// Black Palette (Deep & Sophisticated)
 	black: {
-		pure: "#0A0A0A",
+		pure: "#0F0F0F",
 		charcoal: "#1A1A1A",
 		soft: "#2A2A2A",
+		medium: "#374151",
 	},
 
-	// Neutral Palette
+	// Platinum & Silvers
+	platinum: {
+		primary: "#E5E4E2",
+		silver: "#C0C0C0",
+		silverDark: "#A8A8A8",
+	},
+
+	// Sophisticated Neutrals
 	neutral: {
 		white: "#FFFFFF",
-		cream: "#FDFBF7",
-		gray: "#F8F9FA",
-		grayDark: "#6C757D",
-		textPrimary: "#212529",
+		offWhite: "#FAF9F6",
+		cream: "#F5F3EF",
+		grayLightest: "#F9FAFB",
+		grayLight: "#F3F4F6",
+		grayMedium: "#9CA3AF",
+		grayDark: "#6B7280",
+		grayDarker: "#4B5563",
 	},
 
-	// Category Badge Colors (matching store.config.ts)
+	// Text Colors
+	text: {
+		primary: "#111827",
+		secondary: "#374151",
+		muted: "#6B7280",
+		light: "#9CA3AF",
+	},
+
+	// Premium Accents
+	accents: {
+		burgundy: "#8B1538",
+		burgundyLight: "#A02348",
+		navy: "#1E3A5F",
+		navyLight: "#2C4F7C",
+		forest: "#2C5530",
+		forestLight: "#3D7043",
+	},
+
+	// Category Badge Colors (Professional palette)
 	categories: {
-		newArrivals: "rgb(34 197 94)", // green-500
-		specialPrice: "rgb(239 68 68)", // red-500
-		limitedEdition: "rgb(168 85 247)", // purple-500
-		rare: "rgb(245 158 11)", // amber-500
-		preOrder: "rgb(59 130 246)", // blue-500
-		comingSoon: "rgb(99 102 241)", // indigo-500
+		newArrivals: "#3D7043", // forest green
+		specialPrice: "#8B1538", // burgundy
+		limitedEdition: "#C4A962", // champagne gold
+		rare: "#B76E79", // rose gold
+		preOrder: "#2C4F7C", // navy
+		comingSoon: "#1E3A5F", // deep navy
 	},
 
-	// Semantic Colors (from Shadcn theme)
+	// Semantic Colors (Professional)
 	semantic: {
-		success: "rgb(34 197 94)", // green-500
-		warning: "rgb(245 158 11)", // amber-500
-		error: "rgb(239 68 68)", // red-500
-		info: "rgb(59 130 246)", // blue-500
+		success: "#059669",
+		successLight: "#10B981",
+		warning: "#D97706",
+		warningLight: "#F59E0B",
+		error: "#DC2626",
+		errorLight: "#EF4444",
+		info: "#2563EB",
+		infoLight: "#3B82F6",
+	},
+
+	// Background System
+	backgrounds: {
+		primary: "#FFFFFF",
+		secondary: "#FAF9F6",
+		tertiary: "#F5F3EF",
+		quaternary: "#F9FAFB",
+	},
+
+	// Border Colors
+	borders: {
+		light: "#E5E7EB",
+		medium: "#D1D5DB",
+		dark: "#9CA3AF",
+		gold: "#C4A962",
 	},
 } as const;
 
@@ -64,18 +120,79 @@ export const colors = {
  * CSS variable names for colors (as defined in globals.css)
  */
 export const cssVars = {
-	gold: "var(--verogold)",
-	goldLight: "var(--verogold-light)",
-	goldDark: "var(--verogold-dark)",
-	goldChampagne: "var(--verogold-champagne)",
-	black: "var(--veroblack)",
-	blackCharcoal: "var(--veroblack-charcoal)",
-	blackSoft: "var(--veroblack-soft)",
-	white: "var(--verowhite)",
-	cream: "var(--verocream)",
-	gray: "var(--verogray)",
-	grayDark: "var(--verogray-dark)",
-	text: "var(--verotext)",
+	// Gold Variables
+	goldChampagne: "var(--vero-gold-champagne)",
+	goldLight: "var(--vero-gold-light)",
+	goldDark: "var(--vero-gold-dark)",
+	goldPale: "var(--vero-gold-pale)",
+	goldGlow: "var(--vero-gold-glow)",
+
+	// Rose Gold
+	roseGold: "var(--vero-rose-gold)",
+	roseGoldLight: "var(--vero-rose-gold-light)",
+	roseGoldDark: "var(--vero-rose-gold-dark)",
+
+	// Black Variables
+	blackPure: "var(--vero-black-pure)",
+	blackCharcoal: "var(--vero-black-charcoal)",
+	blackSoft: "var(--vero-black-soft)",
+	blackMedium: "var(--vero-black-medium)",
+
+	// Platinum & Silvers
+	platinum: "var(--vero-platinum)",
+	silver: "var(--vero-silver)",
+	silverDark: "var(--vero-silver-dark)",
+
+	// Neutrals
+	white: "var(--vero-white-pure)",
+	offWhite: "var(--vero-white-off)",
+	cream: "var(--vero-cream)",
+	grayLightest: "var(--vero-gray-lightest)",
+	grayLight: "var(--vero-gray-light)",
+	grayMedium: "var(--vero-gray-medium)",
+	grayDark: "var(--vero-gray-dark)",
+	grayDarker: "var(--vero-gray-darker)",
+
+	// Text Colors
+	textPrimary: "var(--vero-text-primary)",
+	textSecondary: "var(--vero-text-secondary)",
+	textMuted: "var(--vero-text-muted)",
+	textLight: "var(--vero-text-light)",
+
+	// Backgrounds
+	bgPrimary: "var(--vero-bg-primary)",
+	bgSecondary: "var(--vero-bg-secondary)",
+	bgTertiary: "var(--vero-bg-tertiary)",
+	bgQuaternary: "var(--vero-bg-quaternary)",
+
+	// Borders
+	borderLight: "var(--vero-border-light)",
+	borderMedium: "var(--vero-border-medium)",
+	borderDark: "var(--vero-border-dark)",
+	borderGold: "var(--vero-border-gold)",
+
+	// Accents
+	burgundy: "var(--vero-burgundy)",
+	burgundyLight: "var(--vero-burgundy-light)",
+	navy: "var(--vero-navy)",
+	navyLight: "var(--vero-navy-light)",
+	forest: "var(--vero-forest)",
+	forestLight: "var(--vero-forest-light)",
+
+	// Semantic
+	success: "var(--vero-success)",
+	successLight: "var(--vero-success-light)",
+	warning: "var(--vero-warning)",
+	warningLight: "var(--vero-warning-light)",
+	error: "var(--vero-error)",
+	errorLight: "var(--vero-error-light)",
+	info: "var(--vero-info)",
+	infoLight: "var(--vero-info-light)",
+
+	// Legacy Compatibility (will map to new colors)
+	gold: "var(--vero-gold-champagne)",
+	black: "var(--vero-black-pure)",
+	text: "var(--vero-text-primary)",
 } as const;
 
 // ============================================================================
@@ -182,7 +299,7 @@ export const borderRadius = {
 // ============================================================================
 
 /**
- * Box shadow values
+ * Box shadow values - Sophisticated luxury shadows
  */
 export const shadows = {
 	sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
@@ -191,9 +308,13 @@ export const shadows = {
 	lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
 	xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 	"2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-	// Custom gold shadows
-	gold: "0 4px 16px rgba(212, 175, 55, 0.2)",
-	goldLg: "0 20px 48px rgba(212, 175, 55, 0.25), 0 8px 16px rgba(0, 0, 0, 0.1)",
+	// Champagne gold shadows
+	gold: "0 4px 16px rgba(196, 169, 98, 0.25)",
+	goldLg: "0 20px 48px rgba(196, 169, 98, 0.3), 0 8px 16px rgba(0, 0, 0, 0.12)",
+	goldGlow: "0 0 20px rgba(196, 169, 98, 0.25), 0 0 40px rgba(196, 169, 98, 0.1)",
+	// Premium dark shadows
+	premium: "0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(196, 169, 98, 0.15)",
+	premiumLg: "0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(196, 169, 98, 0.2)",
 } as const;
 
 // ============================================================================
@@ -339,8 +460,8 @@ export function getColor(category: keyof typeof colors, shade?: string): string 
 	if (!shade)
 		return typeof colorGroup === "string"
 			? colorGroup
-			: (Object.values(colorGroup)[0] ?? colors.neutral.textPrimary);
-	return (colorGroup as Record<string, string>)[shade] || colors.neutral.textPrimary;
+			: (Object.values(colorGroup)[0] ?? colors.text.primary);
+	return (colorGroup as Record<string, string>)[shade] || colors.text.primary;
 }
 
 /**

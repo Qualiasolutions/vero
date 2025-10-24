@@ -112,7 +112,7 @@ export function HeroSlideshow() {
 							</p>
 							<Link
 								href={slide.cta.href}
-								className="vero-button has-ripple px-5 py-2.5 text-sm rounded-lg inline-block text-center shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40 animate-fade-in"
+								className="vero-button has-ripple px-5 py-2.5 text-sm rounded-lg inline-block text-center shadow-lg shadow-[#C4A962]/20 hover:shadow-[#C4A962]/40 animate-fade-in"
 							>
 								{slide.cta.text}
 							</Link>
@@ -126,7 +126,7 @@ export function HeroSlideshow() {
 				{/* Previous Button */}
 				<button
 					onClick={prevSlide}
-					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
+					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#C4A962]/30 text-white hover:bg-[#C4A962] hover:border-[#C4A962] transition-all duration-300 hover:scale-110 shadow-lg"
 					aria-label="Previous slide"
 				>
 					<ChevronLeft className="h-4 w-4" />
@@ -135,7 +135,7 @@ export function HeroSlideshow() {
 				{/* Play/Pause Button */}
 				<button
 					onClick={() => setIsPlaying(!isPlaying)}
-					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
+					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#C4A962]/30 text-white hover:bg-[#C4A962] hover:border-[#C4A962] transition-all duration-300 hover:scale-110 shadow-lg"
 					aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
 				>
 					{isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
@@ -144,7 +144,7 @@ export function HeroSlideshow() {
 				{/* Next Button */}
 				<button
 					onClick={nextSlide}
-					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 hover:scale-110 shadow-lg"
+					className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-[#C4A962]/30 text-white hover:bg-[#C4A962] hover:border-[#C4A962] transition-all duration-300 hover:scale-110 shadow-lg"
 					aria-label="Next slide"
 				>
 					<ChevronRight className="h-4 w-4" />
@@ -159,7 +159,7 @@ export function HeroSlideshow() {
 						onClick={() => goToSlide(index)}
 						className={cn(
 							"w-3 h-3 rounded-full transition-all duration-300",
-							index === currentSlide ? "bg-[#D4AF37] w-8" : "bg-white/40 hover:bg-white/60",
+							index === currentSlide ? "bg-[#C4A962] w-8" : "bg-white/40 hover:bg-white/60",
 						)}
 						aria-label={`Go to slide ${index + 1}`}
 					/>

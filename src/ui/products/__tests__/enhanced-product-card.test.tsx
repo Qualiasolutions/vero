@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+import type { ComponentProps } from "react";
+import { describe, expect, it, vi } from "vitest";
 import { EnhancedProductCard } from "../enhanced-product-card";
 
 // Mock Next.js components
@@ -8,8 +9,8 @@ vi.mock("next/image", () => ({
 }));
 
 vi.mock("next/link", () => ({
-	default: ({ href, children, className }: any) => (
-		<a href={href} className={className}>
+	default: ({ href, children, className, ...rest }: ComponentProps<"a">) => (
+		<a href={href} className={className} {...rest}>
 			{children}
 		</a>
 	),

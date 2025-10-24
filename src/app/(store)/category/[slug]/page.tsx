@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
-import { getProducts } from "@/lib/product-service";
+import { getProducts, getProductsByCategory, type Product } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { CategoryContent } from "@/ui/category/category-content";
 
@@ -28,67 +28,67 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 		return notFound();
 	}
 
-	// Get all products and filter based on category logic
-	const allProductsResult = await getProducts(100);
-	const allProducts = allProductsResult.data || [];
-	let filteredProducts = allProducts;
+	// Try to get products by category using metadata first
+	let products: Product[] = [];
 
-	// Apply category filtering based on product metadata and category type
-	switch (params.slug) {
-		case "new-arrivals":
-			// Show first 12 products as "new arrivals"
-			filteredProducts = allProducts.slice(0, 12);
-			break;
-		case "on-sale":
-			// Show some mid-range products as "on sale"
-			filteredProducts = allProducts.slice(12, 24);
-			break;
-		case "limited-edition":
-			// Show products with "limited" in name or premium models
-			filteredProducts = allProducts.filter(
-				(p) =>
-					p.name.toLowerCase().includes("limited") ||
-					p.name.toLowerCase().includes("edition") ||
-					p.price > 150,
-			);
-			// Fallback if no matches
-			if (filteredProducts.length === 0) {
-				filteredProducts = allProducts.slice(24, 36);
+	try {
+		// For specific categories that match our Stripe metadata, use the metadata-based filtering
+		if (params.slug === "pre-order" || params.slug === "collection") {
+			products = await getProductsByCategory(params.slug, 100);
+		} else {
+			// For other categories, get all products and apply custom logic
+			const allProductsResult = await getProducts(100);
+			const allProducts = allProductsResult.data || [];
+
+			// Apply category filtering based on product metadata and category type
+			switch (params.slug) {
+				case "new-arrivals":
+					// Show first 12 products as "new arrivals"
+					products = allProducts.slice(0, 12);
+					break;
+				case "on-sale":
+					// Show some mid-range products as "on sale"
+					products = allProducts.slice(12, 24);
+					break;
+				case "limited-edition":
+					// Show products with "limited" in name or premium models
+					products = allProducts.filter(
+						(p) =>
+							p.name.toLowerCase().includes("limited") ||
+							p.name.toLowerCase().includes("edition") ||
+							p.price > 150,
+					);
+					// Fallback if no matches
+					if (products.length === 0) {
+						products = allProducts.slice(24, 36);
+					}
+					break;
+				case "rare":
+					// Show premium/older models
+					products = allProducts.filter(
+						(p) =>
+							p.name.toLowerCase().includes("rare") ||
+							p.name.toLowerCase().includes("vintage") ||
+							p.name.toLowerCase().includes("classic"),
+					);
+					// Fallback if no matches
+					if (products.length === 0) {
+						products = allProducts.slice(36, 48);
+					}
+					break;
+				case "coming-soon":
+					// Show remaining products as "coming soon"
+					products = allProducts.slice(60);
+					break;
+				default:
+					// If no matching category, return empty
+					products = [];
 			}
-			break;
-		case "rare":
-			// Show premium/older models
-			filteredProducts = allProducts.filter(
-				(p) =>
-					p.name.toLowerCase().includes("rare") ||
-					p.name.toLowerCase().includes("vintage") ||
-					p.name.toLowerCase().includes("classic"),
-			);
-			// Fallback if no matches
-			if (filteredProducts.length === 0) {
-				filteredProducts = allProducts.slice(36, 48);
-			}
-			break;
-		case "pre-order":
-			// Show some premium models as "pre-order"
-			filteredProducts = allProducts.filter(
-				(p) => p.name.toLowerCase().includes("2025") || p.name.toLowerCase().includes("pre-order"),
-			);
-			// Fallback if no matches
-			if (filteredProducts.length === 0) {
-				filteredProducts = allProducts.slice(48, 60);
-			}
-			break;
-		case "coming-soon":
-			// Show remaining products as "coming soon"
-			filteredProducts = allProducts.slice(60);
-			break;
-		default:
-			// If no matching category, return empty
-			filteredProducts = [];
+		}
+	} catch (error) {
+		console.error(`Error fetching products for category ${params.slug}:`, error);
+		products = [];
 	}
-
-	const products = filteredProducts;
 
 	// Get hero background gradient based on category - darker, more premium colors
 	const getHeroGradient = (slug: string) => {
@@ -96,7 +96,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "from-emerald-700 via-emerald-800 to-emerald-900",
 			"on-sale": "from-rose-700 via-rose-800 to-rose-900",
 			"limited-edition": "from-violet-700 via-violet-800 to-violet-900",
-			"rare": "from-orange-700 via-orange-800 to-orange-900",
+			rare: "from-orange-700 via-orange-800 to-orange-900",
 			"pre-order": "from-sky-700 via-sky-800 to-sky-900",
 			"coming-soon": "from-slate-800 via-slate-900 to-slate-950",
 		};
@@ -108,7 +108,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "border-emerald-400/40",
 			"on-sale": "border-rose-400/40",
 			"limited-edition": "border-violet-400/40",
-			"rare": "border-orange-400/40",
+			rare: "border-orange-400/40",
 			"pre-order": "border-sky-400/40",
 			"coming-soon": "border-slate-400/40",
 		};
@@ -120,7 +120,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "border-emerald-300",
 			"on-sale": "border-rose-300",
 			"limited-edition": "border-violet-300",
-			"rare": "border-orange-300",
+			rare: "border-orange-300",
 			"pre-order": "border-sky-300",
 			"coming-soon": "border-slate-300",
 		};
@@ -132,7 +132,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "text-emerald-100",
 			"on-sale": "text-rose-100",
 			"limited-edition": "text-violet-100",
-			"rare": "text-orange-100",
+			rare: "text-orange-100",
 			"pre-order": "text-sky-100",
 			"coming-soon": "text-slate-100",
 		};
@@ -144,7 +144,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			"new-arrivals": "text-emerald-200",
 			"on-sale": "text-rose-200",
 			"limited-edition": "text-violet-200",
-			"rare": "text-orange-200",
+			rare: "text-orange-200",
 			"pre-order": "text-sky-200",
 			"coming-soon": "text-slate-200",
 		};
@@ -203,19 +203,19 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 				<CategoryContent products={products} />
 			) : (
 				<div className="container mx-auto px-4 py-12">
-					<div className="vero-card rounded-2xl p-12 text-center border border-[#D4AF37]/20 max-w-2xl mx-auto">
-						<div className="text-[#D4AF37]/40 text-6xl mb-6">🏎️</div>
-						<h3 className="text-2xl font-light text-[#212529] mb-4 uppercase tracking-wide">
+					<div className="vero-card rounded-2xl p-12 text-center border border-[#C4A962]/20 max-w-2xl mx-auto">
+						<div className="text-[#C4A962]/40 text-6xl mb-6">🏎️</div>
+						<h3 className="text-2xl font-light text-[#111827] mb-4 uppercase tracking-wide">
 							Models Coming Soon
 						</h3>
-						<p className="text-[#6C757D] leading-relaxed mb-8">
+						<p className="text-[#6B7280] leading-relaxed mb-8">
 							We're currently curating the finest selection for {category.name.toLowerCase()}. Check back soon
 							or explore our other collections.
 						</p>
 						<div className="mt-6">
 							<a
 								href="/products"
-								className="inline-flex items-center gap-2 bg-[#D4AF37] hover:bg-[#B8941F] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/30 uppercase tracking-wide text-sm"
+								className="inline-flex items-center gap-2 bg-[#C4A962] hover:bg-[#A89050] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#C4A962]/30 uppercase tracking-wide text-sm"
 							>
 								View All Models →
 							</a>

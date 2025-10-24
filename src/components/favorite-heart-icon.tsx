@@ -41,8 +41,8 @@ export function FavoriteHeartIcon({ product, className = "" }: FavoriteHeartIcon
 			className={cn(
 				"absolute top-2 right-2 z-20 p-2 rounded-full backdrop-blur-md transition-all duration-300 shadow-lg",
 				isProductFavorite
-					? "bg-[#D4AF37] hover:bg-[#E6C757] text-white"
-					: "bg-white/90 hover:bg-white text-[#6C757D] hover:text-[#D4AF37]",
+					? "bg-[#C4A962] hover:bg-[#D4B673] text-white"
+					: "bg-white/90 hover:bg-white text-[#6B7280] hover:text-[#C4A962]",
 				className,
 			)}
 			aria-label={isProductFavorite ? "Remove from favorites" : "Add to favorites"}

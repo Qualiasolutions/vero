@@ -1,0 +1,59 @@
+{
+	"buildCommand": "bun run build",
+	"outputDirectory": ".next",
+	"installCommand": "bun install",
+	"framework": "nextjs",
+	"regions": ["iad1"],
+	"env": {
+		"NEXT_PUBLIC_URL": "https://vero-new.vercel.app",
+		"DOCKER": "1"
+	},
+	"build": {
+		"env": {
+			"DOCKER": "1"
+		}
+	},
+	"headers": [
+		{
+			"source": "/(.*)",
+			"headers": [
+				{
+					"key": "X-Content-Type-Options",
+					"value": "nosniff"
+				},
+				{
+					"key": "X-Frame-Options",
+					"value": "DENY"
+				},
+				{
+					"key": "X-XSS-Protection",
+					"value": "1; mode=block"
+				},
+				{
+					"key": "Referrer-Policy",
+					"value": "strict-origin-when-cross-origin"
+				}
+			]
+		},
+		{
+			"source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff|woff2|ttf|eot))",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=31536000, immutable"
+				}
+			]
+		}
+	],
+	"rewrites": [
+		{
+			"source": "/",
+			"destination": "/"
+		}
+	],
+	"functions": {
+		"src/app/api/**/*.ts": {
+			"runtime": "nodejs18.x"
+		}
+	}
+}

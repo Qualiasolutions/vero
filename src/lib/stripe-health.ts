@@ -3,11 +3,8 @@
  * Validates Stripe configuration and provides helpful error messages
  */
 
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-	apiVersion: "2025-08-27.basil",
-});
+import { env } from "@/env.mjs";
+import { getStripeClient } from "@/lib/stripe";
 
 export interface StripeHealthCheck {
 	isValid: boolean;
@@ -25,8 +22,8 @@ export interface StripeHealthCheck {
  * This should be called on app startup or when cart/checkout operations fail
  */
 export async function validateStripeConfig(): Promise<StripeHealthCheck> {
-	const hasSecretKey = !!process.env.STRIPE_SECRET_KEY;
-	const hasPublishableKey = !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+	const hasSecretKey = !!env.STRIPE_SECRET_KEY;
+	const hasPublishableKey = !!env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
 	// Check if keys exist
 	if (!hasSecretKey) {
@@ -46,7 +43,7 @@ export async function validateStripeConfig(): Promise<StripeHealthCheck> {
 	}
 
 	// Check if secret key looks valid (starts with sk_test_ or sk_live_)
-	const secretKey = process.env.STRIPE_SECRET_KEY!; // We already checked existence above
+	const secretKey = env.STRIPE_SECRET_KEY!; // We already checked existence above
 	if (!secretKey.startsWith("sk_test_") && !secretKey.startsWith("sk_live_")) {
 		return {
 			isValid: false,
@@ -57,6 +54,7 @@ export async function validateStripeConfig(): Promise<StripeHealthCheck> {
 
 	// Try to make a simple API call to verify connectivity
 	try {
+		const stripe = getStripeClient();
 		const account = await stripe.accounts.retrieve();
 
 		return {

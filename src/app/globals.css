@@ -70,14 +70,6 @@
 	}
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
 	*,
 	::after,
@@ -105,37 +97,127 @@
 	animation: slide-from-right 0.2s ease-out forwards;
 }
 
+/* ============================================================================ */
+/* LUXURY AUTOMOTIVE DESIGN SYSTEM - Veromodels Professional Palette          */
+/* ============================================================================ */
+
 @layer base {
 	:root {
+		/* Core Background & Foreground */
 		--background: 0 0% 100%;
 		--foreground: 222.2 84% 4.9%;
 
+		/* Card System */
 		--card: 0 0% 100%;
 		--card-foreground: 222.2 84% 4.9%;
 
+		/* Popover System */
 		--popover: 0 0% 100%;
 		--popover-foreground: 222.2 84% 4.9%;
 
-		--primary: 222.2 47.4% 11.2%;
-		--primary-foreground: 210 40% 98%;
+		/* Primary (Dark Charcoal) */
+		--primary: 0 0% 6%;
+		--primary-foreground: 0 0% 98%;
 
-		--secondary: 210 40% 96.1%;
-		--secondary-foreground: 222.2 47.4% 11.2%;
+		/* Secondary (Light Neutral) */
+		--secondary: 0 0% 96%;
+		--secondary-foreground: 0 0% 6%;
 
-		--muted: 210 40% 96.1%;
-		--muted-foreground: 215.4 16.3% 46.9%;
+		/* Muted (Subtle Backgrounds) */
+		--muted: 0 0% 96%;
+		--muted-foreground: 215 16% 47%;
 
-		--accent: 210 40% 96.1%;
-		--accent-foreground: 222.2 47.4% 11.2%;
+		/* Accent (Champagne Gold) */
+		--accent: 45 35% 58%;
+		--accent-foreground: 0 0% 6%;
 
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 210 40% 98%;
+		/* Destructive (Burgundy) */
+		--destructive: 348 83% 31%;
+		--destructive-foreground: 0 0% 98%;
 
-		--border: 214.3 31.8% 91.4%;
-		--input: 214.3 31.8% 91.4%;
-		--ring: 222.2 84% 4.9%;
+		/* Border & Input */
+		--border: 0 0% 90%;
+		--input: 0 0% 90%;
+		--ring: 0 0% 6%;
 
 		--radius: 0.5rem;
+
+		/* VEROMODELS LUXURY PALETTE */
+
+		/* Primary Blacks - Deep & Sophisticated */
+		--vero-black-pure: #0f0f0f;
+		--vero-black-charcoal: #1a1a1a;
+		--vero-black-soft: #2a2a2a;
+		--vero-black-medium: #374151;
+
+		/* Champagne Gold - Elegant & Refined */
+		--vero-gold-champagne: #c4a962;
+		--vero-gold-light: #d4b673;
+		--vero-gold-dark: #a89050;
+		--vero-gold-pale: #e8dcc4;
+		--vero-gold-glow: rgba(196, 169, 98, 0.25);
+
+		/* Rose Gold - Luxury Accent */
+		--vero-rose-gold: #b76e79;
+		--vero-rose-gold-light: #d4909c;
+		--vero-rose-gold-dark: #8e5560;
+
+		/* Platinum & Silvers */
+		--vero-platinum: #e5e4e2;
+		--vero-silver: #c0c0c0;
+		--vero-silver-dark: #a8a8a8;
+
+		/* Sophisticated Neutrals */
+		--vero-white-pure: #ffffff;
+		--vero-white-off: #faf9f6;
+		--vero-cream: #f5f3ef;
+		--vero-gray-lightest: #f9fafb;
+		--vero-gray-light: #f3f4f6;
+		--vero-gray-medium: #9ca3af;
+		--vero-gray-dark: #6b7280;
+		--vero-gray-darker: #4b5563;
+
+		/* Premium Accents */
+		--vero-burgundy: #8b1538;
+		--vero-burgundy-light: #a02348;
+		--vero-navy: #1e3a5f;
+		--vero-navy-light: #2c4f7c;
+		--vero-forest: #2c5530;
+		--vero-forest-light: #3d7043;
+
+		/* Semantic Colors - Professional */
+		--vero-success: #059669;
+		--vero-success-light: #10b981;
+		--vero-warning: #d97706;
+		--vero-warning-light: #f59e0b;
+		--vero-error: #dc2626;
+		--vero-error-light: #ef4444;
+		--vero-info: #2563eb;
+		--vero-info-light: #3b82f6;
+
+		/* Text Colors */
+		--vero-text-primary: #111827;
+		--vero-text-secondary: #374151;
+		--vero-text-muted: #6b7280;
+		--vero-text-light: #9ca3af;
+
+		/* Background System */
+		--vero-bg-primary: #ffffff;
+		--vero-bg-secondary: #faf9f6;
+		--vero-bg-tertiary: #f5f3ef;
+		--vero-bg-quaternary: #f9fafb;
+
+		/* Border Colors */
+		--vero-border-light: #e5e7eb;
+		--vero-border-medium: #d1d5db;
+		--vero-border-dark: #9ca3af;
+		--vero-border-gold: var(--vero-gold-champagne);
+
+		/* Interactive States */
+		--vero-hover-bg: #f9fafb;
+		--vero-hover-border: var(--vero-gold-champagne);
+		--vero-active-bg: #f3f4f6;
+		--vero-focus-ring: var(--vero-gold-glow);
 	}
 
 	.dark {
@@ -151,21 +233,21 @@
 		--primary: 210 40% 98%;
 		--primary-foreground: 222.2 47.4% 11.2%;
 
-		--secondary: 217.2 32.6% 17.5%;
+		--secondary: 217.2 33% 17%;
 		--secondary-foreground: 210 40% 98%;
 
-		--muted: 217.2 32.6% 17.5%;
-		--muted-foreground: 215 20.2% 65.1%;
+		--muted: 217.2 33% 17%;
+		--muted-foreground: 215 20% 65%;
 
-		--accent: 217.2 32.6% 17.5%;
+		--accent: 45 35% 58%;
 		--accent-foreground: 210 40% 98%;
 
-		--destructive: 0 62.8% 30.6%;
+		--destructive: 348 83% 31%;
 		--destructive-foreground: 210 40% 98%;
 
-		--border: 217.2 32.6% 17.5%;
-		--input: 217.2 32.6% 17.5%;
-		--ring: 212.7 26.8% 83.9%;
+		--border: 217.2 33% 17%;
+		--input: 217.2 33% 17%;
+		--ring: 212.7 27% 84%;
 	}
 }
 
@@ -175,6 +257,13 @@
 	}
 	body {
 		@apply bg-white text-gray-900;
+		background-color: var(--vero-bg-primary);
+		color: var(--vero-text-primary);
+		font-feature-settings:
+			"kern" 1,
+			"liga" 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 }
 
@@ -198,6 +287,10 @@ label:has([required]) > span:first-child {
 input[type="search" i]::-webkit-search-cancel-button {
 	display: none;
 }
+
+/* ============================================================================ */
+/* ANIMATIONS & KEYFRAMES                                                       */
+/* ============================================================================ */
 
 @keyframes slideDown {
 	from {
@@ -237,41 +330,6 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 }
 
-.nav-border-reveal::after {
-	@apply content-[''] w-full h-px absolute bottom-0 bg-neutral-200;
-
-	animation: nav-border-reveal;
-	animation-timeline: scroll();
-	animation-range: 0 100px;
-}
-
-@keyframes nav-border-reveal {
-	0% {
-		opacity: 0%;
-	}
-	100% {
-		opacity: 100%;
-	}
-}
-
-@keyframes meteor {
-	0% {
-		transform: rotate(215deg) translateX(0);
-		opacity: 1;
-	}
-	70% {
-		opacity: 1;
-	}
-	100% {
-		transform: rotate(215deg) translateX(-500px);
-		opacity: 0;
-	}
-}
-
-.animate-meteor {
-	animation: var(--animate-meteor-effect);
-}
-
 @keyframes shimmer {
 	0% {
 		background-position: 200% center;
@@ -285,13 +343,13 @@ input[type="search" i]::-webkit-search-cancel-button {
 	0%,
 	100% {
 		box-shadow:
-			0 0 20px rgba(212, 175, 55, 0.3),
-			0 0 40px rgba(212, 175, 55, 0.1);
+			0 0 20px var(--vero-gold-glow),
+			0 0 40px rgba(196, 169, 98, 0.1);
 	}
 	50% {
 		box-shadow:
-			0 0 30px rgba(212, 175, 55, 0.5),
-			0 0 60px rgba(212, 175, 55, 0.2);
+			0 0 30px var(--vero-gold-glow),
+			0 0 60px rgba(196, 169, 98, 0.2);
 	}
 }
 
@@ -310,7 +368,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 		transform: translateY(0) scale(1);
 	}
 	to {
-		transform: translateY(-4px) scale(1.02);
+		transform: translateY(-4px) scale(1.01);
 	}
 }
 
@@ -320,6 +378,36 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes meteor {
+	0% {
+		transform: rotate(215deg) translateX(0);
+		opacity: 1;
+	}
+	70% {
+		opacity: 1;
+	}
+	100% {
+		transform: rotate(215deg) translateX(-500px);
+		opacity: 0;
+	}
+}
+
+@keyframes parallaxScroll {
+	0%,
+	100% {
+		transform: translateY(0) scale(1);
+	}
+	25% {
+		transform: translateY(-20px) scale(1.01);
+	}
+	50% {
+		transform: translateY(-10px) scale(1.005);
+	}
+	75% {
+		transform: translateY(-30px) scale(1.015);
 	}
 }
 
@@ -339,123 +427,122 @@ input[type="search" i]::-webkit-search-cancel-button {
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover effect for animate-lift - applied via regular CSS */
+@utility animate-meteor {
+	animation: var(--animate-meteor-effect);
+}
+
 .animate-lift:hover {
-	transform: translateY(-4px) scale(1.02);
-	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	transform: translateY(-4px) scale(1.01);
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
-/* Ripple effect utility */
-.has-ripple {
-	position: relative;
-	overflow: hidden;
+/* ============================================================================ */
+/* LUXURY GRADIENTS                                                             */
+/* ============================================================================ */
+
+.vero-gradient-primary {
+	background: linear-gradient(135deg, var(--vero-white-pure) 0%, var(--vero-white-off) 100%);
 }
 
-.has-ripple::before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.5);
-	transform: translate(-50%, -50%);
-	transition:
-		width 0.6s,
-		height 0.6s;
+.vero-gradient-secondary {
+	background: linear-gradient(135deg, var(--vero-white-off) 0%, var(--vero-cream) 100%);
 }
 
-.has-ripple:active::before {
-	width: 300px;
-	height: 300px;
+.vero-gradient-black {
+	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
 }
 
-/* Veromodels Luxury Black & Gold Theme */
-@layer base {
-	:root {
-		/* Gold Palette */
-		--verogold: #d4af37;
-		--verogold-light: #e6c757;
-		--verogold-dark: #b8941f;
-		--verogold-champagne: #f5e6d3;
-
-		/* Black Palette */
-		--veroblack: #0a0a0a;
-		--veroblack-charcoal: #1a1a1a;
-		--veroblack-soft: #2a2a2a;
-
-		/* Neutral Palette */
-		--verowhite: #ffffff;
-		--verocream: #fdfbf7;
-		--verogray: #f8f9fa;
-		--verogray-dark: #6c757d;
-		--verotext: #212529;
-	}
-
-	.vero-gradient {
-		background: linear-gradient(135deg, var(--verowhite) 0%, var(--verocream) 100%);
-	}
-
-	.vero-black-gradient {
-		background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
-	}
-
-	.vero-luxury-gradient {
-		background: linear-gradient(135deg, var(--veroblack) 0%, var(--verogold-dark) 100%);
-	}
-
-	.vero-gold-gradient {
-		background: linear-gradient(135deg, var(--verogold) 0%, var(--verogold-dark) 100%);
-	}
-
-	.vero-text-gradient {
-		background: linear-gradient(135deg, var(--verogold) 0%, var(--verogold-dark) 100%);
-		background-size: 200% auto;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
-
-	.vero-elegant-text {
-		background: linear-gradient(
-			90deg,
-			var(--verogold) 0%,
-			var(--verogold-light) 25%,
-			var(--verogold) 50%,
-			var(--verogold-light) 75%,
-			var(--verogold) 100%
-		);
-		background-size: 200% auto;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		animation: shimmer 3s linear infinite;
-	}
-
-	.vero-glass {
-		background: rgba(255, 255, 255, 0.05);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		border: 1px solid rgba(212, 175, 55, 0.1);
-	}
-
-	.vero-glass-dark {
-		background: rgba(10, 10, 10, 0.8);
-		backdrop-filter: blur(20px);
-		-webkit-backdrop-filter: blur(20px);
-		border: 1px solid rgba(212, 175, 55, 0.2);
-	}
+.vero-gradient-luxury {
+	background: linear-gradient(
+		135deg,
+		var(--vero-black-pure) 0%,
+		var(--vero-black-soft) 50%,
+		var(--vero-black-medium) 100%
+	);
 }
 
-/* Custom professional components */
+.vero-gradient-gold {
+	background: linear-gradient(135deg, var(--vero-gold-champagne) 0%, var(--vero-gold-light) 100%);
+}
+
+.vero-gradient-rose {
+	background: linear-gradient(135deg, var(--vero-rose-gold) 0%, var(--vero-rose-gold-light) 100%);
+}
+
+.vero-gradient-hero {
+	background: linear-gradient(
+		135deg,
+		var(--vero-black-pure) 0%,
+		var(--vero-black-charcoal) 40%,
+		var(--vero-black-soft) 100%
+	);
+}
+
+.vero-text-gradient {
+	background: linear-gradient(
+		135deg,
+		var(--vero-gold-champagne) 0%,
+		var(--vero-gold-light) 50%,
+		var(--vero-gold-champagne) 100%
+	);
+	background-size: 200% auto;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.vero-elegant-text {
+	background: linear-gradient(
+		90deg,
+		var(--vero-gold-champagne) 0%,
+		var(--vero-gold-light) 25%,
+		var(--vero-gold-champagne) 50%,
+		var(--vero-gold-light) 75%,
+		var(--vero-gold-champagne) 100%
+	);
+	background-size: 200% auto;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	animation: shimmer 4s linear infinite;
+}
+
+/* ============================================================================ */
+/* GLASS MORPHISM EFFECTS                                                       */
+/* ============================================================================ */
+
+.vero-glass {
+	background: rgba(255, 255, 255, 0.92);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid var(--vero-border-light);
+}
+
+.vero-glass-dark {
+	background: rgba(15, 15, 15, 0.92);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(196, 169, 98, 0.2);
+}
+
+.vero-glass-gold {
+	background: rgba(196, 169, 98, 0.12);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(196, 169, 98, 0.3);
+}
+
+/* ============================================================================ */
+/* PREMIUM CARD COMPONENTS                                                      */
+/* ============================================================================ */
+
 .vero-card {
-	background: white;
-	border: 1px solid rgba(212, 175, 55, 0.15);
+	background: var(--vero-white-pure);
+	border: 1px solid var(--vero-border-light);
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .vero-card::before {
@@ -465,8 +552,8 @@ input[type="search" i]::-webkit-search-cancel-button {
 	left: -100%;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
-	transition: left 0.5s ease;
+	background: linear-gradient(90deg, transparent, rgba(196, 169, 98, 0.08), transparent);
+	transition: left 0.6s ease;
 	z-index: 1;
 	pointer-events: none;
 }
@@ -476,20 +563,20 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .vero-card:hover {
-	border-color: var(--verogold);
-	transform: translateY(-6px) scale(1.01);
+	border-color: var(--vero-gold-champagne);
+	transform: translateY(-2px);
 	box-shadow:
-		0 20px 48px rgba(212, 175, 55, 0.25),
-		0 8px 16px rgba(0, 0, 0, 0.1);
+		0 8px 24px rgba(0, 0, 0, 0.08),
+		0 2px 8px rgba(196, 169, 98, 0.15);
 }
 
 .vero-card-dark {
-	background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
-	border: 1px solid rgba(212, 175, 55, 0.3);
+	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
+	border: 1px solid rgba(196, 169, 98, 0.2);
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .vero-card-dark::before {
@@ -499,8 +586,8 @@ input[type="search" i]::-webkit-search-cancel-button {
 	left: -100%;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
-	transition: left 0.5s ease;
+	background: linear-gradient(90deg, transparent, rgba(196, 169, 98, 0.15), transparent);
+	transition: left 0.6s ease;
 	z-index: 1;
 	pointer-events: none;
 }
@@ -510,23 +597,47 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .vero-card-dark:hover {
-	border-color: var(--verogold-light);
-	transform: translateY(-8px) scale(1.02);
+	border-color: var(--vero-gold-champagne);
+	transform: translateY(-3px);
 	box-shadow:
-		0 24px 56px rgba(212, 175, 55, 0.35),
-		0 12px 20px rgba(0, 0, 0, 0.6);
+		0 12px 32px rgba(0, 0, 0, 0.4),
+		0 0 24px var(--vero-gold-glow);
 }
 
+.vero-card-premium {
+	background: linear-gradient(135deg, var(--vero-white-pure) 0%, var(--vero-white-off) 100%);
+	border: 1px solid var(--vero-border-light);
+	border-radius: 1rem;
+	padding: 2rem;
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.vero-card-premium:hover {
+	transform: translateY(-4px);
+	border-color: var(--vero-gold-champagne);
+	box-shadow:
+		0 12px 32px rgba(0, 0, 0, 0.1),
+		0 4px 16px rgba(196, 169, 98, 0.2);
+}
+
+/* ============================================================================ */
+/* PREMIUM BUTTON COMPONENTS                                                    */
+/* ============================================================================ */
+
 .vero-button {
-	background: var(--verogold);
-	color: white;
+	background: var(--vero-black-pure);
+	color: var(--vero-white-pure);
 	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 1.5px;
-	transition: all 0.3s ease;
+	letter-spacing: 0.3px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
 	border: none;
+	padding: 0.75rem 1.5rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .vero-button::before {
@@ -537,11 +648,11 @@ input[type="search" i]::-webkit-search-cancel-button {
 	width: 0;
 	height: 0;
 	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.2);
 	transform: translate(-50%, -50%);
 	transition:
-		width 0.6s,
-		height 0.6s;
+		width 0.5s,
+		height 0.5s;
 }
 
 .vero-button:hover::before {
@@ -550,21 +661,24 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .vero-button:hover {
-	background: var(--verogold-dark);
-	transform: translateY(-2px);
-	box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+	background: var(--vero-gold-champagne);
+	color: var(--vero-black-pure);
+	transform: translateY(-1px);
+	box-shadow:
+		0 6px 20px rgba(0, 0, 0, 0.2),
+		0 0 20px var(--vero-gold-glow);
 }
 
 .vero-button-outline {
 	background: transparent;
-	color: var(--verogold);
-	border: 2px solid var(--verogold);
+	color: var(--vero-black-pure);
+	border: 1.5px solid var(--vero-black-pure);
 	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 1.5px;
-	transition: all 0.3s ease;
+	letter-spacing: 0.3px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
+	padding: 0.75rem 1.5rem;
 }
 
 .vero-button-outline::before {
@@ -574,7 +688,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 	left: -100%;
 	width: 100%;
 	height: 100%;
-	background: var(--verogold);
+	background: var(--vero-black-pure);
 	transition: left 0.3s ease;
 	z-index: -1;
 }
@@ -584,103 +698,61 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .vero-button-outline:hover {
-	color: white;
-	border-color: var(--verogold-dark);
+	color: var(--vero-white-pure);
+	border-color: var(--vero-gold-champagne);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-	width: 12px;
+.vero-button-gold {
+	background: var(--vero-gold-champagne);
+	color: var(--vero-black-pure);
+	font-weight: 600;
+	letter-spacing: 0.3px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	border: none;
+	padding: 0.75rem 1.5rem;
+	box-shadow: 0 2px 8px var(--vero-gold-glow);
 }
 
-::-webkit-scrollbar-track {
-	background: #f8f9fa;
-	border-left: 1px solid rgba(212, 175, 55, 0.1);
+.vero-button-gold:hover {
+	background: var(--vero-gold-dark);
+	transform: translateY(-1px);
+	box-shadow:
+		0 6px 20px var(--vero-gold-glow),
+		0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-::-webkit-scrollbar-thumb {
-	background: linear-gradient(180deg, var(--verogold-dark), var(--verogold));
-	border-radius: 6px;
-}
+/* ============================================================================ */
+/* PREMIUM INPUT FIELDS                                                         */
+/* ============================================================================ */
 
-::-webkit-scrollbar-thumb:hover {
-	background: var(--verogold-light);
-}
-
-/* Custom scrollbar for filter lists */
-.custom-scrollbar::-webkit-scrollbar {
-	width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-	background: rgba(212, 175, 55, 0.05);
-	border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-	background: var(--verogold);
-	border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-	background: var(--verogold-light);
-}
-
-/* Enhanced Premium Input Fields */
 .vero-input {
-	background: white;
-	border: 2px solid rgba(212, 175, 55, 0.2);
+	background: var(--vero-white-pure);
+	border: 1px solid var(--vero-border-light);
 	border-radius: 0.5rem;
 	padding: 0.75rem 1rem;
 	transition: all 0.3s ease;
 	font-size: 0.875rem;
+	color: var(--vero-text-primary);
 }
 
 .vero-input:focus {
 	outline: none;
-	border-color: var(--verogold);
-	box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+	border-color: var(--vero-gold-champagne);
+	box-shadow: 0 0 0 3px var(--vero-gold-glow);
 }
 
 .vero-input:hover:not(:focus) {
-	border-color: rgba(212, 175, 55, 0.3);
+	border-color: var(--vero-border-medium);
 }
 
-/* Premium Hero Section Utilities */
-.vero-hero-gradient {
-	background: linear-gradient(
-		135deg,
-		var(--veroblack) 0%,
-		var(--veroblack-charcoal) 50%,
-		var(--verogold-dark) 100%
-	);
+.vero-input::placeholder {
+	color: var(--vero-text-light);
 }
 
-.vero-hero-overlay {
-	background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-}
+/* ============================================================================ */
+/* BADGE COMPONENTS                                                             */
+/* ============================================================================ */
 
-/* Advanced Card Variants */
-.vero-card-premium {
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 251, 247, 0.98) 100%);
-	border: 2px solid rgba(212, 175, 55, 0.25);
-	border-radius: 1rem;
-	padding: 2rem;
-	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	position: relative;
-	overflow: hidden;
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.vero-card-premium:hover {
-	transform: translateY(-8px);
-	border-color: var(--verogold);
-	box-shadow:
-		0 24px 64px rgba(212, 175, 55, 0.2),
-		0 12px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* Animated Badge Component */
 .vero-badge {
 	display: inline-flex;
 	align-items: center;
@@ -690,7 +762,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	border-radius: 9999px;
+	border-radius: 0.375rem;
 	transition: all 0.3s ease;
 	position: relative;
 	overflow: hidden;
@@ -709,56 +781,96 @@ input[type="search" i]::-webkit-search-cancel-button {
 	transform: translateX(100%);
 }
 
-/* Split Screen Layout Utility */
-.vero-split-screen {
-	display: grid;
-	grid-template-columns: 1fr;
-	min-height: 100vh;
+.vero-badge-gold {
+	background: var(--vero-gold-champagne);
+	color: var(--vero-black-pure);
+	border: 1px solid var(--vero-gold-dark);
 }
 
-@media (min-width: 1024px) {
-	.vero-split-screen {
-		grid-template-columns: 1fr 1fr;
+.vero-badge-black {
+	background: var(--vero-black-pure);
+	color: var(--vero-gold-champagne);
+	border: 1px solid var(--vero-gold-champagne);
+}
+
+.vero-badge-burgundy {
+	background: var(--vero-burgundy);
+	color: var(--vero-white-pure);
+}
+
+.vero-badge-success {
+	background: var(--vero-success);
+	color: var(--vero-white-pure);
+}
+
+/* ============================================================================ */
+/* NAVIGATION STYLES                                                            */
+/* ============================================================================ */
+
+.nav-border-reveal::after {
+	@apply content-[''] w-full h-px absolute bottom-0;
+	background: var(--vero-border-light);
+	animation: nav-border-reveal;
+	animation-timeline: scroll();
+	animation-range: 0 100px;
+}
+
+@keyframes nav-border-reveal {
+	0% {
+		opacity: 0%;
+	}
+	100% {
+		opacity: 100%;
 	}
 }
 
-.vero-split-left {
-	background: linear-gradient(135deg, var(--veroblack) 0%, var(--veroblack-charcoal) 100%);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 3rem;
+/* ============================================================================ */
+/* IMAGE HOVER EFFECTS                                                          */
+/* ============================================================================ */
+
+.vero-image-hover {
 	position: relative;
 	overflow: hidden;
 }
 
-.vero-split-left::before {
+.vero-image-hover img {
+	transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vero-image-hover:hover img {
+	transform: scale(1.05);
+}
+
+.vero-image-hover::after {
 	content: "";
 	position: absolute;
 	inset: 0;
-	background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+	background: linear-gradient(135deg, rgba(196, 169, 98, 0.1) 0%, transparent 60%);
+	opacity: 0;
+	transition: opacity 0.4s ease;
 }
 
-.vero-split-right {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 3rem;
-	background: linear-gradient(135deg, var(--verowhite) 0%, var(--verocream) 100%);
+.vero-image-hover:hover::after {
+	opacity: 1;
 }
 
-/* Glassmorphism Card Enhanced */
-.vero-glass-card {
-	background: rgba(255, 255, 255, 0.1);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	border-radius: 1rem;
-	padding: 2rem;
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+/* ============================================================================ */
+/* UTILITY CLASSES                                                              */
+/* ============================================================================ */
+
+.vero-divider {
+	height: 1px;
+	background: linear-gradient(90deg, transparent 0%, var(--vero-gold-champagne) 50%, transparent 100%);
+	margin: 3rem 0;
 }
 
-/* Premium Section Spacing */
+.vero-grid-pattern {
+	background-image:
+		linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+	background-size: 20px 20px;
+}
+
 .vero-section {
 	padding-top: 5rem;
 	padding-bottom: 5rem;
@@ -778,13 +890,63 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 }
 
-/* Enhanced Focus States for Accessibility */
+/* ============================================================================ */
+/* SCROLLBAR CUSTOMIZATION                                                      */
+/* ============================================================================ */
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--vero-bg-secondary);
+	border-left: 1px solid var(--vero-border-light);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--vero-gray-medium);
+	border-radius: 5px;
+	transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--vero-gold-champagne);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: var(--vero-gray-light);
+	border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background: var(--vero-gray-medium);
+	border-radius: 3px;
+	transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: var(--vero-gold-champagne);
+}
+
+/* ============================================================================ */
+/* FOCUS STATES FOR ACCESSIBILITY                                               */
+/* ============================================================================ */
+
 *:focus-visible {
-	outline: 2px solid var(--verogold);
+	outline: 2px solid var(--vero-gold-champagne);
 	outline-offset: 2px;
 }
 
-/* Smooth Page Transitions */
+/* ============================================================================ */
+/* PAGE TRANSITIONS                                                             */
+/* ============================================================================ */
+
 @keyframes page-enter {
 	from {
 		opacity: 0;
@@ -800,60 +962,130 @@ input[type="search" i]::-webkit-search-cancel-button {
 	animation: page-enter 0.5s ease-out forwards;
 }
 
-/* Premium Hover Effect for Images */
-.vero-image-hover {
-	position: relative;
-	overflow: hidden;
+/* ============================================================================ */
+/* PARALLAX EFFECTS                                                             */
+/* ============================================================================ */
+
+.parallax-bg {
+	will-change: transform;
+	animation: parallaxScroll 20s ease-in-out infinite;
 }
 
-.vero-image-hover img {
-	transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+.parallax-bg-scroll {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	will-change: transform;
+	background: linear-gradient(
+		45deg,
+		rgba(196, 169, 98, 0.02) 0%,
+		rgba(229, 228, 226, 0.03) 25%,
+		rgba(196, 169, 98, 0.02) 50%,
+		rgba(229, 228, 226, 0.03) 75%,
+		rgba(196, 169, 98, 0.02) 100%
+	);
+	z-index: 0;
 }
 
-.vero-image-hover:hover img {
-	transform: scale(1.08);
+/* ============================================================================ */
+/* LEGACY COMPATIBILITY ALIASES                                                 */
+/* ============================================================================ */
+
+.vero-black-gradient {
+	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-charcoal) 100%);
 }
 
-.vero-image-hover::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, transparent 60%);
-	opacity: 0;
-	transition: opacity 0.4s ease;
+.vero-gold-gradient {
+	background: linear-gradient(135deg, var(--vero-gold-champagne) 0%, var(--vero-gold-light) 100%);
 }
 
-.vero-image-hover:hover::after {
-	opacity: 1;
+.vero-luxury-gradient {
+	background: linear-gradient(135deg, var(--vero-black-pure) 0%, var(--vero-black-soft) 100%);
 }
 
-/* Advanced Grid Patterns */
-.vero-grid-pattern {
-	background-image:
-		linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-	background-size: 20px 20px;
+.selfridges-card {
+	@apply vero-card;
 }
 
-/* Luxury Divider */
-.vero-divider {
-	height: 1px;
-	background: linear-gradient(90deg, transparent 0%, var(--verogold) 50%, transparent 100%);
-	margin: 3rem 0;
+.selfridges-button {
+	@apply vero-button;
 }
 
-/* Premium Status Indicators */
-.vero-status-success {
-	background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-	color: white;
+.selfridges-button-outline {
+	@apply vero-button-outline;
 }
 
-.vero-status-warning {
-	background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-	color: white;
+/* Legacy CSS Variables for Backward Compatibility */
+:root {
+	--selfridges-black: var(--vero-black-pure);
+	--selfridges-gray-medium: var(--vero-gray-dark);
+	--selfridges-gray-light: var(--vero-gray-light);
+	--selfridges-gray-lighter: var(--vero-gray-lightest);
+	--selfridges-gray-border: var(--vero-border-light);
+	--selfridges-white: var(--vero-white-pure);
+	--selfridges-red: var(--vero-error);
+	--selfridges-red-light: var(--vero-error-light);
+	--selfridges-text-primary: var(--vero-text-primary);
+	--selfridges-text-secondary: var(--vero-text-secondary);
+	--selfridges-text-muted: var(--vero-text-muted);
+	--selfridges-bg-primary: var(--vero-bg-primary);
+	--selfridges-bg-secondary: var(--vero-bg-secondary);
+	--selfridges-bg-tertiary: var(--vero-bg-tertiary);
+	--selfridges-background: var(--vero-bg-primary);
+	--selfridges-background-muted: var(--vero-bg-secondary);
+	--selfridges-cream: var(--vero-cream);
+	--selfridges-border-light: var(--vero-border-light);
+	--selfridges-border-medium: var(--vero-border-medium);
+	--selfridges-border-dark: var(--vero-border-dark);
+	--selfridges-hover-bg: var(--vero-hover-bg);
+	--selfridges-active-bg: var(--vero-active-bg);
+
+	--vero-gold-accent: var(--vero-gold-champagne);
+	--vero-gold-accent-light: var(--vero-gold-light);
+	--vero-gold-accent-dark: var(--vero-gold-dark);
+	--vero-gold-accent-glow: var(--vero-gold-glow);
+
+	--verogold: var(--vero-gold-champagne);
+	--verogold-light: var(--vero-gold-light);
+	--verogold-dark: var(--vero-gold-dark);
+	--verogold-champagne: var(--vero-gold-pale);
+
+	--veroblack: var(--vero-black-pure);
+	--veroblack-charcoal: var(--vero-black-charcoal);
+	--veroblack-soft: var(--vero-black-soft);
+
+	--verowhite: var(--vero-white-pure);
+	--verocream: var(--vero-cream);
+	--verogray: var(--vero-gray-light);
+	--verogray-dark: var(--vero-gray-dark);
+	--verotext: var(--vero-text-primary);
 }
 
-.vero-status-error {
-	background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-	color: white;
+/* ============================================================================ */
+/* PRINT STYLES                                                                 */
+/* ============================================================================ */
+
+@media print {
+	body {
+		background: white;
+		color: black;
+	}
+
+	.vero-card,
+	.vero-card-dark,
+	.vero-card-premium {
+		border: 1px solid #ccc;
+		box-shadow: none;
+		background: white;
+	}
+
+	.vero-button,
+	.vero-button-outline,
+	.vero-button-gold {
+		border: 1px solid black;
+		background: white;
+		color: black;
+	}
 }

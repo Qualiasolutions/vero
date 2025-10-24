@@ -41,43 +41,43 @@ export default function ContactPage() {
 			<section className="max-w-7xl mx-auto px-6 py-16 -mt-16 relative z-10">
 				<div className="grid md:grid-cols-3 gap-6">
 					{/* Email Card */}
-					<div className="group bg-white rounded-2xl p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37] hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-2">
-						<div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-							<Mail className="w-8 h-8 text-[#D4AF37]" />
+					<div className="group bg-white rounded-2xl p-8 border border-[#C4A962]/20 hover:border-[#C4A962] hover:shadow-2xl hover:shadow-[#C4A962]/10 transition-all duration-300 hover:-translate-y-2">
+						<div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#C4A962]/10 to-[#D4B673]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+							<Mail className="w-8 h-8 text-[#C4A962]" />
 						</div>
-						<h3 className="text-xl font-semibold text-[#212529] mb-3 text-center">Email Us</h3>
-						<p className="text-[#6C757D] mb-4 text-center">Send us a message anytime</p>
+						<h3 className="text-xl font-semibold text-[#111827] mb-3 text-center">Email Us</h3>
+						<p className="text-[#6B7280] mb-4 text-center">Send us a message anytime</p>
 						<Link
 							href={`mailto:${StoreConfig.contact.email}`}
-							className="block text-center text-[#D4AF37] hover:text-[#B8941F] font-medium transition-colors"
+							className="block text-center text-[#C4A962] hover:text-[#A89050] font-medium transition-colors"
 						>
 							{StoreConfig.contact.email}
 						</Link>
 					</div>
 
 					{/* Phone Card */}
-					<div className="group bg-white rounded-2xl p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37] hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-2">
-						<div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-							<Phone className="w-8 h-8 text-[#D4AF37]" />
+					<div className="group bg-white rounded-2xl p-8 border border-[#C4A962]/20 hover:border-[#C4A962] hover:shadow-2xl hover:shadow-[#C4A962]/10 transition-all duration-300 hover:-translate-y-2">
+						<div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#C4A962]/10 to-[#D4B673]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+							<Phone className="w-8 h-8 text-[#C4A962]" />
 						</div>
-						<h3 className="text-xl font-semibold text-[#212529] mb-3 text-center">Call Us</h3>
-						<p className="text-[#6C757D] mb-4 text-center">Mon-Fri 9AM-6PM CET</p>
+						<h3 className="text-xl font-semibold text-[#111827] mb-3 text-center">Call Us</h3>
+						<p className="text-[#6B7280] mb-4 text-center">Mon-Fri 9AM-6PM CET</p>
 						<Link
 							href={`tel:${StoreConfig.contact.phone}`}
-							className="block text-center text-[#D4AF37] hover:text-[#B8941F] font-medium transition-colors"
+							className="block text-center text-[#C4A962] hover:text-[#A89050] font-medium transition-colors"
 						>
 							{StoreConfig.contact.phone}
 						</Link>
 					</div>
 
 					{/* Address Card */}
-					<div className="group bg-white rounded-2xl p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37] hover:shadow-2xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-2">
-						<div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#D4AF37]/10 to-[#E6C757]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-							<MapPin className="w-8 h-8 text-[#D4AF37]" />
+					<div className="group bg-white rounded-2xl p-8 border border-[#C4A962]/20 hover:border-[#C4A962] hover:shadow-2xl hover:shadow-[#C4A962]/10 transition-all duration-300 hover:-translate-y-2">
+						<div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#C4A962]/10 to-[#D4B673]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+							<MapPin className="w-8 h-8 text-[#C4A962]" />
 						</div>
-						<h3 className="text-xl font-semibold text-[#212529] mb-3 text-center">Visit Us</h3>
-						<p className="text-[#6C757D] mb-4 text-center">Our headquarters</p>
-						<p className="text-center text-[#D4AF37] font-medium">{StoreConfig.contact.address}</p>
+						<h3 className="text-xl font-semibold text-[#111827] mb-3 text-center">Visit Us</h3>
+						<p className="text-[#6B7280] mb-4 text-center">Our headquarters</p>
+						<p className="text-center text-[#C4A962] font-medium">{StoreConfig.contact.address}</p>
 					</div>
 				</div>
 			</section>
@@ -87,17 +87,17 @@ export default function ContactPage() {
 				<div className="grid lg:grid-cols-2 gap-16 items-start">
 					{/* Contact Form */}
 					<div>
-						<h2 className="text-3xl md:text-4xl font-light text-[#212529] mb-4">
+						<h2 className="text-3xl md:text-4xl font-light text-[#111827] mb-4">
 							Send Us a <span className="vero-elegant-text">Message</span>
 						</h2>
-						<p className="text-[#6C757D] text-lg mb-8">
+						<p className="text-[#6B7280] text-lg mb-8">
 							Have a question about a specific model? Looking for a rare piece? We're here to help.
 						</p>
 
 						<form className="space-y-6">
 							<div className="grid md:grid-cols-2 gap-6">
 								<div>
-									<label htmlFor="name" className="block text-sm font-medium text-[#212529] mb-2">
+									<label htmlFor="name" className="block text-sm font-medium text-[#111827] mb-2">
 										Full Name
 									</label>
 									<input
@@ -110,7 +110,7 @@ export default function ContactPage() {
 									/>
 								</div>
 								<div>
-									<label htmlFor="email" className="block text-sm font-medium text-[#212529] mb-2">
+									<label htmlFor="email" className="block text-sm font-medium text-[#111827] mb-2">
 										Email Address
 									</label>
 									<input
@@ -125,7 +125,7 @@ export default function ContactPage() {
 							</div>
 
 							<div>
-								<label htmlFor="subject" className="block text-sm font-medium text-[#212529] mb-2">
+								<label htmlFor="subject" className="block text-sm font-medium text-[#111827] mb-2">
 									Subject
 								</label>
 								<input
@@ -139,7 +139,7 @@ export default function ContactPage() {
 							</div>
 
 							<div>
-								<label htmlFor="message" className="block text-sm font-medium text-[#212529] mb-2">
+								<label htmlFor="message" className="block text-sm font-medium text-[#111827] mb-2">
 									Message
 								</label>
 								<textarea
@@ -163,55 +163,55 @@ export default function ContactPage() {
 
 					{/* FAQ Section */}
 					<div>
-						<h2 className="text-3xl md:text-4xl font-light text-[#212529] mb-4">
+						<h2 className="text-3xl md:text-4xl font-light text-[#111827] mb-4">
 							Frequently Asked <span className="vero-elegant-text">Questions</span>
 						</h2>
-						<p className="text-[#6C757D] text-lg mb-8">
+						<p className="text-[#6B7280] text-lg mb-8">
 							Quick answers to common questions about our products and services.
 						</p>
 
 						<div className="space-y-6">
 							<div className="vero-glass-card p-6">
-								<h3 className="text-lg font-semibold text-[#212529] mb-2 flex items-start gap-3">
-									<MessageSquare className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-1" />
+								<h3 className="text-lg font-semibold text-[#111827] mb-2 flex items-start gap-3">
+									<MessageSquare className="w-5 h-5 text-[#C4A962] flex-shrink-0 mt-1" />
 									<span>Do you ship internationally?</span>
 								</h3>
-								<p className="text-[#6C757D] ml-8">
+								<p className="text-[#6B7280] ml-8">
 									Yes! We ship worldwide with tracked and insured delivery to ensure your models arrive
 									safely.
 								</p>
 							</div>
 
 							<div className="vero-glass-card p-6">
-								<h3 className="text-lg font-semibold text-[#212529] mb-2 flex items-start gap-3">
-									<MessageSquare className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-1" />
+								<h3 className="text-lg font-semibold text-[#111827] mb-2 flex items-start gap-3">
+									<MessageSquare className="w-5 h-5 text-[#C4A962] flex-shrink-0 mt-1" />
 									<span>Are all models authentic?</span>
 								</h3>
-								<p className="text-[#6C757D] ml-8">
+								<p className="text-[#6B7280] ml-8">
 									Absolutely. Every model is officially licensed and comes from authorized manufacturers with
 									certificates of authenticity.
 								</p>
 							</div>
 
 							<div className="vero-glass-card p-6">
-								<h3 className="text-lg font-semibold text-[#212529] mb-2 flex items-start gap-3">
-									<MessageSquare className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-1" />
+								<h3 className="text-lg font-semibold text-[#111827] mb-2 flex items-start gap-3">
+									<MessageSquare className="w-5 h-5 text-[#C4A962] flex-shrink-0 mt-1" />
 									<span>Can you source specific models?</span>
 								</h3>
-								<p className="text-[#6C757D] ml-8">
+								<p className="text-[#6B7280] ml-8">
 									Yes! If you're looking for a specific model not in our current inventory, contact us and
 									we'll do our best to source it for you.
 								</p>
 							</div>
 
 							<div className="vero-glass-card p-6">
-								<h3 className="text-lg font-semibold text-[#212529] mb-2 flex items-start gap-3">
-									<MessageSquare className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-1" />
+								<h3 className="text-lg font-semibold text-[#111827] mb-2 flex items-start gap-3">
+									<MessageSquare className="w-5 h-5 text-[#C4A962] flex-shrink-0 mt-1" />
 									<span>What is your return policy?</span>
 								</h3>
-								<p className="text-[#6C757D] ml-8">
+								<p className="text-[#6B7280] ml-8">
 									We offer a 30-day return policy on all unopened items in original condition. See our{" "}
-									<Link href="/terms" className="text-[#D4AF37] hover:text-[#B8941F]">
+									<Link href="/terms" className="text-[#C4A962] hover:text-[#A89050]">
 										terms & conditions
 									</Link>{" "}
 									for details.
@@ -219,14 +219,14 @@ export default function ContactPage() {
 							</div>
 						</div>
 
-						<div className="mt-8 p-6 bg-gradient-to-r from-[#D4AF37]/10 to-[#E6C757]/10 rounded-2xl border border-[#D4AF37]/20">
-							<h3 className="text-lg font-semibold text-[#212529] mb-2">Still have questions?</h3>
-							<p className="text-[#6C757D] mb-4">
+						<div className="mt-8 p-6 bg-gradient-to-r from-[#C4A962]/10 to-[#D4B673]/10 rounded-2xl border border-[#C4A962]/20">
+							<h3 className="text-lg font-semibold text-[#111827] mb-2">Still have questions?</h3>
+							<p className="text-[#6B7280] mb-4">
 								Our team is ready to help you find the perfect addition to your collection.
 							</p>
 							<Link
 								href={`mailto:${StoreConfig.contact.email}`}
-								className="inline-flex items-center gap-2 text-[#D4AF37] hover:text-[#B8941F] font-medium transition-colors"
+								className="inline-flex items-center gap-2 text-[#C4A962] hover:text-[#A89050] font-medium transition-colors"
 							>
 								<Mail className="w-4 h-4" />
 								Email us directly
@@ -237,23 +237,23 @@ export default function ContactPage() {
 			</section>
 
 			{/* Business Hours */}
-			<section className="border-t border-[#D4AF37]/20 bg-gradient-to-b from-[#FDFBF7] to-white py-16">
+			<section className="border-t border-[#C4A962]/20 bg-gradient-to-b from-[#FDFBF7] to-white py-16">
 				<div className="max-w-5xl mx-auto px-6 text-center">
-					<h2 className="text-3xl font-light text-[#212529] mb-8">
+					<h2 className="text-3xl font-light text-[#111827] mb-8">
 						Business <span className="vero-elegant-text">Hours</span>
 					</h2>
 					<div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
 						<div className="vero-glass-card p-6">
-							<h3 className="font-semibold text-[#212529] mb-3">Customer Support</h3>
-							<p className="text-[#6C757D]">Monday - Friday: 9:00 AM - 6:00 PM CET</p>
-							<p className="text-[#6C757D]">Saturday: 10:00 AM - 4:00 PM CET</p>
-							<p className="text-[#6C757D]">Sunday: Closed</p>
+							<h3 className="font-semibold text-[#111827] mb-3">Customer Support</h3>
+							<p className="text-[#6B7280]">Monday - Friday: 9:00 AM - 6:00 PM CET</p>
+							<p className="text-[#6B7280]">Saturday: 10:00 AM - 4:00 PM CET</p>
+							<p className="text-[#6B7280]">Sunday: Closed</p>
 						</div>
 						<div className="vero-glass-card p-6">
-							<h3 className="font-semibold text-[#212529] mb-3">Order Processing</h3>
-							<p className="text-[#6C757D]">Orders placed before 2:00 PM CET</p>
-							<p className="text-[#6C757D]">ship same business day</p>
-							<p className="text-[#D4AF37] font-medium mt-2">Free shipping on orders AED 150+</p>
+							<h3 className="font-semibold text-[#111827] mb-3">Order Processing</h3>
+							<p className="text-[#6B7280]">Orders placed before 2:00 PM CET</p>
+							<p className="text-[#6B7280]">ship same business day</p>
+							<p className="text-[#C4A962] font-medium mt-2">Free shipping on orders AED 150+</p>
 						</div>
 					</div>
 				</div>

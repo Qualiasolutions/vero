@@ -4,559 +4,196 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Your Next Store (YNS) is a Next.js 15 e-commerce boilerplate tightly integrated with Stripe for payment processing. It's built with React 19, TypeScript, and uses Bun as the package manager and runtime.
+**Veromodels** is a premium e-commerce store for 1:18 scale die-cast model cars built with Next.js 15, TypeScript, and modern web technologies. The project is based on the "yournextstore" template and customized for the Veromodels brand.
+
+## Technology Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui (Radix UI based)
+- **Database**: Prisma with PostgreSQL
+- **Authentication**: Supabase Auth
+- **Payments**: Stripe
+- **Package Manager**: Bun
+- **Testing**: Vitest + Testing Library
+- **Linting**: Biome
 
 ## Development Commands
 
-### Package Management & Installation
+### Core Commands
 ```bash
-bun install                    # Install dependencies
+# Start development server with Turbopack
+bun dev
+
+# Build for production
+bun build
+
+# Start production server
+bun start
+
+# Run linting and auto-fix
+bun lint
+
+# Run tests
+bun test
+
+# Prepare Husky hooks
+bun prepare
 ```
 
-### Development Server
+### Docker Commands
 ```bash
-bun run dev                   # Start development server with Turbo
+# Build Docker image
+bun docker:build
+
+# Run Docker container
+bun docker:run
 ```
 
-### Building & Production
-```bash
-bun run build                 # Build for production
-bun run start                 # Start production server
-```
-
-### Code Quality & Testing
-```bash
-bun run lint                  # Run Biome linter/formatter (auto-fix)
-bun run test                  # Run Vitest tests (all tests)
-bun test [pattern]           # Run specific test file(s) matching pattern
-tsgo                         # TypeScript type checking (use tsgo command)
-```
-
-### Docker
-```bash
-bun run docker:build        # Build Docker image
-bun run docker:run          # Run Docker container
-```
-
-### Stripe Product Sync
-```bash
-node scripts/sync-stripe-products.js              # Sync all products from CSV to Stripe
-node scripts/sync-stripe-products.js --dry-run    # Preview changes without applying
-node scripts/sync-stripe-products.js --sku=12345  # Sync specific product by SKU
-node scripts/sync-stripe-products.js --csv=./path # Use custom CSV file
-```
-
-## Architecture & Structure
-
-### Core Technologies
-- **Framework**: Next.js 15 with App Router
-- **Runtime**: React 19 with React Compiler enabled
-- **TypeScript**: Strict configuration with path aliases
-- **Styling**: Tailwind CSS v4 with Radix UI components
-- **State Management**: React Context for cart functionality
-- **Payment Processing**: Stripe integration via commerce-kit
-- **Testing**: Vitest with Testing Library
-- **Linting**: Biome (replaces ESLint/Prettier)
-
-### Directory Structure
-```
-src/
-├── app/                     # Next.js App Router pages
-│   ├── (store)/            # Store route group with layout
-│   ├── login/              # Authentication pages
-│   └── signup/             # User registration
-├── actions/                # Server actions
-├── components/             # Shared React components
-├── context/                # React Context providers (cart, modals)
-├── i18n/                   # Internationalization (client/server)
-├── lib/                    # Utilities, types, auth, search
-├── ui/                     # Reusable UI components
-│   ├── shadcn/             # Shadcn/ui components
-│   ├── checkout/           # Checkout-specific components
-│   ├── nav/                # Navigation components
-│   └── products/           # Product-related components
-└── store.config.ts         # Store configuration (categories, contact info)
-```
-
-### Key Architectural Patterns
-- **Route Groups**: `(store)` group for main store pages with shared layout
-- **Server Components**: Extensive use for performance optimization
-- **Server Actions**: Form handling and data mutations
-- **Dynamic Routes**: `[slug]` for products and categories
-- **Catch-all Routes**: `[...segments]` for flexible routing
-- **Parallel Routing**: Modal implementations using `@modal` slots
-
-### Path Aliases
-- `@/*` → `./src/*`
-- `@ui/*` → `./src/ui/*`
-- `@/components/ui/*` → `./src/ui/shadcn/*`
-
-## Environment Configuration
-
-### Required Environment Variables
-- `STRIPE_SECRET_KEY` - Stripe secret key
-- `STRIPE_CURRENCY` - Currency code (e.g., "usd")
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Stripe publishable key
-- `NEXT_PUBLIC_URL` - Store URL (optional on Vercel)
-
-### Optional Environment Variables
-- `ENABLE_STRIPE_TAX` - Enable Stripe Tax calculations
-- `STRIPE_WEBHOOK_SECRET` - For Stripe webhook handling
-- `NEXT_PUBLIC_UMAMI_WEBSITE_ID` - Analytics tracking
-- `NEXT_PUBLIC_NEWSLETTER_ENDPOINT` - Newsletter signup endpoint
-- `NEXT_PUBLIC_LANGUAGE` - Locale (defaults to "en-US")
-- `SECRET` - JWT signing secret for authentication (required for auth features)
-- `EMAIL` - Admin email for authentication
-- `PASSWORD` - Admin password for authentication
-- `DOCKER` - Set to `1` when building for Docker deployment
-
-## Code Style & Standards
-
-### Biome Configuration
-- **Indentation**: Tabs, width 2
-- **Line Width**: 110 characters
-- **Quotes**: Double quotes for JS/JSX
-- **Trailing Commas**: Always
-- **Semicolons**: Always required
-- **Arrow Parentheses**: Always
-
-### TypeScript Standards
-- Strict mode enabled with additional strictness (`noUncheckedIndexedAccess`)
-- No unused locals enforced
-- Import type enforcement for type-only imports
-- Path aliases configured for clean imports
-
-## Testing
-
-- **Framework**: Vitest with React Testing Library
-- **Setup**: Global test setup in `src/setup-tests.ts`
-- **Pattern**: `**/?(*.)test.?(c|m)[jt]s?(x)`
-- **Mocking**: Automatic mock clearing/resetting between tests
-
-## Commerce Integration
-
-### Stripe Integration
-- Products managed in Stripe Dashboard with metadata
-- Required metadata: `slug` (for URLs)
-- Optional metadata: `category`, `order`, `variant`
-- Webhooks handle payment events and cache revalidation
-
-### Search Functionality
-- Simple search implementation for products
-- Search functionality in `src/lib/search/`
-
-## Commerce & Cart Patterns
-
-### Cart State Management
-- Cart uses **optimistic updates** via `useOptimistic` hook in `src/context/cart-context.tsx`
-- Three-layer cart flow:
-  1. Optimistic UI update (instant feedback)
-  2. Server action execution (`addToCartAction`, `updateCartItemAction`, `removeFromCartAction`)
-  3. Automatic rollback on failure via `useEffect` synchronization
-- Cart state is persisted via cookies using `src/lib/cart-cookies.ts`
-- Import cart functionality via: `import { useCart } from "@/context/cart-context"`
-
-### Commerce Kit Integration
-- Commerce operations use the `commerce-kit` abstraction layer (`src/lib/commerce.ts`)
-- Zero-config setup: reads `STRIPE_SECRET_KEY` and `STRIPE_CURRENCY` from environment
-- Use `commerce.products()`, `commerce.cart()` methods for all Stripe operations
-- Never call Stripe SDK directly; always go through Commerce Kit
+## Architecture Overview
 
 ### Store Configuration
-- All store-level config in `src/store.config.ts` (categories, brands, social, contact, features)
-- Categories are UI-driven; actual product categorization happens via Stripe metadata
-- Feature flags control optional functionality (preorders, wishlist, reviews, newsletter)
+- **src/store.config.ts**: Central store configuration including categories, brands, contact info, and feature flags
+- **src/env.mjs**: Environment variable validation with Zod schemas
 
-## Authentication & Authorization
+### Key Architectural Patterns
 
-- JWT-based authentication using `jose` library (`src/lib/auth.ts`)
-- Session duration: 24 hours with automatic renewal when < 1 hour remaining
-- Protected routes defined in `src/middleware.ts` via `ProtectedPaths` array
-- Auth credentials stored in environment variables: `EMAIL` and `PASSWORD`
-- Login redirects to `/orders`, logout redirects to `/login`
-- Middleware only runs on paths matching the `matcher` config
-
-## Product Data Architecture
-
-### Product Metadata Flow
-Products are managed entirely in Stripe Dashboard with specific metadata:
-- **Required**: `slug` - URL identifier (can be shared across variants)
-- **Optional**:
-  - `category` - Matches categories in `store.config.ts`
-  - `order` - Sort order (lower = first)
-  - `variant` - Variant identifier for product variations
-
-### Variants Implementation
-- Products with identical `slug` metadata are grouped as variants
-- Each variant is a separate Stripe product with its own price, description, and images
-- Variants rendered on same product page at `/product/[slug]`
-- All variants of a product should share the same `category` for consistent browsing
-
-## Custom Slash Commands
-
-This project includes three custom slash commands for maintaining design system consistency:
-
-### `/vero-component [name] [type]`
-Generate a new component following the Veromodels design system. The command guides through:
-- Researching existing similar components
-- Following color, spacing, and typography rules
-- Using proper Vero classes (.vero-card, .vero-button, etc.)
-- Including animations and responsive behavior
-- Validating against design system standards
-
-**Example**: `/vero-component FeatureCard card`
-
-### `/design-audit [file_path]`
-Audit a specific file for design system compliance. Checks:
-- Color palette compliance
-- Spacing consistency (Tailwind scale only)
-- Typography standards
-- Component pattern adherence
-- Vero class usage
-- Accessibility requirements
-- Responsive design
-
-**Example**: `/design-audit src/ui/products/product-card.tsx`
-
-### `/consistency-check`
-Perform project-wide consistency analysis across all components. Generates comprehensive reports on:
-- Color usage consistency
-- Card/button component patterns
-- Typography hierarchy
-- Spacing patterns
-- Animation/transition consistency
-- Responsive design patterns
-
-Produces actionable prioritized fixes and refactoring recommendations.
-
-## Key Development Notes
-
-- Use server components by default, client components only when necessary
-- Leverage Next.js 15 features: React Compiler, Turbo dev server, MDX support
-- Commerce Kit handles Stripe integration abstractions - never call Stripe SDK directly
-- Internationalization ready with message files in `/messages`
-- Docker-ready with standalone output mode (`DOCKER=1` env variable)
-- Git hooks configured with Husky for commit linting
-- Development server runs in background - don't use `bun run dev`, just ask about checking if needed
-- Use `structuredClone()` when passing Stripe SDK data from server to client components (eliminates class instances)
-
-## Stripe Product Management
-
-Products are synced from CSV files to Stripe using the sync script in `scripts/`:
-- Products require `slug` metadata to appear on the website
-- Optional metadata: `category`, `order`, `sku` for organization
-- Images can be included via URLs or uploaded separately
-- The sync script handles creating/updating products and prices
-- See `scripts/README.md` for detailed usage instructions
-
-## DESIGN SYSTEM - MANDATORY FOR ALL DEVELOPMENT
-
-### Brand Identity
-**Project**: Veromodels - Premium 1:18 Scale Die-Cast Model Cars
-**Brand Personality**: Luxury, Exclusive, Premium, Collector-focused
-**Design Philosophy**: Black & Gold luxury aesthetic with clean, professional presentation
-**Target Audience**: Serious collectors and die-cast model enthusiasts
-
-### Color System (USE ONLY THESE - NEVER CREATE NEW COLORS)
-
-#### Veromodels Luxury Palette
-**Gold (Primary Brand Color)**
-- Primary Gold: `#D4AF37` (`--verogold`)
-- Light Gold: `#E6C757` (`--verogold-light`)
-- Dark Gold: `#B8941F` (`--verogold-dark`)
-- Champagne: `#F5E6D3` (`--verogold-champagne`)
-
-**Black Palette**
-- Pure Black: `#0A0A0A` (`--veroblack`)
-- Charcoal: `#1A1A1A` (`--veroblack-charcoal`)
-- Soft Black: `#2A2A2A` (`--veroblack-soft`)
-
-**Neutral Palette**
-- White: `#FFFFFF` (`--verowhite`)
-- Cream: `#FDFBF7` (`--verocream`)
-- Light Gray: `#F8F9FA` (`--verogray`)
-- Medium Gray: `#6C757D` (`--verogray-dark`)
-- Text Primary: `#212529` (`--verotext`)
-
-#### Shadcn Semantic Colors (from globals.css)
-**Light Mode:**
-- Background: `0 0% 100%` (white)
-- Foreground: `222.2 84% 4.9%` (near black)
-- Primary: `222.2 47.4% 11.2%` (dark blue-gray)
-- Secondary: `210 40% 96.1%` (light gray)
-- Muted: `210 40% 96.1%` (light gray)
-- Accent: `210 40% 96.1%` (light gray)
-- Destructive: `0 84.2% 60.2%` (red)
-- Border: `214.3 31.8% 91.4%` (light gray)
-
-**Category Badge Colors** (from store.config.ts)
-- New Arrivals: `bg-green-500`
-- Special Price: `bg-red-500`
-- Limited Editions: `bg-purple-500`
-- Rare Models: `bg-amber-500`
-- Pre-Order: `bg-blue-500`
-- Coming Soon: `bg-indigo-500`
-
-### Typography System
-
-**Font Family**: System font stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`)
-
-**Font Weights**
-- Light: 300 (use for headings)
-- Normal: 400 (default body text)
-- Medium: 500 (emphasized text)
-- Semibold: 600 (buttons, labels)
-- Bold: 700 (strong emphasis)
-
-**Font Scale** (Tailwind defaults - use these classes)
-- Display: `text-4xl` or `text-5xl` (36-48px)
-- H1: `text-3xl` (30px)
-- H2: `text-2xl` (24px)
-- H3: `text-xl` (20px)
-- H4: `text-lg` (18px)
-- Body Large: `text-base` (16px)
-- Body: `text-sm` (14px)
-- Small: `text-xs` (12px)
-- Caption: `text-[10px]` or `text-[11px]`
-
-**Line Heights**
-- Tight: `leading-tight` (1.25) - for headings
-- Normal: `leading-normal` (1.5) - default
-- Relaxed: `leading-relaxed` (1.625) - for long text
-
-**Text Styles**
-- Uppercase: Use `uppercase` with `tracking-wide` or `tracking-wider` for premium feel
-- Letter Spacing: `tracking-wide` (0.025em) for buttons and labels
-
-### Spacing System (Tailwind Scale - NEVER use arbitrary values)
-- `space-1` = 4px
-- `space-2` = 8px
-- `space-3` = 12px
-- `space-4` = 16px
-- `space-5` = 20px
-- `space-6` = 24px
-- `space-8` = 32px
-- `space-12` = 48px
-- `space-16` = 64px
-- `space-24` = 96px
-
-**Common Spacing Usage:**
-- Component padding: `p-4` to `p-6`
-- Card padding: `p-5` or `p-6`
-- Section gaps: `gap-4` to `gap-6`
-- Section spacing: `py-8` to `py-12`
-- Container padding: `px-4` (mobile), `px-8` to `px-12` (desktop)
-
-### Border Radius
-- Extra small: `rounded-sm` (2px)
-- Small: `rounded` (4px)
-- Medium: `rounded-md` (6px)
-- Large: `rounded-lg` (8px)
-- Extra large: `rounded-xl` (12px)
-- Full: `rounded-full` (9999px)
-
-**Component Defaults:**
-- Cards: `rounded-lg` or `rounded-xl`
-- Buttons: `rounded-md` or `rounded-lg`
-- Badges: `rounded-md` or `rounded-full`
-- Images: `rounded-lg`
-
-### Shadows (Tailwind defaults)
-- Small: `shadow-sm` - subtle card shadows
-- Medium: `shadow-md` - elevated elements
-- Large: `shadow-lg` - modals, popovers
-- Extra large: `shadow-xl` - floating elements
-
-### Component Patterns (MANDATORY STANDARDS)
-
-#### Cards
-**Standard Card** (`.vero-card` class):
-- Background: white
-- Border: `1px solid rgba(212, 175, 55, 0.15)` (subtle gold)
-- Border radius: `rounded-lg` or `rounded-xl`
-- Shadow: `shadow-sm` or custom gold shadow
-- Hover: Lift animation (`translateY(-6px) scale(1.01)`)
-- Hover border: Changes to gold (`--verogold`)
-
-**Usage:**
-```tsx
-<div className="vero-card rounded-lg overflow-hidden">
-  {/* Card content */}
-</div>
+#### 1. Route Structure (App Router)
+```
+src/app/
+├── (store)/           # Store routes with shared layout
+│   ├── page.tsx       # Homepage
+│   ├── product/[slug]/ # Dynamic product pages
+│   ├── category/[slug]/ # Category pages
+│   ├── checkout/      # Checkout flow
+│   └── search/        # Product search
+├── api/               # API routes
+└── auth/              # Authentication routes
 ```
 
-#### Buttons
-**Primary Button** (`.vero-button` class):
-- Background: `--verogold` (#D4AF37)
-- Text: white
-- Font weight: 600 (semibold)
-- Text transform: uppercase
-- Letter spacing: `tracking-wide` (1.5px)
-- Padding: `px-6 py-3` or `px-8 py-3`
-- Border radius: `rounded-md`
-- Hover: Darker gold with ripple effect
+#### 2. State Management
+- **src/context/cart-context.tsx**: Cart state management with React Context
+- **src/context/favorites-context.tsx**: Wishlist/favorites management
+- Server Components for data fetching with client components for interactivity
 
-**Outline Button** (`.vero-button-outline` class):
-- Background: transparent
-- Border: `2px solid --verogold`
-- Text: gold color
-- Hover: Fill with gold, text becomes white
+#### 3. Commerce Layer
+- **src/lib/commerce.ts**: Core commerce utilities
+- **src/lib/product-service.ts**: Product data management
+- **src/actions/**: Server actions for cart, checkout, and auth
+- **commerce-kit** package: Stripe-based commerce functionality
 
-**Shadcn Button Variants:**
-- Default: Primary dark background
-- Outline: Border with hover background
-- Ghost: Transparent with hover accent
-- Link: Underline style
+#### 4. Authentication
+- Supabase-based authentication with middleware support
+- **src/lib/supabase/**: Client, server, and middleware configurations
+- Protected routes with auth checks
 
-**Usage:**
-```tsx
-// Custom Vero button
-<button className="vero-button px-8 py-3 rounded-md">
-  Add to Cart
-</button>
+#### 5. UI Architecture
+- **src/ui/**: Reusable UI components
+- **src/ui/shadcn/**: shadcn/ui components
+- **src/components/**: Business-specific components
+- Design tokens in **src/design/tokens.ts**
 
-// Shadcn button
-<Button variant="default" size="lg">
-  View Details
-</Button>
-```
+### Data Flow
 
-#### Gradients
-**Available Gradient Classes:**
-- `.vero-gradient` - White to cream
-- `.vero-black-gradient` - Black to charcoal
-- `.vero-luxury-gradient` - Black to gold
-- `.vero-gold-gradient` - Gold to dark gold
-- `.vero-text-gradient` - Gold gradient text effect (with shimmer)
-- `.vero-elegant-text` - Animated shimmer gold text
+#### Product Management
+- Products fetched through Stripe API with commerce-kit
+- Image mapping via **src/lib/product-image-mapping.js**
+- Search functionality in **src/lib/search/**
+- Category-based filtering
 
-#### Glass Effects
-- `.vero-glass` - Light glass with backdrop blur
-- `.vero-glass-dark` - Dark glass with gold border
+#### Cart & Checkout
+- Cart state managed via React Context + Server Actions
+- Stripe Payment Intents for checkout
+- Cookie-based cart persistence
+- Optimistic updates for better UX
 
-#### Navigation
-**Header** (see `src/ui/nav/nav.tsx`):
-- Height: Auto (py-6)
-- Background: `bg-white/95` with `backdrop-blur-md`
-- Border bottom: `border-[#D4AF37]/20`
-- Sticky positioning
-- Logo hover: Scale + gold glow
+#### User Management
+- Supabase authentication with JWT sessions
+- User profiles and order history
+- Protected customer dashboards
 
-#### Input Fields
-**Standard Input** (Shadcn):
-- Height: `h-9` or `h-10`
-- Padding: `px-3 py-2`
-- Border: `border-input`
-- Border radius: `rounded-md`
-- Focus: Ring with primary color
+## Important Files & Their Roles
 
-#### Layout
-- Max width: 1400px (`.container` utility)
-- Container padding: `px-4` to `px-12` (responsive)
-- Section spacing: `py-8` to `py-12`
-- Grid gaps: `gap-4` to `gap-6`
+### Configuration
+- **src/store.config.ts**: Store settings, categories, brands
+- **src/env.mjs**: Environment variable validation
+- **middleware.ts**: Request middleware for auth/i18n
+- **tailwind.config.ts**: Tailwind configuration
 
-### Animation Utilities
+### Core Libraries
+- **src/lib/stripe.ts**: Stripe integration
+- **src/lib/api.ts**: API utilities
+- **src/lib/types.ts**: TypeScript type definitions
+- **src/lib/utils.ts**: Utility functions
 
-**Available Animations:**
-- `animate-fade-in` - Fade in with slide up
-- `animate-shimmer` - Shimmer effect (for text/buttons)
-- `animate-glow` - Pulsing glow effect
-- `animate-float` - Floating animation
-- `animate-lift` - Hover lift effect
-- `animate-meteor` - Meteor trail animation
+### Actions (Server Actions)
+- **src/actions/cart-actions.ts**: Cart operations
+- **src/actions/checkout-actions.ts**: Checkout process
+- **src/actions/auth-actions.ts**: Authentication
 
-**Transition Standards:**
-- Default: `transition-all duration-300`
-- Slow: `duration-500` or `duration-700`
-- Easing: `ease-in-out` or `cubic-bezier(0.4, 0, 0.2, 1)`
+## Development Guidelines
 
-### Accessibility Requirements
-- Minimum contrast ratio: 4.5:1 for normal text
-- Color cannot be the only indicator of meaning
-- Focus indicators must be visible (ring utilities)
-- Interactive elements minimum 44px touch target
-- Alt text required for all images
+### Code Organization
+- Server Components by default, Client Components only when needed
+- Use TypeScript strictly - no `any` types
+- Follow the existing component naming conventions
+- Separate business logic from UI components
 
-### Consistency Enforcement Rules
+### Styling
+- Use Tailwind CSS classes consistently
+- Leverage shadcn/ui components for consistency
+- Follow the existing color scheme and spacing patterns
+- Mobile-first responsive design
 
-**CRITICAL - READ BEFORE EVERY COMPONENT CREATION:**
+### Testing
+- Unit tests for utilities and business logic
+- Component tests for UI components
+- Test files located in `__tests__/` directories or `.test.ts` files
 
-1. **NEVER create custom colors** - Only use the defined Vero palette or Shadcn semantic colors
-2. **NEVER use arbitrary spacing** - Always use Tailwind's spacing scale
-3. **ALWAYS check existing components** for pattern consistency before creating new ones
-4. **ALWAYS use `.vero-*` classes** for luxury styling (cards, buttons, gradients)
-5. **Test responsive behavior** at mobile, tablet, and desktop breakpoints
-6. **Follow component naming** - Use descriptive names that match the Vero brand
-7. **Prefer custom Vero classes** over inline Tailwind when a utility class exists
-8. **Use Shadcn components** as base, then enhance with Vero styling
+### Performance Considerations
+- Images optimized through Next.js Image component
+- Prefetching for navigation links
+- Optimistic updates for cart operations
+- Suspense boundaries for loading states
 
-**Before Creating ANY Component:**
-1. Review this design system section
-2. Check if similar component exists in `src/ui/` or `src/components/`
-3. Use existing patterns (product cards, buttons, etc.)
-4. Ensure color palette compliance
-5. Apply proper hover/animation effects
+## Environment Setup
 
-**File Reference Locations:**
-- Custom Vero CSS classes: `src/app/globals.css` (lines 374-609)
-- Full design system documentation: `DESIGN-SYSTEM.md`
-- Shadcn components: `src/ui/shadcn/*`
-- Product components: `src/ui/products/*`
-- Navigation: `src/ui/nav/*`
-- Store config: `src/store.config.ts`
+Required environment variables (see **src/env.mjs** for complete list):
+- `STRIPE_SECRET_KEY` & `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_CURRENCY`
+- `NEXT_PUBLIC_URL` (for Stripe redirects)
+- Supabase credentials (`NEXT_PUBLIC_SUPABASE_URL`, etc.)
+- Optional: `ENABLE_STRIPE_TAX` for tax calculation
 
-**Note**: For complete design system details including all color values, typography scales, component templates, and usage examples, refer to `DESIGN-SYSTEM.md`. This section provides the essential rules for quick reference.
+## Common Patterns
 
-### Brand-Specific Guidelines
+### Adding New Products
+Products are managed through Stripe dashboard. The system automatically syncs with Stripe products.
 
-**Luxury Aesthetic:**
-- Use generous white space
-- Apply subtle animations and hover effects
-- Maintain professional, premium feel
-- Use gold sparingly as accent (not overwhelming)
-- Ensure high-quality product imagery presentation
+### Category Management
+Categories configured in **src/store.config.ts** with proper slugs and images.
 
-**Text Content:**
-- Use professional, confident tone
-- Emphasize authenticity, quality, exclusivity
-- Highlight limited editions and rarity
-- Focus on collector value
+### UI Component Creation
+- Use shadcn/ui as base components when possible
+- Follow existing component structure in **src/ui/**
+- Use TypeScript interfaces for props
+- Implement responsive design
 
-**Component Consistency:**
-- Every product card should have favorite heart icon
-- Category badges use consistent colors
-- Maintain consistent image aspect ratios
-- Use consistent pricing format (€XX.XX)
+### API Routes
+API routes follow Next.js App Router conventions in **src/app/api/** with proper error handling and TypeScript typing.
 
-## Available Development Tools
+## Deployment
 
-### MCP Servers
-This project has the following Model Context Protocol (MCP) servers configured:
+The project is configured for Vercel deployment with:
+- Edge middleware support
+- Environment variable validation
+- Stripe webhook handling
+- Supabase integration
 
-#### Context7 (`mcp__context7__*`)
-Access up-to-date documentation for libraries:
-- `resolve-library-id`: Find Context7-compatible library IDs
-- `get-library-docs`: Fetch current documentation for a library
+## Testing Strategy
 
-#### Filesystem (`mcp__filesystem__*`)
-Advanced filesystem operations:
-- Read/write/edit files with enhanced capabilities
-- Directory operations and file searching
-- Supports multiple file reads in parallel
-
-#### Playwright (`mcp__playwright__*`)
-Browser automation for testing:
-- Navigate and interact with web pages
-- Take screenshots and snapshots
-- Evaluate JavaScript, fill forms
-- Capture console messages and network requests
-- Useful for testing the deployed store
-
-### When to Use Tools
-- Use **Read/Write/Edit** tools for code modifications
-- Use **Glob** for finding files by pattern
-- Use **Grep** for searching file contents (supports regex)
-- Use **Bash** for terminal operations (git, npm, docker, etc.) - NOT for reading files
-- Use **Task** agent for complex multi-step searches or analyses
-- Use **Playwright** tools for end-to-end testing of the live website
+- Unit tests with Vitest for utilities and business logic
+- Component testing with Testing Library
+- E2E testing capabilities (though not currently implemented)
+- Type checking as the first line of defense

@@ -20,7 +20,7 @@ export default async function StoreLayout({
 					{/* Skip to main content link for keyboard navigation */}
 					<a
 						href="#main-content"
-						className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-[#D4AF37] focus:text-white focus:rounded-lg focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:ring-offset-2"
+						className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-[#C4A962] focus:text-white focus:rounded-lg focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#C4A962] focus:ring-offset-2"
 					>
 						Skip to main content
 					</a>

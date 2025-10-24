@@ -20,26 +20,12 @@ export default function AuthErrorPage() {
 
 					<div className="mb-6">
 						<div className="w-16 h-16 rounded-full bg-[#8B4513]/10 flex items-center justify-center mx-auto mb-4 border border-[#8B4513]/30">
-							<svg
-								className="w-8 h-8 text-[#A0522D]"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M6 18L18 6M6 6l12 12"
-								/>
+							<svg className="w-8 h-8 text-[#A0522D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
 							</svg>
 						</div>
-						<h1 className="text-2xl font-light text-white mb-2 tracking-wide">
-							Authentication Error
-						</h1>
-						<p className="text-[#C9A961] mb-6 font-light">
-							The verification link is invalid or has expired.
-						</p>
+						<h1 className="text-2xl font-light text-white mb-2 tracking-wide">Authentication Error</h1>
+						<p className="text-[#C9A961] mb-6 font-light">The verification link is invalid or has expired.</p>
 					</div>
 
 					<div className="space-y-4 text-sm text-white/60 mb-8 font-light">
@@ -55,7 +41,11 @@ export default function AuthErrorPage() {
 						<Button asChild className="w-full vero-button h-12">
 							<Link href="/signup">Try Signing Up Again</Link>
 						</Button>
-						<Button asChild variant="outline" className="w-full h-12 border-[#B8941F]/30 hover:border-[#C9A961]">
+						<Button
+							asChild
+							variant="outline"
+							className="w-full h-12 border-[#A89050]/30 hover:border-[#C9A961]"
+						>
 							<Link href="/login">Back to Login</Link>
 						</Button>
 					</div>
@@ -63,7 +53,7 @@ export default function AuthErrorPage() {
 
 				<p className="text-center text-sm text-white/50 mt-6 font-light">
 					Need help?{" "}
-					<a href="mailto:support@veromodels.com" className="text-[#C9A961] hover:text-[#D4AF37]">
+					<a href="mailto:support@veromodels.com" className="text-[#C9A961] hover:text-[#C4A962]">
 						Contact Support
 					</a>
 				</p>

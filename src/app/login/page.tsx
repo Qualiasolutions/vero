@@ -51,8 +51,8 @@ export default async function LoginPage() {
 				</div>
 				{/* Decorative pattern */}
 				<div className="absolute inset-0 opacity-5">
-					<div className="absolute top-20 left-20 w-64 h-64 border border-[#B8941F] rounded-full" />
-					<div className="absolute bottom-20 right-20 w-48 h-48 border border-[#B8941F] rounded-full" />
+					<div className="absolute top-20 left-20 w-64 h-64 border border-[#A89050] rounded-full" />
+					<div className="absolute bottom-20 right-20 w-48 h-48 border border-[#A89050] rounded-full" />
 				</div>
 			</div>
 
@@ -69,7 +69,7 @@ export default async function LoginPage() {
 							className="h-14 w-auto"
 							priority
 						/>
-						<p className="text-sm text-[#6C757D] text-center font-light">Premium Diecast Car Models</p>
+						<p className="text-sm text-[#6B7280] text-center font-light">Premium Diecast Car Models</p>
 					</Link>
 
 					<LoginForm />

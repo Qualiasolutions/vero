@@ -15,7 +15,7 @@ export const Banner = () => {
 	};
 
 	return (
-		<div className="bg-gradient-to-r from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] px-4 py-3 text-[#F5E6D3] border-b border-[#D4AF37]/30">
+		<div className="bg-gradient-to-r from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] px-4 py-3 text-[#F5E6D3] border-b border-[#C4A962]/30">
 			<div className="flex items-center justify-between gap-x-4">
 				<div className="mx-auto flex max-w-7xl items-center justify-between gap-x-4">
 					<div className="flex items-center gap-x-4">
@@ -24,7 +24,7 @@ export const Banner = () => {
 						</p>
 						<YnsLink
 							href="/new-arrivals"
-							className="flex-none rounded-full bg-[#D4AF37] px-3 py-1 text-sm font-semibold text-white shadow-md hover:bg-[#E6C757] transition-all duration-300"
+							className="flex-none rounded-full bg-[#C4A962] px-3 py-1 text-sm font-semibold text-white shadow-md hover:bg-[#D4B673] transition-all duration-300"
 						>
 							Shop Now
 						</YnsLink>
@@ -32,7 +32,7 @@ export const Banner = () => {
 				</div>
 				<button
 					onClick={handleClose}
-					className="flex-none rounded-full justify-self-end bg-[#D4AF37] p-1 text-white shadow-md hover:bg-[#E6C757] transition-all duration-300"
+					className="flex-none rounded-full justify-self-end bg-[#C4A962] p-1 text-white shadow-md hover:bg-[#D4B673] transition-all duration-300"
 					aria-label="Close banner"
 					type="button"
 				>

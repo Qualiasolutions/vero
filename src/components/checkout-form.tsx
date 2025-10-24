@@ -85,7 +85,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 	};
 
 	return (
-		<Card className="border-[#D4AF37]/20">
+		<Card className="border-[#C4A962]/20">
 			<CardHeader>
 				<CardTitle className="text-xl font-light uppercase tracking-wide flex items-center gap-2">
 					{userId ? <User className="h-5 w-5" /> : <ShoppingBag className="h-5 w-5" />}
@@ -103,7 +103,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 								value={formData.firstName}
 								onChange={handleInputChange}
 								required
-								className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+								className="border-[#C4A962]/20 focus:border-[#C4A962]"
 							/>
 						</div>
 						<div className="space-y-2">
@@ -114,7 +114,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 								value={formData.lastName}
 								onChange={handleInputChange}
 								required
-								className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+								className="border-[#C4A962]/20 focus:border-[#C4A962]"
 							/>
 						</div>
 					</div>
@@ -128,12 +128,12 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 							value={formData.email}
 							onChange={handleInputChange}
 							required
-							className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+							className="border-[#C4A962]/20 focus:border-[#C4A962]"
 						/>
 					</div>
 
 					<div className="space-y-4">
-						<h3 className="font-medium text-[#212529]">Shipping Information</h3>
+						<h3 className="font-medium text-[#111827]">Shipping Information</h3>
 
 						<div className="space-y-2">
 							<Label htmlFor="address">Street Address</Label>
@@ -142,7 +142,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 								name="address"
 								value={formData.address}
 								onChange={handleInputChange}
-								className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+								className="border-[#C4A962]/20 focus:border-[#C4A962]"
 							/>
 						</div>
 
@@ -154,7 +154,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 									name="city"
 									value={formData.city}
 									onChange={handleInputChange}
-									className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+									className="border-[#C4A962]/20 focus:border-[#C4A962]"
 								/>
 							</div>
 							<div className="space-y-2">
@@ -164,7 +164,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 									name="postalCode"
 									value={formData.postalCode}
 									onChange={handleInputChange}
-									className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+									className="border-[#C4A962]/20 focus:border-[#C4A962]"
 								/>
 							</div>
 						</div>
@@ -177,13 +177,13 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 								value={formData.country}
 								onChange={handleInputChange}
 								placeholder="e.g., United States"
-								className="border-[#D4AF37]/20 focus:border-[#D4AF37]"
+								className="border-[#C4A962]/20 focus:border-[#C4A962]"
 							/>
 						</div>
 					</div>
 
-					<div className="bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-lg p-4">
-						<p className="text-sm text-[#212529]">
+					<div className="bg-[#C4A962]/10 border border-[#C4A962]/30 rounded-lg p-4">
+						<p className="text-sm text-[#111827]">
 							You will be redirected to Stripe's secure checkout page to complete your payment.
 						</p>
 					</div>
@@ -207,7 +207,7 @@ export function CheckoutForm({ cart, userId }: CheckoutFormProps) {
 						)}
 					</Button>
 
-					<div className="flex items-center justify-center gap-2 text-xs text-[#6C757D]">
+					<div className="flex items-center justify-center gap-2 text-xs text-[#6B7280]">
 						<svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
 							<path
 								strokeLinecap="round"

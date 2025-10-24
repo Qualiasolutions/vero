@@ -38,7 +38,7 @@ export default async function SignupPage() {
 					{/* Benefits List */}
 					<div className="text-left space-y-4 mt-12">
 						<div className="flex items-start gap-4">
-							<div className="w-8 h-8 rounded-full bg-[#B8941F]/15 flex items-center justify-center flex-shrink-0 mt-1 border border-[#B8941F]/30">
+							<div className="w-8 h-8 rounded-full bg-[#A89050]/15 flex items-center justify-center flex-shrink-0 mt-1 border border-[#A89050]/30">
 								<svg className="w-4 h-4 text-[#C9A961]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
 								</svg>
@@ -49,7 +49,7 @@ export default async function SignupPage() {
 							</div>
 						</div>
 						<div className="flex items-start gap-4">
-							<div className="w-8 h-8 rounded-full bg-[#B8941F]/15 flex items-center justify-center flex-shrink-0 mt-1 border border-[#B8941F]/30">
+							<div className="w-8 h-8 rounded-full bg-[#A89050]/15 flex items-center justify-center flex-shrink-0 mt-1 border border-[#A89050]/30">
 								<svg className="w-4 h-4 text-[#C9A961]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
 								</svg>
@@ -60,7 +60,7 @@ export default async function SignupPage() {
 							</div>
 						</div>
 						<div className="flex items-start gap-4">
-							<div className="w-8 h-8 rounded-full bg-[#B8941F]/15 flex items-center justify-center flex-shrink-0 mt-1 border border-[#B8941F]/30">
+							<div className="w-8 h-8 rounded-full bg-[#A89050]/15 flex items-center justify-center flex-shrink-0 mt-1 border border-[#A89050]/30">
 								<svg className="w-4 h-4 text-[#C9A961]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
 								</svg>
@@ -74,8 +74,8 @@ export default async function SignupPage() {
 				</div>
 				{/* Decorative pattern */}
 				<div className="absolute inset-0 opacity-5">
-					<div className="absolute top-20 right-20 w-64 h-64 border border-[#B8941F] rounded-full" />
-					<div className="absolute bottom-20 left-20 w-48 h-48 border border-[#B8941F] rounded-full" />
+					<div className="absolute top-20 right-20 w-64 h-64 border border-[#A89050] rounded-full" />
+					<div className="absolute bottom-20 left-20 w-48 h-48 border border-[#A89050] rounded-full" />
 				</div>
 			</div>
 
@@ -92,7 +92,7 @@ export default async function SignupPage() {
 							className="h-14 w-auto"
 							priority
 						/>
-						<p className="text-sm text-[#6C757D] text-center font-light">Premium Diecast Car Models</p>
+						<p className="text-sm text-[#6B7280] text-center font-light">Premium Diecast Car Models</p>
 					</Link>
 
 					<SignupForm />

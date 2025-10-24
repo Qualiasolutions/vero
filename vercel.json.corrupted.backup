@@ -1,0 +1,325 @@
+{
+  "buildCommand": "bun run build",
+  "outputDirectory": ".next",
+  "installCommand": "bun install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_URL": "https://vero-new.vercel.app",
+    "DOCKER": "1"
+  },
+  "build": {
+    "env": {
+      "DOCKER": "1"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Per",
+          "value": "DENY"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Per",
+          "value": "nosniff"
+        }
+      ]
+    }
+    ],
+    {
+      "source": "(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+    ]
+  },
+    {
+      "source": "/(.*\\.(ico|png|jpg|getCapabilities",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          " /": {
+        "key": "X-Content-Type-Options",
+          "value": "nosniff"
+          },
+          "  "key": "X-Frame-Per",
+          "value": "DENY"
+          },
+          " "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+          },
+          " "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff|win|ttf|eot))",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+          },
+          "  "key": "X-Frame-Options",
+          "value": "DENY"
+          },
+          " "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+          },
+          "  "key": "Verc internal error"
+        },
+          "value": "An internal error occurred: timeout"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Vercel internal error"
+          "timeout": "timeout"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          " timeout",
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "color": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+    }
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ltf|eot))",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        isPartial: false
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|json))",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|json|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          " experiencing intermittent connectivity issues
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "string-origin-when-cross-origin"
+        }
+      ]
+    }
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|webp|svg|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Vercel internal error"
+          "value": "An internal error occurred: timeout"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(ico|png|jpg|jpeg|json|webm|mp4|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          " Verification Status: Verified Environment Variables
+- NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ✅ Encrypted
+- NEXT_PUBLIC_URL: ✅ Set
+- STRIPE_CURRENCY: ✅ Set
+- DATABASE_URL: ✅ Set
+- SECRET: ✅ Set
+- IRON_SESSION_PASSWORD: ✅ Set
+- SUPABASE_DATABASE_URL: ✅ Set
+- SUPABASE_SERVICE_ROLE_KEY: ✅ Set
+- NEXT_PUBLIC_SUPABASE_ANON_KEY: ✅ Set
