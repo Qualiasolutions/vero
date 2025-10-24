@@ -217,9 +217,6 @@ export const Nav = () => {
 					</div>
 				)}
 			</header>
-
-			{/* Spacer for fixed header */}
-			<div className="h-20 lg:h-24"></div>
 		</>
 	);
 };
