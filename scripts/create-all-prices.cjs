@@ -12,16 +12,11 @@ const csv = require("csv-parser");
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 if (!STRIPE_SECRET_KEY) {
-	console.error("❌ Error: STRIPE_SECRET_KEY environment variable not set");
 	process.exit(1);
 }
 
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 const CSV_FILE = "./products_cleaned.csv";
-
-console.log("======================================================================");
-console.log("🚀 CREATING STRIPE PRODUCT PRICES");
-console.log("======================================================================\n");
 
 // Read CSV and create price mapping
 const csvProducts = [];
@@ -39,28 +34,19 @@ fs.createReadStream(CSV_FILE)
 		}
 	})
 	.on("end", async () => {
-		console.log(`📋 Loaded ${csvProducts.length} products from CSV\n`);
-
-		// Fetch all Stripe products
-		console.log("📥 Fetching products from Stripe...");
 		const stripeProducts = [];
 		for await (const product of stripe.products.list({ limit: 100 })) {
 			stripeProducts.push(product);
 		}
-		console.log(`✅ Found ${stripeProducts.length} products in Stripe\n`);
 
-		let created = 0;
-		let updated = 0;
-		let skipped = 0;
-		let failed = 0;
+		let _created = 0;
+		let _updated = 0;
+		let _skipped = 0;
+		let _failed = 0;
 
 		// Match and create/update prices
 		for (const csvProduct of csvProducts) {
 			const { sku, price, title } = csvProduct;
-
-			console.log(`🔄 Processing: ${title}`);
-			console.log(`   SKU: ${sku}`);
-			console.log(`   Price: €${(price / 100).toFixed(2)}`);
 
 			// Find matching Stripe product by SKU in description or metadata
 			const stripeProduct = stripeProducts.find(
@@ -72,18 +58,13 @@ fs.createReadStream(CSV_FILE)
 			);
 
 			if (!stripeProduct) {
-				console.log(`   ⚠️  No matching Stripe product found\n`);
-				skipped++;
+				_skipped++;
 				continue;
 			}
-
-			console.log(`   Found: ${stripeProduct.id}`);
 
 			try {
 				// Check if product already has a price
 				if (stripeProduct.default_price) {
-					console.log(`   ℹ️  Product already has price: ${stripeProduct.default_price}`);
-
 					// Update the existing price if needed
 					const existingPrice = await stripe.prices.retrieve(stripeProduct.default_price);
 					if (existingPrice.unit_amount !== price) {
@@ -97,12 +78,9 @@ fs.createReadStream(CSV_FILE)
 						await stripe.products.update(stripeProduct.id, {
 							default_price: newPrice.id,
 						});
-
-						console.log(`   ✅ Updated with new price: ${newPrice.id}\n`);
-						updated++;
+						_updated++;
 					} else {
-						console.log(`   ✅ Price already correct\n`);
-						skipped++;
+						_skipped++;
 					}
 				} else {
 					// Create new price
@@ -116,26 +94,13 @@ fs.createReadStream(CSV_FILE)
 					await stripe.products.update(stripeProduct.id, {
 						default_price: newPrice.id,
 					});
-
-					console.log(`   ✅ Created new price: ${newPrice.id}\n`);
-					created++;
+					_created++;
 				}
 
 				// Rate limiting
 				await new Promise((resolve) => setTimeout(resolve, 100));
-			} catch (error) {
-				console.log(`   ❌ Failed: ${error.message}\n`);
-				failed++;
+			} catch (_error) {
+				_failed++;
 			}
 		}
-
-		console.log("======================================================================");
-		console.log("📊 PRICE CREATION SUMMARY");
-		console.log("======================================================================");
-		console.log(`✅ Created:  ${created} prices`);
-		console.log(`🔄 Updated:  ${updated} prices`);
-		console.log(`⏭️  Skipped:  ${skipped} products`);
-		console.log(`❌ Failed:   ${failed} products`);
-		console.log("======================================================================\n");
-		console.log("✨ Price creation complete!");
 	});

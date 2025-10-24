@@ -82,26 +82,26 @@ function extractBrand(title: string): string {
 }
 
 // Extract scale from description
-function extractScale(description: string): string {
+function _extractScale(description: string): string {
 	const scaleMatch = description.match(/Scale:\s*(\d+:\d+)/i);
 	return scaleMatch ? scaleMatch[1] : "1:18";
 }
 
 // Extract material from description
-function extractMaterial(description: string): string {
+function _extractMaterial(description: string): string {
 	if (description.includes("Resin")) return "Resin";
 	if (description.includes("Die-cast")) return "Die-cast";
 	return "Mixed";
 }
 
 // Extract release date from tags
-function extractReleaseDate(tags: string): string | undefined {
+function _extractReleaseDate(tags: string): string | undefined {
 	const match = tags.match(/Release:\s*(\w+\s+\d{4})/i);
 	return match ? match[1] : undefined;
 }
 
 // Clean HTML from description
-function cleanDescription(desc: string): string {
+function _cleanDescription(desc: string): string {
 	return desc
 		.replace(/<pre><code>/g, "")
 		.replace(/<\/code><\/pre>/g, "")
@@ -111,7 +111,7 @@ function cleanDescription(desc: string): string {
 }
 
 // Create slug from title
-function createSlug(title: string, sku: string): string {
+function _createSlug(title: string, sku: string): string {
 	return (title + "-" + sku)
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")

@@ -53,7 +53,7 @@ async function main() {
 	const toDelete: Array<{ id: string; name: string; reason: string }> = [];
 	const toKeep: Array<{ id: string; name: string }> = [];
 
-	for (const [name, products] of productsByName.entries()) {
+	for (const [_name, products] of productsByName.entries()) {
 		if (products.length > 1) {
 			// Sort to find best product to keep
 			const sorted = [...products].sort((a, b) => {
