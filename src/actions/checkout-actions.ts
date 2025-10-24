@@ -66,12 +66,15 @@ export async function createCheckoutSession() {
 			env.NEXT_PUBLIC_URL ||
 			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
+<<<<<<< HEAD
 		console.log("🔍 About to create Stripe session with currency:", cart.currency);
 		console.log(
 			"🔍 Line items currency check:",
 			lineItems.map((i) => i.price_data.currency),
 		);
 
+=======
+>>>>>>> parent of 03d1ef2 (debug: add detailed currency logging before Stripe session creation)
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
 			line_items: lineItems,
