@@ -1019,15 +1019,37 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 
 	.selfridges-card {
-		@apply vero-card;
+		background: var(--vero-white-pure);
+		border: 1px solid var(--vero-border-light);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 	}
 
 	.selfridges-button {
-		@apply vero-button;
+		background: var(--vero-black-pure);
+		color: var(--vero-white-pure);
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		border: none;
+		padding: 0.75rem 1.5rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	}
 
 	.selfridges-button-outline {
-		@apply vero-button-outline;
+		background: transparent;
+		color: var(--vero-black-pure);
+		border: 1.5px solid var(--vero-black-pure);
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		padding: 0.75rem 1.5rem;
 	}
 
 	/* Legacy CSS Variables for Backward Compatibility */
