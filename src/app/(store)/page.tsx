@@ -258,7 +258,7 @@ export default async function Home() {
 																<div className="flex gap-1.5">
 																	<AddToCart
 																		variantId={product.id}
-																		className="flex-1 items-center justify-center gap-1 rounded-md bg-[var(--vero-gold-accent)] px-2 py-1.5 text-xs font-semibold text-white transition-colors duration-300 hover:bg-[var(--vero-gold-accent-dark)]"
+																		className="flex-1 items-center justify-center gap-1 rounded-md bg-black px-2 py-1.5 text-xs font-semibold text-white transition-colors duration-300 hover:bg-gray-800"
 																	>
 																		<span className="uppercase tracking-wide text-xs">Add</span>
 																	</AddToCart>
