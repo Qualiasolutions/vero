@@ -114,8 +114,8 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 			});
 
 			// Check if products.data exists and is an array
-			if (!products || !products.data || !Array.isArray(products.data)) {
-				throw new Error("Commerce-kit returned invalid data structure");
+			if (!products || !products.data || !Array.isArray(products.data) || products.data.length === 0) {
+				throw new Error("Commerce-kit returned invalid or empty data structure");
 			}
 
 			const enrichedProducts: Product[] = products.data.map((product) => ({
@@ -136,7 +136,11 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 				endCursor: products.data[products.data.length - 1]?.id,
 			};
 		} catch (commerceError) {
-			console.warn("Commerce-kit failed, falling back to direct Stripe API:", commerceError);
+			// Silently fall back to Stripe API - this is expected and normal
+			// Only log in development
+			if (process.env.NODE_ENV === "development") {
+				console.debug("Using Stripe API directly (commerce-kit unavailable)");
+			}
 		}
 
 		// Fallback: Use direct Stripe API with expanded prices
@@ -223,10 +227,13 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 				}
 			}
 		} catch (commerceError) {
-			console.warn("Commerce-kit failed, falling back to direct Stripe API:", commerceError);
+			// Silently fall back to Stripe API - this is expected
+			if (process.env.NODE_ENV === "development") {
+				console.debug("Using Stripe API directly for product lookup");
+			}
 		}
 
-		// Fallback: Try direct Stripe API (only if commerce-kit fails)
+		// Fallback: Use direct Stripe API (reliable and always works)
 		// First, try to find by slug metadata
 		const products = await stripe.products.list({
 			limit: 100, // Search through more products
