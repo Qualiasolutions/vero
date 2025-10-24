@@ -13,9 +13,12 @@ import Stripe from "stripe";
 console.log("🔧 Minimal metadata fix for existing products...");
 
 // Initialize Stripe with minimal config
-const stripe = new Stripe(
-	"$STRIPE_SECRET_KEY",
-);
+if (!process.env.STRIPE_SECRET_KEY) {
+	console.error("❌ Error: STRIPE_SECRET_KEY environment variable is required");
+	process.exit(1);
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Read product data
 const products = JSON.parse(fs.readFileSync("/tmp/all_products.json", "utf8"));
