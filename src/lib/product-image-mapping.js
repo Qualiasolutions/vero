@@ -111,6 +111,8 @@ export const productImageMap = {
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108029586-C6J4G5CHQWUPTDKLUEHT/GT542n.jpg",
 	"range-rover-sport-sv-edition-two-grey-2024-gt-spir":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108030782-391YOPAE2A0APW67ZTCK/gt539nh.jpg",
+	"range-rover-sport-sv-edition-two-grey-2024-30592":
+		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108030782-391YOPAE2A0APW67ZTCK/gt539nh.jpg",
 	"renault-laguna-v6-3-0-baccara-gris-opale-1996-otto":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108033227-P0ZDHS6D711HD25QNK36/renault-laguna-v6-30-baccar.jpg",
 	"rtr-ford-mustang-spec-3-yellow-2025-gt-spirit-1-18":
@@ -118,9 +120,9 @@ export const productImageMap = {
 	"rwb-porsche-army-girl-purple-2015-gt-spirit-1-18-r":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108035710-PKRTJ36DLSWFY9HSNFW2/gt562nh.jpg",
 	"premium-classixxs-scania-r500-gold-met":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108037181-CI385RI6PTZYCH4D78U4/Untitled%2Bdesign%2B%252820%2529.png",
+		"https://i.ibb.co/PZsKp1BZ/Generated-Image-October-26-2025-1-51-AM.png",
 	"solido-subaru-impreza-22b-sonic-blue-1998":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108038732-5R8P1QMOADR79YOMPWLY/subaru-impreza-22b-sonic-blue-1998-01.jpg",
+		"https://i.ibb.co/23KhMkFY/Generated-Image-October-26-2025-2-00-AM.png",
 	"kyosho-toyota-land-cruiser-60-1980":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108041546-31LPTMWJWUBII23SGLB8/Generated%252BImage%252BSeptember%252B27%25252C%252B2025%252B-%252B11_37AM.png",
 	"ottomobile-toyota-supra-3000-gt-trd-red":
@@ -128,7 +130,7 @@ export const productImageMap = {
 	"gt-spirit-toyota-supra-fuji-edition-white":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108044506-92Z462UX0YCT05QNWIUP/gt341-toyota-supra-gr-fuji-speedway-edition-01-2.jpg",
 	"premium-classixxs-volvo-fh16-xl-red":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108046234-J37EDF2CASYKYU5HIMYY/Volvo%252BFH25%252BEvolution%252B500%252BHP%252BCab.png",
+		"https://i.ibb.co/CGWYYWY/Generated-Image-October-26-2025-2-01-AM.png",
 	"premium-classixxs-volvo-fh16-xl-white-orange":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108047932-EE4LP0DPJGC73IDEG6XT/DSC07389.jpg https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/982761b7-da43-41b7-bc52-5143a2f4ef13/152034_1-1.jpg",
 	"suzuki-sx4-wrc-rally-monte-carlo-2008-per-gunnar-andersson-ott-mobile-1-18-resinemodell":
@@ -171,7 +173,7 @@ export const categoryImages = {
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107956575-59KIHJMNQ7Y93TN0VVGS/GT546n.jpg",
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107958993-WWD32CJ8X4Q8L4GF08J3/gt965n.jpg",
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107960182-G8WW3RS1NUYBQQYPQM2L/188319.jpg",
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107962506-ZJCD3KB6WP091BCT9OTA/123200nh.jpg",
+		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108030782-391YOPAE2A0APW67ZTCK/gt539nh.jpg",
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107963644-HG1ELO2D14832CI9RU8H/gt552n.jpg",
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107966425-0JH4GITYFC83YNBY610H/GT967n.jpg",
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107967596-1617G8SZ1MDO69HD43BG/gt564n.jpg",

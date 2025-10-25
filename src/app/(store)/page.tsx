@@ -1,15 +1,15 @@
-import { Award, Eye, Package, Shield, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { Award, Eye, Package, Shield, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next/types";
 import { AddToCart } from "@/components/add-to-cart";
 import { FavoriteHeartIcon } from "@/components/favorite-heart-icon";
 import { publicUrl } from "@/env.mjs";
-import { getPremiumPlaceholder, getProductImage } from "@/lib/product-image-mapping";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { HeroSection } from "@/ui/home/hero-section";
 import { ImageSlideshow } from "@/ui/home/image-slideshow";
+import { InfoBillboard } from "@/ui/home/info-billboard";
 import { ParallaxSection } from "@/ui/home/parallax-section";
 import { Badge } from "@/ui/shadcn/badge";
 import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/ui/shadcn/marquee";
@@ -26,7 +26,22 @@ export default async function Home() {
 	const allProductsResult = await getProducts(100);
 	const allProducts = allProductsResult.data || [];
 
-	// Distribute products across categories (3 per category)
+	// Featured products to show at top of each category (in fixed order)
+	const featuredProductNames = [
+		"Premium Classixxs MAN TGX XXL Blue Metallic",
+		"KYOSHO Lamborghini Countach LP400 Red 1974",
+		"IXO TOYOTA CALICA GT-FOUR",
+		"PARAGON MODELS BMW X4 XDRIVE 3.5d F83 2014",
+		"RANGE ROVER SPORT SV EDITION TWO GREY 2024 GT Spirit 1:18",
+		"AutoArt ALFA ROMEO 4C GLOSS BLACK",
+	];
+
+	// Find featured products in order
+	const featuredProducts = featuredProductNames.map((name) =>
+		allProducts.find((p) => p.name.toLowerCase().includes(name.toLowerCase())),
+	);
+
+	// Distribute products across categories (3 per category + 1 featured at top)
 	const categoryProducts = StoreConfig.categories.map((category, index) => {
 		// First, try to get products with matching category metadata
 		let categoryProds = allProducts.filter(
@@ -42,6 +57,12 @@ export default async function Home() {
 			categoryProds = categoryProds.slice(0, 3);
 		}
 
+		// Add featured product at the top (one per category, in order)
+		const featuredProduct = featuredProducts[index];
+		if (featuredProduct && !categoryProds.find((p) => p.id === featuredProduct.id)) {
+			categoryProds = [featuredProduct, ...categoryProds.slice(0, 2)]; // Keep total at 3
+		}
+
 		return {
 			category,
 			products: categoryProds,
@@ -52,68 +73,11 @@ export default async function Home() {
 		<div className="bg-[var(--selfridges-background)] relative">
 			{/* Content */}
 			<div className="relative">
-				{/* Announcement Banner */}
-				<section className="relative bg-[var(--selfridges-gray-light)] text-[var(--selfridges-text-primary)] py-2 border-b border-[var(--selfridges-border-light)]">
-					<div className="w-full px-6 lg:px-12">
-						<div className="flex items-center justify-center gap-2 text-xs md:text-sm font-medium">
-							<Sparkles className="w-4 h-4 animate-pulse" />
-							<span>NEW ARRIVALS WEEKLY • FREE SHIPPING AED 550+ • EXCLUSIVE COLLECTIBLES</span>
-							<Sparkles className="w-4 h-4 animate-pulse" />
-						</div>
-					</div>
-				</section>
-
 				{/* Hero Section */}
 				<HeroSection />
 
-				{/* Feature Bar */}
-				<section className="w-full px-6 lg:px-12 xl:px-16 py-6 bg-[var(--selfridges-bg-secondary)] border-y border-[var(--vero-gold-accent)]/20">
-					<div className="w-full">
-						<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-							<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[var(--vero-gold-accent)]/10 to-[var(--selfridges-background)] rounded-lg border border-[var(--vero-gold-accent)]/20">
-								<Shield className="w-8 h-8 text-[var(--vero-gold-accent)] flex-shrink-0" />
-								<div>
-									<p className="text-xs font-bold text-[var(--selfridges-text-primary)]">AUTHENTIC</p>
-									<p className="text-[10px] text-[var(--selfridges-text-muted)]">Officially Licensed</p>
-								</div>
-							</div>
-							<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[var(--vero-gold-accent-light)]/10 to-[var(--selfridges-background)] rounded-lg border border-[var(--vero-gold-accent)]/20">
-								<Package className="w-8 h-8 text-[var(--vero-gold-accent-dark)] flex-shrink-0" />
-								<div>
-									<p className="text-xs font-bold text-[var(--selfridges-text-primary)]">FREE SHIPPING</p>
-									<p className="text-[10px] text-[var(--selfridges-text-muted)]">Orders Over AED 550</p>
-								</div>
-							</div>
-							<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[var(--selfridges-cream)]/50 to-[var(--selfridges-background)] rounded-lg border border-[var(--vero-gold-accent)]/20">
-								<Award className="w-8 h-8 text-[var(--vero-gold-accent)] flex-shrink-0" />
-								<div>
-									<p className="text-xs font-bold text-[var(--selfridges-text-primary)]">PREMIUM</p>
-									<p className="text-[10px] text-[var(--selfridges-text-muted)]">1:18 Scale Quality</p>
-								</div>
-							</div>
-							<div className="flex items-center gap-3 p-3 bg-gradient-to-br from-[var(--selfridges-black-secondary)]/5 to-[var(--selfridges-background)] rounded-lg border border-[var(--vero-gold-accent)]/20">
-								<TrendingUp className="w-8 h-8 text-[var(--vero-gold-accent-dark)] flex-shrink-0" />
-								<div>
-									<p className="text-xs font-bold text-[var(--selfridges-text-primary)]">LIMITED</p>
-									<p className="text-[10px] text-[var(--selfridges-text-muted)]">Exclusive Releases</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				{/* Special Offers Banner - Dark Theme */}
-				<section className="w-full px-6 lg:px-12 xl:px-16 py-3 bg-gradient-to-r from-[var(--selfridges-black)] via-[var(--selfridges-gray-medium)] to-[var(--selfridges-black)] border-y border-[var(--selfridges-border-light)]">
-					<div className="w-full">
-						<div className="flex items-center justify-center gap-2 text-[var(--selfridges-text-primary)]">
-							<Zap className="w-5 h-5 animate-pulse" />
-							<p className="text-sm md:text-base font-semibold uppercase tracking-wide">
-								Special Offers: Up to 30% Off Selected Items - Limited Time!
-							</p>
-							<Zap className="w-5 h-5 animate-pulse" />
-						</div>
-					</div>
-				</section>
+				{/* Info Billboard - Live Stats */}
+				<InfoBillboard />
 
 				{/* Category Columns with Products - 6 Columns in Single Row */}
 				<section
@@ -130,18 +94,18 @@ export default async function Home() {
 								Explore our curated collection of premium 1:18 scale die-cast models
 							</p>
 						</div>
-						{/* Grid of 6 columns (1 on mobile, 3 on tablet, 6 on desktop) */}
-						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+						{/* Grid - Mobile optimized (2 cols on mobile, scales up gracefully) */}
+						<div className="grid grid-cols-2 gap-4 xs:gap-5 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-7 xl:grid-cols-6 xl:gap-8">
 							{categoryProducts.map(({ category, products }) => {
 								return (
 									<div
 										key={category.slug}
-										className="flex flex-col space-y-3 p-6 rounded-xl border border-[var(--vero-gold-accent)]/20 bg-[var(--selfridges-bg-secondary)] transition-all duration-300 hover:shadow-lg hover:border-[var(--vero-gold-accent)]/40"
+										className="flex flex-col space-y-2 xs:space-y-3 p-3 xs:p-4 sm:p-6 rounded-lg xs:rounded-xl border border-[var(--vero-gold-accent)]/20 bg-[var(--selfridges-bg-secondary)] transition-all duration-300 hover:shadow-lg hover:border-[var(--vero-gold-accent)]/40"
 									>
 										{/* Category Badge */}
-										<div className="relative mb-4">
+										<div className="relative mb-2 xs:mb-3 sm:mb-4">
 											<Badge
-												className={`${category.badgeColor} text-xs font-bold px-4 py-2 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 z-10 shadow-lg whitespace-nowrap`}
+												className={`${category.badgeColor} text-[9px] xs:text-[10px] sm:text-xs font-bold px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 z-10 shadow-lg whitespace-nowrap`}
 											>
 												{category.badge}
 											</Badge>
@@ -162,7 +126,7 @@ export default async function Home() {
 												/>
 											</div>
 											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4">
-												<h2 className="text-white font-bold text-lg uppercase tracking-wide text-center drop-shadow-lg">
+												<h2 className="text-white font-bold text-xs xs:text-sm sm:text-base md:text-lg uppercase tracking-wide text-center drop-shadow-lg">
 													{category.name}
 												</h2>
 											</div>
@@ -180,90 +144,58 @@ export default async function Home() {
 												>
 													{/* Product Image with enhanced hover */}
 													<Link href={`/product/${product.slug || product.id}`} className="block">
-														<div className="relative aspect-square w-full bg-[var(--selfridges-background-muted)] group-hover:bg-[var(--selfridges-bg-secondary)] transition-colors duration-300">
-															{(() => {
-																// Try to get image from mapping first
-																const mappedImage = getProductImage(product.slug);
-																if (mappedImage) {
-																	return (
-																		<Image
-																			src={mappedImage}
-																			alt={product.name}
-																			fill
-																			className="object-contain p-3 transition-all duration-500 group-hover:scale-105"
-																			sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-																		/>
-																	);
-																}
-
-																// Use product images if available
-																if (product.images && product.images.length > 0 && product.images[0]) {
-																	return (
-																		<Image
-																			src={product.images[0]}
-																			alt={product.name}
-																			fill
-																			className="object-contain p-3 transition-all duration-500 group-hover:scale-105"
-																			sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-																		/>
-																	);
-																}
-
-																// Use premium placeholder based on product name
-																const isSports =
-																	product.name.toLowerCase().includes("porsche") ||
-																	product.name.toLowerCase().includes("ferrari") ||
-																	product.name.toLowerCase().includes("lamborghini");
-																const isLuxury =
-																	product.name.toLowerCase().includes("mercedes") ||
-																	product.name.toLowerCase().includes("bmw") ||
-																	product.name.toLowerCase().includes("aston");
-																const placeholderType = isSports ? "sports" : isLuxury ? "luxury" : "classic";
-																const placeholderImage = getPremiumPlaceholder(placeholderType, product.slug);
-
-																return (
-																	<Image
-																		src={placeholderImage}
-																		alt={product.name}
-																		fill
-																		className="object-contain p-3 transition-all duration-500 group-hover:scale-105"
-																		sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-																	/>
-																);
-															})()}
-															<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+														<div className="relative aspect-[16/9] w-full bg-[var(--selfridges-background-muted)] group-hover:bg-[var(--selfridges-bg-secondary)] transition-colors duration-300 overflow-hidden">
+															{product.images && product.images.length > 0 && product.images[0] ? (
+																<Image
+																	src={product.images[0]}
+																	alt={product.name}
+																	fill
+																	className="object-cover object-center transition-all duration-500 group-hover:scale-110"
+																	sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+																/>
+															) : (
+																<div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#FAFAF9] to-[#F5F5F5]">
+																	<span className="text-[#C4A962] text-sm font-semibold uppercase tracking-wide">
+																		Coming Soon
+																	</span>
+																</div>
+															)}
+															<div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
 																<FavoriteHeartIcon product={product} />
 															</div>
 														</div>
 													</Link>
 
 													{/* Enhanced Product Info */}
-													<div className="p-3 bg-[var(--selfridges-bg-secondary)] space-y-2 group-hover:bg-[var(--selfridges-background)] transition-colors duration-300">
+													<div className="p-3 bg-[var(--selfridges-bg-secondary)] space-y-3 group-hover:bg-[var(--selfridges-background)] transition-colors duration-300">
 														<Link href={`/product/${product.slug || product.id}`} className="block">
-															<h3 className="text-sm font-semibold text-[var(--selfridges-text-primary)] line-clamp-2 group-hover:text-[var(--vero-gold-accent)] transition-colors leading-snug mb-2">
+															<h3 className="text-xs sm:text-sm font-semibold text-[var(--selfridges-text-primary)] line-clamp-2 group-hover:text-[#dfbc3f] transition-colors leading-snug min-h-[32px] mb-2">
 																{product.name}
 															</h3>
-															<div className="flex flex-col gap-2">
-																<p className="text-lg font-bold text-[var(--selfridges-text-primary)]">
-																	€{(product.price / 100).toFixed(2)}
-																</p>
-																<div className="flex gap-1.5">
-																	<AddToCart
-																		variantId={product.id}
-																		className="flex-1 items-center justify-center gap-1 rounded-md bg-black px-2 py-1.5 text-xs font-semibold text-white transition-colors duration-300 hover:bg-gray-800"
-																	>
-																		<span className="uppercase tracking-wide text-xs">Add</span>
-																	</AddToCart>
-																	<Link
-																		href={`/product/${product.slug || product.id}`}
-																		className="flex-1 inline-flex items-center justify-center gap-1 rounded-md border border-[var(--vero-gold-accent)]/40 px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-black bg-[var(--vero-gold-accent)] transition-all duration-300 hover:border-[var(--vero-gold-accent-dark)] hover:bg-[var(--vero-gold-accent-dark)]"
-																	>
-																		<Eye className="h-3 w-3 text-black" />
-																		<span className="text-xs text-black">View</span>
-																	</Link>
-																</div>
-															</div>
 														</Link>
+
+														{/* Price - centered with gold color */}
+														<p className="text-base sm:text-lg font-bold text-[#dfbc3f] text-center">
+															€{(product.price / 100).toFixed(2)}
+														</p>
+
+														{/* Action buttons - not cropped */}
+														<div className="flex gap-1.5">
+															<Link
+																href={`/product/${product.slug || product.id}`}
+																className="flex-1 inline-flex items-center justify-center gap-1 rounded-md border-2 border-[#dfbc3f] px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-black bg-white transition-all duration-300 hover:bg-[#dfbc3f] hover:text-white"
+															>
+																<Eye className="h-3 w-3" />
+																<span className="text-xs">View</span>
+															</Link>
+															<AddToCart
+																variantId={product.id}
+																className="flex-1 inline-flex items-center justify-center gap-1 rounded-md bg-[#dfbc3f] px-2 py-1.5 text-xs font-semibold text-black transition-colors duration-300 hover:bg-[#c4a535] uppercase tracking-wide"
+															>
+																<ShoppingCart className="h-3 w-3" />
+																<span className="text-xs">Add</span>
+															</AddToCart>
+														</div>
 													</div>
 												</div>
 											))}
