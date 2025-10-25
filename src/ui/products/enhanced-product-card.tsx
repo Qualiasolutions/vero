@@ -96,7 +96,7 @@ export function EnhancedProductCard({ product, currency = "EUR" }: EnhancedProdu
 								src={imageUrl}
 								alt={product.name}
 								fill
-								className="object-cover scale-110 transition-transform duration-700 group-hover:scale-125 group-hover:brightness-110"
+								className="object-cover scale-150 transition-transform duration-700 group-hover:scale-[1.65] group-hover:brightness-110"
 								sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 							/>
 							{/* Overlay glow effect on hover */}
