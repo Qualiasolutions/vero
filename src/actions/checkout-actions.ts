@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { env } from "@/env.mjs";
 import { logger } from "@/lib/logger";
 import { getStripeClient } from "@/lib/stripe";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { clearCartAction, getCartAction } from "./cart-actions";
 
 export async function createCheckoutSession() {
@@ -88,6 +88,7 @@ export async function createCheckoutSession() {
 
 export async function createOrderFromCheckout(sessionId: string) {
 	try {
+		const supabase = await createClient();
 		const stripe = getStripeClient();
 		// Retrieve the Stripe session with line items to get actual prices
 		const session = await stripe.checkout.sessions.retrieve(sessionId, {

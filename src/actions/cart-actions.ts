@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import type Stripe from "stripe";
 import { env } from "@/env.mjs";
 import { getStripeClient } from "@/lib/stripe";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 const DEFAULT_CURRENCY = (env.STRIPE_CURRENCY ?? "USD").toUpperCase();
 
@@ -137,6 +137,7 @@ async function transformCart(sessionId: string, items: DbCartItem[], stripe: Str
 
 export async function getCartAction(): Promise<Cart | null> {
 	try {
+		const supabase = await createClient();
 		const sessionId = await getCartSessionId();
 		const { data: items, error } = await supabase
 			.from("cart_items")
@@ -162,6 +163,7 @@ export async function getCartAction(): Promise<Cart | null> {
 }
 
 export async function addToCartAction(variantId: string, quantity: number): Promise<Cart> {
+	const supabase = await createClient();
 	const sessionId = await getCartSessionId();
 
 	try {
@@ -208,6 +210,7 @@ export async function addToCartAction(variantId: string, quantity: number): Prom
 }
 
 export async function updateCartItemAction(variantId: string, quantity: number): Promise<Cart> {
+	const supabase = await createClient();
 	const sessionId = await getCartSessionId();
 
 	try {
@@ -243,6 +246,7 @@ export async function updateCartItemAction(variantId: string, quantity: number):
 }
 
 export async function removeFromCartAction(variantId: string): Promise<Cart> {
+	const supabase = await createClient();
 	const sessionId = await getCartSessionId();
 
 	try {
@@ -265,6 +269,7 @@ export async function removeFromCartAction(variantId: string): Promise<Cart> {
 
 export async function getCartItemCount(): Promise<number> {
 	try {
+		const supabase = await createClient();
 		const sessionId = await getCartSessionId();
 		const { data: items, error } = await supabase
 			.from("cart_items")
@@ -284,6 +289,7 @@ export async function getCartItemCount(): Promise<number> {
 
 export async function clearCartAction(): Promise<void> {
 	try {
+		const supabase = await createClient();
 		const sessionId = await getCartSessionId();
 		const { error } = await supabase.from("cart_items").delete().eq("session_id", sessionId);
 		if (error) {
@@ -297,6 +303,7 @@ export async function clearCartAction(): Promise<void> {
 
 export async function cleanupExpiredCarts(): Promise<void> {
 	try {
+		const supabase = await createClient();
 		const thirtyDaysAgo = new Date();
 		thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 

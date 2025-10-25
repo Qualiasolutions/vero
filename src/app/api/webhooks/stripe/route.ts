@@ -5,8 +5,8 @@ import { createOrderFromCheckout } from "@/actions/checkout-actions";
 import { env } from "@/env.mjs";
 import { sendOrderConfirmationEmail } from "@/lib/email";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/prisma";
 import { getStripeClient } from "@/lib/stripe";
+import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
 	const body = await req.text();
@@ -81,14 +81,19 @@ export async function POST(req: Request) {
 				const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
 				// Update order status if needed
-				const order = await prisma.order.findUnique({
-					where: { stripePaymentId: paymentIntent.id },
-				});
+				const supabase = await createClient();
+				const { data: order } = await supabase
+					.from("orders")
+					.select("*")
+					.eq("stripe_payment_intent_id", paymentIntent.id)
+					.single();
 
-				if (order && order.status === "PENDING") {
-					await prisma.order.update({
-						where: { id: order.id },
-						data: { status: "PROCESSING" },
+				if (order && order.status === "pending") {
+					await supabase.from("orders").update({ status: "processing" }).eq("id", order.id);
+
+					logger.info("Order status updated to processing", {
+						orderId: order.id,
+						paymentIntentId: paymentIntent.id,
 					});
 				}
 				break;
@@ -98,104 +103,38 @@ export async function POST(req: Request) {
 				const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
 				// Update order status to cancelled
-				const order = await prisma.order.findUnique({
-					where: { stripePaymentId: paymentIntent.id },
-				});
+				const supabase = await createClient();
+				const { data: order } = await supabase
+					.from("orders")
+					.select("*")
+					.eq("stripe_payment_intent_id", paymentIntent.id)
+					.single();
 
 				if (order) {
-					const existingMetadata =
-						typeof order.metadata === "object" && order.metadata !== null && !Array.isArray(order.metadata)
-							? (order.metadata as Record<string, unknown>)
-							: {};
+					await supabase.from("orders").update({ status: "cancelled" }).eq("id", order.id);
 
-					await prisma.order.update({
-						where: { id: order.id },
-						data: {
-							status: "CANCELLED",
-							metadata: {
-								...existingMetadata,
-								failureReason: paymentIntent.last_payment_error?.message,
-							},
-						},
+					logger.error("Payment failed for order", {
+						orderId: order.id,
+						paymentIntentId: paymentIntent.id,
+						failureReason: paymentIntent.last_payment_error?.message,
 					});
 				}
 				break;
 			}
 
+			// Note: Product and price sync removed - products are fetched directly from Stripe
+			// No need to cache in database since Stripe is the source of truth
+
 			case "product.created":
-			case "product.updated": {
-				const product = event.data.object as Stripe.Product;
-
-				// Sync product to database cache
-				await prisma.product.upsert({
-					where: { id: product.id },
-					create: {
-						id: product.id,
-						name: product.name,
-						slug: product.metadata.slug || product.id,
-						description: product.description,
-						images: product.images || [],
-						metadata: product.metadata || {},
-						active: product.active,
-					},
-					update: {
-						name: product.name,
-						slug: product.metadata.slug || product.id,
-						description: product.description,
-						images: product.images || [],
-						metadata: product.metadata || {},
-						active: product.active,
-					},
-				});
-				break;
-			}
-
-			case "product.deleted": {
-				const product = event.data.object as Stripe.Product;
-
-				// Mark product as inactive
-				await prisma.product.update({
-					where: { id: product.id },
-					data: { active: false },
-				});
-				break;
-			}
-
+			case "product.updated":
+			case "product.deleted":
 			case "price.created":
-			case "price.updated": {
-				const price = event.data.object as Stripe.Price;
-
-				// Sync price to database cache
-				await prisma.price.upsert({
-					where: { id: price.id },
-					create: {
-						id: price.id,
-						productId: price.product as string,
-						amount: price.unit_amount || 0,
-						currency: price.currency,
-						active: price.active,
-						metadata: price.metadata || {},
-					},
-					update: {
-						amount: price.unit_amount || 0,
-						currency: price.currency,
-						active: price.active,
-						metadata: price.metadata || {},
-					},
-				});
+			case "price.updated":
+			case "price.deleted":
+				// Products and prices are fetched directly from Stripe API
+				// No database caching needed
+				logger.info("Product/Price event received", { eventType: event.type });
 				break;
-			}
-
-			case "price.deleted": {
-				const price = event.data.object as Stripe.Price;
-
-				// Mark price as inactive
-				await prisma.price.update({
-					where: { id: price.id },
-					data: { active: false },
-				});
-				break;
-			}
 
 			case "customer.subscription.created":
 			case "customer.subscription.updated":

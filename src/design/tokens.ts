@@ -17,12 +17,13 @@
  * Professional automotive-inspired color scheme with sophisticated champagne gold
  */
 export const colors = {
-	// Luxury Metallic Gold Palette (Primary Luxury Brand Color)
+	// Luxury Metallic Gold Palette (Primary Luxury Brand Color) - Enhanced Premium
 	gold: {
-		champagne: "#D4AF37",
-		light: "#E8C468",
-		dark: "#B8941F",
-		pale: "#F5E6C3",
+		champagne: "#E8C468", // Brighter, more luxurious premium gold
+		light: "#F4D89E", // Softer highlights
+		dark: "#C4A962", // Rich shadows for depth
+		pale: "#FBF3E0", // Subtle backgrounds
+		accent: "#E8C468", // Primary accent color
 	},
 
 	// Rose Gold (Premium Accent)
@@ -308,13 +309,13 @@ export const shadows = {
 	lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
 	xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 	"2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-	// Luxury metallic gold shadows
-	gold: "0 4px 16px rgba(212, 175, 55, 0.3)",
-	goldLg: "0 20px 48px rgba(212, 175, 55, 0.35), 0 8px 16px rgba(0, 0, 0, 0.12)",
-	goldGlow: "0 0 24px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.15)",
+	// Luxury metallic gold shadows - Enhanced with new premium gold
+	gold: "0 4px 16px rgba(232, 196, 104, 0.35)",
+	goldLg: "0 20px 48px rgba(232, 196, 104, 0.4), 0 8px 16px rgba(0, 0, 0, 0.12)",
+	goldGlow: "0 0 24px rgba(232, 196, 104, 0.35), 0 0 40px rgba(232, 196, 104, 0.18)",
 	// Premium dark shadows
-	premium: "0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(212, 175, 55, 0.2)",
-	premiumLg: "0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(212, 175, 55, 0.25)",
+	premium: "0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(232, 196, 104, 0.25)",
+	premiumLg: "0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(232, 196, 104, 0.3)",
 } as const;
 
 // ============================================================================
