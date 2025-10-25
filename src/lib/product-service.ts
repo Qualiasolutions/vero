@@ -1,4 +1,5 @@
 import { commerce } from "./commerce";
+import { logger } from "./logger";
 import { performanceMonitor } from "./performance";
 import { getStripeClient } from "./stripe";
 
