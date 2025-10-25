@@ -1,7 +1,7 @@
 // Auto-generated image mapping for products
 export const productImageMap = {
 	"autoart-alfa-romeo-4c-gloss-black":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107949807-9V46D2QFE9DE9PCBJN4H/Untitled%2Bdesign%2B%252822%2529.png",
+		"https://i.ibb.co/xqtHG8Sn/Generated-Image-October-25-2025-6-11-PM-1.png",
 	"alpina-b4-gt-grey-2024-gt-spirit-1-18-resinemodell":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107951210-1CYT4K3UNMWSK82208CA/gt541nh.jpg",
 	"solido-aston-martin-db5":
@@ -17,7 +17,7 @@ export const productImageMap = {
 	"bmw-m2-cs-blue-2025-gt-spirit-1-18-resinemodell-t-":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107963644-HG1ELO2D14832CI9RU8H/gt552n.jpg",
 	"paragon-models-bmw-x4-xdrive-3-5d-f83-2014":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107965176-PDF2YKA4NJ2IRS3KBU50/Untitled%2Bdesign%2B%252818%2529.png",
+		"https://i.ibb.co/YFY9h6Xb/Generated-Image-October-25-2025-6-10-PM.png",
 	"bmw-x5-m-competition-blue-2023-gt-spirit-1-18-resi":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107966425-0JH4GITYFC83YNBY610H/GT967n.jpg",
 	"brabus-900-peetch-pink-2024-gt-spirit-1-18-resinem":
@@ -44,12 +44,11 @@ export const productImageMap = {
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107981153-5O7BTE6RO6EB4OCZ0LE3/187934nh.jpg",
 	"ford-fiesta-xr2-1981-blue-metallic-1-18-norev-1-18":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107982374-GN8XCCC39R84UBKVMF5F/182744n.jpg",
-	"ixo-toyota-calica-gt-four":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107983791-V6WQQ8RLKMW3MQVTTGHZ/51VIOlap1eL.jpg",
+	"ixo-toyota-calica-gt-four": "https://i.ibb.co/B5bPMz0L/Generated-Image-October-25-2025-6-08-PM.png",
 	"jaguar-xj-s-5-3-h-e-coupe-1986-sage-green-metallic":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107985029-6WH6CH424HCNZVZCEHT9/182623n.jpg",
 	"kyosho-lamborghini-countach-lp400-red-1974":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107986378-G99ECY8DIPS0GIPKO964/Untitled%2Bdesign%2B%252817%2529.png",
+		"https://i.ibb.co/8pt0wY6/Generated-Image-October-25-2025-6-06-PM-1.png",
 	"land-rover-defender-110-p400x-white-2021-gt-spirit":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107987750-STR6L4DG1DH759DZ33EF/gt554nh.jpg",
 	"land-rover-defender-3-station-wagon-green-2016-gt-":
@@ -59,7 +58,7 @@ export const productImageMap = {
 	"lb-works-porsche-turbo-white-gt-spirit-1-18-resine":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107991340-CT2PJ7ALXU2IXOAD3JM4/gt958n.jpg",
 	"premium-classixxs-man-tgx-xxl-blue-metallic":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107992641-DMXFBI7VK7E6PL7CSTBL/Untitled%2Bdesign%2B%252815%2529.png",
+		"https://i.ibb.co/JRW1VSKs/Generated-Image-October-25-2025-6-03-PM.png",
 	"mclaren-f1-red-1992-gt-spirit-1-18-resinemodell-t-":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760107993937-VNRSWQ5HF1TEDW6XLB07/gt534n.jpg",
 	"kk-scale-mercedes-benz-500-sl-r129-dark-blue":
