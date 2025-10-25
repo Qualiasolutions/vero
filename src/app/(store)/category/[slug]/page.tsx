@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { publicUrl } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 import { getProducts, getProductsByCategory, type Product } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 import { CategoryContent } from "@/ui/category/category-content";
@@ -86,7 +87,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
 			}
 		}
 	} catch (error) {
-		console.error(`Error fetching products for category ${params.slug}:`, error);
+		logger.error(`Error fetching products for category ${params.slug}`, error);
 		products = [];
 	}
 

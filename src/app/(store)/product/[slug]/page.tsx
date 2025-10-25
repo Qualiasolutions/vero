@@ -624,7 +624,7 @@ async function SimilarProducts({ id, category, brand }: { id: string; category?:
 								className="group block border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
 							>
 								<div className="aspect-square relative bg-gray-100">
-									{product.images && product.images[0] ? (
+									{product.images?.[0] ? (
 										<Image
 											src={product.images[0]}
 											alt={product.name}
@@ -654,7 +654,7 @@ async function SimilarProducts({ id, category, brand }: { id: string; category?:
 				</div>
 			</section>
 		);
-	} catch (error) {
+	} catch (_error) {
 		// Silently fail - similar products are non-critical
 		return null;
 	}

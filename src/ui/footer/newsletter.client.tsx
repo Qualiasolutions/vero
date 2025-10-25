@@ -27,7 +27,7 @@ export const Newsletter = () => {
 					} else {
 						toast.error(t("error"), { position: "bottom-left" });
 					}
-				} catch (error) {
+				} catch (_error) {
 					toast.error(t("error"), { position: "bottom-left" });
 				} finally {
 					setLoading(false);

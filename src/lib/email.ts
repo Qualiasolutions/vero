@@ -28,7 +28,7 @@ interface OrderDetails {
 }
 
 /**
- * Send an email (stub implementation - integrate with actual email service)
+ * Send an email using Resend or fallback to logging
  */
 async function sendEmail(options: EmailOptions): Promise<boolean> {
 	try {
@@ -48,18 +48,32 @@ async function sendEmail(options: EmailOptions): Promise<boolean> {
 			return true;
 		}
 
-		// TODO: Implement actual email sending with Resend, SendGrid, or AWS SES
-		// Example with Resend:
-		// const resend = new Resend(process.env.RESEND_API_KEY);
-		// await resend.emails.send({
-		//   from: 'orders@veromodels.com',
-		//   to: options.to,
-		//   subject: options.subject,
-		//   html: options.html,
-		// });
+		// Try to use Resend if API key is available
+		if (process.env.RESEND_API_KEY) {
+			try {
+				const { Resend } = await import("resend");
+				const resend = new Resend(process.env.RESEND_API_KEY);
 
-		// For now, log a warning that emails are not actually sent
-		logger.warn("Email not sent - email service not configured", {
+				await resend.emails.send({
+					from: "Veromodels <orders@veromodels.com>",
+					to: options.to,
+					subject: options.subject,
+					html: options.html,
+					text: options.text,
+				});
+
+				logger.info("Email sent successfully via Resend", {
+					to: options.to,
+					subject: options.subject,
+				});
+				return true;
+			} catch (resendError) {
+				logger.error("Resend email failed, falling back to log", resendError);
+			}
+		}
+
+		// Fallback: log the email (for production without email service)
+		logger.warn("Email logged - email service not configured", {
 			to: options.to,
 			subject: options.subject,
 		});

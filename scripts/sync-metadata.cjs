@@ -29,7 +29,7 @@ fs.createReadStream(CSV_FILE)
 		const title = row.Title?.trim();
 
 		if (sku && slug && title) {
-			csvProducts.push({ sku, slug, category, title });
+			csvProducts.push({ sku, slug, category });
 		}
 	})
 	.on("end", async () => {
@@ -44,7 +44,7 @@ fs.createReadStream(CSV_FILE)
 
 		// Match and update products
 		for (const csvProduct of csvProducts) {
-			const { sku, slug, category, title } = csvProduct;
+			const { sku, slug, category } = csvProduct;
 
 			// Find matching Stripe product by SKU in description or name
 			const stripeProduct = stripeProducts.find(

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCartAction } from "@/actions/cart-actions";
 import { env } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 import { getStripeClient } from "@/lib/stripe";
 
 export async function GET() {
@@ -30,11 +31,12 @@ export async function GET() {
 			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 		// Debug environment
-		console.log("Environment check:");
-		console.log("  NEXT_PUBLIC_URL:", env.NEXT_PUBLIC_URL);
-		console.log("  VERCEL_URL:", process.env.VERCEL_URL);
-		console.log("  Computed baseUrl:", baseUrl);
-		console.log("  success_url will be:", `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`);
+		logger.info("Stripe checkout environment", {
+			nextPublicUrl: env.NEXT_PUBLIC_URL,
+			vercelUrl: process.env.VERCEL_URL,
+			baseUrl,
+			successUrl: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+		});
 
 		// Try to create Stripe session
 		const session = await stripe.checkout.sessions.create({

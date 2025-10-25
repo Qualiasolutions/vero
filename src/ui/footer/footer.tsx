@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail } from "lucide-react";
+import { CreditCard, Facebook, Instagram, Mail, Shield } from "lucide-react";
 import Image from "next/image";
 import { YnsLink } from "@/ui/yns-link";
 
@@ -35,56 +35,56 @@ const sections = [
 
 export async function Footer() {
 	return (
-		<footer className="w-full border-t border-[var(--selfridges-border-light)] bg-[var(--selfridges-bg-primary)] py-6">
-			<div className="container mx-auto px-4 max-w-6xl">
+		<footer className="w-full border-t-2 border-[#dfbc3f]/30 bg-gradient-to-b from-black via-black/98 to-black/95 py-12">
+			<div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1600px]">
 				{/* Main Footer Content */}
-				<div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
+				<div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-10">
 					{/* Brand Info */}
 					<div className="md:col-span-1">
-						<div className="flex flex-col gap-4">
+						<div className="flex flex-col gap-5 items-center md:items-start">
 							<Image
 								src="/veromodels-logo.webp"
 								alt="Veromodels"
-								width={160}
-								height={60}
-								className="h-12 w-auto object-contain"
+								width={400}
+								height={140}
+								className="h-32 w-auto object-contain"
 							/>
-							<p className="text-[var(--selfridges-text-muted)] text-sm leading-relaxed mt-2">
-								Premium 1:18 scale diecast collectibles
+							<p className="text-white/80 text-sm leading-relaxed text-center md:text-left">
+								Premium 1:18 scale diecast collectibles from the world's finest manufacturers
 							</p>
-							<div className="flex items-center gap-2 mt-3">
+							<div className="flex items-center gap-3 mt-4">
 								<a
 									href="https://facebook.com"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-[var(--selfridges-text-muted)]/60 hover:text-[var(--selfridges-text-secondary)] transition-colors p-2 rounded-full bg-[var(--selfridges-bg-secondary)] hover:bg-[var(--selfridges-bg-tertiary)]"
+									className="text-[#dfbc3f] hover:text-[#c4a535] transition-all duration-300 p-3 rounded-full border-2 border-[#dfbc3f]/30 hover:border-[#dfbc3f] hover:bg-[#dfbc3f]/10 backdrop-blur-sm"
 								>
-									<Facebook className="w-4 h-4" />
+									<Facebook className="w-5 h-5" />
 								</a>
 								<a
 									href="https://instagram.com"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-[var(--selfridges-text-muted)]/60 hover:text-[var(--selfridges-text-secondary)] transition-colors p-2 rounded-full bg-[var(--selfridges-bg-secondary)] hover:bg-[var(--selfridges-bg-tertiary)]"
+									className="text-[#dfbc3f] hover:text-[#c4a535] transition-all duration-300 p-3 rounded-full border-2 border-[#dfbc3f]/30 hover:border-[#dfbc3f] hover:bg-[#dfbc3f]/10 backdrop-blur-sm"
 								>
-									<Instagram className="w-4 h-4" />
+									<Instagram className="w-5 h-5" />
 								</a>
 							</div>
 						</div>
 					</div>
 
 					{/* Navigation Links */}
-					<nav className="md:col-span-2 grid grid-cols-2 gap-8">
+					<nav className="md:col-span-2 grid grid-cols-2 gap-12">
 						{sections.slice(0, 2).map((section) => (
 							<div key={section.header}>
-								<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
+								<h4 className="font-bold text-[#dfbc3f] uppercase tracking-wider text-sm mb-5">
 									{section.header}
 								</h4>
-								<ul role="list" className="space-y-2">
+								<ul role="list" className="space-y-3">
 									{section.links.map((link) => (
 										<li key={link.label}>
 											<YnsLink
-												className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors text-sm"
+												className="text-white/70 hover:text-[#dfbc3f] transition-all duration-300 text-sm font-medium"
 												href={link.href}
 											>
 												{link.label}
@@ -97,17 +97,15 @@ export async function Footer() {
 					</nav>
 
 					{/* Company & Contact */}
-					<div className="md:col-span-1 space-y-4">
+					<div className="md:col-span-1 space-y-6">
 						{/* Company Links */}
 						<div>
-							<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
-								Company
-							</h4>
-							<ul role="list" className="space-y-2">
+							<h4 className="font-bold text-[#dfbc3f] uppercase tracking-wider text-sm mb-5">Company</h4>
+							<ul role="list" className="space-y-3">
 								{sections[2]?.links.map((link) => (
 									<li key={link.label}>
 										<YnsLink
-											className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors text-sm"
+											className="text-white/70 hover:text-[#dfbc3f] transition-all duration-300 text-sm font-medium"
 											href={link.href}
 										>
 											{link.label}
@@ -119,48 +117,35 @@ export async function Footer() {
 
 						{/* Contact */}
 						<div>
-							<h4 className="font-semibold text-[var(--selfridges-text-primary)] uppercase tracking-wider text-xs mb-3">
-								Get in Touch
-							</h4>
-							<div className="space-y-2">
+							<h4 className="font-bold text-[#dfbc3f] uppercase tracking-wider text-sm mb-5">Get in Touch</h4>
+							<div className="space-y-3">
 								<a
 									href="mailto:info@veromodels.com"
-									className="text-[var(--selfridges-text-muted)] hover:text-[var(--selfridges-text-secondary)] transition-colors flex items-center gap-2 text-sm"
+									className="text-white/70 hover:text-[#dfbc3f] transition-all duration-300 flex items-center gap-3 text-sm font-medium"
 								>
-									<Mail className="w-4 h-4" />
+									<Mail className="w-5 h-5 text-[#dfbc3f]" />
 									<span>info@veromodels.com</span>
 								</a>
-								<div className="flex items-center gap-2">
-									<span className="text-[var(--selfridges-text-muted)] text-sm">Follow us:</span>
-									<a
-										href="https://facebook.com/veromodels"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-[var(--selfridges-text-secondary)] hover:text-[var(--selfridges-text-primary)] transition-colors"
-									>
-										Facebook
-									</a>
-								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
 				{/* Bottom Bar */}
-				<div className="border-t border-[var(--selfridges-border-light)] pt-4">
-					<div className="flex flex-col md:flex-row items-center justify-between gap-4">
+				<div className="border-t-2 border-[#dfbc3f]/20 pt-8 mt-10">
+					<div className="flex flex-col md:flex-row items-center justify-between gap-6">
 						{/* Copyright */}
 						<div className="text-center md:text-left">
-							<p className="text-[var(--selfridges-text-muted)] text-xs">
+							<p className="text-white/60 text-sm font-medium">
 								© {new Date().getFullYear()} Veromodels. All rights reserved.
 							</p>
-							<p className="text-[var(--selfridges-text-muted)]/70 text-xs mt-1">
+							<p className="text-white/40 text-sm mt-2">
 								Developed by{" "}
 								<a
 									href="https://qualiasolutions.net"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-[var(--selfridges-text-secondary)] hover:text-[var(--selfridges-text-primary)] transition-colors"
+									className="text-[#dfbc3f] hover:text-[#c4a535] transition-colors font-semibold"
 								>
 									Qualia Solutions
 								</a>
@@ -168,20 +153,23 @@ export async function Footer() {
 						</div>
 
 						{/* Payment Methods */}
-						<div className="flex items-center gap-4">
-							<span className="text-[var(--selfridges-text-muted)] text-xs">Secure Payment:</span>
+						<div className="flex flex-col sm:flex-row items-center gap-4">
+							<div className="flex items-center gap-2 text-white/60 text-sm font-semibold uppercase tracking-wider">
+								<Shield className="w-4 h-4 text-[#dfbc3f]" />
+								<span>Secure Payment</span>
+							</div>
 							<div className="flex items-center gap-3">
-								<div className="px-3 py-1 bg-[var(--selfridges-bg-secondary)] rounded text-xs font-semibold text-[var(--selfridges-text-muted)]">
-									Visa
+								<div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#dfbc3f]/30 rounded-lg hover:border-[#dfbc3f]/50 hover:bg-white/15 transition-all">
+									<CreditCard className="w-4 h-4 text-[#dfbc3f]" />
+									<span className="text-xs font-bold text-white/90">Visa</span>
 								</div>
-								<div className="px-3 py-1 bg-[var(--selfridges-bg-secondary)] rounded text-xs font-semibold text-[var(--selfridges-text-muted)]">
-									Mastercard
+								<div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#dfbc3f]/30 rounded-lg hover:border-[#dfbc3f]/50 hover:bg-white/15 transition-all">
+									<CreditCard className="w-4 h-4 text-[#dfbc3f]" />
+									<span className="text-xs font-bold text-white/90">Mastercard</span>
 								</div>
-								<div className="px-3 py-1 bg-[var(--selfridges-bg-secondary)] rounded text-xs font-semibold text-[var(--selfridges-text-muted)]">
-									Amex
-								</div>
-								<div className="px-3 py-1 bg-[var(--selfridges-bg-secondary)] rounded text-xs font-semibold text-[var(--selfridges-text-muted)]">
-									Stripe
+								<div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#dfbc3f]/30 rounded-lg hover:border-[#dfbc3f]/50 hover:bg-white/15 transition-all">
+									<Shield className="w-4 h-4 text-[#dfbc3f]" />
+									<span className="text-xs font-bold text-white/90">Stripe</span>
 								</div>
 							</div>
 						</div>

@@ -135,12 +135,9 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 				hasMore: false, // commerce-kit doesn't provide pagination info
 				endCursor: products.data[products.data.length - 1]?.id,
 			};
-		} catch (commerceError) {
+		} catch (_commerceError) {
 			// Silently fall back to Stripe API - this is expected and normal
-			// Only log in development
-			if (process.env.NODE_ENV === "development") {
-				console.debug("Using Stripe API directly (commerce-kit unavailable)");
-			}
+			// No logging needed as this is normal behavior
 		}
 
 		// Fallback: Use direct Stripe API with expanded prices
@@ -175,7 +172,7 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 			endCursor: products.data[products.data.length - 1]?.id,
 		};
 	} catch (error) {
-		console.error("Error fetching products:", error);
+		logger.error("Error fetching products", { error });
 		return { data: [], hasMore: false };
 	}
 }
@@ -226,11 +223,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 					return enrichedProduct;
 				}
 			}
-		} catch (commerceError) {
+		} catch (_commerceError) {
 			// Silently fall back to Stripe API - this is expected
-			if (process.env.NODE_ENV === "development") {
-				console.debug("Using Stripe API directly for product lookup");
-			}
 		}
 
 		// Fallback: Use direct Stripe API (reliable and always works)
@@ -298,7 +292,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 	} catch (error) {
 		const metric = endTimer();
 		metric.metadata = { source: "error", error: error instanceof Error ? error.message : "Unknown error" };
-		console.error("Error fetching product:", error);
+		logger.error("Error fetching product", { error });
 		return null;
 	}
 }
@@ -316,7 +310,7 @@ export async function searchProducts(query: string): Promise<Product[]> {
 				product.metadata.category?.toLowerCase().includes(searchTerm),
 		);
 	} catch (error) {
-		console.error("Error searching products:", error);
+		logger.error("Error searching products", { error });
 		return [];
 	}
 }
@@ -364,7 +358,7 @@ export async function getProductsByCategory(categorySlug: string, limit = 3): Pr
 
 		return filteredProducts;
 	} catch (error) {
-		console.error(`Error fetching products for category ${categorySlug}:`, error);
+		logger.error("Error fetching products for category", { error, categorySlug });
 		return [];
 	}
 }

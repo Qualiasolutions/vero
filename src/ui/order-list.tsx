@@ -33,19 +33,20 @@ export function OrderList() {
 	// Empty state when no orders exist
 	if (orders.length === 0) {
 		return (
-			<div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-				<div className="mb-6 p-8 rounded-full bg-[#C4A962]/10">
-					<Package className="h-16 w-16 text-[#C4A962]" />
+			<div className="min-h-[50vh] flex flex-col items-center justify-center text-center px-4 py-12">
+				<div className="mb-6 p-10 rounded-2xl bg-gradient-to-br from-[#dfbc3f]/10 to-[#dfbc3f]/5 border-2 border-[#dfbc3f]/20">
+					<Package className="h-20 w-20 text-[#dfbc3f]" />
 				</div>
-				<h2 className="text-2xl md:text-3xl font-light text-[#111827] mb-4 uppercase tracking-wider">
+				<h2 className="text-2xl md:text-3xl font-light text-[var(--selfridges-text-primary)] mb-4 uppercase tracking-wider">
 					No Orders Yet
 				</h2>
-				<p className="text-base text-[#6B7280] mb-8 max-w-md">
-					You haven&apos;t placed any orders yet. Start exploring our premium collection!
+				<p className="text-base text-[var(--selfridges-text-muted)] mb-8 max-w-md leading-relaxed">
+					You haven&apos;t placed any orders yet. Start exploring our premium collection of 1:18 scale diecast
+					models!
 				</p>
 				<Link
 					href="/products"
-					className="vero-button inline-flex items-center gap-2 px-8 py-4 rounded-lg shadow-lg uppercase tracking-wide"
+					className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#dfbc3f] to-[#c4a535] text-black font-semibold uppercase tracking-wide shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
 				>
 					<Package className="h-5 w-5" />
 					Browse Products

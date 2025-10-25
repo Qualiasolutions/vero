@@ -1,12 +1,13 @@
 import { unstable_cache } from "next/cache";
 import { commerce } from "@/lib/commerce";
+import { logger } from "@/lib/logger";
 import { simpleSearch } from "./simplesearch";
 
 export const searchProducts = unstable_cache(
 	async (query: string) => {
 		// Only use commerce if it's available (server-side)
 		if (!commerce) {
-			console.error("Commerce is not available on client side");
+			logger.error("Commerce is not available on client side");
 			return [];
 		}
 

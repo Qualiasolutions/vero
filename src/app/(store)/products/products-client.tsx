@@ -3,6 +3,7 @@
 import { ArrowRight, Search, Sparkles } from "lucide-react";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
+import { BreadcrumbNavigation, generateBreadcrumbs } from "@/components/breadcrumb-navigation";
 import type { Product } from "@/lib/product-service";
 import ProductFiltersClient from "@/ui/products/product-filters-client";
 import { ProductList } from "@/ui/products/product-list";
@@ -126,13 +127,7 @@ export default function ProductsClient({ initialProducts, locale = "en-US" }: Pr
 			{/* Premium Filters and Collection */}
 			<div id="collection" className="container mx-auto px-4 py-12 lg:py-16">
 				{/* Breadcrumb Navigation */}
-				<nav className="flex items-center gap-2 text-sm text-[#6B7280] mb-8">
-					<a href="/" className="hover:text-[var(--vero-gold-accent)] transition-colors">
-						Home
-					</a>
-					<span>/</span>
-					<span className="text-[#111827] font-medium">All Models</span>
-				</nav>
+				<BreadcrumbNavigation items={generateBreadcrumbs("products")} className="mb-8" />
 
 				<div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 					{/* Premium Filters Sidebar - Sticky */}

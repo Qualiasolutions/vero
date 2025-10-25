@@ -126,7 +126,7 @@ export const productImageMap = {
 	"kyosho-toyota-land-cruiser-60-1980":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108041546-31LPTMWJWUBII23SGLB8/Generated%252BImage%252BSeptember%252B27%25252C%252B2025%252B-%252B11_37AM.png",
 	"ottomobile-toyota-supra-3000-gt-trd-red":
-		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108043074-EPRS1UMP1SIIM1354H0Z/toyota-supra-3000-gt-trd-renaissance-red-1998.jpg",
+		"https://i.ibb.co/rf4mWMtY/Generated-Image-October-26-2025-2-09-AM-2.png",
 	"gt-spirit-toyota-supra-fuji-edition-white":
 		"https://images.squarespace-cdn.com/content/v1/68d6a6c7ad50e42eaaa2008c/1760108044506-92Z462UX0YCT05QNWIUP/gt341-toyota-supra-gr-fuji-speedway-edition-01-2.jpg",
 	"premium-classixxs-volvo-fh16-xl-red":

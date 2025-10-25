@@ -9,6 +9,7 @@ import {
 	removeFromCartAction,
 	updateCartItemAction,
 } from "@/actions/cart-actions";
+import { logger } from "@/lib/logger";
 
 type CartAction =
 	| { type: "ADD_ITEM"; variantId: string; quantity: number; product?: ProductInfo }
@@ -190,7 +191,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			});
 		} catch (error) {
 			// Rollback will happen automatically via useEffect
-			console.error("Failed to add to cart:", error);
+			logger.error("Failed to add to cart", { variantId, quantity, error });
 			toast.error("Failed to add to cart", {
 				description: "Please try again later",
 			});
@@ -214,7 +215,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			setActualCart(updatedCart);
 		} catch (error) {
 			// Rollback will happen automatically via useEffect
-			console.error("Failed to update cart item:", error);
+			logger.error("Failed to update cart item", { variantId, quantity, error });
 			throw error;
 		} finally {
 			// Clear pending operation
@@ -240,7 +241,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 			});
 		} catch (error) {
 			// Rollback will happen automatically via useEffect
-			console.error("Failed to remove from cart:", error);
+			logger.error("Failed to remove from cart", { variantId, error });
 			toast.error("Failed to remove item", {
 				description: "Please try again later",
 			});

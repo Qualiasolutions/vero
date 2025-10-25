@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { cookies } from "next/headers";
 import type Stripe from "stripe";
 import { env } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 import { getStripeClient } from "@/lib/stripe";
 import { createClient } from "@/lib/supabase/server";
 
@@ -31,7 +32,7 @@ const getStripeSession = (): Stripe => {
 	try {
 		return getStripeClient();
 	} catch (error) {
-		console.error("Stripe client initialisation failed:", error);
+		logger.error("Stripe client initialisation failed", error);
 		throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY in your environment.");
 	}
 };
@@ -110,7 +111,7 @@ async function transformCart(sessionId: string, items: DbCartItem[], stripe: Str
 					currency: price.currency.toUpperCase(),
 				};
 			} catch (error) {
-				console.error(`Failed to load Stripe product ${item.product_id}:`, error);
+				logger.error(`Failed to load Stripe product ${item.product_id}`, error);
 				throw error;
 			}
 		}),
@@ -118,7 +119,7 @@ async function transformCart(sessionId: string, items: DbCartItem[], stripe: Str
 
 	const currencies = new Set(stripeItems.map((entry) => entry.currency));
 	if (currencies.size > 1) {
-		console.warn("Cart contains items with multiple currencies, defaulting to first currency.", {
+		logger.warn("Cart contains items with multiple currencies, defaulting to first currency.", {
 			currencies: Array.from(currencies),
 		});
 	}
@@ -136,9 +137,10 @@ async function transformCart(sessionId: string, items: DbCartItem[], stripe: Str
 }
 
 export async function getCartAction(): Promise<Cart | null> {
+	let sessionId: string | undefined;
 	try {
 		const supabase = await createClient();
-		const sessionId = await getCartSessionId();
+		sessionId = await getCartSessionId();
 		const { data: items, error } = await supabase
 			.from("cart_items")
 			.select("*")
@@ -146,7 +148,7 @@ export async function getCartAction(): Promise<Cart | null> {
 			.order("created_at", { ascending: true });
 
 		if (error) {
-			console.error("Error loading cart items:", error);
+			logger.error("Error loading cart items", error, { sessionId });
 			return null;
 		}
 
@@ -157,7 +159,7 @@ export async function getCartAction(): Promise<Cart | null> {
 		const stripe = getStripeSession();
 		return transformCart(sessionId, items, stripe);
 	} catch (error) {
-		console.error("Error getting cart:", error);
+		logger.error("Error getting cart", error, { sessionId });
 		return null;
 	}
 }
@@ -204,7 +206,7 @@ export async function addToCartAction(variantId: string, quantity: number): Prom
 		const cart = await getCartAction();
 		return cart ?? createEmptyCart(sessionId);
 	} catch (error) {
-		console.error("Error adding to cart:", error);
+		logger.error("Error adding to cart", error, { sessionId, variantId, quantity });
 		throw error;
 	}
 }
@@ -240,7 +242,7 @@ export async function updateCartItemAction(variantId: string, quantity: number):
 		const cart = await getCartAction();
 		return cart ?? createEmptyCart(sessionId);
 	} catch (error) {
-		console.error("Error updating cart item:", error);
+		logger.error("Error updating cart item", error, { sessionId, variantId, quantity });
 		throw error;
 	}
 }
@@ -262,7 +264,7 @@ export async function removeFromCartAction(variantId: string): Promise<Cart> {
 		const cart = await getCartAction();
 		return cart ?? createEmptyCart(sessionId);
 	} catch (error) {
-		console.error("Error removing from cart:", error);
+		logger.error("Error removing from cart", error, { sessionId, variantId });
 		throw error;
 	}
 }
@@ -282,7 +284,7 @@ export async function getCartItemCount(): Promise<number> {
 
 		return items?.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
 	} catch (error) {
-		console.error("Error getting cart item count:", error);
+		logger.error("Error getting cart item count", error);
 		return 0;
 	}
 }
@@ -296,7 +298,7 @@ export async function clearCartAction(): Promise<void> {
 			throw error;
 		}
 	} catch (error) {
-		console.error("Error clearing cart:", error);
+		logger.error("Error clearing cart", error);
 		throw error;
 	}
 }
@@ -317,7 +319,7 @@ export async function cleanupExpiredCarts(): Promise<void> {
 			throw error;
 		}
 	} catch (error) {
-		console.error("Error cleaning up expired carts:", error);
+		logger.error("Error cleaning up expired carts", error);
 		throw error;
 	}
 }

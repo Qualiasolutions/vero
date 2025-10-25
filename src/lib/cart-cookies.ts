@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { logger } from "@/lib/logger";
 
 export const CART_COOKIE = "yns_cart_id";
 
@@ -8,7 +9,7 @@ export async function getCartId(): Promise<string | null> {
 		const cartId = cookiesValue.get(CART_COOKIE)?.value;
 		return cartId || null;
 	} catch (error) {
-		console.error("Failed to get cart ID from cookies", error);
+		logger.error("Failed to get cart ID from cookies", { error });
 		return null;
 	}
 }
@@ -22,7 +23,7 @@ export async function setCartId(cartId: string): Promise<void> {
 			maxAge: 60 * 60 * 24 * 30, // 30 days
 		});
 	} catch (error) {
-		console.error("Failed to set cart ID cookie", error);
+		logger.error("Failed to set cart ID cookie", { error, cartId });
 	}
 }
 
@@ -32,6 +33,6 @@ export async function clearCartId(): Promise<void> {
 			maxAge: 0,
 		});
 	} catch (error) {
-		console.error("Failed to clear cart ID cookie", error);
+		logger.error("Failed to clear cart ID cookie", { error });
 	}
 }

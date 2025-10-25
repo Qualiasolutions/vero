@@ -4,6 +4,7 @@ import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { useCart } from "@/context/cart-context";
+import { logger } from "@/lib/logger";
 import { formatMoney } from "@/lib/utils";
 
 interface CartSidebarProps {
@@ -19,7 +20,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 		try {
 			await optimisticUpdate(productId, quantity);
 		} catch (error) {
-			console.error("Failed to update quantity:", error);
+			logger.error("Failed to update cart quantity", { productId, quantity, error });
 		}
 	}
 
@@ -27,7 +28,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 		try {
 			await optimisticRemove(productId);
 		} catch (error) {
-			console.error("Failed to remove item:", error);
+			logger.error("Failed to remove cart item", { productId, error });
 		}
 	}
 
@@ -41,7 +42,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 			// createCheckoutSession() uses redirect() which will handle navigation
 			await createCheckoutSession();
 		} catch (error) {
-			console.error("Checkout error:", error);
+			logger.error("Checkout failed", { error });
 			alert("Checkout failed. Please try again or contact support.");
 			// Could show a toast notification here in the future
 			// For now, the error is already logged in the server action
@@ -60,14 +61,14 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 				onClick={onClose}
 			/>
 
-			{/* Sidebar */}
-			<div className="fixed right-0 top-0 z-50 h-screen w-full sm:w-96 max-w-full bg-white border-l-2 border-[#C4A962]/30 shadow-2xl shadow-[#C4A962]/10 transition-transform">
+			{/* Sidebar - Mobile optimized width */}
+			<div className="fixed right-0 top-0 z-50 h-screen w-full xs:w-[340px] sm:w-[380px] md:w-[420px] max-w-full bg-white border-l-2 border-[#C4A962]/30 shadow-2xl shadow-[#C4A962]/10 transition-transform">
 				<div className="flex h-full flex-col">
 					{/* Header */}
-					<div className="flex items-center justify-between border-b border-[#C4A962]/30 p-6 bg-gradient-to-b from-[#FDFBF7] to-white">
-						<div className="flex items-center gap-3">
-							<ShoppingBag className="h-5 w-5 text-[#C4A962]" />
-							<h2 className="text-lg font-light uppercase tracking-wider text-[#111827]">
+					<div className="flex items-center justify-between border-b border-[#C4A962]/30 p-4 xs:p-5 sm:p-6 bg-gradient-to-b from-[#FDFBF7] to-white">
+						<div className="flex items-center gap-2 xs:gap-3">
+							<ShoppingBag className="h-4 w-4 xs:h-5 xs:w-5 text-[#C4A962]" />
+							<h2 className="text-base xs:text-lg font-light uppercase tracking-wider text-[#111827]">
 								Cart <span className="text-[#C4A962]">({itemCount})</span>
 							</h2>
 						</div>
@@ -80,8 +81,8 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 						</button>
 					</div>
 
-					{/* Content */}
-					<div className="flex-1 overflow-y-auto bg-white">
+					{/* Content - Mobile optimized */}
+					<div className="flex-1 overflow-y-auto bg-white custom-scrollbar">
 						{!cart || !cart.items || cart.items.length === 0 ? (
 							<div className="flex h-full flex-col items-center justify-center gap-4 p-6 text-center">
 								<ShoppingBag className="h-16 w-16 text-[#C4A962]/30" />
@@ -91,7 +92,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 								</div>
 							</div>
 						) : (
-							<div className="p-4 space-y-4">
+							<div className="p-3 xs:p-4 space-y-3 xs:space-y-4">
 								{cart.items.map((item) => {
 									// Product info is now directly available in item.product
 									const product = item.product;
@@ -100,9 +101,12 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 									const itemId = item.productId || item.variantId || item.id;
 
 									return (
-										<div key={item.id} className="flex items-start gap-3 border-b border-[#C4A962]/20 pb-4">
+										<div
+											key={item.id}
+											className="flex items-start gap-2 xs:gap-3 border-b border-[#C4A962]/20 pb-3 xs:pb-4"
+										>
 											{/* Product Image */}
-											<div className="flex-shrink-0 w-20 h-20 bg-[#F8F9FA] border border-[#C4A962]/20 rounded-lg overflow-hidden">
+											<div className="flex-shrink-0 w-16 h-16 xs:w-18 xs:h-18 sm:w-20 sm:h-20 bg-[#F8F9FA] border border-[#C4A962]/20 rounded-lg overflow-hidden">
 												{product?.images?.[0] ? (
 													<Image
 														src={product.images[0]}
@@ -120,10 +124,10 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
 											{/* Product Info */}
 											<div className="flex-1 min-w-0">
-												<h3 className="font-light text-sm text-[#111827] leading-snug">
+												<h3 className="font-light text-xs xs:text-sm text-[#111827] leading-snug">
 													{product?.name || `Product ${item.productId}`}
 												</h3>
-												<p className="text-sm vero-text-gradient font-semibold mt-1">
+												<p className="text-xs xs:text-sm vero-text-gradient font-semibold mt-0.5 xs:mt-1">
 													{formatMoney({
 														amount: price, // Already in cents from Stripe
 														currency: cart.currency || "aed",
@@ -172,10 +176,10 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 
 					{/* Footer with Total */}
 					{cart && cart.items.length > 0 && (
-						<div className="border-t border-[#C4A962]/30 p-6 space-y-4 bg-gradient-to-t from-[#FDFBF7] to-white">
+						<div className="border-t border-[#C4A962]/30 p-4 xs:p-5 sm:p-6 space-y-3 xs:space-y-4 bg-gradient-to-t from-[#FDFBF7] to-white">
 							<div className="flex items-center justify-between">
-								<span className="text-sm uppercase tracking-wider text-[#6B7280]">Total:</span>
-								<span className="text-2xl font-semibold vero-text-gradient">
+								<span className="text-xs xs:text-sm uppercase tracking-wider text-[#6B7280]">Total:</span>
+								<span className="text-xl xs:text-2xl font-semibold vero-text-gradient">
 									{formatMoney({
 										amount: cart.total || 0, // Already in fils (smallest unit)
 										currency: cart.currency || "aed",
@@ -212,7 +216,9 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
 									"Proceed to Checkout"
 								)}
 							</button>
-							<p className="text-xs text-center text-[#6B7280]">Secure checkout powered by Stripe</p>
+							<p className="text-[10px] xs:text-xs text-center text-[#6B7280]">
+								Secure checkout powered by Stripe
+							</p>
 						</div>
 					)}
 				</div>

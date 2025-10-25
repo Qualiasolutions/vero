@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
 
 // Email validation regex
@@ -103,7 +104,7 @@ export async function signup(
 		redirect("/");
 	} catch (error) {
 		// Catch unexpected errors
-		console.error("Unexpected signup error:", error);
+		logger.error("Unexpected signup error", error, { email });
 		return { error: "An unexpected error occurred. Please try again." };
 	}
 }
@@ -156,7 +157,7 @@ export async function login(_state: unknown, formData: FormData): Promise<{ erro
 		redirect("/");
 	} catch (error) {
 		// Catch unexpected errors
-		console.error("Unexpected login error:", error);
+		logger.error("Unexpected login error", error, { email });
 		return { error: "An unexpected error occurred. Please try again." };
 	}
 }
@@ -167,7 +168,7 @@ export async function logout() {
 	const { error } = await supabase.auth.signOut();
 
 	if (error) {
-		console.error("Logout error:", error);
+		logger.error("Logout error", error);
 		redirect("/");
 	}
 

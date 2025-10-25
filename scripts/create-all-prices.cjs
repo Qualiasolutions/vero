@@ -30,7 +30,7 @@ fs.createReadStream(CSV_FILE)
 		if (sku && price && title) {
 			// Convert price to cents (EUR)
 			const priceInCents = Math.round(parseFloat(price) * 100);
-			csvProducts.push({ sku, price: priceInCents, title });
+			csvProducts.push({ sku, price: priceInCents });
 		}
 	})
 	.on("end", async () => {
@@ -46,7 +46,7 @@ fs.createReadStream(CSV_FILE)
 
 		// Match and create/update prices
 		for (const csvProduct of csvProducts) {
-			const { sku, price, title } = csvProduct;
+			const { sku, price } = csvProduct;
 
 			// Find matching Stripe product by SKU in description or metadata
 			const stripeProduct = stripeProducts.find(

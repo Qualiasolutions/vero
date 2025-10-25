@@ -51,46 +51,44 @@ export const Nav = () => {
 			<header
 				className={`sticky top-0 z-50 w-full transition-all duration-300 ${
 					isScrolled
-						? "bg-white/98 backdrop-blur-xl shadow-lg border-b border-[var(--vero-gold-accent)]/30"
-						: "bg-white/95 backdrop-blur-md border-b border-[var(--vero-gold-accent)]/20"
+						? "bg-gradient-to-r from-[var(--selfridges-bg-secondary)] via-[var(--selfridges-background)] to-[var(--selfridges-bg-secondary)] backdrop-blur-xl shadow-xl shadow-[#dfbc3f]/10 border-b border-[var(--vero-gold-accent)]/30"
+						: "bg-gradient-to-r from-[var(--selfridges-bg-secondary)] via-[var(--selfridges-background)] to-[var(--selfridges-bg-secondary)] backdrop-blur-md border-b border-[var(--vero-gold-accent)]/20"
 				}`}
 			>
-				<div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+				<div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
 					{/* Main Navigation */}
-					<div className="flex items-center justify-between h-20 lg:h-24">
+					<div className="flex items-center justify-between h-20 sm:h-24 lg:h-28">
 						{/* Logo - Left */}
 						<Link
 							href="/"
-							className="flex items-center rounded-xl hover:scale-105 transition-all duration-500 flex-shrink-0 group"
+							className="flex items-center rounded-xl hover:scale-105 transition-all duration-500 flex-shrink-0 group mr-4 lg:mr-6"
 						>
 							<div className="relative">
 								<Image
 									src="/veromodels-logo.webp"
 									alt="Veromodels"
-									width={320}
-									height={112}
-									className="h-14 lg:h-16 w-auto object-contain transition-all duration-500 group-hover:drop-shadow-[0_4px_20px_var(--vero-gold-accent-glow)]"
+									width={400}
+									height={140}
+									className="h-14 sm:h-16 lg:h-20 xl:h-24 w-auto object-contain transition-all duration-500 group-hover:drop-shadow-[0_8px_32px_#dfbc3f]"
 									priority
 									unoptimized={false}
 								/>
-								{!isScrolled && (
-									<div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--vero-gold-accent)] to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-								)}
+								<div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#dfbc3f] to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
 							</div>
 							<SeoH1 className="sr-only">Veromodels</SeoH1>
 						</Link>
 
-						{/* Desktop Navigation - Center */}
-						<nav className="hidden lg:flex items-center justify-center flex-1 mx-4 xl:mx-8">
-							<ul className="flex items-center gap-1 lg:gap-1.5 xl:gap-2">
+						{/* Desktop Navigation - Left aligned */}
+						<nav className="hidden lg:flex items-center flex-1 mx-2 xl:mx-4">
+							<ul className="flex items-center gap-1 xl:gap-2">
 								{navLinks.map((link) => (
 									<li key={link.href} className="relative whitespace-nowrap">
 										<Link
 											href={link.href}
-											className="group relative px-2.5 lg:px-3 xl:px-4 py-2 lg:py-2.5 xl:py-3 text-sm lg:text-sm xl:text-base font-medium text-[var(--selfridges-text-primary)] transition-all duration-300 hover:text-[var(--vero-gold-accent)] rounded-full hover:bg-[var(--vero-gold-accent)]/10 flex items-center justify-center min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vero-gold-accent)]/50"
+											className="group relative px-3 xl:px-4 py-2 text-sm xl:text-base font-semibold text-[var(--selfridges-text-primary)] transition-all duration-300 hover:text-[#dfbc3f] flex items-center justify-center min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfbc3f]/50"
 										>
-											<span className="truncate text-center">{link.label}</span>
-											<span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-[var(--vero-gold-accent)] to-[var(--vero-gold-accent-dark)] transform -translate-x-1/2 transition-all duration-300 group-hover:w-6 xl:group-hover:w-8"></span>
+											<span className="truncate text-center uppercase tracking-wider">{link.label}</span>
+											<span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-[#dfbc3f] to-[#c4a535] transform -translate-x-1/2 transition-all duration-300 group-hover:w-8 xl:group-hover:w-10"></span>
 										</Link>
 									</li>
 								))}
@@ -104,12 +102,12 @@ export const Nav = () => {
 								<div className="relative group">
 									<input
 										type="search"
-										placeholder="Search models..."
-										className="w-48 xl:w-64 h-10 px-4 pr-10 text-sm border border-[var(--vero-gold-accent)]/20 rounded-full focus:outline-none focus:border-[var(--vero-gold-accent)] focus:ring-2 focus:ring-[var(--vero-gold-accent-glow)] transition-all duration-300 group-hover:border-[var(--vero-gold-accent)]/40 bg-[var(--selfridges-white)] placeholder-[var(--selfridges-text-muted)]"
+										placeholder="Search..."
+										className="w-40 xl:w-48 h-10 px-4 pr-11 text-sm border-2 border-[#dfbc3f]/30 rounded-full focus:outline-none focus:border-[#dfbc3f] focus:ring-2 focus:ring-[#dfbc3f]/20 transition-all duration-300 group-hover:border-[#dfbc3f]/50 bg-white text-[var(--selfridges-text-primary)] placeholder-[var(--selfridges-text-muted)]"
 									/>
 									<button
 										type="button"
-										className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[var(--selfridges-text-muted)] hover:text-[var(--vero-gold-accent)] hover:bg-[var(--vero-gold-accent)]/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vero-gold-accent)]/50"
+										className="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[#dfbc3f] hover:text-[#c4a535] hover:bg-[#dfbc3f]/20 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfbc3f]/50"
 									>
 										<Search className="h-4 w-4" />
 									</button>
@@ -120,9 +118,9 @@ export const Nav = () => {
 							<button
 								type="button"
 								onClick={() => setIsSearchOpen(!isSearchOpen)}
-								className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full border border-[var(--vero-gold-accent)]/20 text-[var(--selfridges-text-muted)] hover:border-[var(--vero-gold-accent)] hover:bg-[var(--vero-gold-accent)]/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vero-gold-accent)]/50"
+								className="lg:hidden flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#dfbc3f]/30 text-[#dfbc3f] hover:border-[#dfbc3f] hover:bg-[#dfbc3f]/20 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfbc3f]/50 bg-white"
 							>
-								<Search className="h-4 w-4" />
+								<Search className="h-5 w-5" />
 							</button>
 
 							{/* Favorites */}
@@ -138,7 +136,7 @@ export const Nav = () => {
 							<button
 								type="button"
 								onClick={() => setIsMenuOpen(!isMenuOpen)}
-								className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full border border-[var(--vero-gold-accent)]/20 text-[var(--selfridges-text-muted)] hover:border-[var(--vero-gold-accent)] hover:bg-[var(--vero-gold-accent)]/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vero-gold-accent)]/50"
+								className="lg:hidden flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#dfbc3f]/30 text-[#dfbc3f] hover:border-[#dfbc3f] hover:bg-[#dfbc3f]/20 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfbc3f]/50 bg-white"
 							>
 								{isMenuOpen ? (
 									<X className="h-5 w-5 transition-transform duration-300 rotate-180" />
@@ -151,17 +149,17 @@ export const Nav = () => {
 
 					{/* Mobile Search Bar */}
 					{isSearchOpen && (
-						<div className="lg:hidden py-3 border-t border-[var(--vero-gold-accent)]/10 animate-fade-in">
+						<div className="lg:hidden py-3 border-t border-[var(--vero-gold-accent)]/20 animate-fade-in">
 							<div className="relative">
 								<input
 									type="search"
 									placeholder="Search models..."
-									className="w-full h-12 px-4 pr-12 text-sm border border-[var(--vero-gold-accent)]/20 rounded-full focus:outline-none focus:border-[var(--vero-gold-accent)] focus:ring-2 focus:ring-[var(--vero-gold-accent-glow)] transition-all duration-300"
+									className="w-full h-12 px-4 pr-12 text-sm border-2 border-[var(--vero-gold-accent)]/30 rounded-full focus:outline-none focus:border-[var(--vero-gold-accent)] focus:ring-2 focus:ring-[var(--vero-gold-accent)]/20 transition-all duration-300 bg-white text-[var(--selfridges-text-primary)] placeholder-[var(--selfridges-text-muted)]"
 									autoFocus
 								/>
 								<button
 									type="button"
-									className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[var(--selfridges-text-muted)] hover:text-[var(--vero-gold-accent)] hover:bg-[var(--vero-gold-accent)]/10 transition-all duration-300"
+									className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[#dfbc3f] hover:text-[#c4a535] hover:bg-[var(--vero-gold-accent)]/20 transition-all duration-300"
 								>
 									<Search className="h-4 w-4" />
 								</button>

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { completeCheckout } from "@/actions/checkout-actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { logger } from "@/lib/logger";
 
 interface PageProps {
 	searchParams: Promise<{ session_id?: string }>;
@@ -20,7 +21,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
 		// Complete the checkout process
 		await completeCheckout(sessionId);
 	} catch (error) {
-		console.error("Error completing checkout:", error);
+		logger.error("Error completing checkout", error, { sessionId });
 		// Don't redirect - show success anyway since payment was completed
 	}
 

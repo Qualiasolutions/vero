@@ -3,11 +3,12 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/i18n/client";
+import { logger } from "@/lib/logger";
 import { YnsLink } from "@/ui/yns-link";
 
 export default function Error({ error }: { error: Error & { digest?: string }; reset: () => void }) {
 	useEffect(() => {
-		console.error(error);
+		logger.error("Application error occurred", { error: error.message, digest: error.digest });
 	}, [error]);
 
 	const t = useTranslations("Global.error");

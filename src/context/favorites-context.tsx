@@ -2,6 +2,7 @@
 
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { logger } from "@/lib/logger";
 
 interface FavoriteProduct {
 	id: string;
@@ -36,7 +37,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 				setFavorites(parsed);
 			}
 		} catch (error) {
-			console.error("Failed to load favorites:", error);
+			logger.error("Failed to load favorites", { error });
 		} finally {
 			setIsLoaded(true);
 		}
@@ -48,7 +49,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			try {
 				localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
 			} catch (error) {
-				console.error("Failed to save favorites:", error);
+				logger.error("Failed to save favorites", { error });
 			}
 		}
 	}, [favorites, isLoaded]);

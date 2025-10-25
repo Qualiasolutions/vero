@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getUser } from "@/actions/auth-actions";
 import { UserMenu } from "@/components/user-menu";
+import { logger } from "@/lib/logger";
 
 interface UserMenuClientProps {
 	variant?: "icon" | "pill";
@@ -17,7 +18,7 @@ export function UserMenuClient({ variant = "icon" }: UserMenuClientProps) {
 				const user = await getUser();
 				setUserEmail(user?.email);
 			} catch (error) {
-				console.error("Error fetching user:", error);
+				logger.error("Error fetching user", { error });
 			}
 		}
 		fetchUser();

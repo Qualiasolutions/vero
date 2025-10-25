@@ -17,7 +17,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // Validate URL format
 try {
 	new URL(supabaseUrl);
-} catch (error) {
+} catch (_error) {
 	throw new Error(`Invalid NEXT_PUBLIC_SUPABASE_URL format: ${supabaseUrl}. Must be a valid URL.`);
 }
 

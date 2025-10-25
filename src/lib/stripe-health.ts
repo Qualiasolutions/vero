@@ -4,6 +4,7 @@
  */
 
 import { env } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 import { getStripeClient } from "@/lib/stripe";
 
 export interface StripeHealthCheck {
@@ -84,15 +85,13 @@ export async function validateStripeConfig(): Promise<StripeHealthCheck> {
  * Useful for debugging in development/production
  */
 export async function logStripeHealth(): Promise<void> {
-	console.log("🔍 Checking Stripe configuration...");
+	logger.info("Checking Stripe configuration");
 
 	const health = await validateStripeConfig();
 
 	if (health.isValid) {
-		console.log("✅ Stripe configuration is valid");
-		console.log("   Account ID:", health.details?.accountId);
+		logger.info("Stripe configuration is valid", { accountId: health.details?.accountId });
 	} else {
-		console.error("❌ Stripe configuration error:", health.error);
-		console.error("   Details:", health.details);
+		logger.error("Stripe configuration error", health.error, { details: health.details });
 	}
 }

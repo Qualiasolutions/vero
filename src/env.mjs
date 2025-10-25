@@ -15,15 +15,33 @@ export const env = createEnv({
 			.string()
 			.optional()
 			.transform((str) => !!str),
+
+		// Supabase Configuration
+		SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+		DATABASE_URL: z.string().optional(),
+
+		// Email Configuration
+		RESEND_API_KEY: z.string().optional(),
+
+		// Sentry Configuration
+		SENTRY_DSN: z.string().optional(),
+		SENTRY_AUTH_TOKEN: z.string().optional(),
 	},
 	client: {
 		// Can be provided via env or parameters to Commerce Kit, thus optional
 		NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
 		NEXT_PUBLIC_URL: z.string().url().optional(),
 
+		// Supabase Client Configuration
+		NEXT_PUBLIC_SUPABASE_URL: z.string().optional(),
+		NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
+
 		NEXT_PUBLIC_UMAMI_WEBSITE_ID: z.string().optional(),
 
 		NEXT_PUBLIC_NEWSLETTER_ENDPOINT: z.string().optional(),
+
+		// Sentry Configuration
+		NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
 
 		NEXT_PUBLIC_LANGUAGE: z.string().optional().default("en-US"),
 	},
@@ -34,6 +52,21 @@ export const env = createEnv({
 
 		NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
 		NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+
+		// Supabase Environment Variables
+		NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+		NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+		SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+		DATABASE_URL: process.env.DATABASE_URL,
+
+		// Email Configuration
+		RESEND_API_KEY: process.env.RESEND_API_KEY,
+
+		// Sentry Configuration
+		SENTRY_DSN: process.env.SENTRY_DSN,
+		SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
+		NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+
 		NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
 		NEXT_PUBLIC_NEWSLETTER_ENDPOINT: process.env.NEXT_PUBLIC_NEWSLETTER_ENDPOINT,
 

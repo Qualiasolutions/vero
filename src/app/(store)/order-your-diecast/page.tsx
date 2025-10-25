@@ -51,8 +51,6 @@ export default function CustomRequestPage() {
 			return;
 		}
 
-		// Here you would typically send the data to your API
-		console.log("Form submitted:", formData);
 		toast.success("Request submitted! We'll contact you within 24-48 hours.");
 
 		// Reset form

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { publicUrl } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 import { getProducts } from "@/lib/product-service";
 import StoreConfig from "@/store.config";
 
@@ -22,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			);
 		}
 	} catch (error) {
-		console.warn("Could not load products for sitemap:", error);
+		logger.warn("Could not load products for sitemap", { error });
 		// Continue with empty product URLs
 	}
 
@@ -31,8 +32,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			({
 				url: `${publicUrl}/category/${category.slug}`,
 				lastModified: new Date(),
-				changeFrequency: "daily",
-				priority: 0.5,
+				changeFrequency: "weekly",
+				priority: 0.8,
+			}) satisfies Item,
+	);
+
+	// Static pages with proper priorities
+	const staticPages = [
+		{ url: "/products", priority: 0.9, changeFreq: "daily" as const },
+		{ url: "/search", priority: 0.7, changeFreq: "weekly" as const },
+		{ url: "/contact", priority: 0.6, changeFreq: "monthly" as const },
+		{ url: "/about", priority: 0.6, changeFreq: "monthly" as const },
+		{ url: "/faq", priority: 0.6, changeFreq: "monthly" as const },
+		{ url: "/shipping-returns", priority: 0.5, changeFreq: "monthly" as const },
+		{ url: "/privacy-policy", priority: 0.3, changeFreq: "yearly" as const },
+		{ url: "/terms-of-service", priority: 0.3, changeFreq: "yearly" as const },
+		{ url: "/newsletter", priority: 0.5, changeFreq: "monthly" as const },
+		{ url: "/favorites", priority: 0.7, changeFreq: "weekly" as const },
+		{ url: "/cart", priority: 0.4, changeFreq: "daily" as const },
+	];
+
+	const staticUrls = staticPages.map(
+		(page) =>
+			({
+				url: `${publicUrl}${page.url}`,
+				lastModified: new Date(),
+				changeFrequency: page.changeFreq,
+				priority: page.priority,
 			}) satisfies Item,
 	);
 
@@ -43,7 +69,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: "always",
 			priority: 1,
 		},
-		...productUrls,
+		...staticUrls,
 		...categoryUrls,
+		...productUrls,
 	];
 }

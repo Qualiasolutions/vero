@@ -6,17 +6,25 @@ export default function robots(): MetadataRoute.Robots {
 		rules: [
 			{
 				userAgent: "*",
-				allow: "/",
+				allow: ["/", "/products", "/category", "/search"],
+				disallow: ["/api", "/auth", "/checkout", "/cart", "/orders", "/admin", "/_next", "/favicon.ico"],
 			},
 			{
 				userAgent: "Googlebot",
-				disallow: " ",
+				allow: "/",
+				disallow: ["/api", "/auth", "/checkout", "/cart", "/orders", "/admin"],
 			},
 			{
-				userAgent: "Googlebot-image",
-				disallow: " ",
+				userAgent: "Googlebot-Image",
+				allow: "/",
+			},
+			{
+				userAgent: "Bingbot",
+				allow: "/",
+				disallow: ["/api", "/auth", "/checkout", "/cart", "/orders", "/admin"],
 			},
 		],
 		sitemap: publicUrl + "/sitemap.xml",
+		host: publicUrl,
 	};
 }

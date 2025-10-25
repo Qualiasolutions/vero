@@ -36,8 +36,6 @@ test.describe("Authentication", () => {
 		await expect(page.getByLabel(/^email/i)).toBeVisible();
 		await expect(page.getByLabel(/^password/i)).toBeVisible();
 		await expect(page.getByLabel(/confirm password/i)).toBeVisible();
-
-		console.log("Signup form is visible and all fields are present");
 	});
 
 	test("should logout successfully", async ({ page }) => {
@@ -50,12 +48,9 @@ test.describe("Authentication", () => {
 
 		// Find and click logout button (usually in navigation)
 		const logoutButton = page.getByRole("button", { name: /log out|logout|sign out/i });
-		if (await logoutButton.isVisible()) {
-			await logoutButton.click();
-			await page.waitForURL(/\/login/, { timeout: 10000 });
-			expect(page.url()).toContain("/login");
-		} else {
-			console.log("Logout button not found - checking navigation");
-		}
+		await expect(logoutButton).toBeVisible();
+		await logoutButton.click();
+		await page.waitForURL(/\/login/, { timeout: 10000 });
+		expect(page.url()).toContain("/login");
 	});
 });

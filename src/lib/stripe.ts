@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { env } from "@/env.mjs";
+import { logger } from "@/lib/logger";
 
 declare global {
 	// eslint-disable-next-line no-var
@@ -16,7 +17,7 @@ const createStripeClient = (): Stripe => {
 		const isDevelopment = process.env.NODE_ENV === "development";
 		const isProduction = process.env.NODE_ENV === "production";
 
-		console.error("Stripe Configuration Error:", {
+		logger.error("Stripe configuration error", null, {
 			isDevelopment,
 			isProduction,
 			hasSecretKey: !!secretKey,
@@ -31,7 +32,7 @@ const createStripeClient = (): Stripe => {
 
 	// Log successful configuration (only in development)
 	if (process.env.NODE_ENV === "development") {
-		console.log("Stripe client initialized successfully");
+		logger.debug("Stripe client initialized successfully");
 	}
 
 	return new Stripe(secretKey, {
