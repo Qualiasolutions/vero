@@ -109,7 +109,7 @@ export function CartContent() {
 									<p className="text-lg sm:text-xl font-bold text-[#dfbc3f] mb-4">
 										{formatMoney({
 											amount: price,
-											currency: cart.currency || "eur",
+											currency: cart.currency || "aed",
 											locale: "en-US",
 										})}
 									</p>
@@ -167,7 +167,7 @@ export function CartContent() {
 						<span className="font-semibold text-[var(--selfridges-text-primary)]">
 							{formatMoney({
 								amount: cart.total || 0,
-								currency: cart.currency || "eur",
+								currency: cart.currency || "aed",
 								locale: "en-US",
 							})}
 						</span>
@@ -179,7 +179,7 @@ export function CartContent() {
 						<span className="text-2xl font-bold text-[#dfbc3f]">
 							{formatMoney({
 								amount: cart.total || 0,
-								currency: cart.currency || "eur",
+								currency: cart.currency || "aed",
 								locale: "en-US",
 							})}
 						</span>

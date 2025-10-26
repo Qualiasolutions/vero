@@ -111,25 +111,27 @@ export default async function Home() {
 											</Badge>
 										</div>
 
-										{/* Category Header with Image */}
+										{/* Smart Category Label - No Image */}
 										<Link
 											href={`/category/${category.slug}`}
-											className="group relative overflow-hidden rounded-lg aspect-[4/3] hover:scale-[1.02] transition-all duration-300 vero-card"
+											className="group relative overflow-hidden rounded-lg p-6 xs:p-8 sm:p-10 bg-gradient-to-br from-[var(--selfridges-bg-secondary)] via-[var(--selfridges-background)] to-[var(--selfridges-bg-secondary)] hover:scale-[1.02] transition-all duration-300 vero-card border border-[var(--vero-gold-accent)]/20 hover:border-[var(--vero-gold-accent)]/40 hover:shadow-lg text-center min-h-[120px] xs:min-h-[140px] sm:min-h-[160px] flex flex-col items-center justify-center"
 										>
-											<div className="relative w-full h-full">
-												<Image
-													src={category.image}
-													alt={category.name}
-													fill
-													className="object-cover transition-transform duration-500 group-hover:scale-110"
-													sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-												/>
+											{/* Icon or Number Badge */}
+											<div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 mx-auto mb-3 xs:mb-4 bg-gradient-to-br from-[var(--vero-gold-accent)]/10 to-[var(--vero-gold-accent-light)]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform border border-[var(--vero-gold-accent)]/20">
+												<span className="text-[var(--vero-gold-accent)] font-bold text-lg xs:text-xl sm:text-2xl">
+													{category.name.charAt(0)}
+												</span>
 											</div>
-											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4">
-												<h2 className="text-white font-bold text-xs xs:text-sm sm:text-base md:text-lg uppercase tracking-wide text-center drop-shadow-lg">
-													{category.name}
-												</h2>
-											</div>
+
+											{/* Category Name */}
+											<h2 className="text-[var(--selfridges-text-primary)] font-bold text-sm xs:text-base sm:text-lg uppercase tracking-wide group-hover:text-[var(--vero-gold-accent)] transition-colors duration-300 leading-tight">
+												{category.name}
+											</h2>
+
+											{/* Subtle description or count hint */}
+											<p className="text-[var(--selfridges-text-muted)] text-xs xs:text-sm mt-1 xs:mt-2 opacity-70 group-hover:opacity-100 transition-opacity">
+												Explore Collection
+											</p>
 										</Link>
 
 										{/* Clean separator */}
@@ -179,21 +181,21 @@ export default async function Home() {
 															€{(product.price / 100).toFixed(2)}
 														</p>
 
-														{/* Action buttons - not cropped */}
-														<div className="flex gap-1.5">
+														{/* Action buttons - fixed sizing */}
+														<div className="flex gap-1.5 w-full overflow-hidden">
 															<Link
 																href={`/product/${product.slug || product.id}`}
-																className="flex-1 inline-flex items-center justify-center gap-1 rounded-md border-2 border-[#dfbc3f] px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-black bg-white transition-all duration-300 hover:bg-[#dfbc3f] hover:text-white"
+																className="flex-1 inline-flex items-center justify-center gap-0.5 rounded-md border border-[#dfbc3f] px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#dfbc3f] bg-white transition-all duration-300 hover:bg-[#dfbc3f] hover:text-white min-w-0 max-w-[50%]"
 															>
-																<Eye className="h-3 w-3" />
-																<span className="text-xs">View</span>
+																<Eye className="h-2.5 w-2.5 flex-shrink-0" />
+																<span className="text-[10px] truncate">View</span>
 															</Link>
 															<AddToCart
 																variantId={product.id}
-																className="flex-1 inline-flex items-center justify-center gap-1 rounded-md bg-[#dfbc3f] px-2 py-1.5 text-xs font-semibold text-black transition-colors duration-300 hover:bg-[#c4a535] uppercase tracking-wide"
+																className="flex-1 inline-flex items-center justify-center gap-0.5 rounded-md bg-[#dfbc3f] px-1.5 py-1 text-[10px] font-semibold text-black transition-colors duration-300 hover:bg-[#c4a535] uppercase tracking-wide min-w-0 max-w-[50%]"
 															>
-																<ShoppingCart className="h-3 w-3" />
-																<span className="text-xs">Add</span>
+																<ShoppingCart className="h-2.5 w-2.5 flex-shrink-0" />
+																<span className="text-[10px] truncate">Add</span>
 															</AddToCart>
 														</div>
 													</div>

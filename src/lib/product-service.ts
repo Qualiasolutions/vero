@@ -128,7 +128,7 @@ export async function getProducts(limit = 24): Promise<ProductBrowseResult> {
 				metadata: {}, // commerce-kit doesn't expose metadata
 				description: cleanProductDescription(product.summary),
 				active: true, // commerce-kit only returns active products
-				currency: product.currency || "eur",
+				currency: product.currency || "aed",
 			}));
 
 			return {
@@ -214,7 +214,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 						metadata: {}, // commerce-kit doesn't expose metadata
 						description: cleanProductDescription(product.summary),
 						active: true, // commerce-kit only returns active products
-						currency: product.currency || "eur",
+						currency: product.currency || "aed",
 					};
 
 					// Cache the result

@@ -135,18 +135,18 @@
 		--muted: 0 0% 96%;
 		--muted-foreground: 215 16% 47%;
 
-		/* Accent (Champagne Gold) */
-		--accent: 45 35% 58%;
+		/* Accent (Champagne Gold - Primary Brand Color) */
+		--accent: 45 65% 56%;
 		--accent-foreground: 0 0% 6%;
 
 		/* Destructive (Burgundy) */
 		--destructive: 348 83% 31%;
 		--destructive-foreground: 0 0% 98%;
 
-		/* Border & Input */
-		--border: 0 0% 90%;
+		/* Border & Input - Enhanced with Gold */
+		--border: 45 35% 75%;
 		--input: 0 0% 90%;
-		--ring: 0 0% 6%;
+		--ring: 45 65% 56%;
 
 		--radius: 0.5rem;
 
@@ -215,17 +215,17 @@
 		--vero-bg-tertiary: #f5f3ef;
 		--vero-bg-quaternary: #f9fafb;
 
-		/* Border Colors */
-		--vero-border-light: #e5e7eb;
-		--vero-border-medium: #d1d5db;
-		--vero-border-dark: #9ca3af;
+		/* Border Colors - Gold Emphasis */
+		--vero-border-light: #f0e8d0;
+		--vero-border-medium: #dfbc3f;
+		--vero-border-dark: #c4a535;
 		--vero-border-gold: #dfbc3f;
 
-		/* Interactive States */
-		--vero-hover-bg: #f9fafb;
-		--vero-hover-border: var(--vero-gold-champagne);
-		--vero-active-bg: #f3f4f6;
-		--vero-focus-ring: var(--vero-gold-glow);
+		/* Interactive States - Gold Focused */
+		--vero-hover-bg: #fef9e7;
+		--vero-hover-border: #dfbc3f;
+		--vero-active-bg: #fef3c7;
+		--vero-focus-ring: rgba(223, 188, 63, 0.4);
 	}
 
 	.dark {
@@ -326,6 +326,28 @@ input[type="search" i]::-webkit-search-cancel-button {
 	to {
 		opacity: 1;
 		transform: translateY(0);
+	}
+}
+
+@keyframes slide-in-right {
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes scale-in {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
 	}
 }
 
@@ -444,6 +466,14 @@ input[type="search" i]::-webkit-search-cancel-button {
 .animate-lift:hover {
 	transform: translateY(-4px) scale(1.01);
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.animate-slide-in-right {
+	animation: slide-in-right 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+	animation: scale-in 0.3s ease-out forwards;
 }
 
 /* ============================================================================ */
@@ -641,16 +671,16 @@ input[type="search" i]::-webkit-search-cancel-button {
 	/* ============================================================================ */
 
 	.vero-button {
-		background: var(--vero-black-pure);
-		color: var(--vero-white-pure);
-		font-weight: 600;
-		letter-spacing: 0.3px;
+		background: #dfbc3f;
+		color: #0f0f0f;
+		font-weight: 700;
+		letter-spacing: 0.5px;
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		position: relative;
 		overflow: hidden;
-		border: none;
+		border: 2px solid #dfbc3f;
 		padding: 0.75rem 1.5rem;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 4px 12px rgba(223, 188, 63, 0.3);
 	}
 
 	.vero-button::before {
@@ -661,7 +691,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 		width: 0;
 		height: 0;
 		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.2);
+		background: rgba(196, 165, 53, 0.4);
 		transform: translate(-50%, -50%);
 		transition:
 			width 0.5s,
@@ -674,20 +704,21 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 
 	.vero-button:hover {
-		background: var(--vero-gold-champagne);
-		color: var(--vero-black-pure);
-		transform: translateY(-1px);
+		background: #c4a535;
+		color: #ffffff;
+		border-color: #c4a535;
+		transform: translateY(-2px);
 		box-shadow:
-			0 6px 20px rgba(0, 0, 0, 0.2),
-			0 0 20px var(--vero-gold-glow);
+			0 8px 24px rgba(223, 188, 63, 0.5),
+			0 0 30px rgba(223, 188, 63, 0.4);
 	}
 
 	.vero-button-outline {
 		background: transparent;
-		color: var(--vero-black-pure);
-		border: 1.5px solid var(--vero-black-pure);
-		font-weight: 600;
-		letter-spacing: 0.3px;
+		color: #dfbc3f;
+		border: 2px solid #dfbc3f;
+		font-weight: 700;
+		letter-spacing: 0.5px;
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		position: relative;
 		overflow: hidden;
@@ -701,7 +732,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 		left: -100%;
 		width: 100%;
 		height: 100%;
-		background: var(--vero-black-pure);
+		background: #dfbc3f;
 		transition: left 0.3s ease;
 		z-index: -1;
 	}
@@ -711,8 +742,9 @@ input[type="search" i]::-webkit-search-cancel-button {
 	}
 
 	.vero-button-outline:hover {
-		color: var(--vero-white-pure);
-		border-color: var(--vero-gold-champagne);
+		color: #0f0f0f;
+		border-color: #c4a535;
+		box-shadow: 0 4px 16px rgba(223, 188, 63, 0.4);
 	}
 
 	.vero-button-gold {
@@ -750,8 +782,8 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 	.vero-input:focus {
 		outline: none;
-		border-color: var(--vero-gold-champagne);
-		box-shadow: 0 0 0 3px var(--vero-gold-glow);
+		border-color: #dfbc3f;
+		box-shadow: 0 0 0 4px rgba(223, 188, 63, 0.25);
 	}
 
 	.vero-input:hover:not(:focus) {
