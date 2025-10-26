@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	// Fetch all products once
-	const allProductsResult = await getProducts(100);
+	// Fetch featured products for homepage
+	const allProductsResult = await getProducts(20);
 	const allProducts = allProductsResult.data || [];
 
-	// Featured products to show at top of each category (in fixed order)
+	// Featured products to showcase
 	const featuredProductNames = [
 		"Premium Classixxs MAN TGX XXL Blue Metallic",
 		"KYOSHO Lamborghini Countach LP400 Red 1974",
@@ -37,37 +37,9 @@ export default async function Home() {
 	];
 
 	// Find featured products in order
-	const featuredProducts = featuredProductNames.map((name) =>
-		allProducts.find((p) => p.name.toLowerCase().includes(name.toLowerCase())),
-	);
-
-	// Distribute products across categories (3 per category + 1 featured at top)
-	const categoryProducts = StoreConfig.categories.map((category, index) => {
-		// First, try to get products with matching category metadata
-		let categoryProds = allProducts.filter(
-			(p) => p.metadata.category?.toLowerCase() === category.slug.toLowerCase(),
-		);
-
-		// If no products with category metadata, use fallback logic
-		if (categoryProds.length === 0) {
-			const startIndex = index * 3;
-			categoryProds = allProducts.slice(startIndex, startIndex + 3);
-		} else {
-			// Limit to 3 products
-			categoryProds = categoryProds.slice(0, 3);
-		}
-
-		// Add featured product at the top (one per category, in order)
-		const featuredProduct = featuredProducts[index];
-		if (featuredProduct && !categoryProds.find((p) => p.id === featuredProduct.id)) {
-			categoryProds = [featuredProduct, ...categoryProds.slice(0, 2)]; // Keep total at 3
-		}
-
-		return {
-			category,
-			products: categoryProds,
-		};
-	});
+	const featuredProducts = featuredProductNames
+		.map((name) => allProducts.find((p) => p.name.toLowerCase().includes(name.toLowerCase())))
+		.filter(Boolean); // Remove any undefined results
 
 	return (
 		<div className="bg-[var(--selfridges-background)] relative">
@@ -78,146 +50,6 @@ export default async function Home() {
 
 				{/* Info Billboard - Live Stats */}
 				<InfoBillboard />
-
-				{/* Category Columns with Products - 6 Columns in Single Row */}
-				<section
-					id="categories"
-					className="w-full px-6 lg:px-12 xl:px-16 py-12 bg-gradient-to-b from-[var(--selfridges-background)] via-[var(--selfridges-bg-secondary)]/30 to-[var(--selfridges-background)]"
-				>
-					<div className="w-full">
-						{/* Section Header */}
-						<div className="text-center mb-12">
-							<h2 className="text-3xl md:text-4xl font-light text-[var(--selfridges-text-primary)] uppercase tracking-wider mb-3">
-								Shop By Category
-							</h2>
-							<p className="text-[var(--selfridges-text-muted)] text-lg max-w-2xl mx-auto">
-								Explore our curated collection of premium 1:18 scale die-cast models
-							</p>
-						</div>
-						{/* Grid - Mobile optimized (2 cols on mobile, scales up gracefully) */}
-						<div className="grid grid-cols-2 gap-4 xs:gap-5 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-7 xl:grid-cols-6 xl:gap-8">
-							{categoryProducts.map(({ category, products }) => {
-								return (
-									<div
-										key={category.slug}
-										className="flex flex-col space-y-2 xs:space-y-3 p-3 xs:p-4 sm:p-6 rounded-lg xs:rounded-xl border border-[var(--vero-gold-accent)]/20 bg-[var(--selfridges-bg-secondary)] transition-all duration-300 hover:shadow-lg hover:border-[var(--vero-gold-accent)]/40"
-									>
-										{/* Category Badge */}
-										<div className="relative mb-2 xs:mb-3 sm:mb-4">
-											<Badge
-												className={`${category.badgeColor} text-[9px] xs:text-[10px] sm:text-xs font-bold px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 z-10 shadow-lg whitespace-nowrap`}
-											>
-												{category.badge}
-											</Badge>
-										</div>
-
-										{/* Smart Category Label - No Image */}
-										<Link
-											href={`/category/${category.slug}`}
-											className="group relative overflow-hidden rounded-lg p-6 xs:p-8 sm:p-10 bg-gradient-to-br from-[var(--selfridges-bg-secondary)] via-[var(--selfridges-background)] to-[var(--selfridges-bg-secondary)] hover:scale-[1.02] transition-all duration-300 vero-card border border-[var(--vero-gold-accent)]/20 hover:border-[var(--vero-gold-accent)]/40 hover:shadow-lg text-center min-h-[120px] xs:min-h-[140px] sm:min-h-[160px] flex flex-col items-center justify-center"
-										>
-											{/* Icon or Number Badge */}
-											<div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 mx-auto mb-3 xs:mb-4 bg-gradient-to-br from-[var(--vero-gold-accent)]/10 to-[var(--vero-gold-accent-light)]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform border border-[var(--vero-gold-accent)]/20">
-												<span className="text-[var(--vero-gold-accent)] font-bold text-lg xs:text-xl sm:text-2xl">
-													{category.name.charAt(0)}
-												</span>
-											</div>
-
-											{/* Category Name */}
-											<h2 className="text-[var(--selfridges-text-primary)] font-bold text-sm xs:text-base sm:text-lg uppercase tracking-wide group-hover:text-[var(--vero-gold-accent)] transition-colors duration-300 leading-tight">
-												{category.name}
-											</h2>
-
-											{/* Subtle description or count hint */}
-											<p className="text-[var(--selfridges-text-muted)] text-xs xs:text-sm mt-1 xs:mt-2 opacity-70 group-hover:opacity-100 transition-opacity">
-												Explore Collection
-											</p>
-										</Link>
-
-										{/* Clean separator */}
-										<div className="h-px bg-gradient-to-r from-transparent via-[var(--vero-gold-accent)]/30 to-transparent my-6"></div>
-
-										{/* Exactly 3 Products under this category */}
-										<div className="space-y-4">
-											{products.slice(0, 3).map((product) => (
-												<div
-													key={product.id}
-													className="group bg-[var(--selfridges-bg-secondary)] rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-[var(--selfridges-border)]"
-												>
-													{/* Product Image with enhanced hover */}
-													<Link href={`/product/${product.slug || product.id}`} className="block">
-														<div className="relative aspect-[16/9] w-full bg-[var(--selfridges-background-muted)] group-hover:bg-[var(--selfridges-bg-secondary)] transition-colors duration-300 overflow-hidden">
-															{product.images && product.images.length > 0 && product.images[0] ? (
-																<Image
-																	src={product.images[0]}
-																	alt={product.name}
-																	fill
-																	className="object-cover object-center transition-all duration-500 group-hover:scale-110"
-																	sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-																/>
-															) : (
-																<div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#FAFAF9] to-[#F5F5F5]">
-																	<span className="text-[#C4A962] text-sm font-semibold uppercase tracking-wide">
-																		Coming Soon
-																	</span>
-																</div>
-															)}
-															<div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-																<FavoriteHeartIcon product={product} />
-															</div>
-														</div>
-													</Link>
-
-													{/* Enhanced Product Info */}
-													<div className="p-3 bg-[var(--selfridges-bg-secondary)] space-y-3 group-hover:bg-[var(--selfridges-background)] transition-colors duration-300">
-														<Link href={`/product/${product.slug || product.id}`} className="block">
-															<h3 className="text-xs sm:text-sm font-semibold text-[var(--selfridges-text-primary)] line-clamp-2 group-hover:text-[#dfbc3f] transition-colors leading-snug min-h-[32px] mb-2">
-																{product.name}
-															</h3>
-														</Link>
-
-														{/* Price - centered with gold color */}
-														<p className="text-base sm:text-lg font-bold text-[#dfbc3f] text-center">
-															€{(product.price / 100).toFixed(2)}
-														</p>
-
-														{/* Action buttons - fixed sizing */}
-														<div className="flex gap-1.5 w-full overflow-hidden">
-															<Link
-																href={`/product/${product.slug || product.id}`}
-																className="flex-1 inline-flex items-center justify-center gap-0.5 rounded-md border border-[#dfbc3f] px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#dfbc3f] bg-white transition-all duration-300 hover:bg-[#dfbc3f] hover:text-white min-w-0 max-w-[50%]"
-															>
-																<Eye className="h-2.5 w-2.5 flex-shrink-0" />
-																<span className="text-[10px] truncate">View</span>
-															</Link>
-															<AddToCart
-																variantId={product.id}
-																className="flex-1 inline-flex items-center justify-center gap-0.5 rounded-md bg-[#dfbc3f] px-1.5 py-1 text-[10px] font-semibold text-black transition-colors duration-300 hover:bg-[#c4a535] uppercase tracking-wide min-w-0 max-w-[50%]"
-															>
-																<ShoppingCart className="h-2.5 w-2.5 flex-shrink-0" />
-																<span className="text-[10px] truncate">Add</span>
-															</AddToCart>
-														</div>
-													</div>
-												</div>
-											))}
-										</div>
-
-										{/* View All Link */}
-										{products.length > 0 && (
-											<Link
-												href={`/category/${category.slug}`}
-												className="text-[11px] text-black hover:text-black font-semibold tracking-wide transition-all duration-300 text-center py-1.5 hover:underline uppercase"
-											>
-												View All →
-											</Link>
-										)}
-									</div>
-								);
-							})}
-						</div>
-					</div>
-				</section>
 
 				{/* Image Slideshow */}
 				<ImageSlideshow />
