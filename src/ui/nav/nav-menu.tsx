@@ -5,14 +5,14 @@ import StoreConfig from "@/store.config";
 import { NavMobileMenu } from "@/ui/nav/nav-mobile-menu.client";
 
 const links = [
+	{
+		label: "Collection",
+		href: "/products",
+	},
 	...StoreConfig.categories.map((cat) => ({
 		label: cat.name,
 		href: `/category/${cat.slug}`,
 	})),
-	{
-		label: "All Models",
-		href: "/products",
-	},
 ];
 
 export const NavMenu = () => {

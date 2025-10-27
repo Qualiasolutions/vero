@@ -8,8 +8,8 @@ import { CartIcon } from "@/components/cart-icon";
 import { FavoritesIcon } from "@/components/favorites-icon";
 import { UserMenuClient } from "@/components/user-menu-client";
 import StoreConfig from "@/store.config";
-import { SeoH1 } from "@/ui/seo-h1";
 import { SearchInput } from "@/ui/nav/search-input.client";
+import { SeoH1 } from "@/ui/seo-h1";
 
 export const Nav = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,14 +37,14 @@ export const Nav = () => {
 	}, [isMenuOpen]);
 
 	const navLinks = [
+		{
+			label: "Collection",
+			href: "/products",
+		},
 		...StoreConfig.categories.map((cat) => ({
 			label: cat.name,
 			href: `/category/${cat.slug}`,
 		})),
-		{
-			label: "All Models",
-			href: "/products",
-		},
 	];
 
 	return (
