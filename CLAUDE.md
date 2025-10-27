@@ -38,8 +38,41 @@ bun lint
 # Run tests
 bun test
 
+# Run tests in watch mode
+bun test --watch
+
+# Run tests with coverage
+bun test --coverage
+
 # Prepare Husky hooks
 bun prepare
+```
+
+### Database Commands
+```bash
+# Generate Prisma client
+bunx prisma generate
+
+# Push schema changes to database
+bunx prisma db push
+
+# Open Prisma Studio (database GUI)
+bunx prisma studio
+
+# Check migration status
+bunx prisma migrate status
+```
+
+### Testing Commands
+```bash
+# Run E2E tests with Playwright
+bunx playwright test
+
+# Run E2E tests with UI
+bunx playwright test --ui
+
+# Generate E2E test code
+bunx playwright codegen http://localhost:3000
 ```
 
 ### Docker Commands
@@ -120,6 +153,10 @@ src/app/
 - **src/env.mjs**: Environment variable validation
 - **middleware.ts**: Request middleware for auth/i18n
 - **tailwind.config.ts**: Tailwind configuration
+- **biome.json**: Linting and formatting rules (strict TypeScript, tab indentation)
+- **vitest.config.ts**: Unit testing configuration with jsdom environment
+- **playwright.config.ts**: E2E testing configuration for multiple browsers
+- **commitlint.config.ts**: Conventional commit enforcement
 
 ### Core Libraries
 - **src/lib/stripe.ts**: Stripe integration
@@ -136,9 +173,11 @@ src/app/
 
 ### Code Organization
 - Server Components by default, Client Components only when needed
-- Use TypeScript strictly - no `any` types
+- Use TypeScript strictly - no `any` types (enforced by Biome)
 - Follow the existing component naming conventions
 - Separate business logic from UI components
+- Use conventional commits (enforced by commitlint)
+- React Compiler is enabled for automatic optimizations
 
 ### Styling
 - Use Tailwind CSS classes consistently
@@ -147,8 +186,11 @@ src/app/
 - Mobile-first responsive design
 
 ### Testing
-- Unit tests for utilities and business logic
-- Component tests for UI components
+- Unit tests for utilities and business logic with Vitest
+- Component tests for UI components with Testing Library
+- Integration tests in `tests/integration/`
+- E2E tests with Playwright in `tests/e2e/`
+- Test setup includes mocks for Next.js components in `src/setup-tests.ts`
 - Test files located in `__tests__/` directories or `.test.ts` files
 
 ### Performance Considerations

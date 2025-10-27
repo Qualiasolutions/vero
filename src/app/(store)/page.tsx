@@ -100,62 +100,42 @@ export default async function Home() {
 								return (
 									<div
 										key={category.slug}
-										className="flex flex-col space-y-2 xs:space-y-3 p-3 xs:p-4 sm:p-6 rounded-lg xs:rounded-xl border border-[var(--vero-gold-accent)]/20 bg-[var(--selfridges-bg-secondary)] transition-all duration-300 hover:shadow-lg hover:border-[var(--vero-gold-accent)]/40"
+										className="flex flex-col space-y-4 p-4 rounded-xl border border-[var(--vero-gold-accent)]/20 bg-[var(--selfridges-bg-secondary)] transition-all duration-300 hover:shadow-lg hover:border-[var(--vero-gold-accent)]/40"
 									>
 										{/* Category Badge */}
-										<div className="relative mb-2 xs:mb-3 sm:mb-4">
+										<div className="relative text-center">
 											<Badge
-												className={`${category.badgeColor} text-[9px] xs:text-[10px] sm:text-xs font-bold px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 z-10 shadow-lg whitespace-nowrap`}
+												className={`${category.badgeColor} text-[10px] xs:text-xs sm:text-sm font-bold px-3 py-1.5 xs:px-4 xs:py-2 sm:px-6 sm:py-2.5 rounded-full shadow-lg whitespace-nowrap inline-block`}
 											>
 												{category.badge}
 											</Badge>
+											{/* Category Name as text below badge */}
+											<h2 className="text-xs xs:text-sm sm:text-base font-bold text-[var(--selfridges-text-primary)] uppercase tracking-wide mt-3 mb-2">
+												{category.name}
+											</h2>
 										</div>
 
-										{/* Category Header with Image */}
-										<Link
-											href={`/category/${category.slug}`}
-											className="group relative overflow-hidden rounded-lg aspect-[4/3] hover:scale-[1.02] transition-all duration-300 vero-card"
-										>
-											<div className="relative w-full h-full">
-												<Image
-													src={category.image}
-													alt={category.name}
-													fill
-													className="object-cover transition-transform duration-500 group-hover:scale-110"
-													sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-												/>
-											</div>
-											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4">
-												<h2 className="text-white font-bold text-xs xs:text-sm sm:text-base md:text-lg uppercase tracking-wide text-center drop-shadow-lg">
-													{category.name}
-												</h2>
-											</div>
-										</Link>
-
-										{/* Clean separator */}
-										<div className="h-px bg-gradient-to-r from-transparent via-[var(--vero-gold-accent)]/30 to-transparent my-6"></div>
-
-										{/* Exactly 3 Products under this category */}
-										<div className="space-y-4">
+										{/* Products */}
+										<div className="flex-1 space-y-3">
 											{products.slice(0, 3).map((product) => (
 												<div
 													key={product.id}
-													className="group bg-[var(--selfridges-bg-secondary)] rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-[var(--selfridges-border)]"
+													className="group bg-[var(--selfridges-background)] rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 border border-[var(--selfridges-border)]"
 												>
-													{/* Product Image with enhanced hover */}
+													{/* Product Image */}
 													<Link href={`/product/${product.slug || product.id}`} className="block">
-														<div className="relative aspect-[16/9] w-full bg-[var(--selfridges-background-muted)] group-hover:bg-[var(--selfridges-bg-secondary)] transition-colors duration-300 overflow-hidden">
+														<div className="relative aspect-[4/3] w-full bg-[var(--selfridges-background-muted)] group-hover:bg-[var(--selfridges-bg-secondary)] transition-colors duration-300 overflow-hidden">
 															{product.images && product.images.length > 0 && product.images[0] ? (
 																<Image
 																	src={product.images[0]}
 																	alt={product.name}
 																	fill
-																	className="object-cover object-center transition-all duration-500 group-hover:scale-110"
+																	className="object-cover object-center transition-all duration-500 group-hover:scale-105"
 																	sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
 																/>
 															) : (
 																<div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#FAFAF9] to-[#F5F5F5]">
-																	<span className="text-[#C4A962] text-sm font-semibold uppercase tracking-wide">
+																	<span className="text-[#C4A962] text-xs font-semibold uppercase tracking-wide">
 																		Coming Soon
 																	</span>
 																</div>
@@ -166,34 +146,36 @@ export default async function Home() {
 														</div>
 													</Link>
 
-													{/* Enhanced Product Info */}
-													<div className="p-3 bg-[var(--selfridges-bg-secondary)] space-y-3 group-hover:bg-[var(--selfridges-background)] transition-colors duration-300">
+													{/* Product Info */}
+													<div className="p-2 sm:p-3 bg-[var(--selfridges-background)] space-y-2 group-hover:bg-[var(--selfridges-bg-secondary)] transition-colors duration-300">
 														<Link href={`/product/${product.slug || product.id}`} className="block">
-															<h3 className="text-xs sm:text-sm font-semibold text-[var(--selfridges-text-primary)] line-clamp-2 group-hover:text-[#dfbc3f] transition-colors leading-snug min-h-[32px] mb-2">
+															<h3 className="text-[10px] xs:text-xs sm:text-sm font-semibold text-[var(--selfridges-text-primary)] line-clamp-2 group-hover:text-[#dfbc3f] transition-colors leading-tight min-h-[24px] xs:min-h-[28px] sm:min-h-[32px]">
 																{product.name}
 															</h3>
 														</Link>
 
-														{/* Price - centered with gold color */}
-														<p className="text-base sm:text-lg font-bold text-[#dfbc3f] text-center">
+														{/* Price */}
+														<p className="text-xs sm:text-sm font-bold text-[#dfbc3f] text-center">
 															€{(product.price / 100).toFixed(2)}
 														</p>
 
-														{/* Action buttons - not cropped */}
-														<div className="flex gap-1.5">
+														{/* Action buttons */}
+														<div className="flex gap-1">
 															<Link
 																href={`/product/${product.slug || product.id}`}
-																className="flex-1 inline-flex items-center justify-center gap-1 rounded-md border-2 border-[#dfbc3f] px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-black bg-white transition-all duration-300 hover:bg-[#dfbc3f] hover:text-white"
+																className="flex-1 inline-flex items-center justify-center gap-0.5 rounded border border-[#dfbc3f] px-1.5 py-1 text-[9px] xs:text-xs font-semibold uppercase tracking-wide text-black bg-white transition-all duration-300 hover:bg-[#dfbc3f] hover:text-white"
 															>
-																<Eye className="h-3 w-3" />
-																<span className="text-xs">View</span>
+																<Eye className="h-2.5 w-2.5 xs:h-3 xs:w-3" />
+																<span className="hidden xs:inline">View</span>
+																<span className="xs:hidden">V</span>
 															</Link>
 															<AddToCart
 																variantId={product.id}
-																className="flex-1 inline-flex items-center justify-center gap-1 rounded-md bg-[#dfbc3f] px-2 py-1.5 text-xs font-semibold text-black transition-colors duration-300 hover:bg-[#c4a535] uppercase tracking-wide"
+																className="flex-1 inline-flex items-center justify-center gap-0.5 rounded bg-[#dfbc3f] px-1.5 py-1 text-[9px] xs:text-xs font-semibold text-black transition-colors duration-300 hover:bg-[#c4a535] uppercase tracking-wide !px-1.5 !py-1"
 															>
-																<ShoppingCart className="h-3 w-3" />
-																<span className="text-xs">Add</span>
+																<ShoppingCart className="h-2.5 w-2.5 xs:h-3 xs:w-3" />
+																<span className="hidden xs:inline">Add</span>
+																<span className="xs:hidden">+</span>
 															</AddToCart>
 														</div>
 													</div>
@@ -205,7 +187,7 @@ export default async function Home() {
 										{products.length > 0 && (
 											<Link
 												href={`/category/${category.slug}`}
-												className="text-[11px] text-black hover:text-black font-semibold tracking-wide transition-all duration-300 text-center py-1.5 hover:underline uppercase"
+												className="text-[10px] xs:text-xs sm:text-xs text-black hover:text-black font-semibold tracking-wide transition-all duration-300 text-center py-2 hover:underline uppercase"
 											>
 												View All →
 											</Link>

@@ -1,19 +1,14 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDebouncedValue } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import { Input } from "@/ui/shadcn/input";
 
 const inputClasses = cn(
-	"vero-search-input appearance-none rounded-lg absolute border-[#C4A962]/20 bg-white/90 backdrop-blur-sm py-2 pl-4 pr-10 w-9 opacity-0 transition-all ease-linear shadow-sm",
-	"max-sm:focus:w-[calc(100vw-2rem)] max-sm:cursor-default max-sm:focus:left-4 max-sm:focus:z-20 max-sm:focus:opacity-100",
-	"sm:opacity-100 sm:w-full sm:pl-4 sm:pr-10 sm:inline-block sm:static",
-	"md:pl-3 md:pr-9 md:max-w-xs lg:max-w-sm",
-	"lg:pl-4 lg:pr-10 lg:max-w-md",
-	"focus:border-[#C4A962] focus:ring-2 focus:ring-[#C4A962]/20 focus:shadow-lg focus:shadow-[#C4A962]/10",
-	"hover:border-[#D4B673]/40 placeholder:text-[#6B7280]/60 text-[#111827] h-9 text-sm",
+	"w-full h-10 px-4 pr-11 text-sm border-2 border-[#dfbc3f]/30 rounded-full focus:outline-none focus:border-[#dfbc3f] focus:ring-2 focus:ring-[#dfbc3f]/20 transition-all duration-300 bg-white text-[var(--selfridges-text-primary)] placeholder-[var(--selfridges-text-muted)]",
+	"group-hover:border-[#dfbc3f]/50",
 );
 
 export const SearchInputPlaceholder = ({ placeholder }: { placeholder: string }) => {
@@ -36,42 +31,70 @@ export const SearchInput = ({ placeholder }: { placeholder: string }) => {
 	const searchParamQuery = searchParams.get("q") ?? "";
 
 	const [query, setQuery] = useState(searchParamQuery);
-	const [_isQueryPending, debouncedQuery] = useDebouncedValue(query, 100);
+	const [_isQueryPending, debouncedQuery] = useDebouncedValue(query, 300);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		router.prefetch(`/search?q=${encodeURIComponent(query)}`);
+		// Only prefetch when query changes, not on every render
+		if (query.trim()) {
+			router.prefetch(`/search?q=${encodeURIComponent(query.trim())}`);
+		}
 	}, [query, router]);
 
 	useEffect(() => {
-		if (debouncedQuery) {
-			router.push(`/search?q=${encodeURIComponent(debouncedQuery)}`, { scroll: false });
-		}
-	}, [debouncedQuery, router]);
-
-	useEffect(() => {
-		if (pathname === "/search" && !query) {
+		// Only navigate when debounced query changes and is not empty
+		if (debouncedQuery.trim()) {
+			router.push(`/search?q=${encodeURIComponent(debouncedQuery.trim())}`, { scroll: false });
+		} else if (pathname === "/search") {
+			// Only navigate back to home if we're on search page and query is empty
 			router.push(`/`, { scroll: true });
 		}
-	}, [pathname, query, router]);
+	}, [debouncedQuery, pathname, router]);
 
+	// Update query when URL search params change (e.g., when navigating back)
 	useEffect(() => {
-		if (pathname !== "/search") {
-			setQuery("");
+		const currentQuery = searchParams.get("q") ?? "";
+		if (currentQuery !== query) {
+			setQuery(currentQuery);
 		}
-	}, [pathname]);
+	}, [searchParams, query]);
+
+	// Keep focus on input when component re-renders
+	useEffect(() => {
+		if (inputRef.current && document.activeElement !== inputRef.current) {
+			// Only focus if the input is not already focused and we have a query
+			if (query.trim()) {
+				inputRef.current.focus();
+			}
+		}
+	});
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newQuery = e.target.value;
+		setQuery(newQuery);
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			if (query.trim()) {
+				router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+			}
+		}
+	};
 
 	return (
 		<Input
-			onChange={(e) => {
-				const query = e.target.value;
-				setQuery(query);
-			}}
+			ref={inputRef}
+			onChange={handleChange}
+			onKeyDown={handleKeyDown}
 			className={inputClasses}
 			placeholder={placeholder}
 			type="search"
 			enterKeyHint="search"
 			name="search"
 			value={query}
+			autoComplete="off"
 		/>
 	);
 };

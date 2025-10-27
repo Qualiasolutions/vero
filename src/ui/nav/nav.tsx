@@ -9,6 +9,7 @@ import { FavoritesIcon } from "@/components/favorites-icon";
 import { UserMenuClient } from "@/components/user-menu-client";
 import StoreConfig from "@/store.config";
 import { SeoH1 } from "@/ui/seo-h1";
+import { SearchInput } from "@/ui/nav/search-input.client";
 
 export const Nav = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -100,17 +101,10 @@ export const Nav = () => {
 							{/* Desktop Search */}
 							<div className="hidden lg:block">
 								<div className="relative group">
-									<input
-										type="search"
-										placeholder="Search..."
-										className="w-40 xl:w-48 h-10 px-4 pr-11 text-sm border-2 border-[#dfbc3f]/30 rounded-full focus:outline-none focus:border-[#dfbc3f] focus:ring-2 focus:ring-[#dfbc3f]/20 transition-all duration-300 group-hover:border-[#dfbc3f]/50 bg-white text-[var(--selfridges-text-primary)] placeholder-[var(--selfridges-text-muted)]"
-									/>
-									<button
-										type="button"
-										className="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[#dfbc3f] hover:text-[#c4a535] hover:bg-[#dfbc3f]/20 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfbc3f]/50"
-									>
+									<SearchInput placeholder="Search models..." />
+									<div className="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[#dfbc3f] pointer-events-none">
 										<Search className="h-4 w-4" />
-									</button>
+									</div>
 								</div>
 							</div>
 
@@ -151,18 +145,10 @@ export const Nav = () => {
 					{isSearchOpen && (
 						<div className="lg:hidden py-3 border-t border-[var(--vero-gold-accent)]/20 animate-fade-in">
 							<div className="relative">
-								<input
-									type="search"
-									placeholder="Search models..."
-									className="w-full h-12 px-4 pr-12 text-sm border-2 border-[var(--vero-gold-accent)]/30 rounded-full focus:outline-none focus:border-[var(--vero-gold-accent)] focus:ring-2 focus:ring-[var(--vero-gold-accent)]/20 transition-all duration-300 bg-white text-[var(--selfridges-text-primary)] placeholder-[var(--selfridges-text-muted)]"
-									autoFocus
-								/>
-								<button
-									type="button"
-									className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[#dfbc3f] hover:text-[#c4a535] hover:bg-[var(--vero-gold-accent)]/20 transition-all duration-300"
-								>
+								<SearchInput placeholder="Search models..." />
+								<div className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full text-[#dfbc3f] pointer-events-none">
 									<Search className="h-4 w-4" />
-								</button>
+								</div>
 							</div>
 						</div>
 					)}

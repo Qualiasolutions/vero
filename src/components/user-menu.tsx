@@ -69,6 +69,13 @@ export function UserMenu({ userEmail, variant = "icon" }: UserMenuProps) {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator className="bg-[#dfbc3f]/30" />
 				<DropdownMenuItem
+					onClick={() => router.push("/profile")}
+					className="cursor-pointer hover:bg-[#dfbc3f]/20 text-white/80 hover:text-[#dfbc3f] focus:bg-[#dfbc3f]/20 focus:text-[#dfbc3f]"
+				>
+					<User className="mr-2 h-4 w-4" />
+					<span>My Profile</span>
+				</DropdownMenuItem>
+				<DropdownMenuItem
 					onClick={() => router.push("/orders")}
 					className="cursor-pointer hover:bg-[#dfbc3f]/20 text-white/80 hover:text-[#dfbc3f] focus:bg-[#dfbc3f]/20 focus:text-[#dfbc3f]"
 				>
