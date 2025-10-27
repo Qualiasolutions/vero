@@ -253,7 +253,7 @@ export default async function SingleProductPage(props: {
 										<p className="text-sm font-bold text-gray-900">1:18</p>
 									</div>
 									<div className="space-y-2 p-3 bg-white rounded-lg border border-black/5">
-										<p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Material</p>
+										<p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Manufacturer</p>
 										<p className="text-sm font-bold text-gray-900">Die-Cast Metal</p>
 									</div>
 									<div className="space-y-2 p-3 bg-white rounded-lg border border-black/5">
@@ -324,7 +324,7 @@ export default async function SingleProductPage(props: {
 											</Badge>
 										</div>
 										<div className="flex justify-between items-center py-4 px-5 border-b-2 border-black/5 bg-gray-50">
-											<span className="text-gray-600 font-medium">Material</span>
+											<span className="text-gray-600 font-medium">Manufacturer</span>
 											<span className="text-gray-900 font-bold">Die-Cast Metal</span>
 										</div>
 										<div className="flex justify-between items-center py-4 px-5 border-b-2 border-black/5 bg-white">
