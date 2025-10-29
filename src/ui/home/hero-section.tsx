@@ -1,7 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { getComingSoonProducts } from "@/actions/product-actions";
+import { AdRotator } from "./ad-rotator";
 
-export function HeroSection() {
+export async function HeroSection() {
+	// Fetch coming soon products for the ad rotator
+	const comingSoonProducts = await getComingSoonProducts();
+
 	return (
 		<section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh] overflow-hidden">
 			{/* Background Gradient */}
@@ -25,9 +30,15 @@ export function HeroSection() {
 				<div className="absolute bottom-20 right-20 w-48 h-48 border border-[var(--vero-gold-accent)] rounded-full animate-float delay-1000" />
 			</div>
 
-			{/* Content */}
-			<div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-12 xl:px-16">
-				<div className="text-center text-white space-y-4 sm:space-y-6 max-w-4xl mx-auto">
+			{/* Main Content Grid */}
+			<div className="relative z-10 h-full grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 sm:px-6 lg:px-12 xl:px-16">
+				{/* Left Side - Coming Soon Ads */}
+				<div className="hidden lg:block">
+					<AdRotator products={comingSoonProducts} autoRotate={true} rotationInterval={4000} />
+				</div>
+
+				{/* Center - Hero Content */}
+				<div className="flex flex-col items-center justify-center text-center text-white space-y-4 sm:space-y-6 max-w-2xl mx-auto lg:max-w-none lg:col-span-1">
 					{/* Premium Badge */}
 					<div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--vero-gold-accent)]/20 border border-[var(--vero-gold-accent)] rounded-full backdrop-blur-sm">
 						<span className="text-sm font-semibold text-white">Premium 1:18 Scale Die-Cast Models</span>
@@ -35,11 +46,11 @@ export function HeroSection() {
 
 					{/* Main Heading */}
 					<div className="space-y-2 sm:space-y-3">
-						<h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight">
+						<h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight">
 							Collect The
 							<span className="block mt-1 sm:mt-2 vero-elegant-text">Extraordinary</span>
 						</h1>
-						<p className="text-sm sm:text-base lg:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+						<p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-xl mx-auto">
 							Discover exclusive die-cast model cars from legendary brands. Limited editions, rare
 							collectibles, and pre-order releases.
 						</p>
@@ -62,6 +73,9 @@ export function HeroSection() {
 						</Link>
 					</div>
 				</div>
+
+				{/* Right Side - Empty (space for video) */}
+				<div className="hidden lg:block"></div>
 			</div>
 		</section>
 	);
