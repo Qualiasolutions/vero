@@ -1,6 +1,7 @@
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { completeCheckout } from "@/actions/checkout-actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +11,7 @@ interface PageProps {
 	searchParams: Promise<{ session_id?: string }>;
 }
 
-export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
+async function CheckoutSuccessContent({ searchParams }: PageProps) {
 	const { session_id: sessionId } = await searchParams;
 
 	if (!sessionId) {
@@ -71,5 +72,25 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
 				</CardContent>
 			</Card>
 		</div>
+	);
+}
+
+export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
+	return (
+		<Suspense
+			fallback={
+				<div className="container mx-auto px-4 py-8 max-w-2xl">
+					<Card className="border-[#C4A962]/20">
+						<CardHeader className="text-center">
+							<CardTitle className="text-2xl font-light uppercase tracking-wide text-[#111827]">
+								Loading...
+							</CardTitle>
+						</CardHeader>
+					</Card>
+				</div>
+			}
+		>
+			<CheckoutSuccessContent searchParams={searchParams} />
+		</Suspense>
 	);
 }

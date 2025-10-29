@@ -111,10 +111,11 @@ src/app/
 - Server Components for data fetching with client components for interactivity
 
 #### 3. Commerce Layer
-- **src/lib/commerce.ts**: Core commerce utilities
-- **src/lib/product-service.ts**: Product data management
+- **src/lib/commerce.ts**: Core commerce utilities using commerce-kit/stripe
+- **src/lib/product-service.ts**: Product data management with caching and fallback strategies
 - **src/actions/**: Server actions for cart, checkout, and auth
-- **commerce-kit** package: Stripe-based commerce functionality
+- **commerce-kit** package: Stripe-based commerce functionality (server-side only)
+- **Product Architecture**: Dual-layer system with commerce-kit for performance and Stripe API as fallback
 
 #### 4. Authentication
 - Supabase-based authentication with middleware support
@@ -130,16 +131,21 @@ src/app/
 ### Data Flow
 
 #### Product Management
-- Products fetched through Stripe API with commerce-kit
-- Image mapping via **src/lib/product-image-mapping.js**
-- Search functionality in **src/lib/search/**
-- Category-based filtering
+- Products fetched through dual-layer system: commerce-kit (fast, server-side) with Stripe API fallback
+- In-memory caching with 5-minute TTL for product data
+- Product description cleaning for German/English text patterns
+- Search functionality in **src/lib/search-utils.ts**
+- Category-based filtering via metadata
+- Product data service handles both slug-based and ID-based lookups
 
 #### Cart & Checkout
 - Cart state managed via React Context + Server Actions
 - Stripe Payment Intents for checkout
-- Cookie-based cart persistence
+- Cookie-based cart persistence (yns_cart_id) with 30-day expiration
+- Database-backed cart items via Supabase with session-based association
 - Optimistic updates for better UX
+- Automatic cleanup of expired carts (30 days)
+- Server-side cart resolution with Stripe product data
 
 #### User Management
 - Supabase authentication with JWT sessions
@@ -157,12 +163,17 @@ src/app/
 - **vitest.config.ts**: Unit testing configuration with jsdom environment
 - **playwright.config.ts**: E2E testing configuration for multiple browsers
 - **commitlint.config.ts**: Conventional commit enforcement
+- **semantic-release**: Automated versioning and changelog generation
 
 ### Core Libraries
-- **src/lib/stripe.ts**: Stripe integration
+- **src/lib/stripe.ts**: Stripe integration with health checks
 - **src/lib/api.ts**: API utilities
 - **src/lib/types.ts**: TypeScript type definitions
 - **src/lib/utils.ts**: Utility functions
+- **src/lib/logger.ts**: Structured logging with performance monitoring
+- **src/lib/performance.ts**: Performance monitoring utilities
+- **src/lib/email.ts**: Email service (currently stubbed, ready for Resend integration)
+- **src/lib/error-handler.ts**: Centralized error handling
 
 ### Actions (Server Actions)
 - **src/actions/cart-actions.ts**: Cart operations
@@ -177,7 +188,17 @@ src/app/
 - Follow the existing component naming conventions
 - Separate business logic from UI components
 - Use conventional commits (enforced by commitlint)
-- React Compiler is enabled for automatic optimizations
+- React Compiler is enabled for automatic optimizations (babel-plugin-react-compiler)
+- Husky: Git hooks for pre-commit linting with lint-staged
+- semantic-release: Automated releases based on conventional commits
+
+### Code Style & Formatting
+- **Biome Configuration**: Uses tab indentation (2 spaces width), line width 110, double quotes for JSX
+- **Import Style**: Use `import type` for type-only imports
+- **Semicolons**: Always required
+- **Trailing Commas**: All trailing commas required
+- **Arrow Functions**: Always use parentheses around parameters
+- **Brace Style**: Same line for opening brace, new line for closing brace
 
 ### Styling
 - Use Tailwind CSS classes consistently
@@ -193,6 +214,27 @@ src/app/
 - Test setup includes mocks for Next.js components in `src/setup-tests.ts`
 - Test files located in `__tests__/` directories or `.test.ts` files
 
+### Testing Commands
+```bash
+# Run single test file
+bun test path/to/test.test.ts
+
+# Run tests in watch mode for development
+bun test --watch
+
+# Run tests with coverage report
+bun test --coverage
+
+# Run E2E tests
+bunx playwright test
+
+# Run E2E tests with UI mode
+bunx playwright test --ui
+
+# Generate E2E test code
+bunx playwright codegen http://localhost:3000
+```
+
 ### Performance Considerations
 - Images optimized through Next.js Image component
 - Prefetching for navigation links
@@ -205,8 +247,13 @@ Required environment variables (see **src/env.mjs** for complete list):
 - `STRIPE_SECRET_KEY` & `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `STRIPE_CURRENCY`
 - `NEXT_PUBLIC_URL` (for Stripe redirects)
-- Supabase credentials (`NEXT_PUBLIC_SUPABASE_URL`, etc.)
+- `STRIPE_WEBHOOK_SECRET` for webhook verification
+- Supabase credentials (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`)
+- `DATABASE_URL` for PostgreSQL connection
 - Optional: `ENABLE_STRIPE_TAX` for tax calculation
+- Optional: `RESEND_API_KEY` for email notifications
+- Optional: `NEXT_PUBLIC_UMAMI_WEBSITE_ID` for analytics
+- Optional: Sentry DSN and auth token for error tracking
 
 ## Common Patterns
 
@@ -229,9 +276,16 @@ API routes follow Next.js App Router conventions in **src/app/api/** with proper
 
 The project is configured for Vercel deployment with:
 - Edge middleware support
-- Environment variable validation
+- Environment variable validation via T3 Env
 - Stripe webhook handling
 - Supabase integration
+- Automatic deployment on main branch pushes
+- semantic-release integration for automated versioning
+
+### Docker Support
+The project includes Docker configuration:
+- `bun docker:build`: Builds Docker image
+- `bun docker:run`: Runs Docker container on port 3000
 
 ## Testing Strategy
 
