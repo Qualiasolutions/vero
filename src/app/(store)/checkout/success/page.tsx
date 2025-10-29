@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { logger } from "@/lib/logger";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
 	searchParams: Promise<{ session_id?: string }>;
 }
