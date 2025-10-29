@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default function CheckoutCancelPage() {
 	return (
 		<div className="container mx-auto px-4 py-8 max-w-2xl">

@@ -2,6 +2,8 @@ import { Award, Car, Globe, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
 	title: "About Us - Our Story",
 	description: "Learn about Veromodels - your destination for premium diecast car models and collectibles.",
