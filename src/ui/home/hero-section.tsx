@@ -1,4 +1,4 @@
-import { ArrowRight, Package, Shield, Star, Truck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export function HeroSection() {
@@ -30,7 +30,6 @@ export function HeroSection() {
 				<div className="text-center text-white space-y-4 sm:space-y-6 max-w-4xl mx-auto">
 					{/* Premium Badge */}
 					<div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--vero-gold-accent)]/20 border border-[var(--vero-gold-accent)] rounded-full backdrop-blur-sm">
-						<Star className="w-4 h-4 text-[var(--vero-gold-accent)]" />
 						<span className="text-sm font-semibold text-white">Premium 1:18 Scale Die-Cast Models</span>
 					</div>
 
