@@ -4,15 +4,20 @@ import Link from "next/link";
 export function HeroSection() {
 	return (
 		<section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh] overflow-hidden">
-			{/* Video Background - All Devices */}
-			<div className="absolute inset-0">
-				<video muted playsInline autoPlay loop className="absolute inset-0 w-full h-full object-cover">
-					<source src="/Generated File October 19, 2025 - 2_39PM.mp4" type="video/mp4" />
-				</video>
+			{/* Background Gradient */}
+			<div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
+
+			{/* Video Background - Right Side, Smaller */}
+			<div className="absolute inset-0 flex items-center justify-center">
+				<div className="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-40">
+					<video muted playsInline autoPlay loop className="absolute inset-0 w-full h-full object-cover">
+						<source src="/Generated File October 19, 2025 - 2_39PM.mp4" type="video/mp4" />
+					</video>
+				</div>
 			</div>
 
-			{/* Dark Overlay for Video */}
-			<div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+			{/* Dark Overlay - Left Side Dominant */}
+			<div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
 
 			{/* Floating Elements */}
 			<div className="absolute inset-0 opacity-5 lg:opacity-10">
